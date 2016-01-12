@@ -8,6 +8,12 @@ fi
 
 if [ `uname` == Darwin ]; then
     PY_LIB="libpython${MY_PY_VER}.dylib"
+    cd /usr/bin
+    rm cc gcc c++ g++
+    ln -s gcc-4.2 cc
+    ln -s gcc-4.2 gcc
+    ln -s c++-4.2 c++
+    ln -s g++-4.2 g++
 else
     PY_LIB="libpython${MY_PY_VER}.so"
 fi
