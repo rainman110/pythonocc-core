@@ -38,6 +38,9 @@ test:
   imports:
     - OCC
     - OCC.BRepPrimAPI
+  commands:
+    - cd ../../test
+    - python run_tests.py
 
 about:
   home: https://github.com/tpaviot/pythonocc-core
