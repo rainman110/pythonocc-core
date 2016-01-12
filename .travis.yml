@@ -1,4 +1,16 @@
-language: objective-c
+sudo: false
+
+language: cpp
+
+os: 
+  - osx
+
+compiler:
+  - clang
+  
+cache:
+  directories:
+    - $HOME/miniconda/pkgs
 
 env:
   matrix:

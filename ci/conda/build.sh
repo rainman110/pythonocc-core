@@ -8,7 +8,6 @@ fi
 
 if [ `uname` == Darwin ]; then
     PY_LIB="libpython${MY_PY_VER}.dylib"
-    # Set Clang as the default compiler for the system
 else
     PY_LIB="libpython${MY_PY_VER}.so"
 fi
