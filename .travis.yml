@@ -51,10 +51,6 @@ install:
 script:
   - conda build ci/conda
 
-after_script:
-  - conda install pythonocc-core --use-local
-  # TODO: run tests
-
 branches:
   only:
     - master
