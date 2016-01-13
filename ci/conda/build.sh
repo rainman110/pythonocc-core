@@ -44,3 +44,9 @@ if [ `uname` == Darwin ]; then
       install_name_tool -rpath $PREFIX/lib @loader_path/../../../ $lib
     done
 fi
+
+if [ `uname` == Darwin ]; then
+    PY_LIB="libpython${MY_PY_VER}.dylib"
+else
+    ccache -s
+fi
