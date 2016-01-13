@@ -15,10 +15,10 @@ else
     ccache-swig -s
     which swig
     swig -swiglib
-    ln -s `which ccache-swig` swig
-    export PATH=$PWD:$PATH
-    which swig
-    swig -swiglib
+    #ln -s `which ccache-swig` swig
+    #export PATH=$PWD:$PATH
+    #which swig
+    #swig -swiglib
 fi
 
 # Configure step
@@ -29,8 +29,8 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
  -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON \
  -DPYTHON_INCLUDE_DIR:PATH=$PREFIX/include/python$MY_PY_VER \
  -DPYTHON_LIBRARY:FILEPATH=$PREFIX/lib/${PY_LIB} \
- -DSWIG_EXECUTABLE=`which swig` \
- -DSWIG_DIR=`swig -swiglib` \
+# -DSWIG_EXECUTABLE=`which swig` \
+# -DSWIG_DIR=`swig -swiglib` \
  .
 
 # Build step
