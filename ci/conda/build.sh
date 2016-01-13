@@ -19,9 +19,7 @@ else
     export PATH=$PWD:$PATH
     #which swig
     #swig -swiglib
-    ls /home/travis/miniconda/envs/_build/share/swig/3.0.8
-    mkdir -p /opt/anaconda1anaconda2anaconda3/share/swig/
-    ln -s /home/travis/miniconda/envs/_build/share/swig/3.0.8 /opt/anaconda1anaconda2anaconda3/share/swig/3.0.8
+    export SWIG_LIB=/home/travis/miniconda/envs/_build/share/swig/3.0.8
 fi
 
 # Configure step
