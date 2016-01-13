@@ -9,9 +9,9 @@ compiler:
   - clang
   - gcc
   
-#cache:
-#  directories:
-#    - $HOME/miniconda/pkgs
+cache:
+  directories:
+    - $HOME/.ccache
 #
 
 cache: ccache
