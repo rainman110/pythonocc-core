@@ -14,9 +14,11 @@ else
     CXX="ccache-swig $CXX"
     ccache-swig -s
     which swig
+    swig -swiglib
     ln -s `which ccache-swig` swig
     export PATH=$PWD:$PATH
     which swig
+    swig -swiglib
 fi
 
 # Configure step
