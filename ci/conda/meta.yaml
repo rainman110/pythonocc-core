@@ -34,12 +34,6 @@ requirements:
     - oce ==0.16.1
     - python
 
-test:
-  imports:
-    - OCC
-    - OCC.BRepPrimAPI
-
-  runtest.sh
 
 about:
   home: https://github.com/tpaviot/pythonocc-core
