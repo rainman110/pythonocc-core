@@ -10,6 +10,8 @@ if [ `uname` == Darwin ]; then
     PY_LIB="libpython${MY_PY_VER}.dylib"
 else
     PY_LIB="libpython${MY_PY_VER}.so"
+    CC="ccache $CC"
+    CXX="ccache $CXX"
 fi
 
 # Configure step
