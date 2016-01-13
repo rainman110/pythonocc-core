@@ -13,10 +13,7 @@ cache:
   ccache: true
   directories:
     - $HOME/.ccache
-#
 
-before_cache:
-  - echo "Before Cache"
 
 env:
   matrix:
