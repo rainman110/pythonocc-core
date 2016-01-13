@@ -23,10 +23,10 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
  .
 
 # Build step
-#make -j 4
+make -j 4
 
 # Install step
-#make install
+make install
 
 # copy the source
 mkdir -p $PREFIX/src

@@ -4,9 +4,11 @@ language: cpp
 
 os: 
   - osx
+  - linux
 
 compiler:
   - clang
+  - gcc
   
 cache:
   directories:
@@ -20,8 +22,8 @@ env:
 install:
   # We do this conditionally because it saves us some downloading if the
   # version is the same.
-  - if [[ "$python_version" == "2.7" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda-latest-MacOSX-x86_64.sh -O miniconda.sh;
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
     else
       wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
     fi
@@ -36,19 +38,14 @@ install:
   - conda config --add channels https://conda.anaconda.org/dlr-sc
   # install everything required to build the receipe
   - conda install conda-build anaconda-client
-  # and wxpython, pyside, pyqt are used for testing graphics
-  # wxpython/pyside packages only available for python 2
-  # pyqt is available for both
-  # however, we install pyqt on py3k only, this cause the simplegui
-  # to force pyside on python2 since pyqt4 is not found
-  - if [[ "$python_version" == "2.7" ]]; then
-      conda install wxpython;
-      conda install pyside;
-    else
-      conda install pyqt;
-    fi
+
 
 script:
+  - if [[ "$python_version" == "2.7" ]]; then
+      export CONDA_PY=27
+    else
+      export CONDA_PY=35
+    fi
   - conda build ci/conda
 
 branches:
