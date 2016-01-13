@@ -19,6 +19,7 @@ else
     #export PATH=$PWD:$PATH
     #which swig
     #swig -swiglib
+    ls /opt/anaconda1anaconda2anaconda3/share/
 fi
 
 # Configure step
