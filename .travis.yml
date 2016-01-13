@@ -12,7 +12,8 @@ compiler:
 cache:
   ccache: true
   directories:
-    - $HOME/.ccache
+    - $HOME/.ccache27
+    - $HOME/.ccache35
 
 
 env:

@@ -2,8 +2,10 @@
 
 if [ "$PY3K" == "1" ]; then
     MY_PY_VER="${PY_VER}m"
+    export CCACHE_DIR=$HOME/.ccache35
 else
     MY_PY_VER="${PY_VER}"
+    export CCACHE_DIR=$HOME/.ccache27
 fi
 
 if [ `uname` == Darwin ]; then
@@ -19,7 +21,7 @@ else
     export PATH=$PWD:$PATH
     #which swig
     #swig -swiglib
-    export SWIG_LIB=/home/travis/miniconda/envs/_build/share/swig/3.0.8
+    #export SWIG_LIB=/home/travis/miniconda/envs/_build/share/swig/3.0.8
 fi
 
 # Configure step

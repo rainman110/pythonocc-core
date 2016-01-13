@@ -27,7 +27,7 @@ requirements:
     - python
     - oce ==0.16.1
     - cmake
-    - swig
+    - swig ==3.0.2
 
   run:
     - pyqt
