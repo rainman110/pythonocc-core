@@ -13,8 +13,10 @@ else
     CC="ccache-swig $CC"
     CXX="ccache-swig $CXX"
     ccache-swig -s
+    which swig
     ln -s `which ccache-swig` swig
     export PATH=$PWD:$PATH
+    which swig
 fi
 
 # Configure step
