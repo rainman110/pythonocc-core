@@ -15,11 +15,11 @@ else
     ccache-swig -s
     which swig
     swig -swiglib
-    #ln -s `which ccache-swig` swig
-    #export PATH=$PWD:$PATH
+    ln -s `which ccache-swig` swig
+    export PATH=$PWD:$PATH
     #which swig
     #swig -swiglib
-    ls /opt/anaconda1anaconda2anaconda3/share/
+    ls /home/travis/miniconda/envs/_build/share/swig/3.0.8
 fi
 
 # Configure step
@@ -30,8 +30,8 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
  -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON \
  -DPYTHON_INCLUDE_DIR:PATH=$PREFIX/include/python$MY_PY_VER \
  -DPYTHON_LIBRARY:FILEPATH=$PREFIX/lib/${PY_LIB} \
-# -DSWIG_EXECUTABLE=`which swig` \
-# -DSWIG_DIR=`swig -swiglib` \
+ -DSWIG_EXECUTABLE=`which swig` \
+ -DSWIG_DIR=/home/travis/miniconda/envs/_build/share/swig/3.0.8 \
  .
 
 # Build step
