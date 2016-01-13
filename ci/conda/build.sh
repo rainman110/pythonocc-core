@@ -12,6 +12,7 @@ else
     PY_LIB="libpython${MY_PY_VER}.so"
     CC="ccache $CC"
     CXX="ccache $CXX"
+    ccache -s
 fi
 
 # Configure step
