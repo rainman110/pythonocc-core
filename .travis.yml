@@ -10,9 +10,9 @@ compiler:
   - clang
   - gcc
   
-cache:
-  directories:
-    - $HOME/miniconda/pkgs
+#cache:
+#  directories:
+#    - $HOME/miniconda/pkgs
 
 env:
   matrix:
@@ -42,9 +42,9 @@ install:
 
 script:
   - if [[ "$python_version" == "2.7" ]]; then
-      export CONDA_PY=27
+      export CONDA_PY=27;
     else
-      export CONDA_PY=35
+      export CONDA_PY=35;
     fi
   - conda build ci/conda
 
