@@ -10,9 +10,11 @@ if [ `uname` == Darwin ]; then
     PY_LIB="libpython${MY_PY_VER}.dylib"
 else
     PY_LIB="libpython${MY_PY_VER}.so"
-    CC="ccache $CC"
-    CXX="ccache $CXX"
-    ccache -s
+    CC="ccache-swig $CC"
+    CXX="ccache-swig $CXX"
+    ccache-swig -s
+    ln -s `which ccache-swig` swig
+    export PATH=$PWD:$PATH
 fi
 
 # Configure step
@@ -48,5 +50,5 @@ fi
 if [ `uname` == Darwin ]; then
     PY_LIB="libpython${MY_PY_VER}.dylib"
 else
-    ccache -s
+    ccache-swig -s
 fi
