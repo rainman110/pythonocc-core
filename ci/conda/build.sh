@@ -21,7 +21,7 @@ else
     export PATH=$PWD:$PATH
     #which swig
     #swig -swiglib
-    #export SWIG_LIB=/home/travis/miniconda/envs/_build/share/swig/3.0.8
+    ##export SWIG_LIB=/home/travis/miniconda/envs/_build/share/swig/3.0.8
 fi
 
 # Configure step
