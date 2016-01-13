@@ -12,6 +12,7 @@ compiler:
 #cache:
 #  directories:
 #    - $HOME/miniconda/pkgs
+#
 
 cache: ccache
 
