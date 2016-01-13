@@ -10,11 +10,13 @@ compiler:
   - gcc
   
 cache:
+  ccache: true
   directories:
     - $HOME/.ccache
 #
 
-cache: ccache
+before_cache:
+  - echo "Before Cache"
 
 env:
   matrix:
