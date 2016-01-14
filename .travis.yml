@@ -9,10 +9,10 @@ os:
 #  - clang
 #  - gcc
   
-cache:
-  ccache: true
-  directories:
-    - $HOME/.ccache
+cache: ccache
+#  ccache: true
+#  directories:
+#    - $HOME/.ccache
 
 
 env:
