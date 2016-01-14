@@ -14,9 +14,12 @@ cache: ccache
 #  directories:
 #    - $HOME/.ccache
 
-
 env:
-  matrix:
+  global:
+    - USE_CCACHE=1
+
+matrix:
+  include:
     - &Linux-64bit
       compiler: gcc-64bit-static
       env: python_version=2.7
@@ -29,9 +32,6 @@ env:
     - <<: *Linux-64bit-shared
       compiler: clang-64bit-shared
       env: python_version=3.5m
-
-  global:
-    - USE_CCACHE=1
 
 install:
   # We do this conditionally because it saves us some downloading if the
