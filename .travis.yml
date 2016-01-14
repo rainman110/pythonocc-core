@@ -17,16 +17,16 @@ cache: ccache
 
 env:
   matrix:
-    - &gcc-python27
+    - &Linux-64bit
       compiler: gcc-64bit-static
       env: python_version=2.7
-    - &gcc-python35
+    - &Linux-64bit-shared
       compiler: gcc-64bit-shared
       env: python_version=3.5m
-    - &clang-python27
+    - <<: *Linux-64bit-shared
       compiler: clang-64bit-static
       env: python_version=2.7
-    - &clang-python35
+    - <<: *Linux-64bit-shared
       compiler: clang-64bit-shared
       env: python_version=3.5m
 
