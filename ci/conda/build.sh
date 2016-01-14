@@ -40,6 +40,10 @@ cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
 # Build step
 make -j 4
 
+make clean
+
+make -j 4
+
 # Install step
 make install
 
