@@ -20,6 +20,7 @@ else
     #which swig
     #swig -swiglib
     ##export SWIG_LIB=/home/travis/miniconda/envs/_build/share/swig/3.0.8
+    export CCACHE_LOGFILE=$SRC_DIR/ccache.debug
 fi
 
 # Configure step
@@ -56,4 +57,5 @@ if [ `uname` == Darwin ]; then
     PY_LIB="libpython${MY_PY_VER}.dylib"
 else
     ccache-swig -s
+    cat $SRC_DIR/ccache.debug
 fi
