@@ -18,16 +18,16 @@ cache:
 env:
   matrix:
     - &gcc-python27
-      compiler: gcc-py27
+      compiler: gcc-64bit-static
       env: python_version=2.7
     - &gcc-python35
-      compiler: gcc-py35
+      compiler: gcc-64bit-shared
       env: python_version=3.5m
     - &clang-python27
-      compiler: clang-py27
+      compiler: clang-64bit-static
       env: python_version=2.7
     - &clang-python35
-      compiler: clang-py35
+      compiler: clang-64bit-shared
       env: python_version=3.5m
 
   global:
