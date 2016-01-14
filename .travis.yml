@@ -2,8 +2,8 @@ sudo: false
 
 language: cpp
 
-os: 
-  - linux
+#os: 
+#  - linux
 
 #compiler:
 #  - clang
@@ -22,21 +22,21 @@ matrix:
   include:
     - &Linux-64bit
       compiler: gcc-64bit-static
-      env: python_version=2.7
+      env: python_version=2.7 LINUX=1
     - &Linux-64bit-shared
       compiler: gcc-64bit-shared
-      env: python_version=3.5m
+      env: python_version=3.5m LINUX=1
     - <<: *Linux-64bit-shared
       compiler: clang-64bit-static
-      env: python_version=2.7
+      env: python_version=2.7 LINUX=1
     - <<: *Linux-64bit-shared
       compiler: clang-64bit-shared
-      env: python_version=3.5m
+      env: python_version=3.5m LINUX=1
 
 install:
   # We do this conditionally because it saves us some downloading if the
   # version is the same.
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  - if [ $LINUX ]; then
       wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
     else
       wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
