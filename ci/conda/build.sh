@@ -22,6 +22,8 @@ else
     ##export SWIG_LIB=/home/travis/miniconda/envs/_build/share/swig/3.0.8
     export CCACHE_SWIG=1
     export CCACHE_CPP2=1
+    mkdir -p $SRC_DIR/ccache-tmp
+    export CCACHE_TEMPDIR=$SRC_DIR/ccache-tmp
     export CCACHE_LOGFILE=$SRC_DIR/ccache.debug
 fi
 
