@@ -5,9 +5,9 @@ language: cpp
 os: 
   - linux
 
-compiler:
-  - clang
-  - gcc
+#compiler:
+#  - clang
+#  - gcc
   
 cache:
   ccache: true
@@ -17,11 +17,17 @@ cache:
 
 env:
   matrix:
-    - &python27
-      python: "2.7"
+    - &gcc-python27
+      compiler: gcc-py27
       env: python_version=2.7
-    - &python35
-      python: "3.4"
+    - &gcc-python35
+      compiler: gcc-py35
+      env: python_version=3.5m
+    - &clang-python27
+      compiler: clang-py27
+      env: python_version=2.7
+    - &clang-python35
+      compiler: clang-py35
       env: python_version=3.5m
 
   global:
