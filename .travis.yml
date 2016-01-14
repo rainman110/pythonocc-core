@@ -9,10 +9,10 @@ language: cpp
 #  - clang
 #  - gcc
   
-cache: ccache
-#  ccache: true
-#  directories:
-#    - $HOME/.ccache
+cache:
+  ccache: true
+  directories:
+    - $HOME/.ccache
 
 env:
   global:
