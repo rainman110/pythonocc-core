@@ -2,10 +2,8 @@
 
 if [ "$PY3K" == "1" ]; then
     MY_PY_VER="${PY_VER}m"
-    export CCACHE_DIR=$HOME/.ccache35
 else
     MY_PY_VER="${PY_VER}"
-    export CCACHE_DIR=$HOME/.ccache27
 fi
 
 if [ `uname` == Darwin ]; then

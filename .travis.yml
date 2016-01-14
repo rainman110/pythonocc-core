@@ -12,14 +12,17 @@ compiler:
 cache:
   ccache: true
   directories:
-    - $HOME/.ccache27
-    - $HOME/.ccache35
+    - $HOME/.ccache
 
 
 env:
   matrix:
-    - python_version=2.7
-    - python_version=3.5m
+    - &python27
+      python: "2.7"
+      env: python_version=2.7
+    - &python35
+      python: "3.4"
+      env: python_version=3.5m
 
   global:
     - USE_CCACHE=1
