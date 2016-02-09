@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include GeomTools_headers.i
 
@@ -150,20 +147,6 @@ class GeomTools {
 };
 
 
-%feature("shadow") GeomTools::~GeomTools %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomTools {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomTools_Curve2dSet;
 class GeomTools_Curve2dSet {
 	public:
@@ -261,20 +244,6 @@ class GeomTools_Curve2dSet {
 };
 
 
-%feature("shadow") GeomTools_Curve2dSet::~GeomTools_Curve2dSet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomTools_Curve2dSet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomTools_CurveSet;
 class GeomTools_CurveSet {
 	public:
@@ -372,20 +341,6 @@ class GeomTools_CurveSet {
 };
 
 
-%feature("shadow") GeomTools_CurveSet::~GeomTools_CurveSet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomTools_CurveSet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomTools_SurfaceSet;
 class GeomTools_SurfaceSet {
 	public:
@@ -483,20 +438,6 @@ class GeomTools_SurfaceSet {
 };
 
 
-%feature("shadow") GeomTools_SurfaceSet::~GeomTools_SurfaceSet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomTools_SurfaceSet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomTools_UndefinedTypeHandler;
 class GeomTools_UndefinedTypeHandler : public MMgt_TShared {
 	public:
@@ -567,23 +508,15 @@ class GeomTools_UndefinedTypeHandler : public MMgt_TShared {
 };
 
 
-%feature("shadow") GeomTools_UndefinedTypeHandler::~GeomTools_UndefinedTypeHandler %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GeomTools_UndefinedTypeHandler {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GeomTools_UndefinedTypeHandler {
-	Handle_GeomTools_UndefinedTypeHandler GetHandle() {
-	return *(Handle_GeomTools_UndefinedTypeHandler*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GeomTools_UndefinedTypeHandler(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -603,20 +536,6 @@ class Handle_GeomTools_UndefinedTypeHandler : public Handle_MMgt_TShared {
 %extend Handle_GeomTools_UndefinedTypeHandler {
     GeomTools_UndefinedTypeHandler* GetObject() {
     return (GeomTools_UndefinedTypeHandler*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GeomTools_UndefinedTypeHandler::~Handle_GeomTools_UndefinedTypeHandler %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GeomTools_UndefinedTypeHandler {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

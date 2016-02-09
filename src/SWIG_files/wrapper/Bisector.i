@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Bisector_headers.i
 
@@ -58,20 +55,6 @@ class Bisector {
 };
 
 
-%feature("shadow") Bisector::~Bisector %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Bisector {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Bisector_Bisec;
 class Bisector_Bisec {
 	public:
@@ -172,30 +155,16 @@ class Bisector_Bisec {
 
 	:rtype: Handle_Geom2d_TrimmedCurve
 ") Value;
-		const Handle_Geom2d_TrimmedCurve & Value ();
+		Handle_Geom2d_TrimmedCurve Value ();
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	* Returns the Curve of <self>.
 
 	:rtype: Handle_Geom2d_TrimmedCurve
 ") ChangeValue;
-		const Handle_Geom2d_TrimmedCurve & ChangeValue ();
+		Handle_Geom2d_TrimmedCurve ChangeValue ();
 };
 
 
-%feature("shadow") Bisector_Bisec::~Bisector_Bisec %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Bisector_Bisec {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Bisector_Curve;
 class Bisector_Curve : public Geom2d_Curve {
 	public:
@@ -238,23 +207,15 @@ class Bisector_Curve : public Geom2d_Curve {
 };
 
 
-%feature("shadow") Bisector_Curve::~Bisector_Curve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Bisector_Curve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Bisector_Curve {
-	Handle_Bisector_Curve GetHandle() {
-	return *(Handle_Bisector_Curve*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Bisector_Curve(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -274,20 +235,6 @@ class Handle_Bisector_Curve : public Handle_Geom2d_Curve {
 %extend Handle_Bisector_Curve {
     Bisector_Curve* GetObject() {
     return (Bisector_Curve*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Bisector_Curve::~Handle_Bisector_Curve %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Bisector_Curve {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -337,20 +284,6 @@ class Bisector_FunctionH : public math_FunctionWithDerivative {
 };
 
 
-%feature("shadow") Bisector_FunctionH::~Bisector_FunctionH %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Bisector_FunctionH {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Bisector_FunctionInter;
 class Bisector_FunctionInter : public math_FunctionWithDerivative {
 	public:
@@ -411,20 +344,6 @@ class Bisector_FunctionInter : public math_FunctionWithDerivative {
 };
 
 
-%feature("shadow") Bisector_FunctionInter::~Bisector_FunctionInter %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Bisector_FunctionInter {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Bisector_Inter;
 class Bisector_Inter : public IntRes2d_Intersection {
 	public:
@@ -475,20 +394,6 @@ class Bisector_Inter : public IntRes2d_Intersection {
 };
 
 
-%feature("shadow") Bisector_Inter::~Bisector_Inter %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Bisector_Inter {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Bisector_PointOnBis;
 class Bisector_PointOnBis {
 	public:
@@ -577,20 +482,6 @@ class Bisector_PointOnBis {
 };
 
 
-%feature("shadow") Bisector_PointOnBis::~Bisector_PointOnBis %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Bisector_PointOnBis {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Bisector_PolyBis;
 class Bisector_PolyBis {
 	public:
@@ -641,20 +532,6 @@ class Bisector_PolyBis {
 };
 
 
-%feature("shadow") Bisector_PolyBis::~Bisector_PolyBis %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Bisector_PolyBis {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Bisector_BisecAna;
 class Bisector_BisecAna : public Bisector_Curve {
 	public:
@@ -933,23 +810,15 @@ class Bisector_BisecAna : public Bisector_Curve {
 };
 
 
-%feature("shadow") Bisector_BisecAna::~Bisector_BisecAna %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Bisector_BisecAna {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Bisector_BisecAna {
-	Handle_Bisector_BisecAna GetHandle() {
-	return *(Handle_Bisector_BisecAna*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Bisector_BisecAna(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -969,20 +838,6 @@ class Handle_Bisector_BisecAna : public Handle_Bisector_Curve {
 %extend Handle_Bisector_BisecAna {
     Bisector_BisecAna* GetObject() {
     return (Bisector_BisecAna*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Bisector_BisecAna::~Handle_Bisector_BisecAna %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Bisector_BisecAna {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1246,23 +1101,15 @@ class Bisector_BisecCC : public Bisector_Curve {
 };
 
 
-%feature("shadow") Bisector_BisecCC::~Bisector_BisecCC %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Bisector_BisecCC {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Bisector_BisecCC {
-	Handle_Bisector_BisecCC GetHandle() {
-	return *(Handle_Bisector_BisecCC*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Bisector_BisecCC(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1282,20 +1129,6 @@ class Handle_Bisector_BisecCC : public Handle_Bisector_Curve {
 %extend Handle_Bisector_BisecCC {
     Bisector_BisecCC* GetObject() {
     return (Bisector_BisecCC*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Bisector_BisecCC::~Handle_Bisector_BisecCC %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Bisector_BisecCC {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1547,23 +1380,15 @@ class Bisector_BisecPC : public Bisector_Curve {
 };
 
 
-%feature("shadow") Bisector_BisecPC::~Bisector_BisecPC %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Bisector_BisecPC {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Bisector_BisecPC {
-	Handle_Bisector_BisecPC GetHandle() {
-	return *(Handle_Bisector_BisecPC*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Bisector_BisecPC(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1583,20 +1408,6 @@ class Handle_Bisector_BisecPC : public Handle_Bisector_Curve {
 %extend Handle_Bisector_BisecPC {
     Bisector_BisecPC* GetObject() {
     return (Bisector_BisecPC*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Bisector_BisecPC::~Handle_Bisector_BisecPC %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Bisector_BisecPC {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

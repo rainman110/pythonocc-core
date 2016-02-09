@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include ShapeProcessAPI_headers.i
 
@@ -62,7 +59,7 @@ class ShapeProcessAPI_ApplySequence {
 
 	:rtype: Handle_ShapeProcess_ShapeContext
 ") Context;
-		Handle_ShapeProcess_ShapeContext & Context ();
+		Handle_ShapeProcess_ShapeContext Context ();
 		%feature("compactdefaultargs") PrepareShape;
 		%feature("autodoc", "	* Performs sequence of operators stored in myRsc. If <fillmap> is True adds history 'shape-shape' into myMap for shape and its subshapes until level <until> (included). If <until> is TopAbs_SHAPE, all the subshapes are considered.
 
@@ -96,17 +93,3 @@ class ShapeProcessAPI_ApplySequence {
 };
 
 
-%feature("shadow") ShapeProcessAPI_ApplySequence::~ShapeProcessAPI_ApplySequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ShapeProcessAPI_ApplySequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

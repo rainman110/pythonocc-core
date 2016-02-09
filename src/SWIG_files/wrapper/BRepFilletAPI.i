@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include BRepFilletAPI_headers.i
 
@@ -192,20 +189,6 @@ class BRepFilletAPI_LocalOperation : public BRepBuilderAPI_MakeShape {
 };
 
 
-%feature("shadow") BRepFilletAPI_LocalOperation::~BRepFilletAPI_LocalOperation %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepFilletAPI_LocalOperation {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepFilletAPI_MakeFillet2d;
 class BRepFilletAPI_MakeFillet2d : public BRepBuilderAPI_MakeShape {
 	public:
@@ -424,20 +407,6 @@ class BRepFilletAPI_MakeFillet2d : public BRepBuilderAPI_MakeShape {
 };
 
 
-%feature("shadow") BRepFilletAPI_MakeFillet2d::~BRepFilletAPI_MakeFillet2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepFilletAPI_MakeFillet2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepFilletAPI_MakeChamfer;
 class BRepFilletAPI_MakeChamfer : public BRepFilletAPI_LocalOperation {
 	public:
@@ -766,20 +735,6 @@ class BRepFilletAPI_MakeChamfer : public BRepFilletAPI_LocalOperation {
 };
 
 
-%feature("shadow") BRepFilletAPI_MakeChamfer::~BRepFilletAPI_MakeChamfer %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepFilletAPI_MakeChamfer {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepFilletAPI_MakeFillet;
 class BRepFilletAPI_MakeFillet : public BRepFilletAPI_LocalOperation {
 	public:
@@ -1272,17 +1227,3 @@ class BRepFilletAPI_MakeFillet : public BRepFilletAPI_LocalOperation {
 };
 
 
-%feature("shadow") BRepFilletAPI_MakeFillet::~BRepFilletAPI_MakeFillet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepFilletAPI_MakeFillet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

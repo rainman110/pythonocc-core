@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include BRepCheck_headers.i
 
@@ -115,20 +112,6 @@ class BRepCheck {
 };
 
 
-%feature("shadow") BRepCheck::~BRepCheck %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepCheck {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepCheck_Analyzer;
 class BRepCheck_Analyzer {
 	public:
@@ -171,24 +154,10 @@ class BRepCheck_Analyzer {
 	:type SubS: TopoDS_Shape &
 	:rtype: Handle_BRepCheck_Result
 ") Result;
-		const Handle_BRepCheck_Result & Result (const TopoDS_Shape & SubS);
+		Handle_BRepCheck_Result Result (const TopoDS_Shape & SubS);
 };
 
 
-%feature("shadow") BRepCheck_Analyzer::~BRepCheck_Analyzer %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepCheck_Analyzer {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus;
 class BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus : public TCollection_BasicMapIterator {
 	public:
@@ -219,20 +188,6 @@ class BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus : public TCollection
 };
 
 
-%feature("shadow") BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus::~BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepCheck_DataMapIteratorOfDataMapOfShapeListOfStatus {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepCheck_DataMapIteratorOfDataMapOfShapeResult;
 class BRepCheck_DataMapIteratorOfDataMapOfShapeResult : public TCollection_BasicMapIterator {
 	public:
@@ -259,24 +214,10 @@ class BRepCheck_DataMapIteratorOfDataMapOfShapeResult : public TCollection_Basic
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_BRepCheck_Result
 ") Value;
-		const Handle_BRepCheck_Result & Value ();
+		Handle_BRepCheck_Result Value ();
 };
 
 
-%feature("shadow") BRepCheck_DataMapIteratorOfDataMapOfShapeResult::~BRepCheck_DataMapIteratorOfDataMapOfShapeResult %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepCheck_DataMapIteratorOfDataMapOfShapeResult {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus;
 class BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus : public TCollection_MapNode {
 	public:
@@ -301,23 +242,15 @@ class BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus : public TCollection_Map
 };
 
 
-%feature("shadow") BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus::~BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus {
-	Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus GetHandle() {
-	return *(Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -337,20 +270,6 @@ class Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus : public Handle_T
 %extend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus {
     BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus* GetObject() {
     return (BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus::~Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -374,27 +293,19 @@ class BRepCheck_DataMapNodeOfDataMapOfShapeResult : public TCollection_MapNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_BRepCheck_Result
 ") Value;
-		Handle_BRepCheck_Result & Value ();
+		Handle_BRepCheck_Result Value ();
 };
 
 
-%feature("shadow") BRepCheck_DataMapNodeOfDataMapOfShapeResult::~BRepCheck_DataMapNodeOfDataMapOfShapeResult %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepCheck_DataMapNodeOfDataMapOfShapeResult {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepCheck_DataMapNodeOfDataMapOfShapeResult {
-	Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult GetHandle() {
-	return *(Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -414,20 +325,6 @@ class Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult : public Handle_TCollec
 %extend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult {
     BRepCheck_DataMapNodeOfDataMapOfShapeResult* GetObject() {
     return (BRepCheck_DataMapNodeOfDataMapOfShapeResult*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult::~Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -509,20 +406,6 @@ class BRepCheck_DataMapOfShapeListOfStatus : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") BRepCheck_DataMapOfShapeListOfStatus::~BRepCheck_DataMapOfShapeListOfStatus %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepCheck_DataMapOfShapeListOfStatus {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepCheck_DataMapOfShapeResult;
 class BRepCheck_DataMapOfShapeResult : public TCollection_BasicMap {
 	public:
@@ -579,13 +462,13 @@ class BRepCheck_DataMapOfShapeResult : public TCollection_BasicMap {
 	:type K: TopoDS_Shape &
 	:rtype: Handle_BRepCheck_Result
 ") Find;
-		const Handle_BRepCheck_Result & Find (const TopoDS_Shape & K);
+		Handle_BRepCheck_Result Find (const TopoDS_Shape & K);
 		%feature("compactdefaultargs") ChangeFind;
 		%feature("autodoc", "	:param K:
 	:type K: TopoDS_Shape &
 	:rtype: Handle_BRepCheck_Result
 ") ChangeFind;
-		Handle_BRepCheck_Result & ChangeFind (const TopoDS_Shape & K);
+		Handle_BRepCheck_Result ChangeFind (const TopoDS_Shape & K);
 		%feature("compactdefaultargs") Find1;
 		%feature("autodoc", "	:param K:
 	:type K: TopoDS_Shape &
@@ -601,20 +484,6 @@ class BRepCheck_DataMapOfShapeResult : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") BRepCheck_DataMapOfShapeResult::~BRepCheck_DataMapOfShapeResult %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepCheck_DataMapOfShapeResult {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepCheck_ListIteratorOfListOfStatus;
 class BRepCheck_ListIteratorOfListOfStatus {
 	public:
@@ -649,20 +518,6 @@ class BRepCheck_ListIteratorOfListOfStatus {
 };
 
 
-%feature("shadow") BRepCheck_ListIteratorOfListOfStatus::~BRepCheck_ListIteratorOfListOfStatus %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepCheck_ListIteratorOfListOfStatus {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepCheck_ListNodeOfListOfStatus;
 class BRepCheck_ListNodeOfListOfStatus : public TCollection_MapNode {
 	public:
@@ -681,23 +536,15 @@ class BRepCheck_ListNodeOfListOfStatus : public TCollection_MapNode {
 };
 
 
-%feature("shadow") BRepCheck_ListNodeOfListOfStatus::~BRepCheck_ListNodeOfListOfStatus %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepCheck_ListNodeOfListOfStatus {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepCheck_ListNodeOfListOfStatus {
-	Handle_BRepCheck_ListNodeOfListOfStatus GetHandle() {
-	return *(Handle_BRepCheck_ListNodeOfListOfStatus*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepCheck_ListNodeOfListOfStatus(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -717,20 +564,6 @@ class Handle_BRepCheck_ListNodeOfListOfStatus : public Handle_TCollection_MapNod
 %extend Handle_BRepCheck_ListNodeOfListOfStatus {
     BRepCheck_ListNodeOfListOfStatus* GetObject() {
     return (BRepCheck_ListNodeOfListOfStatus*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepCheck_ListNodeOfListOfStatus::~Handle_BRepCheck_ListNodeOfListOfStatus %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepCheck_ListNodeOfListOfStatus {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -858,20 +691,6 @@ class BRepCheck_ListOfStatus {
 };
 
 
-%feature("shadow") BRepCheck_ListOfStatus::~BRepCheck_ListOfStatus %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepCheck_ListOfStatus {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepCheck_Result;
 class BRepCheck_Result : public MMgt_TShared {
 	public:
@@ -944,23 +763,15 @@ class BRepCheck_Result : public MMgt_TShared {
 };
 
 
-%feature("shadow") BRepCheck_Result::~BRepCheck_Result %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepCheck_Result {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepCheck_Result {
-	Handle_BRepCheck_Result GetHandle() {
-	return *(Handle_BRepCheck_Result*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepCheck_Result(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -980,20 +791,6 @@ class Handle_BRepCheck_Result : public Handle_MMgt_TShared {
 %extend Handle_BRepCheck_Result {
     BRepCheck_Result* GetObject() {
     return (BRepCheck_Result*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepCheck_Result::~Handle_BRepCheck_Result %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepCheck_Result {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1037,23 +834,15 @@ class BRepCheck_Edge : public BRepCheck_Result {
 };
 
 
-%feature("shadow") BRepCheck_Edge::~BRepCheck_Edge %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepCheck_Edge {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepCheck_Edge {
-	Handle_BRepCheck_Edge GetHandle() {
-	return *(Handle_BRepCheck_Edge*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepCheck_Edge(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1073,20 +862,6 @@ class Handle_BRepCheck_Edge : public Handle_BRepCheck_Result {
 %extend Handle_BRepCheck_Edge {
     BRepCheck_Edge* GetObject() {
     return (BRepCheck_Edge*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepCheck_Edge::~Handle_BRepCheck_Edge %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepCheck_Edge {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1152,23 +927,15 @@ class BRepCheck_Face : public BRepCheck_Result {
 };
 
 
-%feature("shadow") BRepCheck_Face::~BRepCheck_Face %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepCheck_Face {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepCheck_Face {
-	Handle_BRepCheck_Face GetHandle() {
-	return *(Handle_BRepCheck_Face*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepCheck_Face(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1188,20 +955,6 @@ class Handle_BRepCheck_Face : public Handle_BRepCheck_Result {
 %extend Handle_BRepCheck_Face {
     BRepCheck_Face* GetObject() {
     return (BRepCheck_Face*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepCheck_Face::~Handle_BRepCheck_Face %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepCheck_Face {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1261,23 +1014,15 @@ class BRepCheck_Shell : public BRepCheck_Result {
 };
 
 
-%feature("shadow") BRepCheck_Shell::~BRepCheck_Shell %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepCheck_Shell {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepCheck_Shell {
-	Handle_BRepCheck_Shell GetHandle() {
-	return *(Handle_BRepCheck_Shell*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepCheck_Shell(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1297,20 +1042,6 @@ class Handle_BRepCheck_Shell : public Handle_BRepCheck_Result {
 %extend Handle_BRepCheck_Shell {
     BRepCheck_Shell* GetObject() {
     return (BRepCheck_Shell*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepCheck_Shell::~Handle_BRepCheck_Shell %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepCheck_Shell {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1344,23 +1075,15 @@ class BRepCheck_Vertex : public BRepCheck_Result {
 };
 
 
-%feature("shadow") BRepCheck_Vertex::~BRepCheck_Vertex %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepCheck_Vertex {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepCheck_Vertex {
-	Handle_BRepCheck_Vertex GetHandle() {
-	return *(Handle_BRepCheck_Vertex*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepCheck_Vertex(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1380,20 +1103,6 @@ class Handle_BRepCheck_Vertex : public Handle_BRepCheck_Result {
 %extend Handle_BRepCheck_Vertex {
     BRepCheck_Vertex* GetObject() {
     return (BRepCheck_Vertex*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepCheck_Vertex::~Handle_BRepCheck_Vertex %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepCheck_Vertex {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1485,23 +1194,15 @@ class BRepCheck_Wire : public BRepCheck_Result {
 };
 
 
-%feature("shadow") BRepCheck_Wire::~BRepCheck_Wire %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepCheck_Wire {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepCheck_Wire {
-	Handle_BRepCheck_Wire GetHandle() {
-	return *(Handle_BRepCheck_Wire*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepCheck_Wire(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1521,20 +1222,6 @@ class Handle_BRepCheck_Wire : public Handle_BRepCheck_Result {
 %extend Handle_BRepCheck_Wire {
     BRepCheck_Wire* GetObject() {
     return (BRepCheck_Wire*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepCheck_Wire::~Handle_BRepCheck_Wire %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepCheck_Wire {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

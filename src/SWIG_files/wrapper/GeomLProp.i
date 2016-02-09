@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include GeomLProp_headers.i
 
@@ -90,20 +87,6 @@ class GeomLProp {
 };
 
 
-%feature("shadow") GeomLProp::~GeomLProp %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomLProp {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomLProp_CLProps;
 class GeomLProp_CLProps {
 	public:
@@ -194,20 +177,6 @@ class GeomLProp_CLProps {
 };
 
 
-%feature("shadow") GeomLProp_CLProps::~GeomLProp_CLProps %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomLProp_CLProps {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class GeomLProp_CurveTool {
 	public:
 		%feature("compactdefaultargs") Value;
@@ -297,20 +266,6 @@ class GeomLProp_CurveTool {
 };
 
 
-%feature("shadow") GeomLProp_CurveTool::~GeomLProp_CurveTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomLProp_CurveTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomLProp_SLProps;
 class GeomLProp_SLProps {
 	public:
@@ -447,20 +402,6 @@ class GeomLProp_SLProps {
 };
 
 
-%feature("shadow") GeomLProp_SLProps::~GeomLProp_SLProps %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomLProp_SLProps {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class GeomLProp_SurfaceTool {
 	public:
 		%feature("compactdefaultargs") Value;
@@ -560,17 +501,3 @@ class GeomLProp_SurfaceTool {
 };
 
 
-%feature("shadow") GeomLProp_SurfaceTool::~GeomLProp_SurfaceTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomLProp_SurfaceTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

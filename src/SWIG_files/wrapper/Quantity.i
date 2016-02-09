@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Quantity_headers.i
 
@@ -801,20 +798,6 @@ class Quantity_Array1OfCoefficient {
 };
 
 
-%feature("shadow") Quantity_Array1OfCoefficient::~Quantity_Array1OfCoefficient %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Quantity_Array1OfCoefficient {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Quantity_Array1OfColor;
 class Quantity_Array1OfColor {
 	public:
@@ -897,20 +880,6 @@ class Quantity_Array1OfColor {
 };
 
 
-%feature("shadow") Quantity_Array1OfColor::~Quantity_Array1OfColor %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Quantity_Array1OfColor {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Quantity_Array2OfColor;
 class Quantity_Array2OfColor {
 	public:
@@ -1015,20 +984,6 @@ class Quantity_Array2OfColor {
 };
 
 
-%feature("shadow") Quantity_Array2OfColor::~Quantity_Array2OfColor %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Quantity_Array2OfColor {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Quantity_Color;
 class Quantity_Color {
 	public:
@@ -1369,20 +1324,6 @@ class Quantity_Color {
 };
 
 
-%feature("shadow") Quantity_Color::~Quantity_Color %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Quantity_Color {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Quantity_Convert;
 class Quantity_Convert {
 	public:
@@ -1435,20 +1376,6 @@ class Quantity_Convert {
 };
 
 
-%feature("shadow") Quantity_Convert::~Quantity_Convert %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Quantity_Convert {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Quantity_Date;
 class Quantity_Date {
 	public:
@@ -1711,20 +1638,6 @@ class Quantity_Date {
 };
 
 
-%feature("shadow") Quantity_Date::~Quantity_Date %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Quantity_Date {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Quantity_HArray1OfColor;
 class Quantity_HArray1OfColor : public MMgt_TShared {
 	public:
@@ -1795,23 +1708,15 @@ class Quantity_HArray1OfColor : public MMgt_TShared {
 };
 
 
-%feature("shadow") Quantity_HArray1OfColor::~Quantity_HArray1OfColor %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Quantity_HArray1OfColor {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Quantity_HArray1OfColor {
-	Handle_Quantity_HArray1OfColor GetHandle() {
-	return *(Handle_Quantity_HArray1OfColor*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Quantity_HArray1OfColor(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1831,20 +1736,6 @@ class Handle_Quantity_HArray1OfColor : public Handle_MMgt_TShared {
 %extend Handle_Quantity_HArray1OfColor {
     Quantity_HArray1OfColor* GetObject() {
     return (Quantity_HArray1OfColor*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Quantity_HArray1OfColor::~Handle_Quantity_HArray1OfColor %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Quantity_HArray1OfColor {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2068,17 +1959,3 @@ class Quantity_Period {
 };
 
 
-%feature("shadow") Quantity_Period::~Quantity_Period %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Quantity_Period {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

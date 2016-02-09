@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include GeomConvert_headers.i
 
@@ -266,20 +263,6 @@ class GeomConvert {
 };
 
 
-%feature("shadow") GeomConvert::~GeomConvert %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomConvert {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomConvert_ApproxCurve;
 class GeomConvert_ApproxCurve {
 	public:
@@ -334,20 +317,6 @@ class GeomConvert_ApproxCurve {
         };
 
 
-%feature("shadow") GeomConvert_ApproxCurve::~GeomConvert_ApproxCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomConvert_ApproxCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomConvert_ApproxSurface;
 class GeomConvert_ApproxSurface {
 	public:
@@ -408,20 +377,6 @@ class GeomConvert_ApproxSurface {
         };
 
 
-%feature("shadow") GeomConvert_ApproxSurface::~GeomConvert_ApproxSurface %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomConvert_ApproxSurface {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomConvert_BSplineCurveKnotSplitting;
 class GeomConvert_BSplineCurveKnotSplitting {
 	public:
@@ -460,20 +415,6 @@ class GeomConvert_BSplineCurveKnotSplitting {
 };
 
 
-%feature("shadow") GeomConvert_BSplineCurveKnotSplitting::~GeomConvert_BSplineCurveKnotSplitting %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomConvert_BSplineCurveKnotSplitting {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomConvert_BSplineCurveToBezierCurve;
 class GeomConvert_BSplineCurveToBezierCurve {
 	public:
@@ -532,20 +473,6 @@ class GeomConvert_BSplineCurveToBezierCurve {
 };
 
 
-%feature("shadow") GeomConvert_BSplineCurveToBezierCurve::~GeomConvert_BSplineCurveToBezierCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomConvert_BSplineCurveToBezierCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomConvert_BSplineSurfaceKnotSplitting;
 class GeomConvert_BSplineSurfaceKnotSplitting {
 	public:
@@ -602,20 +529,6 @@ class GeomConvert_BSplineSurfaceKnotSplitting {
 };
 
 
-%feature("shadow") GeomConvert_BSplineSurfaceKnotSplitting::~GeomConvert_BSplineSurfaceKnotSplitting %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomConvert_BSplineSurfaceKnotSplitting {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomConvert_BSplineSurfaceToBezierSurface;
 class GeomConvert_BSplineSurfaceToBezierSurface {
 	public:
@@ -694,20 +607,6 @@ class GeomConvert_BSplineSurfaceToBezierSurface {
 };
 
 
-%feature("shadow") GeomConvert_BSplineSurfaceToBezierSurface::~GeomConvert_BSplineSurfaceToBezierSurface %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomConvert_BSplineSurfaceToBezierSurface {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomConvert_CompBezierSurfacesToBSplineSurface;
 class GeomConvert_CompBezierSurfacesToBSplineSurface {
 	public:
@@ -778,13 +677,13 @@ class GeomConvert_CompBezierSurfacesToBSplineSurface {
 
 	:rtype: Handle_TColgp_HArray2OfPnt
 ") Poles;
-		const Handle_TColgp_HArray2OfPnt & Poles ();
+		Handle_TColgp_HArray2OfPnt Poles ();
 		%feature("compactdefaultargs") UKnots;
 		%feature("autodoc", "	* Returns the knots table for the u parametric direction of the BSpline surface whose data is computed in this framework.
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") UKnots;
-		const Handle_TColStd_HArray1OfReal & UKnots ();
+		Handle_TColStd_HArray1OfReal UKnots ();
 		%feature("compactdefaultargs") UDegree;
 		%feature("autodoc", "	* Returns the degree for the u parametric direction of the BSpline surface whose data is computed in this framework.
 
@@ -796,7 +695,7 @@ class GeomConvert_CompBezierSurfacesToBSplineSurface {
 
 	:rtype: Handle_TColStd_HArray1OfReal
 ") VKnots;
-		const Handle_TColStd_HArray1OfReal & VKnots ();
+		Handle_TColStd_HArray1OfReal VKnots ();
 		%feature("compactdefaultargs") VDegree;
 		%feature("autodoc", "	* Returns the degree for the v parametric direction of the BSpline surface whose data is computed in this framework.
 
@@ -808,13 +707,13 @@ class GeomConvert_CompBezierSurfacesToBSplineSurface {
 
 	:rtype: Handle_TColStd_HArray1OfInteger
 ") UMultiplicities;
-		const Handle_TColStd_HArray1OfInteger & UMultiplicities ();
+		Handle_TColStd_HArray1OfInteger UMultiplicities ();
 		%feature("compactdefaultargs") VMultiplicities;
 		%feature("autodoc", "	* -- Returns the multiplicities table for the v parametric direction of the knots of the BSpline surface whose data is computed in this framework.
 
 	:rtype: Handle_TColStd_HArray1OfInteger
 ") VMultiplicities;
-		const Handle_TColStd_HArray1OfInteger & VMultiplicities ();
+		Handle_TColStd_HArray1OfInteger VMultiplicities ();
 		%feature("compactdefaultargs") IsDone;
 		%feature("autodoc", "	* Returns true if the conversion was successful. Unless an exception was raised at the time of construction, the conversion of the Bezier surface grid assigned to this algorithm is always carried out. IsDone returns false if the constraints defined at the time of construction cannot be respected. This occurs when there is an incompatibility between a required degree of continuity on the BSpline surface, and the maximum tolerance accepted for local deformations of the surface. In such a case the computed data does not satisfy all the initial constraints.
 
@@ -824,20 +723,6 @@ class GeomConvert_CompBezierSurfacesToBSplineSurface {
 };
 
 
-%feature("shadow") GeomConvert_CompBezierSurfacesToBSplineSurface::~GeomConvert_CompBezierSurfacesToBSplineSurface %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomConvert_CompBezierSurfacesToBSplineSurface {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomConvert_CompCurveToBSplineCurve;
 class GeomConvert_CompCurveToBSplineCurve {
 	public:
@@ -882,17 +767,3 @@ class GeomConvert_CompCurveToBSplineCurve {
 };
 
 
-%feature("shadow") GeomConvert_CompCurveToBSplineCurve::~GeomConvert_CompCurveToBSplineCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomConvert_CompCurveToBSplineCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

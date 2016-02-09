@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include FEmTool_headers.i
 
@@ -144,20 +141,6 @@ class FEmTool_Assembly {
 };
 
 
-%feature("shadow") FEmTool_Assembly::~FEmTool_Assembly %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend FEmTool_Assembly {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor FEmTool_AssemblyTable;
 class FEmTool_AssemblyTable {
 	public:
@@ -250,7 +233,7 @@ class FEmTool_AssemblyTable {
 	:type Col: int
 	:rtype: Handle_TColStd_HArray1OfInteger
 ") Value;
-		const Handle_TColStd_HArray1OfInteger & Value (const Standard_Integer Row,const Standard_Integer Col);
+		Handle_TColStd_HArray1OfInteger Value (const Standard_Integer Row,const Standard_Integer Col);
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	:param Row:
 	:type Row: int
@@ -258,24 +241,10 @@ class FEmTool_AssemblyTable {
 	:type Col: int
 	:rtype: Handle_TColStd_HArray1OfInteger
 ") ChangeValue;
-		Handle_TColStd_HArray1OfInteger & ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
+		Handle_TColStd_HArray1OfInteger ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
 };
 
 
-%feature("shadow") FEmTool_AssemblyTable::~FEmTool_AssemblyTable %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend FEmTool_AssemblyTable {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor FEmTool_Curve;
 class FEmTool_Curve : public MMgt_TShared {
 	public:
@@ -394,23 +363,15 @@ class FEmTool_Curve : public MMgt_TShared {
 };
 
 
-%feature("shadow") FEmTool_Curve::~FEmTool_Curve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend FEmTool_Curve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend FEmTool_Curve {
-	Handle_FEmTool_Curve GetHandle() {
-	return *(Handle_FEmTool_Curve*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_FEmTool_Curve(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -430,20 +391,6 @@ class Handle_FEmTool_Curve : public Handle_MMgt_TShared {
 %extend Handle_FEmTool_Curve {
     FEmTool_Curve* GetObject() {
     return (FEmTool_Curve*)$self->Access();
-    }
-};
-%feature("shadow") Handle_FEmTool_Curve::~Handle_FEmTool_Curve %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_FEmTool_Curve {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -505,23 +452,15 @@ class FEmTool_ElementaryCriterion : public MMgt_TShared {
 };
 
 
-%feature("shadow") FEmTool_ElementaryCriterion::~FEmTool_ElementaryCriterion %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend FEmTool_ElementaryCriterion {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend FEmTool_ElementaryCriterion {
-	Handle_FEmTool_ElementaryCriterion GetHandle() {
-	return *(Handle_FEmTool_ElementaryCriterion*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_FEmTool_ElementaryCriterion(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -541,20 +480,6 @@ class Handle_FEmTool_ElementaryCriterion : public Handle_MMgt_TShared {
 %extend Handle_FEmTool_ElementaryCriterion {
     FEmTool_ElementaryCriterion* GetObject() {
     return (FEmTool_ElementaryCriterion*)$self->Access();
-    }
-};
-%feature("shadow") Handle_FEmTool_ElementaryCriterion::~Handle_FEmTool_ElementaryCriterion %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_FEmTool_ElementaryCriterion {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -594,20 +519,6 @@ class FEmTool_ElementsOfRefMatrix : public math_FunctionSet {
 };
 
 
-%feature("shadow") FEmTool_ElementsOfRefMatrix::~FEmTool_ElementsOfRefMatrix %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend FEmTool_ElementsOfRefMatrix {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor FEmTool_HAssemblyTable;
 class FEmTool_HAssemblyTable : public MMgt_TShared {
 	public:
@@ -684,7 +595,7 @@ class FEmTool_HAssemblyTable : public MMgt_TShared {
 	:type Col: int
 	:rtype: Handle_TColStd_HArray1OfInteger
 ") Value;
-		const Handle_TColStd_HArray1OfInteger & Value (const Standard_Integer Row,const Standard_Integer Col);
+		Handle_TColStd_HArray1OfInteger Value (const Standard_Integer Row,const Standard_Integer Col);
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	:param Row:
 	:type Row: int
@@ -692,7 +603,7 @@ class FEmTool_HAssemblyTable : public MMgt_TShared {
 	:type Col: int
 	:rtype: Handle_TColStd_HArray1OfInteger
 ") ChangeValue;
-		Handle_TColStd_HArray1OfInteger & ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
+		Handle_TColStd_HArray1OfInteger ChangeValue (const Standard_Integer Row,const Standard_Integer Col);
 		%feature("compactdefaultargs") Array2;
 		%feature("autodoc", "	:rtype: FEmTool_AssemblyTable
 ") Array2;
@@ -704,23 +615,15 @@ class FEmTool_HAssemblyTable : public MMgt_TShared {
 };
 
 
-%feature("shadow") FEmTool_HAssemblyTable::~FEmTool_HAssemblyTable %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend FEmTool_HAssemblyTable {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend FEmTool_HAssemblyTable {
-	Handle_FEmTool_HAssemblyTable GetHandle() {
-	return *(Handle_FEmTool_HAssemblyTable*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_FEmTool_HAssemblyTable(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -740,20 +643,6 @@ class Handle_FEmTool_HAssemblyTable : public Handle_MMgt_TShared {
 %extend Handle_FEmTool_HAssemblyTable {
     FEmTool_HAssemblyTable* GetObject() {
     return (FEmTool_HAssemblyTable*)$self->Access();
-    }
-};
-%feature("shadow") Handle_FEmTool_HAssemblyTable::~Handle_FEmTool_HAssemblyTable %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_FEmTool_HAssemblyTable {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -787,24 +676,10 @@ class FEmTool_ListIteratorOfListOfVectors {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
 ") Value;
-		Handle_TColStd_HArray1OfReal & Value ();
+		Handle_TColStd_HArray1OfReal Value ();
 };
 
 
-%feature("shadow") FEmTool_ListIteratorOfListOfVectors::~FEmTool_ListIteratorOfListOfVectors %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend FEmTool_ListIteratorOfListOfVectors {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor FEmTool_ListNodeOfListOfVectors;
 class FEmTool_ListNodeOfListOfVectors : public TCollection_MapNode {
 	public:
@@ -819,27 +694,19 @@ class FEmTool_ListNodeOfListOfVectors : public TCollection_MapNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
 ") Value;
-		Handle_TColStd_HArray1OfReal & Value ();
+		Handle_TColStd_HArray1OfReal Value ();
 };
 
 
-%feature("shadow") FEmTool_ListNodeOfListOfVectors::~FEmTool_ListNodeOfListOfVectors %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend FEmTool_ListNodeOfListOfVectors {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend FEmTool_ListNodeOfListOfVectors {
-	Handle_FEmTool_ListNodeOfListOfVectors GetHandle() {
-	return *(Handle_FEmTool_ListNodeOfListOfVectors*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_FEmTool_ListNodeOfListOfVectors(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -859,20 +726,6 @@ class Handle_FEmTool_ListNodeOfListOfVectors : public Handle_TCollection_MapNode
 %extend Handle_FEmTool_ListNodeOfListOfVectors {
     FEmTool_ListNodeOfListOfVectors* GetObject() {
     return (FEmTool_ListNodeOfListOfVectors*)$self->Access();
-    }
-};
-%feature("shadow") Handle_FEmTool_ListNodeOfListOfVectors::~Handle_FEmTool_ListNodeOfListOfVectors %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_FEmTool_ListNodeOfListOfVectors {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -950,11 +803,11 @@ class FEmTool_ListOfVectors {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
 ") First;
-		Handle_TColStd_HArray1OfReal & First ();
+		Handle_TColStd_HArray1OfReal First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_TColStd_HArray1OfReal
 ") Last;
-		Handle_TColStd_HArray1OfReal & Last ();
+		Handle_TColStd_HArray1OfReal Last ();
 		%feature("compactdefaultargs") RemoveFirst;
 		%feature("autodoc", "	:rtype: None
 ") RemoveFirst;
@@ -1000,20 +853,6 @@ class FEmTool_ListOfVectors {
 };
 
 
-%feature("shadow") FEmTool_ListOfVectors::~FEmTool_ListOfVectors %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend FEmTool_ListOfVectors {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor FEmTool_SeqOfLinConstr;
 class FEmTool_SeqOfLinConstr : public TCollection_BaseSequence {
 	public:
@@ -1146,20 +985,6 @@ class FEmTool_SeqOfLinConstr : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") FEmTool_SeqOfLinConstr::~FEmTool_SeqOfLinConstr %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend FEmTool_SeqOfLinConstr {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor FEmTool_SequenceNodeOfSeqOfLinConstr;
 class FEmTool_SequenceNodeOfSeqOfLinConstr : public TCollection_SeqNode {
 	public:
@@ -1180,23 +1005,15 @@ class FEmTool_SequenceNodeOfSeqOfLinConstr : public TCollection_SeqNode {
 };
 
 
-%feature("shadow") FEmTool_SequenceNodeOfSeqOfLinConstr::~FEmTool_SequenceNodeOfSeqOfLinConstr %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend FEmTool_SequenceNodeOfSeqOfLinConstr {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend FEmTool_SequenceNodeOfSeqOfLinConstr {
-	Handle_FEmTool_SequenceNodeOfSeqOfLinConstr GetHandle() {
-	return *(Handle_FEmTool_SequenceNodeOfSeqOfLinConstr*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_FEmTool_SequenceNodeOfSeqOfLinConstr(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1216,20 +1033,6 @@ class Handle_FEmTool_SequenceNodeOfSeqOfLinConstr : public Handle_TCollection_Se
 %extend Handle_FEmTool_SequenceNodeOfSeqOfLinConstr {
     FEmTool_SequenceNodeOfSeqOfLinConstr* GetObject() {
     return (FEmTool_SequenceNodeOfSeqOfLinConstr*)$self->Access();
-    }
-};
-%feature("shadow") Handle_FEmTool_SequenceNodeOfSeqOfLinConstr::~Handle_FEmTool_SequenceNodeOfSeqOfLinConstr %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_FEmTool_SequenceNodeOfSeqOfLinConstr {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1315,23 +1118,15 @@ class FEmTool_SparseMatrix : public MMgt_TShared {
 };
 
 
-%feature("shadow") FEmTool_SparseMatrix::~FEmTool_SparseMatrix %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend FEmTool_SparseMatrix {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend FEmTool_SparseMatrix {
-	Handle_FEmTool_SparseMatrix GetHandle() {
-	return *(Handle_FEmTool_SparseMatrix*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_FEmTool_SparseMatrix(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1351,20 +1146,6 @@ class Handle_FEmTool_SparseMatrix : public Handle_MMgt_TShared {
 %extend Handle_FEmTool_SparseMatrix {
     FEmTool_SparseMatrix* GetObject() {
     return (FEmTool_SparseMatrix*)$self->Access();
-    }
-};
-%feature("shadow") Handle_FEmTool_SparseMatrix::~Handle_FEmTool_SparseMatrix %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_FEmTool_SparseMatrix {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1408,23 +1189,15 @@ class FEmTool_LinearFlexion : public FEmTool_ElementaryCriterion {
 };
 
 
-%feature("shadow") FEmTool_LinearFlexion::~FEmTool_LinearFlexion %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend FEmTool_LinearFlexion {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend FEmTool_LinearFlexion {
-	Handle_FEmTool_LinearFlexion GetHandle() {
-	return *(Handle_FEmTool_LinearFlexion*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_FEmTool_LinearFlexion(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1444,20 +1217,6 @@ class Handle_FEmTool_LinearFlexion : public Handle_FEmTool_ElementaryCriterion {
 %extend Handle_FEmTool_LinearFlexion {
     FEmTool_LinearFlexion* GetObject() {
     return (FEmTool_LinearFlexion*)$self->Access();
-    }
-};
-%feature("shadow") Handle_FEmTool_LinearFlexion::~Handle_FEmTool_LinearFlexion %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_FEmTool_LinearFlexion {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1501,23 +1260,15 @@ class FEmTool_LinearJerk : public FEmTool_ElementaryCriterion {
 };
 
 
-%feature("shadow") FEmTool_LinearJerk::~FEmTool_LinearJerk %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend FEmTool_LinearJerk {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend FEmTool_LinearJerk {
-	Handle_FEmTool_LinearJerk GetHandle() {
-	return *(Handle_FEmTool_LinearJerk*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_FEmTool_LinearJerk(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1537,20 +1288,6 @@ class Handle_FEmTool_LinearJerk : public Handle_FEmTool_ElementaryCriterion {
 %extend Handle_FEmTool_LinearJerk {
     FEmTool_LinearJerk* GetObject() {
     return (FEmTool_LinearJerk*)$self->Access();
-    }
-};
-%feature("shadow") Handle_FEmTool_LinearJerk::~Handle_FEmTool_LinearJerk %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_FEmTool_LinearJerk {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1594,23 +1331,15 @@ class FEmTool_LinearTension : public FEmTool_ElementaryCriterion {
 };
 
 
-%feature("shadow") FEmTool_LinearTension::~FEmTool_LinearTension %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend FEmTool_LinearTension {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend FEmTool_LinearTension {
-	Handle_FEmTool_LinearTension GetHandle() {
-	return *(Handle_FEmTool_LinearTension*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_FEmTool_LinearTension(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1630,20 +1359,6 @@ class Handle_FEmTool_LinearTension : public Handle_FEmTool_ElementaryCriterion {
 %extend Handle_FEmTool_LinearTension {
     FEmTool_LinearTension* GetObject() {
     return (FEmTool_LinearTension*)$self->Access();
-    }
-};
-%feature("shadow") Handle_FEmTool_LinearTension::~Handle_FEmTool_LinearTension %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_FEmTool_LinearTension {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1751,23 +1466,15 @@ class FEmTool_ProfileMatrix : public FEmTool_SparseMatrix {
 };
 
 
-%feature("shadow") FEmTool_ProfileMatrix::~FEmTool_ProfileMatrix %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend FEmTool_ProfileMatrix {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend FEmTool_ProfileMatrix {
-	Handle_FEmTool_ProfileMatrix GetHandle() {
-	return *(Handle_FEmTool_ProfileMatrix*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_FEmTool_ProfileMatrix(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1787,20 +1494,6 @@ class Handle_FEmTool_ProfileMatrix : public Handle_FEmTool_SparseMatrix {
 %extend Handle_FEmTool_ProfileMatrix {
     FEmTool_ProfileMatrix* GetObject() {
     return (FEmTool_ProfileMatrix*)$self->Access();
-    }
-};
-%feature("shadow") Handle_FEmTool_ProfileMatrix::~Handle_FEmTool_ProfileMatrix %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_FEmTool_ProfileMatrix {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

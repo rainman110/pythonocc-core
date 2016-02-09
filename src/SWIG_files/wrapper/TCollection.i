@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include TCollection_headers.i
 
@@ -66,20 +63,6 @@ class TCollection {
 };
 
 
-%feature("shadow") TCollection::~TCollection %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TCollection_AVLBaseNode;
 class TCollection_AVLBaseNode : public MMgt_TShared {
 	public:
@@ -141,23 +124,15 @@ class TCollection_AVLBaseNode : public MMgt_TShared {
             };
 
 
-%feature("shadow") TCollection_AVLBaseNode::~TCollection_AVLBaseNode %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TCollection_AVLBaseNode {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TCollection_AVLBaseNode {
-	Handle_TCollection_AVLBaseNode GetHandle() {
-	return *(Handle_TCollection_AVLBaseNode*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TCollection_AVLBaseNode(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -179,20 +154,6 @@ class Handle_TCollection_AVLBaseNode : public Handle_MMgt_TShared {
     return (TCollection_AVLBaseNode*)$self->Access();
     }
 };
-%feature("shadow") Handle_TCollection_AVLBaseNode::~Handle_TCollection_AVLBaseNode %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TCollection_AVLBaseNode {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor TCollection_Array1Descriptor;
 class TCollection_Array1Descriptor {
@@ -212,20 +173,6 @@ class TCollection_Array1Descriptor {
 };
 
 
-%feature("shadow") TCollection_Array1Descriptor::~TCollection_Array1Descriptor %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection_Array1Descriptor {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TCollection_Array2Descriptor;
 class TCollection_Array2Descriptor {
 	public:
@@ -252,20 +199,6 @@ class TCollection_Array2Descriptor {
 };
 
 
-%feature("shadow") TCollection_Array2Descriptor::~TCollection_Array2Descriptor %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection_Array2Descriptor {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TCollection_AsciiString;
 class TCollection_AsciiString {
 	public:
@@ -1115,20 +1048,6 @@ class TCollection_AsciiString {
 };
 
 
-%feature("shadow") TCollection_AsciiString::~TCollection_AsciiString %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection_AsciiString {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TCollection_BaseSequence;
 class TCollection_BaseSequence {
 	public:
@@ -1163,20 +1082,6 @@ class TCollection_BaseSequence {
 };
 
 
-%feature("shadow") TCollection_BaseSequence::~TCollection_BaseSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection_BaseSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TCollection_BasicMap;
 class TCollection_BasicMap {
 	public:
@@ -1209,20 +1114,6 @@ class TCollection_BasicMap {
         };
 
 
-%feature("shadow") TCollection_BasicMap::~TCollection_BasicMap %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection_BasicMap {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TCollection_BasicMapIterator;
 class TCollection_BasicMapIterator {
 	public:
@@ -1247,20 +1138,6 @@ class TCollection_BasicMapIterator {
 };
 
 
-%feature("shadow") TCollection_BasicMapIterator::~TCollection_BasicMapIterator %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection_BasicMapIterator {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TCollection_ExtendedString;
 class TCollection_ExtendedString {
 	public:
@@ -1725,20 +1602,6 @@ class TCollection_ExtendedString {
 };
 
 
-%feature("shadow") TCollection_ExtendedString::~TCollection_ExtendedString %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection_ExtendedString {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TCollection_HAsciiString;
 class TCollection_HAsciiString : public MMgt_TShared {
 	public:
@@ -2299,23 +2162,15 @@ class TCollection_HAsciiString : public MMgt_TShared {
 };
 
 
-%feature("shadow") TCollection_HAsciiString::~TCollection_HAsciiString %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TCollection_HAsciiString {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TCollection_HAsciiString {
-	Handle_TCollection_HAsciiString GetHandle() {
-	return *(Handle_TCollection_HAsciiString*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TCollection_HAsciiString(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2335,20 +2190,6 @@ class Handle_TCollection_HAsciiString : public Handle_MMgt_TShared {
 %extend Handle_TCollection_HAsciiString {
     TCollection_HAsciiString* GetObject() {
     return (TCollection_HAsciiString*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TCollection_HAsciiString::~Handle_TCollection_HAsciiString %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TCollection_HAsciiString {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2634,23 +2475,15 @@ class TCollection_HExtendedString : public MMgt_TShared {
 };
 
 
-%feature("shadow") TCollection_HExtendedString::~TCollection_HExtendedString %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TCollection_HExtendedString {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TCollection_HExtendedString {
-	Handle_TCollection_HExtendedString GetHandle() {
-	return *(Handle_TCollection_HExtendedString*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TCollection_HExtendedString(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2672,20 +2505,6 @@ class Handle_TCollection_HExtendedString : public Handle_MMgt_TShared {
     return (TCollection_HExtendedString*)$self->Access();
     }
 };
-%feature("shadow") Handle_TCollection_HExtendedString::~Handle_TCollection_HExtendedString %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TCollection_HExtendedString {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor TCollection_MapNode;
 class TCollection_MapNode : public MMgt_TShared {
@@ -2703,23 +2522,15 @@ class TCollection_MapNode : public MMgt_TShared {
 };
 
 
-%feature("shadow") TCollection_MapNode::~TCollection_MapNode %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TCollection_MapNode {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TCollection_MapNode {
-	Handle_TCollection_MapNode GetHandle() {
-	return *(Handle_TCollection_MapNode*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TCollection_MapNode(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2739,20 +2550,6 @@ class Handle_TCollection_MapNode : public Handle_MMgt_TShared {
 %extend Handle_TCollection_MapNode {
     TCollection_MapNode* GetObject() {
     return (TCollection_MapNode*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TCollection_MapNode::~Handle_TCollection_MapNode %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TCollection_MapNode {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2785,20 +2582,6 @@ class TCollection_PrivCompareOfInteger {
 };
 
 
-%feature("shadow") TCollection_PrivCompareOfInteger::~TCollection_PrivCompareOfInteger %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection_PrivCompareOfInteger {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class TCollection_PrivCompareOfReal {
 	public:
 		%feature("compactdefaultargs") IsLower;
@@ -2828,20 +2611,6 @@ class TCollection_PrivCompareOfReal {
 };
 
 
-%feature("shadow") TCollection_PrivCompareOfReal::~TCollection_PrivCompareOfReal %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection_PrivCompareOfReal {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TCollection_SeqNode;
 class TCollection_SeqNode : public MMgt_TShared {
 	public:
@@ -2864,23 +2633,15 @@ class TCollection_SeqNode : public MMgt_TShared {
 };
 
 
-%feature("shadow") TCollection_SeqNode::~TCollection_SeqNode %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TCollection_SeqNode {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TCollection_SeqNode {
-	Handle_TCollection_SeqNode GetHandle() {
-	return *(Handle_TCollection_SeqNode*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TCollection_SeqNode(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2900,20 +2661,6 @@ class Handle_TCollection_SeqNode : public Handle_MMgt_TShared {
 %extend Handle_TCollection_SeqNode {
     TCollection_SeqNode* GetObject() {
     return (TCollection_SeqNode*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TCollection_SeqNode::~Handle_TCollection_SeqNode %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TCollection_SeqNode {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2947,20 +2694,6 @@ class TCollection_CompareOfInteger : public TCollection_PrivCompareOfInteger {
 };
 
 
-%feature("shadow") TCollection_CompareOfInteger::~TCollection_CompareOfInteger %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection_CompareOfInteger {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TCollection_CompareOfReal;
 class TCollection_CompareOfReal : public TCollection_PrivCompareOfReal {
 	public:
@@ -2991,17 +2724,3 @@ class TCollection_CompareOfReal : public TCollection_PrivCompareOfReal {
 };
 
 
-%feature("shadow") TCollection_CompareOfReal::~TCollection_CompareOfReal %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TCollection_CompareOfReal {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

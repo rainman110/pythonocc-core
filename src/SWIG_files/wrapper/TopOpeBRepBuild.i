@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include TopOpeBRepBuild_headers.i
 
@@ -121,7 +118,7 @@ class TopOpeBRepBuild_AreaBuilder {
 
 	:rtype: Handle_TopOpeBRepBuild_Loop
 ") Loop;
-		const Handle_TopOpeBRepBuild_Loop & Loop ();
+		Handle_TopOpeBRepBuild_Loop Loop ();
 		%feature("compactdefaultargs") ADD_Loop_TO_LISTOFLoop;
 		%feature("autodoc", "	:param L:
 	:type L: Handle_TopOpeBRepBuild_Loop &
@@ -159,20 +156,6 @@ class TopOpeBRepBuild_AreaBuilder {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_AreaBuilder::~TopOpeBRepBuild_AreaBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_AreaBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_BlockBuilder;
 class TopOpeBRepBuild_BlockBuilder {
 	public:
@@ -269,20 +252,6 @@ class TopOpeBRepBuild_BlockBuilder {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_BlockBuilder::~TopOpeBRepBuild_BlockBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_BlockBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_BlockIterator;
 class TopOpeBRepBuild_BlockIterator {
 	public:
@@ -321,20 +290,6 @@ class TopOpeBRepBuild_BlockIterator {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_BlockIterator::~TopOpeBRepBuild_BlockIterator %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_BlockIterator {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_BuilderON;
 class TopOpeBRepBuild_BuilderON {
 	public:
@@ -415,20 +370,6 @@ class TopOpeBRepBuild_BuilderON {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_BuilderON::~TopOpeBRepBuild_BuilderON %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_BuilderON {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_CorrectFace2d;
 class TopOpeBRepBuild_CorrectFace2d {
 	public:
@@ -499,20 +440,6 @@ class TopOpeBRepBuild_CorrectFace2d {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_CorrectFace2d::~TopOpeBRepBuild_CorrectFace2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_CorrectFace2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape;
 class TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape : public TCollection_BasicMapIterator {
 	public:
@@ -543,20 +470,6 @@ class TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape : pu
 };
 
 
-%feature("shadow") TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape::~TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_DataMapIteratorOfDataMapOfShapeListOfShapeListOfShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape;
 class TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape : public TCollection_MapNode {
 	public:
@@ -581,23 +494,15 @@ class TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape : public
 };
 
 
-%feature("shadow") TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape::~TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape {
-	Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape GetHandle() {
-	return *(Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -617,20 +522,6 @@ class Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape :
 %extend Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape {
     TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape* GetObject() {
     return (TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape::~Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -712,20 +603,6 @@ class TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape : public TCollection_
 };
 
 
-%feature("shadow") TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape::~TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_DataMapOfShapeListOfShapeListOfShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_FaceBuilder;
 class TopOpeBRepBuild_FaceBuilder {
 	public:
@@ -864,20 +741,6 @@ class TopOpeBRepBuild_FaceBuilder {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_FaceBuilder::~TopOpeBRepBuild_FaceBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_FaceBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_FuseFace;
 class TopOpeBRepBuild_FuseFace {
 	public:
@@ -960,20 +823,6 @@ class TopOpeBRepBuild_FuseFace {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_FuseFace::~TopOpeBRepBuild_FuseFace %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_FuseFace {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_GIter;
 class TopOpeBRepBuild_GIter {
 	public:
@@ -1024,20 +873,6 @@ class TopOpeBRepBuild_GIter {
         };
 
 
-%feature("shadow") TopOpeBRepBuild_GIter::~TopOpeBRepBuild_GIter %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_GIter {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class TopOpeBRepBuild_GTool {
 	public:
 		%feature("compactdefaultargs") GFusUnsh;
@@ -1123,20 +958,6 @@ class TopOpeBRepBuild_GTool {
         };
 
 
-%feature("shadow") TopOpeBRepBuild_GTool::~TopOpeBRepBuild_GTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_GTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_GTopo;
 class TopOpeBRepBuild_GTopo {
 	public:
@@ -1367,20 +1188,6 @@ class TopOpeBRepBuild_GTopo {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_GTopo::~TopOpeBRepBuild_GTopo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_GTopo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_HBuilder;
 class TopOpeBRepBuild_HBuilder : public MMgt_TShared {
 	public:
@@ -1655,23 +1462,15 @@ class TopOpeBRepBuild_HBuilder : public MMgt_TShared {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_HBuilder::~TopOpeBRepBuild_HBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TopOpeBRepBuild_HBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TopOpeBRepBuild_HBuilder {
-	Handle_TopOpeBRepBuild_HBuilder GetHandle() {
-	return *(Handle_TopOpeBRepBuild_HBuilder*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TopOpeBRepBuild_HBuilder(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1691,20 +1490,6 @@ class Handle_TopOpeBRepBuild_HBuilder : public Handle_MMgt_TShared {
 %extend Handle_TopOpeBRepBuild_HBuilder {
     TopOpeBRepBuild_HBuilder* GetObject() {
     return (TopOpeBRepBuild_HBuilder*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TopOpeBRepBuild_HBuilder::~Handle_TopOpeBRepBuild_HBuilder %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TopOpeBRepBuild_HBuilder {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1753,23 +1538,15 @@ class TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo : publ
 };
 
 
-%feature("shadow") TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo::~TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo {
-	Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo GetHandle() {
-	return *(Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1789,20 +1566,6 @@ class Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo
 %extend Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo {
     TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo* GetObject() {
     return (TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo::~Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1916,20 +1679,6 @@ class TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo : public TCollection_Basic
 };
 
 
-%feature("shadow") TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo::~TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_IndexedDataMapOfShapeVertexInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ListIteratorOfListOfListOfLoop;
 class TopOpeBRepBuild_ListIteratorOfListOfListOfLoop {
 	public:
@@ -1964,20 +1713,6 @@ class TopOpeBRepBuild_ListIteratorOfListOfListOfLoop {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListIteratorOfListOfListOfLoop::~TopOpeBRepBuild_ListIteratorOfListOfListOfLoop %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ListIteratorOfListOfListOfLoop {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ListIteratorOfListOfLoop;
 class TopOpeBRepBuild_ListIteratorOfListOfLoop {
 	public:
@@ -2008,24 +1743,10 @@ class TopOpeBRepBuild_ListIteratorOfListOfLoop {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
 ") Value;
-		Handle_TopOpeBRepBuild_Loop & Value ();
+		Handle_TopOpeBRepBuild_Loop Value ();
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListIteratorOfListOfLoop::~TopOpeBRepBuild_ListIteratorOfListOfLoop %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ListIteratorOfListOfLoop {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ListIteratorOfListOfPave;
 class TopOpeBRepBuild_ListIteratorOfListOfPave {
 	public:
@@ -2056,24 +1777,10 @@ class TopOpeBRepBuild_ListIteratorOfListOfPave {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Pave
 ") Value;
-		Handle_TopOpeBRepBuild_Pave & Value ();
+		Handle_TopOpeBRepBuild_Pave Value ();
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListIteratorOfListOfPave::~TopOpeBRepBuild_ListIteratorOfListOfPave %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ListIteratorOfListOfPave {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape;
 class TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape {
 	public:
@@ -2108,20 +1815,6 @@ class TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape::~TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ListIteratorOfListOfShapeListOfShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ListNodeOfListOfListOfLoop;
 class TopOpeBRepBuild_ListNodeOfListOfListOfLoop : public TCollection_MapNode {
 	public:
@@ -2140,23 +1833,15 @@ class TopOpeBRepBuild_ListNodeOfListOfListOfLoop : public TCollection_MapNode {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListNodeOfListOfListOfLoop::~TopOpeBRepBuild_ListNodeOfListOfListOfLoop %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TopOpeBRepBuild_ListNodeOfListOfListOfLoop {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TopOpeBRepBuild_ListNodeOfListOfListOfLoop {
-	Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop GetHandle() {
-	return *(Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2178,20 +1863,6 @@ class Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop : public Handle_TCollect
     return (TopOpeBRepBuild_ListNodeOfListOfListOfLoop*)$self->Access();
     }
 };
-%feature("shadow") Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop::~Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor TopOpeBRepBuild_ListNodeOfListOfLoop;
 class TopOpeBRepBuild_ListNodeOfListOfLoop : public TCollection_MapNode {
@@ -2207,27 +1878,19 @@ class TopOpeBRepBuild_ListNodeOfListOfLoop : public TCollection_MapNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
 ") Value;
-		Handle_TopOpeBRepBuild_Loop & Value ();
+		Handle_TopOpeBRepBuild_Loop Value ();
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListNodeOfListOfLoop::~TopOpeBRepBuild_ListNodeOfListOfLoop %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TopOpeBRepBuild_ListNodeOfListOfLoop {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TopOpeBRepBuild_ListNodeOfListOfLoop {
-	Handle_TopOpeBRepBuild_ListNodeOfListOfLoop GetHandle() {
-	return *(Handle_TopOpeBRepBuild_ListNodeOfListOfLoop*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TopOpeBRepBuild_ListNodeOfListOfLoop(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2249,20 +1912,6 @@ class Handle_TopOpeBRepBuild_ListNodeOfListOfLoop : public Handle_TCollection_Ma
     return (TopOpeBRepBuild_ListNodeOfListOfLoop*)$self->Access();
     }
 };
-%feature("shadow") Handle_TopOpeBRepBuild_ListNodeOfListOfLoop::~Handle_TopOpeBRepBuild_ListNodeOfListOfLoop %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfLoop {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor TopOpeBRepBuild_ListNodeOfListOfPave;
 class TopOpeBRepBuild_ListNodeOfListOfPave : public TCollection_MapNode {
@@ -2278,27 +1927,19 @@ class TopOpeBRepBuild_ListNodeOfListOfPave : public TCollection_MapNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Pave
 ") Value;
-		Handle_TopOpeBRepBuild_Pave & Value ();
+		Handle_TopOpeBRepBuild_Pave Value ();
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListNodeOfListOfPave::~TopOpeBRepBuild_ListNodeOfListOfPave %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TopOpeBRepBuild_ListNodeOfListOfPave {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TopOpeBRepBuild_ListNodeOfListOfPave {
-	Handle_TopOpeBRepBuild_ListNodeOfListOfPave GetHandle() {
-	return *(Handle_TopOpeBRepBuild_ListNodeOfListOfPave*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TopOpeBRepBuild_ListNodeOfListOfPave(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2320,20 +1961,6 @@ class Handle_TopOpeBRepBuild_ListNodeOfListOfPave : public Handle_TCollection_Ma
     return (TopOpeBRepBuild_ListNodeOfListOfPave*)$self->Access();
     }
 };
-%feature("shadow") Handle_TopOpeBRepBuild_ListNodeOfListOfPave::~Handle_TopOpeBRepBuild_ListNodeOfListOfPave %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfPave {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape;
 class TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape : public TCollection_MapNode {
@@ -2353,23 +1980,15 @@ class TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape : public TCollection_MapN
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape::~TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape {
-	Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape GetHandle() {
-	return *(Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2389,20 +2008,6 @@ class Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape : public Handle_TC
 %extend Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape {
     TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape* GetObject() {
     return (TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape::~Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2530,20 +2135,6 @@ class TopOpeBRepBuild_ListOfListOfLoop {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListOfListOfLoop::~TopOpeBRepBuild_ListOfListOfLoop %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ListOfListOfLoop {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ListOfLoop;
 class TopOpeBRepBuild_ListOfLoop {
 	public:
@@ -2618,11 +2209,11 @@ class TopOpeBRepBuild_ListOfLoop {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
 ") First;
-		Handle_TopOpeBRepBuild_Loop & First ();
+		Handle_TopOpeBRepBuild_Loop First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
 ") Last;
-		Handle_TopOpeBRepBuild_Loop & Last ();
+		Handle_TopOpeBRepBuild_Loop Last ();
 		%feature("compactdefaultargs") RemoveFirst;
 		%feature("autodoc", "	:rtype: None
 ") RemoveFirst;
@@ -2668,20 +2259,6 @@ class TopOpeBRepBuild_ListOfLoop {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListOfLoop::~TopOpeBRepBuild_ListOfLoop %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ListOfLoop {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ListOfPave;
 class TopOpeBRepBuild_ListOfPave {
 	public:
@@ -2756,11 +2333,11 @@ class TopOpeBRepBuild_ListOfPave {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Pave
 ") First;
-		Handle_TopOpeBRepBuild_Pave & First ();
+		Handle_TopOpeBRepBuild_Pave First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Pave
 ") Last;
-		Handle_TopOpeBRepBuild_Pave & Last ();
+		Handle_TopOpeBRepBuild_Pave Last ();
 		%feature("compactdefaultargs") RemoveFirst;
 		%feature("autodoc", "	:rtype: None
 ") RemoveFirst;
@@ -2806,20 +2383,6 @@ class TopOpeBRepBuild_ListOfPave {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListOfPave::~TopOpeBRepBuild_ListOfPave %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ListOfPave {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ListOfShapeListOfShape;
 class TopOpeBRepBuild_ListOfShapeListOfShape {
 	public:
@@ -2944,20 +2507,6 @@ class TopOpeBRepBuild_ListOfShapeListOfShape {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ListOfShapeListOfShape::~TopOpeBRepBuild_ListOfShapeListOfShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ListOfShapeListOfShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_Loop;
 class TopOpeBRepBuild_Loop : public MMgt_TShared {
 	public:
@@ -2992,23 +2541,15 @@ class TopOpeBRepBuild_Loop : public MMgt_TShared {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_Loop::~TopOpeBRepBuild_Loop %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TopOpeBRepBuild_Loop {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TopOpeBRepBuild_Loop {
-	Handle_TopOpeBRepBuild_Loop GetHandle() {
-	return *(Handle_TopOpeBRepBuild_Loop*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TopOpeBRepBuild_Loop(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -3028,20 +2569,6 @@ class Handle_TopOpeBRepBuild_Loop : public Handle_MMgt_TShared {
 %extend Handle_TopOpeBRepBuild_Loop {
     TopOpeBRepBuild_Loop* GetObject() {
     return (TopOpeBRepBuild_Loop*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TopOpeBRepBuild_Loop::~Handle_TopOpeBRepBuild_Loop %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TopOpeBRepBuild_Loop {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -3065,20 +2592,6 @@ class TopOpeBRepBuild_LoopClassifier {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_LoopClassifier::~TopOpeBRepBuild_LoopClassifier %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_LoopClassifier {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_LoopSet;
 class TopOpeBRepBuild_LoopSet {
 	public:
@@ -3109,24 +2622,10 @@ class TopOpeBRepBuild_LoopSet {
 		%feature("compactdefaultargs") Loop;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
 ") Loop;
-		virtual const Handle_TopOpeBRepBuild_Loop & Loop ();
+		Handle_TopOpeBRepBuild_Loop Loop ();
 };
 
 
-%feature("shadow") TopOpeBRepBuild_LoopSet::~TopOpeBRepBuild_LoopSet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_LoopSet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ShapeListOfShape;
 class TopOpeBRepBuild_ShapeListOfShape {
 	public:
@@ -3167,20 +2666,6 @@ class TopOpeBRepBuild_ShapeListOfShape {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ShapeListOfShape::~TopOpeBRepBuild_ShapeListOfShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ShapeListOfShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ShapeSet;
 class TopOpeBRepBuild_ShapeSet {
 	public:
@@ -3411,20 +2896,6 @@ class TopOpeBRepBuild_ShapeSet {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ShapeSet::~TopOpeBRepBuild_ShapeSet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ShapeSet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ShellToSolid;
 class TopOpeBRepBuild_ShellToSolid {
 	public:
@@ -3453,20 +2924,6 @@ class TopOpeBRepBuild_ShellToSolid {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ShellToSolid::~TopOpeBRepBuild_ShellToSolid %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ShellToSolid {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_SolidBuilder;
 class TopOpeBRepBuild_SolidBuilder {
 	public:
@@ -3547,20 +3004,6 @@ class TopOpeBRepBuild_SolidBuilder {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_SolidBuilder::~TopOpeBRepBuild_SolidBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_SolidBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class TopOpeBRepBuild_Tools {
 	public:
 		%feature("compactdefaultargs") DumpMapOfShapeWithState;
@@ -3820,20 +3263,6 @@ class TopOpeBRepBuild_Tools {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_Tools::~TopOpeBRepBuild_Tools %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_Tools {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class TopOpeBRepBuild_Tools2d {
 	public:
 		%feature("compactdefaultargs") MakeMapOfShapeVertexInfo;
@@ -3861,20 +3290,6 @@ class TopOpeBRepBuild_Tools2d {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_Tools2d::~TopOpeBRepBuild_Tools2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_Tools2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_VertexInfo;
 class TopOpeBRepBuild_VertexInfo {
 	public:
@@ -3971,20 +3386,6 @@ class TopOpeBRepBuild_VertexInfo {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_VertexInfo::~TopOpeBRepBuild_VertexInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_VertexInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_WireToFace;
 class TopOpeBRepBuild_WireToFace {
 	public:
@@ -4013,20 +3414,6 @@ class TopOpeBRepBuild_WireToFace {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_WireToFace::~TopOpeBRepBuild_WireToFace %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_WireToFace {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_Area1dBuilder;
 class TopOpeBRepBuild_Area1dBuilder : public TopOpeBRepBuild_AreaBuilder {
 	public:
@@ -4101,20 +3488,6 @@ class TopOpeBRepBuild_Area1dBuilder : public TopOpeBRepBuild_AreaBuilder {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_Area1dBuilder::~TopOpeBRepBuild_Area1dBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_Area1dBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_Area2dBuilder;
 class TopOpeBRepBuild_Area2dBuilder : public TopOpeBRepBuild_AreaBuilder {
 	public:
@@ -4149,20 +3522,6 @@ class TopOpeBRepBuild_Area2dBuilder : public TopOpeBRepBuild_AreaBuilder {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_Area2dBuilder::~TopOpeBRepBuild_Area2dBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_Area2dBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_Area3dBuilder;
 class TopOpeBRepBuild_Area3dBuilder : public TopOpeBRepBuild_AreaBuilder {
 	public:
@@ -4197,20 +3556,6 @@ class TopOpeBRepBuild_Area3dBuilder : public TopOpeBRepBuild_AreaBuilder {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_Area3dBuilder::~TopOpeBRepBuild_Area3dBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_Area3dBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_Builder1;
 class TopOpeBRepBuild_Builder1 : public TopOpeBRepBuild_Builder {
 	public:
@@ -4453,20 +3798,6 @@ class TopOpeBRepBuild_Builder1 : public TopOpeBRepBuild_Builder {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_Builder1::~TopOpeBRepBuild_Builder1 %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_Builder1 {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_CompositeClassifier;
 class TopOpeBRepBuild_CompositeClassifier : public TopOpeBRepBuild_LoopClassifier {
 	public:
@@ -4531,20 +3862,6 @@ class TopOpeBRepBuild_CompositeClassifier : public TopOpeBRepBuild_LoopClassifie
 };
 
 
-%feature("shadow") TopOpeBRepBuild_CompositeClassifier::~TopOpeBRepBuild_CompositeClassifier %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_CompositeClassifier {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_Pave;
 class TopOpeBRepBuild_Pave : public TopOpeBRepBuild_Loop {
 	public:
@@ -4617,23 +3934,15 @@ class TopOpeBRepBuild_Pave : public TopOpeBRepBuild_Loop {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_Pave::~TopOpeBRepBuild_Pave %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TopOpeBRepBuild_Pave {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TopOpeBRepBuild_Pave {
-	Handle_TopOpeBRepBuild_Pave GetHandle() {
-	return *(Handle_TopOpeBRepBuild_Pave*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TopOpeBRepBuild_Pave(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -4653,20 +3962,6 @@ class Handle_TopOpeBRepBuild_Pave : public Handle_TopOpeBRepBuild_Loop {
 %extend Handle_TopOpeBRepBuild_Pave {
     TopOpeBRepBuild_Pave* GetObject() {
     return (TopOpeBRepBuild_Pave*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TopOpeBRepBuild_Pave::~Handle_TopOpeBRepBuild_Pave %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TopOpeBRepBuild_Pave {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -4722,20 +4017,6 @@ class TopOpeBRepBuild_PaveClassifier : public TopOpeBRepBuild_LoopClassifier {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_PaveClassifier::~TopOpeBRepBuild_PaveClassifier %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_PaveClassifier {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_PaveSet;
 class TopOpeBRepBuild_PaveSet : public TopOpeBRepBuild_LoopSet {
 	public:
@@ -4776,7 +4057,7 @@ class TopOpeBRepBuild_PaveSet : public TopOpeBRepBuild_LoopSet {
 		%feature("compactdefaultargs") Loop;
 		%feature("autodoc", "	:rtype: Handle_TopOpeBRepBuild_Loop
 ") Loop;
-		virtual const Handle_TopOpeBRepBuild_Loop & Loop ();
+		Handle_TopOpeBRepBuild_Loop Loop ();
 		%feature("compactdefaultargs") Edge;
 		%feature("autodoc", "	:rtype: TopoDS_Edge
 ") Edge;
@@ -4804,20 +4085,6 @@ class TopOpeBRepBuild_PaveSet : public TopOpeBRepBuild_LoopSet {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_PaveSet::~TopOpeBRepBuild_PaveSet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_PaveSet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ShellFaceSet;
 class TopOpeBRepBuild_ShellFaceSet : public TopOpeBRepBuild_ShapeSet {
 	public:
@@ -4906,20 +4173,6 @@ class TopOpeBRepBuild_ShellFaceSet : public TopOpeBRepBuild_ShapeSet {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ShellFaceSet::~TopOpeBRepBuild_ShellFaceSet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ShellFaceSet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_WireEdgeSet;
 class TopOpeBRepBuild_WireEdgeSet : public TopOpeBRepBuild_ShapeSet {
 	public:
@@ -5036,20 +4289,6 @@ class TopOpeBRepBuild_WireEdgeSet : public TopOpeBRepBuild_ShapeSet {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_WireEdgeSet::~TopOpeBRepBuild_WireEdgeSet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_WireEdgeSet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_EdgeBuilder;
 class TopOpeBRepBuild_EdgeBuilder : public TopOpeBRepBuild_Area1dBuilder {
 	public:
@@ -5114,20 +4353,6 @@ class TopOpeBRepBuild_EdgeBuilder : public TopOpeBRepBuild_Area1dBuilder {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_EdgeBuilder::~TopOpeBRepBuild_EdgeBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_EdgeBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_FaceAreaBuilder;
 class TopOpeBRepBuild_FaceAreaBuilder : public TopOpeBRepBuild_Area2dBuilder {
 	public:
@@ -5160,20 +4385,6 @@ class TopOpeBRepBuild_FaceAreaBuilder : public TopOpeBRepBuild_Area2dBuilder {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_FaceAreaBuilder::~TopOpeBRepBuild_FaceAreaBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_FaceAreaBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_ShellFaceClassifier;
 class TopOpeBRepBuild_ShellFaceClassifier : public TopOpeBRepBuild_CompositeClassifier {
 	public:
@@ -5242,20 +4453,6 @@ class TopOpeBRepBuild_ShellFaceClassifier : public TopOpeBRepBuild_CompositeClas
 };
 
 
-%feature("shadow") TopOpeBRepBuild_ShellFaceClassifier::~TopOpeBRepBuild_ShellFaceClassifier %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_ShellFaceClassifier {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_SolidAreaBuilder;
 class TopOpeBRepBuild_SolidAreaBuilder : public TopOpeBRepBuild_Area3dBuilder {
 	public:
@@ -5288,20 +4485,6 @@ class TopOpeBRepBuild_SolidAreaBuilder : public TopOpeBRepBuild_Area3dBuilder {
 };
 
 
-%feature("shadow") TopOpeBRepBuild_SolidAreaBuilder::~TopOpeBRepBuild_SolidAreaBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_SolidAreaBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopOpeBRepBuild_WireEdgeClassifier;
 class TopOpeBRepBuild_WireEdgeClassifier : public TopOpeBRepBuild_CompositeClassifier {
 	public:
@@ -5382,17 +4565,3 @@ class TopOpeBRepBuild_WireEdgeClassifier : public TopOpeBRepBuild_CompositeClass
 };
 
 
-%feature("shadow") TopOpeBRepBuild_WireEdgeClassifier::~TopOpeBRepBuild_WireEdgeClassifier %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopOpeBRepBuild_WireEdgeClassifier {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

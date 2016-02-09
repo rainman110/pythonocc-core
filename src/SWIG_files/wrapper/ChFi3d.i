@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include ChFi3d_headers.i
 
@@ -116,20 +113,6 @@ class ChFi3d {
 };
 
 
-%feature("shadow") ChFi3d::~ChFi3d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFi3d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFi3d_Builder;
 class ChFi3d_Builder {
 	public:
@@ -400,20 +383,6 @@ class ChFi3d_Builder {
 };
 
 
-%feature("shadow") ChFi3d_Builder::~ChFi3d_Builder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFi3d_Builder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFi3d_SearchSing;
 class ChFi3d_SearchSing : public math_FunctionWithDerivative {
 	public:
@@ -460,20 +429,6 @@ class ChFi3d_SearchSing : public math_FunctionWithDerivative {
 };
 
 
-%feature("shadow") ChFi3d_SearchSing::~ChFi3d_SearchSing %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFi3d_SearchSing {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFi3d_ChBuilder;
 class ChFi3d_ChBuilder : public ChFi3d_Builder {
 	public:
@@ -1054,20 +1009,6 @@ class ChFi3d_ChBuilder : public ChFi3d_Builder {
 };
 
 
-%feature("shadow") ChFi3d_ChBuilder::~ChFi3d_ChBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFi3d_ChBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFi3d_FilBuilder;
 class ChFi3d_FilBuilder : public ChFi3d_Builder {
 	public:
@@ -1284,17 +1225,3 @@ class ChFi3d_FilBuilder : public ChFi3d_Builder {
 };
 
 
-%feature("shadow") ChFi3d_FilBuilder::~ChFi3d_FilBuilder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFi3d_FilBuilder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

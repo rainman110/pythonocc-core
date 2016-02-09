@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Sweep_headers.i
 
@@ -112,20 +109,6 @@ class Sweep_NumShape {
 };
 
 
-%feature("shadow") Sweep_NumShape::~Sweep_NumShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Sweep_NumShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Sweep_NumShapeIterator;
 class Sweep_NumShapeIterator {
 	public:
@@ -168,20 +151,6 @@ class Sweep_NumShapeIterator {
 };
 
 
-%feature("shadow") Sweep_NumShapeIterator::~Sweep_NumShapeIterator %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Sweep_NumShapeIterator {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Sweep_NumShapeTool;
 class Sweep_NumShapeTool {
 	public:
@@ -258,17 +227,3 @@ class Sweep_NumShapeTool {
 };
 
 
-%feature("shadow") Sweep_NumShapeTool::~Sweep_NumShapeTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Sweep_NumShapeTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

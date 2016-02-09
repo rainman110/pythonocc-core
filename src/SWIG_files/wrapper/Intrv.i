@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Intrv_headers.i
 
@@ -292,20 +289,6 @@ class Intrv_Interval {
 };
 
 
-%feature("shadow") Intrv_Interval::~Intrv_Interval %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Intrv_Interval {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Intrv_Intervals;
 class Intrv_Intervals {
 	public:
@@ -396,20 +379,6 @@ class Intrv_Intervals {
 };
 
 
-%feature("shadow") Intrv_Intervals::~Intrv_Intervals %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Intrv_Intervals {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Intrv_SequenceNodeOfSequenceOfInterval;
 class Intrv_SequenceNodeOfSequenceOfInterval : public TCollection_SeqNode {
 	public:
@@ -430,23 +399,15 @@ class Intrv_SequenceNodeOfSequenceOfInterval : public TCollection_SeqNode {
 };
 
 
-%feature("shadow") Intrv_SequenceNodeOfSequenceOfInterval::~Intrv_SequenceNodeOfSequenceOfInterval %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Intrv_SequenceNodeOfSequenceOfInterval {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Intrv_SequenceNodeOfSequenceOfInterval {
-	Handle_Intrv_SequenceNodeOfSequenceOfInterval GetHandle() {
-	return *(Handle_Intrv_SequenceNodeOfSequenceOfInterval*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Intrv_SequenceNodeOfSequenceOfInterval(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -466,20 +427,6 @@ class Handle_Intrv_SequenceNodeOfSequenceOfInterval : public Handle_TCollection_
 %extend Handle_Intrv_SequenceNodeOfSequenceOfInterval {
     Intrv_SequenceNodeOfSequenceOfInterval* GetObject() {
     return (Intrv_SequenceNodeOfSequenceOfInterval*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Intrv_SequenceNodeOfSequenceOfInterval::~Handle_Intrv_SequenceNodeOfSequenceOfInterval %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Intrv_SequenceNodeOfSequenceOfInterval {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -615,17 +562,3 @@ class Intrv_SequenceOfInterval : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") Intrv_SequenceOfInterval::~Intrv_SequenceOfInterval %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Intrv_SequenceOfInterval {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

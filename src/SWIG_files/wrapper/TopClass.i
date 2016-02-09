@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include TopClass_headers.i
 
@@ -88,20 +85,6 @@ class TopClass_Intersection3d {
 };
 
 
-%feature("shadow") TopClass_Intersection3d::~TopClass_Intersection3d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopClass_Intersection3d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopClass_SolidExplorer;
 class TopClass_SolidExplorer {
 	public:
@@ -202,17 +185,3 @@ class TopClass_SolidExplorer {
 };
 
 
-%feature("shadow") TopClass_SolidExplorer::~TopClass_SolidExplorer %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopClass_SolidExplorer {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

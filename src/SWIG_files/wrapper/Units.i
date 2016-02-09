@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Units_headers.i
 
@@ -166,20 +163,6 @@ class Units {
 };
 
 
-%feature("shadow") Units::~Units %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Units {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Units_Explorer;
 class Units_Explorer {
 	public:
@@ -306,20 +289,6 @@ class Units_Explorer {
 };
 
 
-%feature("shadow") Units_Explorer::~Units_Explorer %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Units_Explorer {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Units_Lexicon;
 class Units_Lexicon : public MMgt_TShared {
 	public:
@@ -376,23 +345,15 @@ class Units_Lexicon : public MMgt_TShared {
 };
 
 
-%feature("shadow") Units_Lexicon::~Units_Lexicon %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_Lexicon {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_Lexicon {
-	Handle_Units_Lexicon GetHandle() {
-	return *(Handle_Units_Lexicon*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_Lexicon(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -412,20 +373,6 @@ class Handle_Units_Lexicon : public Handle_MMgt_TShared {
 %extend Handle_Units_Lexicon {
     Units_Lexicon* GetObject() {
     return (Units_Lexicon*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_Lexicon::~Handle_Units_Lexicon %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_Lexicon {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -595,20 +542,6 @@ class Units_Measurement {
 };
 
 
-%feature("shadow") Units_Measurement::~Units_Measurement %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Units_Measurement {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Units_QtsSequence;
 class Units_QtsSequence : public TCollection_BaseSequence {
 	public:
@@ -691,11 +624,11 @@ class Units_QtsSequence : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_Units_Quantity
 ") First;
-		const Handle_Units_Quantity & First ();
+		Handle_Units_Quantity First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_Units_Quantity
 ") Last;
-		const Handle_Units_Quantity & Last ();
+		Handle_Units_Quantity Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -709,7 +642,7 @@ class Units_QtsSequence : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_Units_Quantity
 ") Value;
-		const Handle_Units_Quantity & Value (const Standard_Integer Index);
+		Handle_Units_Quantity Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -723,7 +656,7 @@ class Units_QtsSequence : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_Units_Quantity
 ") ChangeValue;
-		Handle_Units_Quantity & ChangeValue (const Standard_Integer Index);
+		Handle_Units_Quantity ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -741,20 +674,6 @@ class Units_QtsSequence : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") Units_QtsSequence::~Units_QtsSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Units_QtsSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Units_QuantitiesSequence;
 class Units_QuantitiesSequence : public MMgt_TShared {
 	public:
@@ -861,13 +780,13 @@ class Units_QuantitiesSequence : public MMgt_TShared {
 	:type anIndex: int
 	:rtype: Handle_Units_Quantity
 ") Value;
-		const Handle_Units_Quantity & Value (const Standard_Integer anIndex);
+		Handle_Units_Quantity Value (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
 	:rtype: Handle_Units_Quantity
 ") ChangeValue;
-		Handle_Units_Quantity & ChangeValue (const Standard_Integer anIndex);
+		Handle_Units_Quantity ChangeValue (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
@@ -897,23 +816,15 @@ class Units_QuantitiesSequence : public MMgt_TShared {
 };
 
 
-%feature("shadow") Units_QuantitiesSequence::~Units_QuantitiesSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_QuantitiesSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_QuantitiesSequence {
-	Handle_Units_QuantitiesSequence GetHandle() {
-	return *(Handle_Units_QuantitiesSequence*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_QuantitiesSequence(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -933,20 +844,6 @@ class Handle_Units_QuantitiesSequence : public Handle_MMgt_TShared {
 %extend Handle_Units_QuantitiesSequence {
     Units_QuantitiesSequence* GetObject() {
     return (Units_QuantitiesSequence*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_QuantitiesSequence::~Handle_Units_QuantitiesSequence %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_QuantitiesSequence {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1004,20 +901,6 @@ class Units_Sentence {
 };
 
 
-%feature("shadow") Units_Sentence::~Units_Sentence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Units_Sentence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Units_SequenceNodeOfQtsSequence;
 class Units_SequenceNodeOfQtsSequence : public TCollection_SeqNode {
 	public:
@@ -1034,27 +917,19 @@ class Units_SequenceNodeOfQtsSequence : public TCollection_SeqNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_Units_Quantity
 ") Value;
-		Handle_Units_Quantity & Value ();
+		Handle_Units_Quantity Value ();
 };
 
 
-%feature("shadow") Units_SequenceNodeOfQtsSequence::~Units_SequenceNodeOfQtsSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_SequenceNodeOfQtsSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_SequenceNodeOfQtsSequence {
-	Handle_Units_SequenceNodeOfQtsSequence GetHandle() {
-	return *(Handle_Units_SequenceNodeOfQtsSequence*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_SequenceNodeOfQtsSequence(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1076,20 +951,6 @@ class Handle_Units_SequenceNodeOfQtsSequence : public Handle_TCollection_SeqNode
     return (Units_SequenceNodeOfQtsSequence*)$self->Access();
     }
 };
-%feature("shadow") Handle_Units_SequenceNodeOfQtsSequence::~Handle_Units_SequenceNodeOfQtsSequence %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_SequenceNodeOfQtsSequence {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor Units_SequenceNodeOfTksSequence;
 class Units_SequenceNodeOfTksSequence : public TCollection_SeqNode {
@@ -1107,27 +968,19 @@ class Units_SequenceNodeOfTksSequence : public TCollection_SeqNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_Units_Token
 ") Value;
-		Handle_Units_Token & Value ();
+		Handle_Units_Token Value ();
 };
 
 
-%feature("shadow") Units_SequenceNodeOfTksSequence::~Units_SequenceNodeOfTksSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_SequenceNodeOfTksSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_SequenceNodeOfTksSequence {
-	Handle_Units_SequenceNodeOfTksSequence GetHandle() {
-	return *(Handle_Units_SequenceNodeOfTksSequence*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_SequenceNodeOfTksSequence(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1149,20 +1002,6 @@ class Handle_Units_SequenceNodeOfTksSequence : public Handle_TCollection_SeqNode
     return (Units_SequenceNodeOfTksSequence*)$self->Access();
     }
 };
-%feature("shadow") Handle_Units_SequenceNodeOfTksSequence::~Handle_Units_SequenceNodeOfTksSequence %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_SequenceNodeOfTksSequence {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor Units_SequenceNodeOfUtsSequence;
 class Units_SequenceNodeOfUtsSequence : public TCollection_SeqNode {
@@ -1180,27 +1019,19 @@ class Units_SequenceNodeOfUtsSequence : public TCollection_SeqNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_Units_Unit
 ") Value;
-		Handle_Units_Unit & Value ();
+		Handle_Units_Unit Value ();
 };
 
 
-%feature("shadow") Units_SequenceNodeOfUtsSequence::~Units_SequenceNodeOfUtsSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_SequenceNodeOfUtsSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_SequenceNodeOfUtsSequence {
-	Handle_Units_SequenceNodeOfUtsSequence GetHandle() {
-	return *(Handle_Units_SequenceNodeOfUtsSequence*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_SequenceNodeOfUtsSequence(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1220,20 +1051,6 @@ class Handle_Units_SequenceNodeOfUtsSequence : public Handle_TCollection_SeqNode
 %extend Handle_Units_SequenceNodeOfUtsSequence {
     Units_SequenceNodeOfUtsSequence* GetObject() {
     return (Units_SequenceNodeOfUtsSequence*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_SequenceNodeOfUtsSequence::~Handle_Units_SequenceNodeOfUtsSequence %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_SequenceNodeOfUtsSequence {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1319,11 +1136,11 @@ class Units_TksSequence : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_Units_Token
 ") First;
-		const Handle_Units_Token & First ();
+		Handle_Units_Token First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_Units_Token
 ") Last;
-		const Handle_Units_Token & Last ();
+		Handle_Units_Token Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -1337,7 +1154,7 @@ class Units_TksSequence : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_Units_Token
 ") Value;
-		const Handle_Units_Token & Value (const Standard_Integer Index);
+		Handle_Units_Token Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -1351,7 +1168,7 @@ class Units_TksSequence : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_Units_Token
 ") ChangeValue;
-		Handle_Units_Token & ChangeValue (const Standard_Integer Index);
+		Handle_Units_Token ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -1369,20 +1186,6 @@ class Units_TksSequence : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") Units_TksSequence::~Units_TksSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Units_TksSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Units_Token;
 class Units_Token : public MMgt_TShared {
 	public:
@@ -1673,23 +1476,15 @@ class Units_Token : public MMgt_TShared {
 };
 
 
-%feature("shadow") Units_Token::~Units_Token %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_Token {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_Token {
-	Handle_Units_Token GetHandle() {
-	return *(Handle_Units_Token*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_Token(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1709,20 +1504,6 @@ class Handle_Units_Token : public Handle_MMgt_TShared {
 %extend Handle_Units_Token {
     Units_Token* GetObject() {
     return (Units_Token*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_Token::~Handle_Units_Token %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_Token {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1832,13 +1613,13 @@ class Units_TokensSequence : public MMgt_TShared {
 	:type anIndex: int
 	:rtype: Handle_Units_Token
 ") Value;
-		const Handle_Units_Token & Value (const Standard_Integer anIndex);
+		Handle_Units_Token Value (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
 	:rtype: Handle_Units_Token
 ") ChangeValue;
-		Handle_Units_Token & ChangeValue (const Standard_Integer anIndex);
+		Handle_Units_Token ChangeValue (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
@@ -1868,23 +1649,15 @@ class Units_TokensSequence : public MMgt_TShared {
 };
 
 
-%feature("shadow") Units_TokensSequence::~Units_TokensSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_TokensSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_TokensSequence {
-	Handle_Units_TokensSequence GetHandle() {
-	return *(Handle_Units_TokensSequence*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_TokensSequence(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1904,20 +1677,6 @@ class Handle_Units_TokensSequence : public Handle_MMgt_TShared {
 %extend Handle_Units_TokensSequence {
     Units_TokensSequence* GetObject() {
     return (Units_TokensSequence*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_TokensSequence::~Handle_Units_TokensSequence %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_TokensSequence {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2031,23 +1790,15 @@ class Units_Unit : public MMgt_TShared {
 };
 
 
-%feature("shadow") Units_Unit::~Units_Unit %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_Unit {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_Unit {
-	Handle_Units_Unit GetHandle() {
-	return *(Handle_Units_Unit*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_Unit(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2067,20 +1818,6 @@ class Handle_Units_Unit : public Handle_MMgt_TShared {
 %extend Handle_Units_Unit {
     Units_Unit* GetObject() {
     return (Units_Unit*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_Unit::~Handle_Units_Unit %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_Unit {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2140,23 +1877,15 @@ class Units_UnitsDictionary : public MMgt_TShared {
 };
 
 
-%feature("shadow") Units_UnitsDictionary::~Units_UnitsDictionary %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_UnitsDictionary {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_UnitsDictionary {
-	Handle_Units_UnitsDictionary GetHandle() {
-	return *(Handle_Units_UnitsDictionary*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_UnitsDictionary(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2176,20 +1905,6 @@ class Handle_Units_UnitsDictionary : public Handle_MMgt_TShared {
 %extend Handle_Units_UnitsDictionary {
     Units_UnitsDictionary* GetObject() {
     return (Units_UnitsDictionary*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_UnitsDictionary::~Handle_Units_UnitsDictionary %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_UnitsDictionary {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2299,13 +2014,13 @@ class Units_UnitsSequence : public MMgt_TShared {
 	:type anIndex: int
 	:rtype: Handle_Units_Unit
 ") Value;
-		const Handle_Units_Unit & Value (const Standard_Integer anIndex);
+		Handle_Units_Unit Value (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
 	:rtype: Handle_Units_Unit
 ") ChangeValue;
-		Handle_Units_Unit & ChangeValue (const Standard_Integer anIndex);
+		Handle_Units_Unit ChangeValue (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
@@ -2335,23 +2050,15 @@ class Units_UnitsSequence : public MMgt_TShared {
 };
 
 
-%feature("shadow") Units_UnitsSequence::~Units_UnitsSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_UnitsSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_UnitsSequence {
-	Handle_Units_UnitsSequence GetHandle() {
-	return *(Handle_Units_UnitsSequence*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_UnitsSequence(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2371,20 +2078,6 @@ class Handle_Units_UnitsSequence : public Handle_MMgt_TShared {
 %extend Handle_Units_UnitsSequence {
     Units_UnitsSequence* GetObject() {
     return (Units_UnitsSequence*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_UnitsSequence::~Handle_Units_UnitsSequence %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_UnitsSequence {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2508,23 +2201,15 @@ class Units_UnitsSystem : public MMgt_TShared {
 };
 
 
-%feature("shadow") Units_UnitsSystem::~Units_UnitsSystem %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_UnitsSystem {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_UnitsSystem {
-	Handle_Units_UnitsSystem GetHandle() {
-	return *(Handle_Units_UnitsSystem*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_UnitsSystem(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2544,20 +2229,6 @@ class Handle_Units_UnitsSystem : public Handle_MMgt_TShared {
 %extend Handle_Units_UnitsSystem {
     Units_UnitsSystem* GetObject() {
     return (Units_UnitsSystem*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_UnitsSystem::~Handle_Units_UnitsSystem %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_UnitsSystem {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2643,11 +2314,11 @@ class Units_UtsSequence : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_Units_Unit
 ") First;
-		const Handle_Units_Unit & First ();
+		Handle_Units_Unit First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_Units_Unit
 ") Last;
-		const Handle_Units_Unit & Last ();
+		Handle_Units_Unit Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2661,7 +2332,7 @@ class Units_UtsSequence : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_Units_Unit
 ") Value;
-		const Handle_Units_Unit & Value (const Standard_Integer Index);
+		Handle_Units_Unit Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2675,7 +2346,7 @@ class Units_UtsSequence : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_Units_Unit
 ") ChangeValue;
-		Handle_Units_Unit & ChangeValue (const Standard_Integer Index);
+		Handle_Units_Unit ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2693,20 +2364,6 @@ class Units_UtsSequence : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") Units_UtsSequence::~Units_UtsSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Units_UtsSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Units_MathSentence;
 class Units_MathSentence : public Units_Sentence {
 	public:
@@ -2721,20 +2378,6 @@ class Units_MathSentence : public Units_Sentence {
 };
 
 
-%feature("shadow") Units_MathSentence::~Units_MathSentence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Units_MathSentence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Units_ShiftedToken;
 class Units_ShiftedToken : public Units_Token {
 	public:
@@ -2799,23 +2442,15 @@ class Units_ShiftedToken : public Units_Token {
 };
 
 
-%feature("shadow") Units_ShiftedToken::~Units_ShiftedToken %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_ShiftedToken {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_ShiftedToken {
-	Handle_Units_ShiftedToken GetHandle() {
-	return *(Handle_Units_ShiftedToken*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_ShiftedToken(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2835,20 +2470,6 @@ class Handle_Units_ShiftedToken : public Handle_Units_Token {
 %extend Handle_Units_ShiftedToken {
     Units_ShiftedToken* GetObject() {
     return (Units_ShiftedToken*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_ShiftedToken::~Handle_Units_ShiftedToken %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_ShiftedToken {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2920,23 +2541,15 @@ class Units_ShiftedUnit : public Units_Unit {
 };
 
 
-%feature("shadow") Units_ShiftedUnit::~Units_ShiftedUnit %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_ShiftedUnit {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_ShiftedUnit {
-	Handle_Units_ShiftedUnit GetHandle() {
-	return *(Handle_Units_ShiftedUnit*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_ShiftedUnit(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2956,20 +2569,6 @@ class Handle_Units_ShiftedUnit : public Handle_Units_Unit {
 %extend Handle_Units_ShiftedUnit {
     Units_ShiftedUnit* GetObject() {
     return (Units_ShiftedUnit*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_ShiftedUnit::~Handle_Units_ShiftedUnit %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_ShiftedUnit {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -3011,20 +2610,6 @@ class Units_UnitSentence : public Units_Sentence {
 };
 
 
-%feature("shadow") Units_UnitSentence::~Units_UnitSentence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Units_UnitSentence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Units_UnitsLexicon;
 class Units_UnitsLexicon : public Units_Lexicon {
 	public:
@@ -3067,23 +2652,15 @@ class Units_UnitsLexicon : public Units_Lexicon {
 };
 
 
-%feature("shadow") Units_UnitsLexicon::~Units_UnitsLexicon %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Units_UnitsLexicon {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Units_UnitsLexicon {
-	Handle_Units_UnitsLexicon GetHandle() {
-	return *(Handle_Units_UnitsLexicon*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Units_UnitsLexicon(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -3103,20 +2680,6 @@ class Handle_Units_UnitsLexicon : public Handle_Units_Lexicon {
 %extend Handle_Units_UnitsLexicon {
     Units_UnitsLexicon* GetObject() {
     return (Units_UnitsLexicon*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Units_UnitsLexicon::~Handle_Units_UnitsLexicon %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Units_UnitsLexicon {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include ShapeAlgo_headers.i
 
@@ -70,20 +67,6 @@ class ShapeAlgo {
 };
 
 
-%feature("shadow") ShapeAlgo::~ShapeAlgo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ShapeAlgo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ShapeAlgo_ToolContainer;
 class ShapeAlgo_ToolContainer : public MMgt_TShared {
 	public:
@@ -108,23 +91,15 @@ class ShapeAlgo_ToolContainer : public MMgt_TShared {
 };
 
 
-%feature("shadow") ShapeAlgo_ToolContainer::~ShapeAlgo_ToolContainer %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ShapeAlgo_ToolContainer {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ShapeAlgo_ToolContainer {
-	Handle_ShapeAlgo_ToolContainer GetHandle() {
-	return *(Handle_ShapeAlgo_ToolContainer*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ShapeAlgo_ToolContainer(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -144,20 +119,6 @@ class Handle_ShapeAlgo_ToolContainer : public Handle_MMgt_TShared {
 %extend Handle_ShapeAlgo_ToolContainer {
     ShapeAlgo_ToolContainer* GetObject() {
     return (ShapeAlgo_ToolContainer*)$self->Access();
-    }
-};
-%feature("shadow") Handle_ShapeAlgo_ToolContainer::~Handle_ShapeAlgo_ToolContainer %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ShapeAlgo_ToolContainer {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

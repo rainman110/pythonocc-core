@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include BOPTools_headers.i
 
@@ -98,20 +95,6 @@ class BOPTools {
 };
 
 
-%feature("shadow") BOPTools::~BOPTools %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPTools {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class BOPTools_AlgoTools {
 	public:
 		%feature("compactdefaultargs") ComputeVV;
@@ -697,20 +680,6 @@ class BOPTools_AlgoTools {
 };
 
 
-%feature("shadow") BOPTools_AlgoTools::~BOPTools_AlgoTools %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPTools_AlgoTools {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class BOPTools_AlgoTools2D {
 	public:
 		%feature("compactdefaultargs") BuildPCurveForEdgeOnFace;
@@ -906,20 +875,6 @@ class BOPTools_AlgoTools2D {
 };
 
 
-%feature("shadow") BOPTools_AlgoTools2D::~BOPTools_AlgoTools2D %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPTools_AlgoTools2D {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class BOPTools_AlgoTools3D {
 	public:
 		%feature("compactdefaultargs") DoSplitSEAMOnFace;
@@ -1111,20 +1066,6 @@ class BOPTools_AlgoTools3D {
 };
 
 
-%feature("shadow") BOPTools_AlgoTools3D::~BOPTools_AlgoTools3D %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPTools_AlgoTools3D {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BOPTools_ConnexityBlock;
 class BOPTools_ConnexityBlock {
 	public:
@@ -1167,20 +1108,6 @@ class BOPTools_ConnexityBlock {
 };
 
 
-%feature("shadow") BOPTools_ConnexityBlock::~BOPTools_ConnexityBlock %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPTools_ConnexityBlock {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BOPTools_CoupleOfShape;
 class BOPTools_CoupleOfShape {
 	public:
@@ -1211,20 +1138,6 @@ class BOPTools_CoupleOfShape {
 };
 
 
-%feature("shadow") BOPTools_CoupleOfShape::~BOPTools_CoupleOfShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPTools_CoupleOfShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BOPTools_EdgeSet;
 class BOPTools_EdgeSet {
 	public:
@@ -1285,20 +1198,6 @@ class BOPTools_EdgeSet {
 };
 
 
-%feature("shadow") BOPTools_EdgeSet::~BOPTools_EdgeSet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPTools_EdgeSet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BOPTools_Set;
 class BOPTools_Set {
 	public:
@@ -1361,20 +1260,6 @@ class BOPTools_Set {
         };
 
 
-%feature("shadow") BOPTools_Set::~BOPTools_Set %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPTools_Set {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class BOPTools_SetMapHasher {
 	public:
 		%feature("compactdefaultargs") HashCode;
@@ -1396,20 +1281,6 @@ class BOPTools_SetMapHasher {
 };
 
 
-%feature("shadow") BOPTools_SetMapHasher::~BOPTools_SetMapHasher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPTools_SetMapHasher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BOPTools_ShapeSet;
 class BOPTools_ShapeSet {
 	public:
@@ -1502,17 +1373,3 @@ class BOPTools_ShapeSet {
 };
 
 
-%feature("shadow") BOPTools_ShapeSet::~BOPTools_ShapeSet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPTools_ShapeSet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

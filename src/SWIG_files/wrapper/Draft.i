@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Draft_headers.i
 
@@ -67,20 +64,6 @@ class Draft {
 };
 
 
-%feature("shadow") Draft::~Draft %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Draft {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo;
 class Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo : public TCollection_BasicMapIterator {
 	public:
@@ -111,20 +94,6 @@ class Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo : public TCollection_BasicMap
 };
 
 
-%feature("shadow") Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo::~Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Draft_DataMapIteratorOfDataMapOfEdgeEdgeInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Draft_DataMapIteratorOfDataMapOfFaceFaceInfo;
 class Draft_DataMapIteratorOfDataMapOfFaceFaceInfo : public TCollection_BasicMapIterator {
 	public:
@@ -155,20 +124,6 @@ class Draft_DataMapIteratorOfDataMapOfFaceFaceInfo : public TCollection_BasicMap
 };
 
 
-%feature("shadow") Draft_DataMapIteratorOfDataMapOfFaceFaceInfo::~Draft_DataMapIteratorOfDataMapOfFaceFaceInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Draft_DataMapIteratorOfDataMapOfFaceFaceInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Draft_DataMapIteratorOfDataMapOfVertexVertexInfo;
 class Draft_DataMapIteratorOfDataMapOfVertexVertexInfo : public TCollection_BasicMapIterator {
 	public:
@@ -199,20 +154,6 @@ class Draft_DataMapIteratorOfDataMapOfVertexVertexInfo : public TCollection_Basi
 };
 
 
-%feature("shadow") Draft_DataMapIteratorOfDataMapOfVertexVertexInfo::~Draft_DataMapIteratorOfDataMapOfVertexVertexInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Draft_DataMapIteratorOfDataMapOfVertexVertexInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo;
 class Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo : public TCollection_MapNode {
 	public:
@@ -237,23 +178,15 @@ class Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo : public TCollection_MapNode {
 };
 
 
-%feature("shadow") Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo::~Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo {
-	Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo GetHandle() {
-	return *(Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -273,20 +206,6 @@ class Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo : public Handle_TCollectio
 %extend Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo {
     Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo* GetObject() {
     return (Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo::~Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -314,23 +233,15 @@ class Draft_DataMapNodeOfDataMapOfFaceFaceInfo : public TCollection_MapNode {
 };
 
 
-%feature("shadow") Draft_DataMapNodeOfDataMapOfFaceFaceInfo::~Draft_DataMapNodeOfDataMapOfFaceFaceInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Draft_DataMapNodeOfDataMapOfFaceFaceInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Draft_DataMapNodeOfDataMapOfFaceFaceInfo {
-	Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo GetHandle() {
-	return *(Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -350,20 +261,6 @@ class Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo : public Handle_TCollectio
 %extend Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo {
     Draft_DataMapNodeOfDataMapOfFaceFaceInfo* GetObject() {
     return (Draft_DataMapNodeOfDataMapOfFaceFaceInfo*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo::~Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -391,23 +288,15 @@ class Draft_DataMapNodeOfDataMapOfVertexVertexInfo : public TCollection_MapNode 
 };
 
 
-%feature("shadow") Draft_DataMapNodeOfDataMapOfVertexVertexInfo::~Draft_DataMapNodeOfDataMapOfVertexVertexInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Draft_DataMapNodeOfDataMapOfVertexVertexInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Draft_DataMapNodeOfDataMapOfVertexVertexInfo {
-	Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo GetHandle() {
-	return *(Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -427,20 +316,6 @@ class Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo : public Handle_TColle
 %extend Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo {
     Draft_DataMapNodeOfDataMapOfVertexVertexInfo* GetObject() {
     return (Draft_DataMapNodeOfDataMapOfVertexVertexInfo*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo::~Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -522,20 +397,6 @@ class Draft_DataMapOfEdgeEdgeInfo : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") Draft_DataMapOfEdgeEdgeInfo::~Draft_DataMapOfEdgeEdgeInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Draft_DataMapOfEdgeEdgeInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Draft_DataMapOfFaceFaceInfo;
 class Draft_DataMapOfFaceFaceInfo : public TCollection_BasicMap {
 	public:
@@ -614,20 +475,6 @@ class Draft_DataMapOfFaceFaceInfo : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") Draft_DataMapOfFaceFaceInfo::~Draft_DataMapOfFaceFaceInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Draft_DataMapOfFaceFaceInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Draft_DataMapOfVertexVertexInfo;
 class Draft_DataMapOfVertexVertexInfo : public TCollection_BasicMap {
 	public:
@@ -706,20 +553,6 @@ class Draft_DataMapOfVertexVertexInfo : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") Draft_DataMapOfVertexVertexInfo::~Draft_DataMapOfVertexVertexInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Draft_DataMapOfVertexVertexInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Draft_EdgeInfo;
 class Draft_EdgeInfo {
 	public:
@@ -770,7 +603,7 @@ class Draft_EdgeInfo {
 		%feature("compactdefaultargs") Geometry;
 		%feature("autodoc", "	:rtype: Handle_Geom_Curve
 ") Geometry;
-		const Handle_Geom_Curve & Geometry ();
+		Handle_Geom_Curve Geometry ();
 		%feature("compactdefaultargs") FirstFace;
 		%feature("autodoc", "	:rtype: TopoDS_Face
 ") FirstFace;
@@ -782,23 +615,23 @@ class Draft_EdgeInfo {
 		%feature("compactdefaultargs") FirstPC;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") FirstPC;
-		const Handle_Geom2d_Curve & FirstPC ();
+		Handle_Geom2d_Curve FirstPC ();
 		%feature("compactdefaultargs") SecondPC;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") SecondPC;
-		const Handle_Geom2d_Curve & SecondPC ();
+		Handle_Geom2d_Curve SecondPC ();
 		%feature("compactdefaultargs") ChangeGeometry;
 		%feature("autodoc", "	:rtype: Handle_Geom_Curve
 ") ChangeGeometry;
-		Handle_Geom_Curve & ChangeGeometry ();
+		Handle_Geom_Curve ChangeGeometry ();
 		%feature("compactdefaultargs") ChangeFirstPC;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") ChangeFirstPC;
-		Handle_Geom2d_Curve & ChangeFirstPC ();
+		Handle_Geom2d_Curve ChangeFirstPC ();
 		%feature("compactdefaultargs") ChangeSecondPC;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") ChangeSecondPC;
-		Handle_Geom2d_Curve & ChangeSecondPC ();
+		Handle_Geom2d_Curve ChangeSecondPC ();
 		%feature("compactdefaultargs") RootFace;
 		%feature("autodoc", "	:rtype: TopoDS_Face
 ") RootFace;
@@ -816,20 +649,6 @@ class Draft_EdgeInfo {
 };
 
 
-%feature("shadow") Draft_EdgeInfo::~Draft_EdgeInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Draft_EdgeInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Draft_FaceInfo;
 class Draft_FaceInfo {
 	public:
@@ -872,11 +691,11 @@ class Draft_FaceInfo {
 		%feature("compactdefaultargs") Geometry;
 		%feature("autodoc", "	:rtype: Handle_Geom_Surface
 ") Geometry;
-		const Handle_Geom_Surface & Geometry ();
+		Handle_Geom_Surface Geometry ();
 		%feature("compactdefaultargs") ChangeGeometry;
 		%feature("autodoc", "	:rtype: Handle_Geom_Surface
 ") ChangeGeometry;
-		Handle_Geom_Surface & ChangeGeometry ();
+		Handle_Geom_Surface ChangeGeometry ();
 		%feature("compactdefaultargs") RootFace;
 		%feature("autodoc", "	:rtype: TopoDS_Face
 ") RootFace;
@@ -884,28 +703,14 @@ class Draft_FaceInfo {
 		%feature("compactdefaultargs") ChangeCurve;
 		%feature("autodoc", "	:rtype: Handle_Geom_Curve
 ") ChangeCurve;
-		Handle_Geom_Curve & ChangeCurve ();
+		Handle_Geom_Curve ChangeCurve ();
 		%feature("compactdefaultargs") Curve;
 		%feature("autodoc", "	:rtype: Handle_Geom_Curve
 ") Curve;
-		const Handle_Geom_Curve & Curve ();
+		Handle_Geom_Curve Curve ();
 };
 
 
-%feature("shadow") Draft_FaceInfo::~Draft_FaceInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Draft_FaceInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Draft_Modification;
 class Draft_Modification : public BRepTools_Modification {
 	public:
@@ -1086,23 +891,15 @@ class Draft_Modification : public BRepTools_Modification {
 };
 
 
-%feature("shadow") Draft_Modification::~Draft_Modification %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Draft_Modification {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Draft_Modification {
-	Handle_Draft_Modification GetHandle() {
-	return *(Handle_Draft_Modification*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Draft_Modification(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1122,20 +919,6 @@ class Handle_Draft_Modification : public Handle_BRepTools_Modification {
 %extend Handle_Draft_Modification {
     Draft_Modification* GetObject() {
     return (Draft_Modification*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Draft_Modification::~Handle_Draft_Modification %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Draft_Modification {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1191,17 +974,3 @@ class Draft_VertexInfo {
 };
 
 
-%feature("shadow") Draft_VertexInfo::~Draft_VertexInfo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Draft_VertexInfo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Interface_headers.i
 
@@ -161,20 +158,6 @@ class Interface_Array1OfFileParameter {
 };
 
 
-%feature("shadow") Interface_Array1OfFileParameter::~Interface_Array1OfFileParameter %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_Array1OfFileParameter {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_Array1OfHAsciiString;
 class Interface_Array1OfHAsciiString {
 	public:
@@ -247,30 +230,16 @@ class Interface_Array1OfHAsciiString {
 	:type Index: int
 	:rtype: Handle_TCollection_HAsciiString
 ") Value;
-		const Handle_TCollection_HAsciiString & Value (const Standard_Integer Index);
+		Handle_TCollection_HAsciiString Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
 	:rtype: Handle_TCollection_HAsciiString
 ") ChangeValue;
-		Handle_TCollection_HAsciiString & ChangeValue (const Standard_Integer Index);
+		Handle_TCollection_HAsciiString ChangeValue (const Standard_Integer Index);
 };
 
 
-%feature("shadow") Interface_Array1OfHAsciiString::~Interface_Array1OfHAsciiString %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_Array1OfHAsciiString {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_BitMap;
 class Interface_BitMap {
 	public:
@@ -495,20 +464,6 @@ class Interface_BitMap {
 };
 
 
-%feature("shadow") Interface_BitMap::~Interface_BitMap %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_BitMap {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_Category;
 class Interface_Category {
 	public:
@@ -615,20 +570,6 @@ class Interface_Category {
 };
 
 
-%feature("shadow") Interface_Category::~Interface_Category %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_Category {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_Check;
 class Interface_Check : public MMgt_TShared {
 	public:
@@ -711,7 +652,7 @@ class Interface_Check : public MMgt_TShared {
 	:type final: bool
 	:rtype: Handle_TCollection_HAsciiString
 ") Fail;
-		const Handle_TCollection_HAsciiString & Fail (const Standard_Integer num,const Standard_Boolean final = Standard_True);
+		Handle_TCollection_HAsciiString Fail (const Standard_Integer num,const Standard_Boolean final = Standard_True);
 		%feature("compactdefaultargs") CFail;
 		%feature("autodoc", "	* Same as above, but returns a CString (to be printed ...) Final form by default, Original form if <final> is False
 
@@ -795,7 +736,7 @@ class Interface_Check : public MMgt_TShared {
 	:type final: bool
 	:rtype: Handle_TCollection_HAsciiString
 ") Warning;
-		const Handle_TCollection_HAsciiString & Warning (const Standard_Integer num,const Standard_Boolean final = Standard_True);
+		Handle_TCollection_HAsciiString Warning (const Standard_Integer num,const Standard_Boolean final = Standard_True);
 		%feature("compactdefaultargs") CWarning;
 		%feature("autodoc", "	* Same as above, but returns a CString (to be printed ...) Final form by default, Original form if <final> is False
 
@@ -837,7 +778,7 @@ class Interface_Check : public MMgt_TShared {
 	:type final: bool
 	:rtype: Handle_TCollection_HAsciiString
 ") InfoMsg;
-		const Handle_TCollection_HAsciiString & InfoMsg (const Standard_Integer num,const Standard_Boolean final = Standard_True);
+		Handle_TCollection_HAsciiString InfoMsg (const Standard_Integer num,const Standard_Boolean final = Standard_True);
 		%feature("compactdefaultargs") CInfoMsg;
 		%feature("autodoc", "	* Same as above, but returns a CString (to be printed ...) Final form by default, Original form if <final> is False
 
@@ -893,7 +834,7 @@ class Interface_Check : public MMgt_TShared {
 
 	:rtype: Handle_Standard_Transient
 ") Entity;
-		const Handle_Standard_Transient & Entity ();
+		Handle_Standard_Transient Entity ();
 		%feature("compactdefaultargs") Clear;
 		%feature("autodoc", "	* Clears a check, in order to receive informations from transfer (Messages and Entity)
 
@@ -999,23 +940,15 @@ class Interface_Check : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_Check::~Interface_Check %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_Check {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_Check {
-	Handle_Interface_Check GetHandle() {
-	return *(Handle_Interface_Check*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_Check(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1035,20 +968,6 @@ class Handle_Interface_Check : public Handle_MMgt_TShared {
 %extend Handle_Interface_Check {
     Interface_Check* GetObject() {
     return (Interface_Check*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_Check::~Handle_Interface_Check %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_Check {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1128,7 +1047,7 @@ class Interface_CheckIterator {
 	:type num: int
 	:rtype: Handle_Interface_Check
 ") Check;
-		const Handle_Interface_Check & Check (const Standard_Integer num);
+		Handle_Interface_Check Check (const Standard_Integer num);
 		%feature("compactdefaultargs") Check;
 		%feature("autodoc", "	* Returns the Check attached to an Entity If no Check was recorded for this Entity, returns an empty Check. Remark : Works apart from the iteration methods (no interference)
 
@@ -1136,7 +1055,7 @@ class Interface_CheckIterator {
 	:type ent: Handle_Standard_Transient &
 	:rtype: Handle_Interface_Check
 ") Check;
-		const Handle_Interface_Check & Check (const Handle_Standard_Transient & ent);
+		Handle_Interface_Check Check (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") CCheck;
 		%feature("autodoc", "	* Returns the Check bound to an Entity Number (0 : Global) in order to be consulted or completed on the spot I.e. returns the Check if is already exists, or adds it then returns the new empty Check
 
@@ -1144,7 +1063,7 @@ class Interface_CheckIterator {
 	:type num: int
 	:rtype: Handle_Interface_Check
 ") CCheck;
-		Handle_Interface_Check & CCheck (const Standard_Integer num);
+		Handle_Interface_Check CCheck (const Standard_Integer num);
 		%feature("compactdefaultargs") CCheck;
 		%feature("autodoc", "	* Returns the Check bound to an Entity, in order to be consulted or completed on the spot I.e. returns the Check if is already exists, or adds it then returns the new empty Check
 
@@ -1152,7 +1071,7 @@ class Interface_CheckIterator {
 	:type ent: Handle_Standard_Transient &
 	:rtype: Handle_Interface_Check
 ") CCheck;
-		Handle_Interface_Check & CCheck (const Handle_Standard_Transient & ent);
+		Handle_Interface_Check CCheck (const Handle_Standard_Transient & ent);
 		%feature("compactdefaultargs") IsEmpty;
 		%feature("autodoc", "	* Returns True if : no Fail has been recorded if <failsonly> is True, no Check at all if <failsonly> is False
 
@@ -1240,7 +1159,7 @@ class Interface_CheckIterator {
 
 	:rtype: Handle_Interface_Check
 ") Value;
-		const Handle_Interface_Check & Value ();
+		Handle_Interface_Check Value ();
 		%feature("compactdefaultargs") Number;
 		%feature("autodoc", "	* Returns Number of Entity for the Check currently iterated or 0 for GlobalCheck
 
@@ -1282,20 +1201,6 @@ class Interface_CheckIterator {
 };
 
 
-%feature("shadow") Interface_CheckIterator::~Interface_CheckIterator %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_CheckIterator {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_CheckTool;
 class Interface_CheckTool {
 	public:
@@ -1418,20 +1323,6 @@ class Interface_CheckTool {
 };
 
 
-%feature("shadow") Interface_CheckTool::~Interface_CheckTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_CheckTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_CopyControl;
 class Interface_CopyControl : public MMgt_TShared {
 	public:
@@ -1464,23 +1355,15 @@ class Interface_CopyControl : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_CopyControl::~Interface_CopyControl %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_CopyControl {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_CopyControl {
-	Handle_Interface_CopyControl GetHandle() {
-	return *(Handle_Interface_CopyControl*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_CopyControl(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1500,20 +1383,6 @@ class Handle_Interface_CopyControl : public Handle_MMgt_TShared {
 %extend Handle_Interface_CopyControl {
     Interface_CopyControl* GetObject() {
     return (Interface_CopyControl*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_CopyControl::~Handle_Interface_CopyControl %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_CopyControl {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1679,20 +1548,6 @@ class Interface_CopyTool {
 };
 
 
-%feature("shadow") Interface_CopyTool::~Interface_CopyTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_CopyTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_DataMapIteratorOfDataMapOfTransientInteger;
 class Interface_DataMapIteratorOfDataMapOfTransientInteger : public TCollection_BasicMapIterator {
 	public:
@@ -1715,7 +1570,7 @@ class Interface_DataMapIteratorOfDataMapOfTransientInteger : public TCollection_
 		%feature("compactdefaultargs") Key;
 		%feature("autodoc", "	:rtype: Handle_Standard_Transient
 ") Key;
-		const Handle_Standard_Transient & Key ();
+		Handle_Standard_Transient Key ();
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: int
 ") Value;
@@ -1723,20 +1578,6 @@ class Interface_DataMapIteratorOfDataMapOfTransientInteger : public TCollection_
 };
 
 
-%feature("shadow") Interface_DataMapIteratorOfDataMapOfTransientInteger::~Interface_DataMapIteratorOfDataMapOfTransientInteger %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_DataMapIteratorOfDataMapOfTransientInteger {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_DataMapNodeOfDataMapOfTransientInteger;
 class Interface_DataMapNodeOfDataMapOfTransientInteger : public TCollection_MapNode {
 	public:
@@ -1753,7 +1594,7 @@ class Interface_DataMapNodeOfDataMapOfTransientInteger : public TCollection_MapN
 		%feature("compactdefaultargs") Key;
 		%feature("autodoc", "	:rtype: Handle_Standard_Transient
 ") Key;
-		Handle_Standard_Transient & Key ();
+		Handle_Standard_Transient Key ();
 
             %feature("autodoc","1");
             %extend {
@@ -1770,23 +1611,15 @@ class Interface_DataMapNodeOfDataMapOfTransientInteger : public TCollection_MapN
             };
 
 
-%feature("shadow") Interface_DataMapNodeOfDataMapOfTransientInteger::~Interface_DataMapNodeOfDataMapOfTransientInteger %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_DataMapNodeOfDataMapOfTransientInteger {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_DataMapNodeOfDataMapOfTransientInteger {
-	Handle_Interface_DataMapNodeOfDataMapOfTransientInteger GetHandle() {
-	return *(Handle_Interface_DataMapNodeOfDataMapOfTransientInteger*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_DataMapNodeOfDataMapOfTransientInteger(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1806,20 +1639,6 @@ class Handle_Interface_DataMapNodeOfDataMapOfTransientInteger : public Handle_TC
 %extend Handle_Interface_DataMapNodeOfDataMapOfTransientInteger {
     Interface_DataMapNodeOfDataMapOfTransientInteger* GetObject() {
     return (Interface_DataMapNodeOfDataMapOfTransientInteger*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_DataMapNodeOfDataMapOfTransientInteger::~Handle_Interface_DataMapNodeOfDataMapOfTransientInteger %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_DataMapNodeOfDataMapOfTransientInteger {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1901,20 +1720,6 @@ class Interface_DataMapOfTransientInteger : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") Interface_DataMapOfTransientInteger::~Interface_DataMapOfTransientInteger %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_DataMapOfTransientInteger {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_EntityCluster;
 class Interface_EntityCluster : public MMgt_TShared {
 	public:
@@ -1987,7 +1792,7 @@ class Interface_EntityCluster : public MMgt_TShared {
 	:type num: int
 	:rtype: Handle_Standard_Transient
 ") Value;
-		const Handle_Standard_Transient & Value (const Standard_Integer num);
+		Handle_Standard_Transient Value (const Standard_Integer num);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	* Changes an Entity given its rank.
 
@@ -2009,23 +1814,15 @@ class Interface_EntityCluster : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_EntityCluster::~Interface_EntityCluster %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_EntityCluster {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_EntityCluster {
-	Handle_Interface_EntityCluster GetHandle() {
-	return *(Handle_Interface_EntityCluster*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_EntityCluster(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2045,20 +1842,6 @@ class Handle_Interface_EntityCluster : public Handle_MMgt_TShared {
 %extend Handle_Interface_EntityCluster {
     Interface_EntityCluster* GetObject() {
     return (Interface_EntityCluster*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_EntityCluster::~Handle_Interface_EntityCluster %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_EntityCluster {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2158,7 +1941,7 @@ class Interface_EntityIterator {
 
 	:rtype: Handle_Standard_Transient
 ") Value;
-		const Handle_Standard_Transient & Value ();
+		Handle_Standard_Transient Value ();
 		%feature("compactdefaultargs") Content;
 		%feature("autodoc", "	* Returns the content of the Iterator, accessed through a Handle to be used by a frontal-engine logic Returns an empty Sequence if the Iterator is empty Calls Start if not yet done
 
@@ -2174,20 +1957,6 @@ class Interface_EntityIterator {
 };
 
 
-%feature("shadow") Interface_EntityIterator::~Interface_EntityIterator %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_EntityIterator {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_EntityList;
 class Interface_EntityList {
 	public:
@@ -2254,7 +2023,7 @@ class Interface_EntityList {
 	:type num: int
 	:rtype: Handle_Standard_Transient
 ") Value;
-		const Handle_Standard_Transient & Value (const Standard_Integer num);
+		Handle_Standard_Transient Value (const Standard_Integer num);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	* Returns an Item given its number. Beware about the way the list was filled (see above, Add and Append)
 
@@ -2294,20 +2063,6 @@ class Interface_EntityList {
 };
 
 
-%feature("shadow") Interface_EntityList::~Interface_EntityList %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_EntityList {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_FileParameter;
 class Interface_FileParameter {
 	public:
@@ -2376,20 +2131,6 @@ class Interface_FileParameter {
 };
 
 
-%feature("shadow") Interface_FileParameter::~Interface_FileParameter %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_FileParameter {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_FileReaderData;
 class Interface_FileReaderData : public MMgt_TShared {
 	public:
@@ -2556,7 +2297,7 @@ class Interface_FileReaderData : public MMgt_TShared {
 	:type nump: int
 	:rtype: Handle_Standard_Transient
 ") ParamEntity;
-		const Handle_Standard_Transient & ParamEntity (const Standard_Integer num,const Standard_Integer nump);
+		Handle_Standard_Transient ParamEntity (const Standard_Integer num,const Standard_Integer nump);
 		%feature("compactdefaultargs") ParamFirstRank;
 		%feature("autodoc", "	* Returns the absolute rank of the beginning of a record (its lsit is from ParamFirstRank+1 to ParamFirstRank+NbParams)
 
@@ -2572,7 +2313,7 @@ class Interface_FileReaderData : public MMgt_TShared {
 	:type num: int
 	:rtype: Handle_Standard_Transient
 ") BoundEntity;
-		const Handle_Standard_Transient & BoundEntity (const Standard_Integer num);
+		Handle_Standard_Transient BoundEntity (const Standard_Integer num);
 		%feature("compactdefaultargs") BindEntity;
 		%feature("autodoc", "	* Binds an entity to a record
 
@@ -2620,23 +2361,15 @@ class Interface_FileReaderData : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_FileReaderData::~Interface_FileReaderData %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_FileReaderData {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_FileReaderData {
-	Handle_Interface_FileReaderData GetHandle() {
-	return *(Handle_Interface_FileReaderData*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_FileReaderData(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2656,20 +2389,6 @@ class Handle_Interface_FileReaderData : public Handle_MMgt_TShared {
 %extend Handle_Interface_FileReaderData {
     Interface_FileReaderData* GetObject() {
     return (Interface_FileReaderData*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_FileReaderData::~Handle_Interface_FileReaderData %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_FileReaderData {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2843,20 +2562,6 @@ class Interface_FileReaderTool {
 };
 
 
-%feature("shadow") Interface_FileReaderTool::~Interface_FileReaderTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_FileReaderTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_FloatWriter;
 class Interface_FloatWriter {
 	public:
@@ -2965,20 +2670,6 @@ class Interface_FloatWriter {
 };
 
 
-%feature("shadow") Interface_FloatWriter::~Interface_FloatWriter %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_FloatWriter {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_GTool;
 class Interface_GTool : public MMgt_TShared {
 	public:
@@ -3083,23 +2774,15 @@ class Interface_GTool : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_GTool::~Interface_GTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_GTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_GTool {
-	Handle_Interface_GTool GetHandle() {
-	return *(Handle_Interface_GTool*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_GTool(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -3119,20 +2802,6 @@ class Handle_Interface_GTool : public Handle_MMgt_TShared {
 %extend Handle_Interface_GTool {
     Interface_GTool* GetObject() {
     return (Interface_GTool*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_GTool::~Handle_Interface_GTool %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_GTool {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -3195,28 +2864,14 @@ class Interface_GeneralLib {
 		%feature("compactdefaultargs") Module;
 		%feature("autodoc", "	:rtype: Handle_Interface_GeneralModule
 ") Module;
-		const Handle_Interface_GeneralModule & Module ();
+		Handle_Interface_GeneralModule Module ();
 		%feature("compactdefaultargs") Protocol;
 		%feature("autodoc", "	:rtype: Handle_Interface_Protocol
 ") Protocol;
-		const Handle_Interface_Protocol & Protocol ();
+		Handle_Interface_Protocol Protocol ();
 };
 
 
-%feature("shadow") Interface_GeneralLib::~Interface_GeneralLib %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_GeneralLib {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_GeneralModule;
 class Interface_GeneralModule : public MMgt_TShared {
 	public:
@@ -3411,23 +3066,15 @@ class Interface_GeneralModule : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_GeneralModule::~Interface_GeneralModule %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_GeneralModule {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_GeneralModule {
-	Handle_Interface_GeneralModule GetHandle() {
-	return *(Handle_Interface_GeneralModule*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_GeneralModule(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -3449,20 +3096,6 @@ class Handle_Interface_GeneralModule : public Handle_MMgt_TShared {
     return (Interface_GeneralModule*)$self->Access();
     }
 };
-%feature("shadow") Handle_Interface_GeneralModule::~Handle_Interface_GeneralModule %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_GeneralModule {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor Interface_GlobalNodeOfGeneralLib;
 class Interface_GlobalNodeOfGeneralLib : public Standard_Transient {
@@ -3482,35 +3115,27 @@ class Interface_GlobalNodeOfGeneralLib : public Standard_Transient {
 		%feature("compactdefaultargs") Module;
 		%feature("autodoc", "	:rtype: Handle_Interface_GeneralModule
 ") Module;
-		const Handle_Interface_GeneralModule & Module ();
+		Handle_Interface_GeneralModule Module ();
 		%feature("compactdefaultargs") Protocol;
 		%feature("autodoc", "	:rtype: Handle_Interface_Protocol
 ") Protocol;
-		const Handle_Interface_Protocol & Protocol ();
+		Handle_Interface_Protocol Protocol ();
 		%feature("compactdefaultargs") Next;
 		%feature("autodoc", "	:rtype: Handle_Interface_GlobalNodeOfGeneralLib
 ") Next;
-		const Handle_Interface_GlobalNodeOfGeneralLib & Next ();
+		Handle_Interface_GlobalNodeOfGeneralLib Next ();
 };
 
 
-%feature("shadow") Interface_GlobalNodeOfGeneralLib::~Interface_GlobalNodeOfGeneralLib %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_GlobalNodeOfGeneralLib {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_GlobalNodeOfGeneralLib {
-	Handle_Interface_GlobalNodeOfGeneralLib GetHandle() {
-	return *(Handle_Interface_GlobalNodeOfGeneralLib*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_GlobalNodeOfGeneralLib(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -3532,20 +3157,6 @@ class Handle_Interface_GlobalNodeOfGeneralLib : public Handle_Standard_Transient
     return (Interface_GlobalNodeOfGeneralLib*)$self->Access();
     }
 };
-%feature("shadow") Handle_Interface_GlobalNodeOfGeneralLib::~Handle_Interface_GlobalNodeOfGeneralLib %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_GlobalNodeOfGeneralLib {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor Interface_GlobalNodeOfReaderLib;
 class Interface_GlobalNodeOfReaderLib : public Standard_Transient {
@@ -3565,35 +3176,27 @@ class Interface_GlobalNodeOfReaderLib : public Standard_Transient {
 		%feature("compactdefaultargs") Module;
 		%feature("autodoc", "	:rtype: Handle_Interface_ReaderModule
 ") Module;
-		const Handle_Interface_ReaderModule & Module ();
+		Handle_Interface_ReaderModule Module ();
 		%feature("compactdefaultargs") Protocol;
 		%feature("autodoc", "	:rtype: Handle_Interface_Protocol
 ") Protocol;
-		const Handle_Interface_Protocol & Protocol ();
+		Handle_Interface_Protocol Protocol ();
 		%feature("compactdefaultargs") Next;
 		%feature("autodoc", "	:rtype: Handle_Interface_GlobalNodeOfReaderLib
 ") Next;
-		const Handle_Interface_GlobalNodeOfReaderLib & Next ();
+		Handle_Interface_GlobalNodeOfReaderLib Next ();
 };
 
 
-%feature("shadow") Interface_GlobalNodeOfReaderLib::~Interface_GlobalNodeOfReaderLib %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_GlobalNodeOfReaderLib {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_GlobalNodeOfReaderLib {
-	Handle_Interface_GlobalNodeOfReaderLib GetHandle() {
-	return *(Handle_Interface_GlobalNodeOfReaderLib*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_GlobalNodeOfReaderLib(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -3613,20 +3216,6 @@ class Handle_Interface_GlobalNodeOfReaderLib : public Handle_Standard_Transient 
 %extend Handle_Interface_GlobalNodeOfReaderLib {
     Interface_GlobalNodeOfReaderLib* GetObject() {
     return (Interface_GlobalNodeOfReaderLib*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_GlobalNodeOfReaderLib::~Handle_Interface_GlobalNodeOfReaderLib %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_GlobalNodeOfReaderLib {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -3744,7 +3333,7 @@ class Interface_Graph {
 	:type num: int
 	:rtype: Handle_Standard_Transient
 ") Entity;
-		const Handle_Standard_Transient & Entity (const Standard_Integer num);
+		Handle_Standard_Transient Entity (const Standard_Integer num);
 		%feature("compactdefaultargs") Status;
 		%feature("autodoc", "	* Returns Status associated to a numero (only to read it)
 
@@ -3806,7 +3395,7 @@ class Interface_Graph {
 
 	:rtype: Handle_Interface_InterfaceModel
 ") Model;
-		const Handle_Interface_InterfaceModel & Model ();
+		Handle_Interface_InterfaceModel Model ();
 		%feature("compactdefaultargs") GetFromModel;
 		%feature("autodoc", "	* Loads Graph with all Entities contained in the Model
 
@@ -3952,7 +3541,7 @@ class Interface_Graph {
 
 	:rtype: Handle_TColStd_HArray1OfListOfInteger
 ") SharingTable;
-		const Handle_TColStd_HArray1OfListOfInteger & SharingTable ();
+		Handle_TColStd_HArray1OfListOfInteger SharingTable ();
 		%feature("compactdefaultargs") ModeStat;
 		%feature("autodoc", "	* Returns mode resposible for computation of statuses;
 
@@ -3962,20 +3551,6 @@ class Interface_Graph {
 };
 
 
-%feature("shadow") Interface_Graph::~Interface_Graph %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_Graph {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_HArray1OfHAsciiString;
 class Interface_HArray1OfHAsciiString : public MMgt_TShared {
 	public:
@@ -4028,13 +3603,13 @@ class Interface_HArray1OfHAsciiString : public MMgt_TShared {
 	:type Index: int
 	:rtype: Handle_TCollection_HAsciiString
 ") Value;
-		const Handle_TCollection_HAsciiString & Value (const Standard_Integer Index);
+		Handle_TCollection_HAsciiString Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
 	:rtype: Handle_TCollection_HAsciiString
 ") ChangeValue;
-		Handle_TCollection_HAsciiString & ChangeValue (const Standard_Integer Index);
+		Handle_TCollection_HAsciiString ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Array1;
 		%feature("autodoc", "	:rtype: Interface_Array1OfHAsciiString
 ") Array1;
@@ -4046,23 +3621,15 @@ class Interface_HArray1OfHAsciiString : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_HArray1OfHAsciiString::~Interface_HArray1OfHAsciiString %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_HArray1OfHAsciiString {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_HArray1OfHAsciiString {
-	Handle_Interface_HArray1OfHAsciiString GetHandle() {
-	return *(Handle_Interface_HArray1OfHAsciiString*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_HArray1OfHAsciiString(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -4082,20 +3649,6 @@ class Handle_Interface_HArray1OfHAsciiString : public Handle_MMgt_TShared {
 %extend Handle_Interface_HArray1OfHAsciiString {
     Interface_HArray1OfHAsciiString* GetObject() {
     return (Interface_HArray1OfHAsciiString*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_HArray1OfHAsciiString::~Handle_Interface_HArray1OfHAsciiString %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_HArray1OfHAsciiString {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -4171,23 +3724,15 @@ class Interface_HGraph : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_HGraph::~Interface_HGraph %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_HGraph {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_HGraph {
-	Handle_Interface_HGraph GetHandle() {
-	return *(Handle_Interface_HGraph*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_HGraph(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -4207,20 +3752,6 @@ class Handle_Interface_HGraph : public Handle_MMgt_TShared {
 %extend Handle_Interface_HGraph {
     Interface_HGraph* GetObject() {
     return (Interface_HGraph*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_HGraph::~Handle_Interface_HGraph %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_HGraph {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -4330,13 +3861,13 @@ class Interface_HSequenceOfCheck : public MMgt_TShared {
 	:type anIndex: int
 	:rtype: Handle_Interface_Check
 ") Value;
-		const Handle_Interface_Check & Value (const Standard_Integer anIndex);
+		Handle_Interface_Check Value (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
 	:rtype: Handle_Interface_Check
 ") ChangeValue;
-		Handle_Interface_Check & ChangeValue (const Standard_Integer anIndex);
+		Handle_Interface_Check ChangeValue (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
@@ -4366,23 +3897,15 @@ class Interface_HSequenceOfCheck : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_HSequenceOfCheck::~Interface_HSequenceOfCheck %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_HSequenceOfCheck {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_HSequenceOfCheck {
-	Handle_Interface_HSequenceOfCheck GetHandle() {
-	return *(Handle_Interface_HSequenceOfCheck*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_HSequenceOfCheck(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -4402,20 +3925,6 @@ class Handle_Interface_HSequenceOfCheck : public Handle_MMgt_TShared {
 %extend Handle_Interface_HSequenceOfCheck {
     Interface_HSequenceOfCheck* GetObject() {
     return (Interface_HSequenceOfCheck*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_HSequenceOfCheck::~Handle_Interface_HSequenceOfCheck %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_HSequenceOfCheck {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -4458,23 +3967,15 @@ class Interface_IndexedMapNodeOfIndexedMapOfAsciiString : public TCollection_Map
 };
 
 
-%feature("shadow") Interface_IndexedMapNodeOfIndexedMapOfAsciiString::~Interface_IndexedMapNodeOfIndexedMapOfAsciiString %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_IndexedMapNodeOfIndexedMapOfAsciiString {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_IndexedMapNodeOfIndexedMapOfAsciiString {
-	Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString GetHandle() {
-	return *(Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -4494,20 +3995,6 @@ class Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString : public Handle_T
 %extend Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString {
     Interface_IndexedMapNodeOfIndexedMapOfAsciiString* GetObject() {
     return (Interface_IndexedMapNodeOfIndexedMapOfAsciiString*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString::~Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -4581,20 +4068,6 @@ class Interface_IndexedMapOfAsciiString : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") Interface_IndexedMapOfAsciiString::~Interface_IndexedMapOfAsciiString %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_IndexedMapOfAsciiString {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_IntList;
 class Interface_IntList {
 	public:
@@ -4751,20 +4224,6 @@ class Interface_IntList {
 };
 
 
-%feature("shadow") Interface_IntList::~Interface_IntList %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_IntList {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_IntVal;
 class Interface_IntVal : public MMgt_TShared {
 	public:
@@ -4792,23 +4251,15 @@ class Interface_IntVal : public MMgt_TShared {
             };
 
 
-%feature("shadow") Interface_IntVal::~Interface_IntVal %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_IntVal {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_IntVal {
-	Handle_Interface_IntVal GetHandle() {
-	return *(Handle_Interface_IntVal*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_IntVal(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -4828,20 +4279,6 @@ class Handle_Interface_IntVal : public Handle_MMgt_TShared {
 %extend Handle_Interface_IntVal {
     Interface_IntVal* GetObject() {
     return (Interface_IntVal*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_IntVal::~Handle_Interface_IntVal %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_IntVal {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -4948,7 +4385,7 @@ class Interface_InterfaceModel : public MMgt_TShared {
 	:type num: int
 	:rtype: Handle_Standard_Transient
 ") Value;
-		const Handle_Standard_Transient & Value (const Standard_Integer num);
+		Handle_Standard_Transient Value (const Standard_Integer num);
 		%feature("compactdefaultargs") NbTypes;
 		%feature("autodoc", "	* Returns the count of DISTINCT types under which an entity may be processed. Defined by the Protocol, which gives default as 1 (dynamic Type).
 
@@ -5090,7 +4527,7 @@ class Interface_InterfaceModel : public MMgt_TShared {
 	:type syntactic: bool
 	:rtype: Handle_Interface_Check
 ") Check;
-		const Handle_Interface_Check & Check (const Standard_Integer num,const Standard_Boolean syntactic);
+		Handle_Interface_Check Check (const Standard_Integer num,const Standard_Boolean syntactic);
 		%feature("compactdefaultargs") Reservate;
 		%feature("autodoc", "	* Does a reservation for the List of Entities (for optimized storage management). If it is not called, storage management can be less efficient. <nbent> is the expected count of Entities to store
 
@@ -5252,7 +4689,7 @@ class Interface_InterfaceModel : public MMgt_TShared {
 	:type syntactic: bool
 	:rtype: Handle_Interface_Check
 ") GlobalCheck;
-		const Handle_Interface_Check & GlobalCheck (const Standard_Boolean syntactic = Standard_True);
+		Handle_Interface_Check GlobalCheck (const Standard_Boolean syntactic = Standard_True);
 		%feature("compactdefaultargs") SetGlobalCheck;
 		%feature("autodoc", "	* Allows to modify GlobalCheck, after getting then completing it Remark : it is SYNTACTIC check. Semantics, see FillChecks
 
@@ -5366,23 +4803,15 @@ class Interface_InterfaceModel : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_InterfaceModel::~Interface_InterfaceModel %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_InterfaceModel {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_InterfaceModel {
-	Handle_Interface_InterfaceModel GetHandle() {
-	return *(Handle_Interface_InterfaceModel*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_InterfaceModel(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -5402,20 +4831,6 @@ class Handle_Interface_InterfaceModel : public Handle_MMgt_TShared {
 %extend Handle_Interface_InterfaceModel {
     Interface_InterfaceModel* GetObject() {
     return (Interface_InterfaceModel*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_InterfaceModel::~Handle_Interface_InterfaceModel %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_InterfaceModel {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -5543,20 +4958,6 @@ class Interface_LineBuffer {
 };
 
 
-%feature("shadow") Interface_LineBuffer::~Interface_LineBuffer %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_LineBuffer {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_MSG;
 class Interface_MSG {
 	public:
@@ -5828,20 +5229,6 @@ class Interface_MSG {
 };
 
 
-%feature("shadow") Interface_MSG::~Interface_MSG %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_MSG {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class Interface_MapAsciiStringHasher {
 	public:
 		%feature("compactdefaultargs") HashCode;
@@ -5863,20 +5250,6 @@ class Interface_MapAsciiStringHasher {
 };
 
 
-%feature("shadow") Interface_MapAsciiStringHasher::~Interface_MapAsciiStringHasher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_MapAsciiStringHasher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_NodeOfGeneralLib;
 class Interface_NodeOfGeneralLib : public MMgt_TShared {
 	public:
@@ -5893,35 +5266,27 @@ class Interface_NodeOfGeneralLib : public MMgt_TShared {
 		%feature("compactdefaultargs") Module;
 		%feature("autodoc", "	:rtype: Handle_Interface_GeneralModule
 ") Module;
-		const Handle_Interface_GeneralModule & Module ();
+		Handle_Interface_GeneralModule Module ();
 		%feature("compactdefaultargs") Protocol;
 		%feature("autodoc", "	:rtype: Handle_Interface_Protocol
 ") Protocol;
-		const Handle_Interface_Protocol & Protocol ();
+		Handle_Interface_Protocol Protocol ();
 		%feature("compactdefaultargs") Next;
 		%feature("autodoc", "	:rtype: Handle_Interface_NodeOfGeneralLib
 ") Next;
-		const Handle_Interface_NodeOfGeneralLib & Next ();
+		Handle_Interface_NodeOfGeneralLib Next ();
 };
 
 
-%feature("shadow") Interface_NodeOfGeneralLib::~Interface_NodeOfGeneralLib %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_NodeOfGeneralLib {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_NodeOfGeneralLib {
-	Handle_Interface_NodeOfGeneralLib GetHandle() {
-	return *(Handle_Interface_NodeOfGeneralLib*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_NodeOfGeneralLib(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -5943,20 +5308,6 @@ class Handle_Interface_NodeOfGeneralLib : public Handle_MMgt_TShared {
     return (Interface_NodeOfGeneralLib*)$self->Access();
     }
 };
-%feature("shadow") Handle_Interface_NodeOfGeneralLib::~Handle_Interface_NodeOfGeneralLib %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_NodeOfGeneralLib {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor Interface_NodeOfReaderLib;
 class Interface_NodeOfReaderLib : public MMgt_TShared {
@@ -5974,35 +5325,27 @@ class Interface_NodeOfReaderLib : public MMgt_TShared {
 		%feature("compactdefaultargs") Module;
 		%feature("autodoc", "	:rtype: Handle_Interface_ReaderModule
 ") Module;
-		const Handle_Interface_ReaderModule & Module ();
+		Handle_Interface_ReaderModule Module ();
 		%feature("compactdefaultargs") Protocol;
 		%feature("autodoc", "	:rtype: Handle_Interface_Protocol
 ") Protocol;
-		const Handle_Interface_Protocol & Protocol ();
+		Handle_Interface_Protocol Protocol ();
 		%feature("compactdefaultargs") Next;
 		%feature("autodoc", "	:rtype: Handle_Interface_NodeOfReaderLib
 ") Next;
-		const Handle_Interface_NodeOfReaderLib & Next ();
+		Handle_Interface_NodeOfReaderLib Next ();
 };
 
 
-%feature("shadow") Interface_NodeOfReaderLib::~Interface_NodeOfReaderLib %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_NodeOfReaderLib {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_NodeOfReaderLib {
-	Handle_Interface_NodeOfReaderLib GetHandle() {
-	return *(Handle_Interface_NodeOfReaderLib*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_NodeOfReaderLib(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -6022,20 +5365,6 @@ class Handle_Interface_NodeOfReaderLib : public Handle_MMgt_TShared {
 %extend Handle_Interface_NodeOfReaderLib {
     Interface_NodeOfReaderLib* GetObject() {
     return (Interface_NodeOfReaderLib*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_NodeOfReaderLib::~Handle_Interface_NodeOfReaderLib %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_NodeOfReaderLib {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -6101,23 +5430,15 @@ class Interface_ParamList : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_ParamList::~Interface_ParamList %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_ParamList {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_ParamList {
-	Handle_Interface_ParamList GetHandle() {
-	return *(Handle_Interface_ParamList*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_ParamList(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -6137,20 +5458,6 @@ class Handle_Interface_ParamList : public Handle_MMgt_TShared {
 %extend Handle_Interface_ParamList {
     Interface_ParamList* GetObject() {
     return (Interface_ParamList*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_ParamList::~Handle_Interface_ParamList %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_ParamList {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -6240,23 +5547,15 @@ class Interface_ParamSet : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_ParamSet::~Interface_ParamSet %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_ParamSet {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_ParamSet {
-	Handle_Interface_ParamSet GetHandle() {
-	return *(Handle_Interface_ParamSet*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_ParamSet(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -6276,20 +5575,6 @@ class Handle_Interface_ParamSet : public Handle_MMgt_TShared {
 %extend Handle_Interface_ParamSet {
     Interface_ParamSet* GetObject() {
     return (Interface_ParamSet*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_ParamSet::~Handle_Interface_ParamSet %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_ParamSet {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -6413,23 +5698,15 @@ class Interface_Protocol : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_Protocol::~Interface_Protocol %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_Protocol {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_Protocol {
-	Handle_Interface_Protocol GetHandle() {
-	return *(Handle_Interface_Protocol*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_Protocol(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -6449,20 +5726,6 @@ class Handle_Interface_Protocol : public Handle_MMgt_TShared {
 %extend Handle_Interface_Protocol {
     Interface_Protocol* GetObject() {
     return (Interface_Protocol*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_Protocol::~Handle_Interface_Protocol %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_Protocol {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -6525,28 +5788,14 @@ class Interface_ReaderLib {
 		%feature("compactdefaultargs") Module;
 		%feature("autodoc", "	:rtype: Handle_Interface_ReaderModule
 ") Module;
-		const Handle_Interface_ReaderModule & Module ();
+		Handle_Interface_ReaderModule Module ();
 		%feature("compactdefaultargs") Protocol;
 		%feature("autodoc", "	:rtype: Handle_Interface_Protocol
 ") Protocol;
-		const Handle_Interface_Protocol & Protocol ();
+		Handle_Interface_Protocol Protocol ();
 };
 
 
-%feature("shadow") Interface_ReaderLib::~Interface_ReaderLib %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_ReaderLib {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_ReaderModule;
 class Interface_ReaderModule : public MMgt_TShared {
 	public:
@@ -6595,23 +5844,15 @@ class Interface_ReaderModule : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_ReaderModule::~Interface_ReaderModule %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_ReaderModule {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_ReaderModule {
-	Handle_Interface_ReaderModule GetHandle() {
-	return *(Handle_Interface_ReaderModule*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_ReaderModule(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -6631,20 +5872,6 @@ class Handle_Interface_ReaderModule : public Handle_MMgt_TShared {
 %extend Handle_Interface_ReaderModule {
     Interface_ReaderModule* GetObject() {
     return (Interface_ReaderModule*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_ReaderModule::~Handle_Interface_ReaderModule %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_ReaderModule {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -6682,13 +5909,13 @@ class Interface_ReportEntity : public MMgt_TShared {
 
 	:rtype: Handle_Interface_Check
 ") Check;
-		const Handle_Interface_Check & Check ();
+		Handle_Interface_Check Check ();
 		%feature("compactdefaultargs") CCheck;
 		%feature("autodoc", "	* Returns the stored Check in order to change it
 
 	:rtype: Handle_Interface_Check
 ") CCheck;
-		Handle_Interface_Check & CCheck ();
+		Handle_Interface_Check CCheck ();
 		%feature("compactdefaultargs") Concerned;
 		%feature("autodoc", "	* Returns the stored Concerned Entity. It equates the Content in the case of an Unknown Entity
 
@@ -6728,23 +5955,15 @@ class Interface_ReportEntity : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_ReportEntity::~Interface_ReportEntity %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_ReportEntity {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_ReportEntity {
-	Handle_Interface_ReportEntity GetHandle() {
-	return *(Handle_Interface_ReportEntity*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_ReportEntity(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -6766,20 +5985,6 @@ class Handle_Interface_ReportEntity : public Handle_MMgt_TShared {
     return (Interface_ReportEntity*)$self->Access();
     }
 };
-%feature("shadow") Handle_Interface_ReportEntity::~Handle_Interface_ReportEntity %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_ReportEntity {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor Interface_SequenceNodeOfSequenceOfCheck;
 class Interface_SequenceNodeOfSequenceOfCheck : public TCollection_SeqNode {
@@ -6797,27 +6002,19 @@ class Interface_SequenceNodeOfSequenceOfCheck : public TCollection_SeqNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_Interface_Check
 ") Value;
-		Handle_Interface_Check & Value ();
+		Handle_Interface_Check Value ();
 };
 
 
-%feature("shadow") Interface_SequenceNodeOfSequenceOfCheck::~Interface_SequenceNodeOfSequenceOfCheck %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_SequenceNodeOfSequenceOfCheck {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_SequenceNodeOfSequenceOfCheck {
-	Handle_Interface_SequenceNodeOfSequenceOfCheck GetHandle() {
-	return *(Handle_Interface_SequenceNodeOfSequenceOfCheck*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_SequenceNodeOfSequenceOfCheck(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -6837,20 +6034,6 @@ class Handle_Interface_SequenceNodeOfSequenceOfCheck : public Handle_TCollection
 %extend Handle_Interface_SequenceNodeOfSequenceOfCheck {
     Interface_SequenceNodeOfSequenceOfCheck* GetObject() {
     return (Interface_SequenceNodeOfSequenceOfCheck*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_SequenceNodeOfSequenceOfCheck::~Handle_Interface_SequenceNodeOfSequenceOfCheck %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_SequenceNodeOfSequenceOfCheck {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -6936,11 +6119,11 @@ class Interface_SequenceOfCheck : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_Interface_Check
 ") First;
-		const Handle_Interface_Check & First ();
+		Handle_Interface_Check First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_Interface_Check
 ") Last;
-		const Handle_Interface_Check & Last ();
+		Handle_Interface_Check Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -6954,7 +6137,7 @@ class Interface_SequenceOfCheck : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_Interface_Check
 ") Value;
-		const Handle_Interface_Check & Value (const Standard_Integer Index);
+		Handle_Interface_Check Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -6968,7 +6151,7 @@ class Interface_SequenceOfCheck : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_Interface_Check
 ") ChangeValue;
-		Handle_Interface_Check & ChangeValue (const Standard_Integer Index);
+		Handle_Interface_Check ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -6986,20 +6169,6 @@ class Interface_SequenceOfCheck : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") Interface_SequenceOfCheck::~Interface_SequenceOfCheck %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_SequenceOfCheck {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_ShareFlags;
 class Interface_ShareFlags {
 	public:
@@ -7086,20 +6255,6 @@ class Interface_ShareFlags {
 };
 
 
-%feature("shadow") Interface_ShareFlags::~Interface_ShareFlags %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_ShareFlags {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_ShareTool;
 class Interface_ShareTool {
 	public:
@@ -7242,20 +6397,6 @@ class Interface_ShareTool {
 };
 
 
-%feature("shadow") Interface_ShareTool::~Interface_ShareTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_ShareTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_SignLabel;
 class Interface_SignLabel : public MoniTool_SignText {
 	public:
@@ -7282,23 +6423,15 @@ class Interface_SignLabel : public MoniTool_SignText {
 };
 
 
-%feature("shadow") Interface_SignLabel::~Interface_SignLabel %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_SignLabel {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_SignLabel {
-	Handle_Interface_SignLabel GetHandle() {
-	return *(Handle_Interface_SignLabel*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_SignLabel(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -7318,20 +6451,6 @@ class Handle_Interface_SignLabel : public Handle_MoniTool_SignText {
 %extend Handle_Interface_SignLabel {
     Interface_SignLabel* GetObject() {
     return (Interface_SignLabel*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_SignLabel::~Handle_Interface_SignLabel %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_SignLabel {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -7369,23 +6488,15 @@ class Interface_SignType : public MoniTool_SignText {
 };
 
 
-%feature("shadow") Interface_SignType::~Interface_SignType %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_SignType {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_SignType {
-	Handle_Interface_SignType GetHandle() {
-	return *(Handle_Interface_SignType*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_SignType(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -7405,20 +6516,6 @@ class Handle_Interface_SignType : public Handle_MoniTool_SignText {
 %extend Handle_Interface_SignType {
     Interface_SignType* GetObject() {
     return (Interface_SignType*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_SignType::~Handle_Interface_SignType %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_SignType {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -7462,23 +6559,15 @@ class Interface_TypedValue : public MoniTool_TypedValue {
 };
 
 
-%feature("shadow") Interface_TypedValue::~Interface_TypedValue %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_TypedValue {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_TypedValue {
-	Handle_Interface_TypedValue GetHandle() {
-	return *(Handle_Interface_TypedValue*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_TypedValue(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -7498,20 +6587,6 @@ class Handle_Interface_TypedValue : public Handle_MoniTool_TypedValue {
 %extend Handle_Interface_TypedValue {
     Interface_TypedValue* GetObject() {
     return (Interface_TypedValue*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_TypedValue::~Handle_Interface_TypedValue %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_TypedValue {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -7673,23 +6748,15 @@ class Interface_UndefinedContent : public MMgt_TShared {
 };
 
 
-%feature("shadow") Interface_UndefinedContent::~Interface_UndefinedContent %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_UndefinedContent {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_UndefinedContent {
-	Handle_Interface_UndefinedContent GetHandle() {
-	return *(Handle_Interface_UndefinedContent*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_UndefinedContent(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -7709,20 +6776,6 @@ class Handle_Interface_UndefinedContent : public Handle_MMgt_TShared {
 %extend Handle_Interface_UndefinedContent {
     Interface_UndefinedContent* GetObject() {
     return (Interface_UndefinedContent*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_UndefinedContent::~Handle_Interface_UndefinedContent %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_UndefinedContent {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -7772,23 +6825,15 @@ class Interface_CopyMap : public Interface_CopyControl {
 };
 
 
-%feature("shadow") Interface_CopyMap::~Interface_CopyMap %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_CopyMap {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_CopyMap {
-	Handle_Interface_CopyMap GetHandle() {
-	return *(Handle_Interface_CopyMap*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_CopyMap(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -7808,20 +6853,6 @@ class Handle_Interface_CopyMap : public Handle_Interface_CopyControl {
 %extend Handle_Interface_CopyMap {
     Interface_CopyMap* GetObject() {
     return (Interface_CopyMap*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_CopyMap::~Handle_Interface_CopyMap %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_CopyMap {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -7901,20 +6932,6 @@ class Interface_GraphContent : public Interface_EntityIterator {
 };
 
 
-%feature("shadow") Interface_GraphContent::~Interface_GraphContent %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Interface_GraphContent {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Interface_Static;
 class Interface_Static : public Interface_TypedValue {
 	public:
@@ -8147,23 +7164,15 @@ class Interface_Static : public Interface_TypedValue {
 };
 
 
-%feature("shadow") Interface_Static::~Interface_Static %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Interface_Static {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Interface_Static {
-	Handle_Interface_Static GetHandle() {
-	return *(Handle_Interface_Static*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Interface_Static(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -8183,20 +7192,6 @@ class Handle_Interface_Static : public Handle_Interface_TypedValue {
 %extend Handle_Interface_Static {
     Interface_Static* GetObject() {
     return (Interface_Static*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Interface_Static::~Handle_Interface_Static %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Interface_Static {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include MMgt_headers.i
 
@@ -54,23 +51,15 @@ class MMgt_TShared : public Standard_Transient {
 };
 
 
-%feature("shadow") MMgt_TShared::~MMgt_TShared %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MMgt_TShared {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MMgt_TShared {
-	Handle_MMgt_TShared GetHandle() {
-	return *(Handle_MMgt_TShared*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MMgt_TShared(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -90,20 +79,6 @@ class Handle_MMgt_TShared : public Handle_Standard_Transient {
 %extend Handle_MMgt_TShared {
     MMgt_TShared* GetObject() {
     return (MMgt_TShared*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MMgt_TShared::~Handle_MMgt_TShared %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MMgt_TShared {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

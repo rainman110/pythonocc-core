@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include MAT_headers.i
 
@@ -193,23 +190,15 @@ class MAT_Arc : public MMgt_TShared {
 };
 
 
-%feature("shadow") MAT_Arc::~MAT_Arc %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_Arc {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_Arc {
-	Handle_MAT_Arc GetHandle() {
-	return *(Handle_MAT_Arc*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_Arc(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -229,20 +218,6 @@ class Handle_MAT_Arc : public Handle_MMgt_TShared {
 %extend Handle_MAT_Arc {
     MAT_Arc* GetObject() {
     return (MAT_Arc*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_Arc::~Handle_MAT_Arc %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_Arc {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -308,23 +283,15 @@ class MAT_BasicElt : public MMgt_TShared {
 };
 
 
-%feature("shadow") MAT_BasicElt::~MAT_BasicElt %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_BasicElt {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_BasicElt {
-	Handle_MAT_BasicElt GetHandle() {
-	return *(Handle_MAT_BasicElt*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_BasicElt(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -344,20 +311,6 @@ class Handle_MAT_BasicElt : public Handle_MMgt_TShared {
 %extend Handle_MAT_BasicElt {
     MAT_BasicElt* GetObject() {
     return (MAT_BasicElt*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_BasicElt::~Handle_MAT_BasicElt %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_BasicElt {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -517,23 +470,15 @@ class MAT_Bisector : public MMgt_TShared {
 };
 
 
-%feature("shadow") MAT_Bisector::~MAT_Bisector %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_Bisector {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_Bisector {
-	Handle_MAT_Bisector GetHandle() {
-	return *(Handle_MAT_Bisector*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_Bisector(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -553,20 +498,6 @@ class Handle_MAT_Bisector : public Handle_MMgt_TShared {
 %extend Handle_MAT_Bisector {
     MAT_Bisector* GetObject() {
     return (MAT_Bisector*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_Bisector::~Handle_MAT_Bisector %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_Bisector {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -596,24 +527,10 @@ class MAT_DataMapIteratorOfDataMapOfIntegerArc : public TCollection_BasicMapIter
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_MAT_Arc
 ") Value;
-		const Handle_MAT_Arc & Value ();
+		Handle_MAT_Arc Value ();
 };
 
 
-%feature("shadow") MAT_DataMapIteratorOfDataMapOfIntegerArc::~MAT_DataMapIteratorOfDataMapOfIntegerArc %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend MAT_DataMapIteratorOfDataMapOfIntegerArc {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor MAT_DataMapIteratorOfDataMapOfIntegerBasicElt;
 class MAT_DataMapIteratorOfDataMapOfIntegerBasicElt : public TCollection_BasicMapIterator {
 	public:
@@ -640,24 +557,10 @@ class MAT_DataMapIteratorOfDataMapOfIntegerBasicElt : public TCollection_BasicMa
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_MAT_BasicElt
 ") Value;
-		const Handle_MAT_BasicElt & Value ();
+		Handle_MAT_BasicElt Value ();
 };
 
 
-%feature("shadow") MAT_DataMapIteratorOfDataMapOfIntegerBasicElt::~MAT_DataMapIteratorOfDataMapOfIntegerBasicElt %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend MAT_DataMapIteratorOfDataMapOfIntegerBasicElt {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor MAT_DataMapIteratorOfDataMapOfIntegerBisector;
 class MAT_DataMapIteratorOfDataMapOfIntegerBisector : public TCollection_BasicMapIterator {
 	public:
@@ -684,24 +587,10 @@ class MAT_DataMapIteratorOfDataMapOfIntegerBisector : public TCollection_BasicMa
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_MAT_Bisector
 ") Value;
-		const Handle_MAT_Bisector & Value ();
+		Handle_MAT_Bisector Value ();
 };
 
 
-%feature("shadow") MAT_DataMapIteratorOfDataMapOfIntegerBisector::~MAT_DataMapIteratorOfDataMapOfIntegerBisector %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend MAT_DataMapIteratorOfDataMapOfIntegerBisector {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor MAT_DataMapIteratorOfDataMapOfIntegerNode;
 class MAT_DataMapIteratorOfDataMapOfIntegerNode : public TCollection_BasicMapIterator {
 	public:
@@ -728,24 +617,10 @@ class MAT_DataMapIteratorOfDataMapOfIntegerNode : public TCollection_BasicMapIte
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_MAT_Node
 ") Value;
-		const Handle_MAT_Node & Value ();
+		Handle_MAT_Node Value ();
 };
 
 
-%feature("shadow") MAT_DataMapIteratorOfDataMapOfIntegerNode::~MAT_DataMapIteratorOfDataMapOfIntegerNode %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend MAT_DataMapIteratorOfDataMapOfIntegerNode {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor MAT_DataMapNodeOfDataMapOfIntegerArc;
 class MAT_DataMapNodeOfDataMapOfIntegerArc : public TCollection_MapNode {
 	public:
@@ -775,27 +650,19 @@ class MAT_DataMapNodeOfDataMapOfIntegerArc : public TCollection_MapNode {
             		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_MAT_Arc
 ") Value;
-		Handle_MAT_Arc & Value ();
+		Handle_MAT_Arc Value ();
 };
 
 
-%feature("shadow") MAT_DataMapNodeOfDataMapOfIntegerArc::~MAT_DataMapNodeOfDataMapOfIntegerArc %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_DataMapNodeOfDataMapOfIntegerArc {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_DataMapNodeOfDataMapOfIntegerArc {
-	Handle_MAT_DataMapNodeOfDataMapOfIntegerArc GetHandle() {
-	return *(Handle_MAT_DataMapNodeOfDataMapOfIntegerArc*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_DataMapNodeOfDataMapOfIntegerArc(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -815,20 +682,6 @@ class Handle_MAT_DataMapNodeOfDataMapOfIntegerArc : public Handle_TCollection_Ma
 %extend Handle_MAT_DataMapNodeOfDataMapOfIntegerArc {
     MAT_DataMapNodeOfDataMapOfIntegerArc* GetObject() {
     return (MAT_DataMapNodeOfDataMapOfIntegerArc*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_DataMapNodeOfDataMapOfIntegerArc::~Handle_MAT_DataMapNodeOfDataMapOfIntegerArc %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerArc {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -861,27 +714,19 @@ class MAT_DataMapNodeOfDataMapOfIntegerBasicElt : public TCollection_MapNode {
             		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_MAT_BasicElt
 ") Value;
-		Handle_MAT_BasicElt & Value ();
+		Handle_MAT_BasicElt Value ();
 };
 
 
-%feature("shadow") MAT_DataMapNodeOfDataMapOfIntegerBasicElt::~MAT_DataMapNodeOfDataMapOfIntegerBasicElt %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_DataMapNodeOfDataMapOfIntegerBasicElt {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_DataMapNodeOfDataMapOfIntegerBasicElt {
-	Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt GetHandle() {
-	return *(Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -901,20 +746,6 @@ class Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt : public Handle_TCollecti
 %extend Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt {
     MAT_DataMapNodeOfDataMapOfIntegerBasicElt* GetObject() {
     return (MAT_DataMapNodeOfDataMapOfIntegerBasicElt*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt::~Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -947,27 +778,19 @@ class MAT_DataMapNodeOfDataMapOfIntegerBisector : public TCollection_MapNode {
             		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_MAT_Bisector
 ") Value;
-		Handle_MAT_Bisector & Value ();
+		Handle_MAT_Bisector Value ();
 };
 
 
-%feature("shadow") MAT_DataMapNodeOfDataMapOfIntegerBisector::~MAT_DataMapNodeOfDataMapOfIntegerBisector %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_DataMapNodeOfDataMapOfIntegerBisector {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_DataMapNodeOfDataMapOfIntegerBisector {
-	Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector GetHandle() {
-	return *(Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -987,20 +810,6 @@ class Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector : public Handle_TCollecti
 %extend Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector {
     MAT_DataMapNodeOfDataMapOfIntegerBisector* GetObject() {
     return (MAT_DataMapNodeOfDataMapOfIntegerBisector*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector::~Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1033,27 +842,19 @@ class MAT_DataMapNodeOfDataMapOfIntegerNode : public TCollection_MapNode {
             		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_MAT_Node
 ") Value;
-		Handle_MAT_Node & Value ();
+		Handle_MAT_Node Value ();
 };
 
 
-%feature("shadow") MAT_DataMapNodeOfDataMapOfIntegerNode::~MAT_DataMapNodeOfDataMapOfIntegerNode %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_DataMapNodeOfDataMapOfIntegerNode {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_DataMapNodeOfDataMapOfIntegerNode {
-	Handle_MAT_DataMapNodeOfDataMapOfIntegerNode GetHandle() {
-	return *(Handle_MAT_DataMapNodeOfDataMapOfIntegerNode*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_DataMapNodeOfDataMapOfIntegerNode(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1073,20 +874,6 @@ class Handle_MAT_DataMapNodeOfDataMapOfIntegerNode : public Handle_TCollection_M
 %extend Handle_MAT_DataMapNodeOfDataMapOfIntegerNode {
     MAT_DataMapNodeOfDataMapOfIntegerNode* GetObject() {
     return (MAT_DataMapNodeOfDataMapOfIntegerNode*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_DataMapNodeOfDataMapOfIntegerNode::~Handle_MAT_DataMapNodeOfDataMapOfIntegerNode %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_DataMapNodeOfDataMapOfIntegerNode {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1146,13 +933,13 @@ class MAT_DataMapOfIntegerArc : public TCollection_BasicMap {
 	:type K: int &
 	:rtype: Handle_MAT_Arc
 ") Find;
-		const Handle_MAT_Arc & Find (const Standard_Integer & K);
+		Handle_MAT_Arc Find (const Standard_Integer & K);
 		%feature("compactdefaultargs") ChangeFind;
 		%feature("autodoc", "	:param K:
 	:type K: int &
 	:rtype: Handle_MAT_Arc
 ") ChangeFind;
-		Handle_MAT_Arc & ChangeFind (const Standard_Integer & K);
+		Handle_MAT_Arc ChangeFind (const Standard_Integer & K);
 		%feature("compactdefaultargs") Find1;
 		%feature("autodoc", "	:param K:
 	:type K: int &
@@ -1168,20 +955,6 @@ class MAT_DataMapOfIntegerArc : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") MAT_DataMapOfIntegerArc::~MAT_DataMapOfIntegerArc %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend MAT_DataMapOfIntegerArc {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor MAT_DataMapOfIntegerBasicElt;
 class MAT_DataMapOfIntegerBasicElt : public TCollection_BasicMap {
 	public:
@@ -1238,13 +1011,13 @@ class MAT_DataMapOfIntegerBasicElt : public TCollection_BasicMap {
 	:type K: int &
 	:rtype: Handle_MAT_BasicElt
 ") Find;
-		const Handle_MAT_BasicElt & Find (const Standard_Integer & K);
+		Handle_MAT_BasicElt Find (const Standard_Integer & K);
 		%feature("compactdefaultargs") ChangeFind;
 		%feature("autodoc", "	:param K:
 	:type K: int &
 	:rtype: Handle_MAT_BasicElt
 ") ChangeFind;
-		Handle_MAT_BasicElt & ChangeFind (const Standard_Integer & K);
+		Handle_MAT_BasicElt ChangeFind (const Standard_Integer & K);
 		%feature("compactdefaultargs") Find1;
 		%feature("autodoc", "	:param K:
 	:type K: int &
@@ -1260,20 +1033,6 @@ class MAT_DataMapOfIntegerBasicElt : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") MAT_DataMapOfIntegerBasicElt::~MAT_DataMapOfIntegerBasicElt %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend MAT_DataMapOfIntegerBasicElt {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor MAT_DataMapOfIntegerBisector;
 class MAT_DataMapOfIntegerBisector : public TCollection_BasicMap {
 	public:
@@ -1330,13 +1089,13 @@ class MAT_DataMapOfIntegerBisector : public TCollection_BasicMap {
 	:type K: int &
 	:rtype: Handle_MAT_Bisector
 ") Find;
-		const Handle_MAT_Bisector & Find (const Standard_Integer & K);
+		Handle_MAT_Bisector Find (const Standard_Integer & K);
 		%feature("compactdefaultargs") ChangeFind;
 		%feature("autodoc", "	:param K:
 	:type K: int &
 	:rtype: Handle_MAT_Bisector
 ") ChangeFind;
-		Handle_MAT_Bisector & ChangeFind (const Standard_Integer & K);
+		Handle_MAT_Bisector ChangeFind (const Standard_Integer & K);
 		%feature("compactdefaultargs") Find1;
 		%feature("autodoc", "	:param K:
 	:type K: int &
@@ -1352,20 +1111,6 @@ class MAT_DataMapOfIntegerBisector : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") MAT_DataMapOfIntegerBisector::~MAT_DataMapOfIntegerBisector %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend MAT_DataMapOfIntegerBisector {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor MAT_DataMapOfIntegerNode;
 class MAT_DataMapOfIntegerNode : public TCollection_BasicMap {
 	public:
@@ -1422,13 +1167,13 @@ class MAT_DataMapOfIntegerNode : public TCollection_BasicMap {
 	:type K: int &
 	:rtype: Handle_MAT_Node
 ") Find;
-		const Handle_MAT_Node & Find (const Standard_Integer & K);
+		Handle_MAT_Node Find (const Standard_Integer & K);
 		%feature("compactdefaultargs") ChangeFind;
 		%feature("autodoc", "	:param K:
 	:type K: int &
 	:rtype: Handle_MAT_Node
 ") ChangeFind;
-		Handle_MAT_Node & ChangeFind (const Standard_Integer & K);
+		Handle_MAT_Node ChangeFind (const Standard_Integer & K);
 		%feature("compactdefaultargs") Find1;
 		%feature("autodoc", "	:param K:
 	:type K: int &
@@ -1444,20 +1189,6 @@ class MAT_DataMapOfIntegerNode : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") MAT_DataMapOfIntegerNode::~MAT_DataMapOfIntegerNode %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend MAT_DataMapOfIntegerNode {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor MAT_Edge;
 class MAT_Edge : public MMgt_TShared {
 	public:
@@ -1526,23 +1257,15 @@ class MAT_Edge : public MMgt_TShared {
 };
 
 
-%feature("shadow") MAT_Edge::~MAT_Edge %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_Edge {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_Edge {
-	Handle_MAT_Edge GetHandle() {
-	return *(Handle_MAT_Edge*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_Edge(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1562,20 +1285,6 @@ class Handle_MAT_Edge : public Handle_MMgt_TShared {
 %extend Handle_MAT_Edge {
     MAT_Edge* GetObject() {
     return (MAT_Edge*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_Edge::~Handle_MAT_Edge %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_Edge {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1695,23 +1404,15 @@ class MAT_Graph : public MMgt_TShared {
 };
 
 
-%feature("shadow") MAT_Graph::~MAT_Graph %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_Graph {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_Graph {
-	Handle_MAT_Graph GetHandle() {
-	return *(Handle_MAT_Graph*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_Graph(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1731,20 +1432,6 @@ class Handle_MAT_Graph : public Handle_MMgt_TShared {
 %extend Handle_MAT_Graph {
     MAT_Graph* GetObject() {
     return (MAT_Graph*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_Graph::~Handle_MAT_Graph %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_Graph {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1872,23 +1559,15 @@ class MAT_ListOfBisector : public MMgt_TShared {
 };
 
 
-%feature("shadow") MAT_ListOfBisector::~MAT_ListOfBisector %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_ListOfBisector {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_ListOfBisector {
-	Handle_MAT_ListOfBisector GetHandle() {
-	return *(Handle_MAT_ListOfBisector*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_ListOfBisector(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1908,20 +1587,6 @@ class Handle_MAT_ListOfBisector : public Handle_MMgt_TShared {
 %extend Handle_MAT_ListOfBisector {
     MAT_ListOfBisector* GetObject() {
     return (MAT_ListOfBisector*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_ListOfBisector::~Handle_MAT_ListOfBisector %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_ListOfBisector {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2049,23 +1714,15 @@ class MAT_ListOfEdge : public MMgt_TShared {
 };
 
 
-%feature("shadow") MAT_ListOfEdge::~MAT_ListOfEdge %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_ListOfEdge {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_ListOfEdge {
-	Handle_MAT_ListOfEdge GetHandle() {
-	return *(Handle_MAT_ListOfEdge*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_ListOfEdge(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2085,20 +1742,6 @@ class Handle_MAT_ListOfEdge : public Handle_MMgt_TShared {
 %extend Handle_MAT_ListOfEdge {
     MAT_ListOfEdge* GetObject() {
     return (MAT_ListOfEdge*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_ListOfEdge::~Handle_MAT_ListOfEdge %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_ListOfEdge {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2182,23 +1825,15 @@ class MAT_Node : public MMgt_TShared {
 };
 
 
-%feature("shadow") MAT_Node::~MAT_Node %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_Node {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_Node {
-	Handle_MAT_Node GetHandle() {
-	return *(Handle_MAT_Node*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_Node(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2220,20 +1855,6 @@ class Handle_MAT_Node : public Handle_MMgt_TShared {
     return (MAT_Node*)$self->Access();
     }
 };
-%feature("shadow") Handle_MAT_Node::~Handle_MAT_Node %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_Node {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor MAT_SequenceNodeOfSequenceOfArc;
 class MAT_SequenceNodeOfSequenceOfArc : public TCollection_SeqNode {
@@ -2251,27 +1872,19 @@ class MAT_SequenceNodeOfSequenceOfArc : public TCollection_SeqNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_MAT_Arc
 ") Value;
-		Handle_MAT_Arc & Value ();
+		Handle_MAT_Arc Value ();
 };
 
 
-%feature("shadow") MAT_SequenceNodeOfSequenceOfArc::~MAT_SequenceNodeOfSequenceOfArc %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_SequenceNodeOfSequenceOfArc {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_SequenceNodeOfSequenceOfArc {
-	Handle_MAT_SequenceNodeOfSequenceOfArc GetHandle() {
-	return *(Handle_MAT_SequenceNodeOfSequenceOfArc*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_SequenceNodeOfSequenceOfArc(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2293,20 +1906,6 @@ class Handle_MAT_SequenceNodeOfSequenceOfArc : public Handle_TCollection_SeqNode
     return (MAT_SequenceNodeOfSequenceOfArc*)$self->Access();
     }
 };
-%feature("shadow") Handle_MAT_SequenceNodeOfSequenceOfArc::~Handle_MAT_SequenceNodeOfSequenceOfArc %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_SequenceNodeOfSequenceOfArc {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor MAT_SequenceNodeOfSequenceOfBasicElt;
 class MAT_SequenceNodeOfSequenceOfBasicElt : public TCollection_SeqNode {
@@ -2324,27 +1923,19 @@ class MAT_SequenceNodeOfSequenceOfBasicElt : public TCollection_SeqNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_MAT_BasicElt
 ") Value;
-		Handle_MAT_BasicElt & Value ();
+		Handle_MAT_BasicElt Value ();
 };
 
 
-%feature("shadow") MAT_SequenceNodeOfSequenceOfBasicElt::~MAT_SequenceNodeOfSequenceOfBasicElt %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_SequenceNodeOfSequenceOfBasicElt {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_SequenceNodeOfSequenceOfBasicElt {
-	Handle_MAT_SequenceNodeOfSequenceOfBasicElt GetHandle() {
-	return *(Handle_MAT_SequenceNodeOfSequenceOfBasicElt*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_SequenceNodeOfSequenceOfBasicElt(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2364,20 +1955,6 @@ class Handle_MAT_SequenceNodeOfSequenceOfBasicElt : public Handle_TCollection_Se
 %extend Handle_MAT_SequenceNodeOfSequenceOfBasicElt {
     MAT_SequenceNodeOfSequenceOfBasicElt* GetObject() {
     return (MAT_SequenceNodeOfSequenceOfBasicElt*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_SequenceNodeOfSequenceOfBasicElt::~Handle_MAT_SequenceNodeOfSequenceOfBasicElt %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_SequenceNodeOfSequenceOfBasicElt {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2463,11 +2040,11 @@ class MAT_SequenceOfArc : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_MAT_Arc
 ") First;
-		const Handle_MAT_Arc & First ();
+		Handle_MAT_Arc First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_MAT_Arc
 ") Last;
-		const Handle_MAT_Arc & Last ();
+		Handle_MAT_Arc Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2481,7 +2058,7 @@ class MAT_SequenceOfArc : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_MAT_Arc
 ") Value;
-		const Handle_MAT_Arc & Value (const Standard_Integer Index);
+		Handle_MAT_Arc Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2495,7 +2072,7 @@ class MAT_SequenceOfArc : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_MAT_Arc
 ") ChangeValue;
-		Handle_MAT_Arc & ChangeValue (const Standard_Integer Index);
+		Handle_MAT_Arc ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2513,20 +2090,6 @@ class MAT_SequenceOfArc : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") MAT_SequenceOfArc::~MAT_SequenceOfArc %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend MAT_SequenceOfArc {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor MAT_SequenceOfBasicElt;
 class MAT_SequenceOfBasicElt : public TCollection_BaseSequence {
 	public:
@@ -2609,11 +2172,11 @@ class MAT_SequenceOfBasicElt : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_MAT_BasicElt
 ") First;
-		const Handle_MAT_BasicElt & First ();
+		Handle_MAT_BasicElt First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_MAT_BasicElt
 ") Last;
-		const Handle_MAT_BasicElt & Last ();
+		Handle_MAT_BasicElt Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2627,7 +2190,7 @@ class MAT_SequenceOfBasicElt : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_MAT_BasicElt
 ") Value;
-		const Handle_MAT_BasicElt & Value (const Standard_Integer Index);
+		Handle_MAT_BasicElt Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2641,7 +2204,7 @@ class MAT_SequenceOfBasicElt : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_MAT_BasicElt
 ") ChangeValue;
-		Handle_MAT_BasicElt & ChangeValue (const Standard_Integer Index);
+		Handle_MAT_BasicElt ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2659,20 +2222,6 @@ class MAT_SequenceOfBasicElt : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") MAT_SequenceOfBasicElt::~MAT_SequenceOfBasicElt %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend MAT_SequenceOfBasicElt {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor MAT_TListNodeOfListOfBisector;
 class MAT_TListNodeOfListOfBisector : public MMgt_TShared {
 	public:
@@ -2723,23 +2272,15 @@ class MAT_TListNodeOfListOfBisector : public MMgt_TShared {
 };
 
 
-%feature("shadow") MAT_TListNodeOfListOfBisector::~MAT_TListNodeOfListOfBisector %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_TListNodeOfListOfBisector {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_TListNodeOfListOfBisector {
-	Handle_MAT_TListNodeOfListOfBisector GetHandle() {
-	return *(Handle_MAT_TListNodeOfListOfBisector*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_TListNodeOfListOfBisector(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2759,20 +2300,6 @@ class Handle_MAT_TListNodeOfListOfBisector : public Handle_MMgt_TShared {
 %extend Handle_MAT_TListNodeOfListOfBisector {
     MAT_TListNodeOfListOfBisector* GetObject() {
     return (MAT_TListNodeOfListOfBisector*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_TListNodeOfListOfBisector::~Handle_MAT_TListNodeOfListOfBisector %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_TListNodeOfListOfBisector {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2826,23 +2353,15 @@ class MAT_TListNodeOfListOfEdge : public MMgt_TShared {
 };
 
 
-%feature("shadow") MAT_TListNodeOfListOfEdge::~MAT_TListNodeOfListOfEdge %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_TListNodeOfListOfEdge {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_TListNodeOfListOfEdge {
-	Handle_MAT_TListNodeOfListOfEdge GetHandle() {
-	return *(Handle_MAT_TListNodeOfListOfEdge*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_TListNodeOfListOfEdge(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2862,20 +2381,6 @@ class Handle_MAT_TListNodeOfListOfEdge : public Handle_MMgt_TShared {
 %extend Handle_MAT_TListNodeOfListOfEdge {
     MAT_TListNodeOfListOfEdge* GetObject() {
     return (MAT_TListNodeOfListOfEdge*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_TListNodeOfListOfEdge::~Handle_MAT_TListNodeOfListOfEdge %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_TListNodeOfListOfEdge {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2931,23 +2436,15 @@ class MAT_Zone : public MMgt_TShared {
 };
 
 
-%feature("shadow") MAT_Zone::~MAT_Zone %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend MAT_Zone {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend MAT_Zone {
-	Handle_MAT_Zone GetHandle() {
-	return *(Handle_MAT_Zone*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_MAT_Zone(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2967,20 +2464,6 @@ class Handle_MAT_Zone : public Handle_MMgt_TShared {
 %extend Handle_MAT_Zone {
     MAT_Zone* GetObject() {
     return (MAT_Zone*)$self->Access();
-    }
-};
-%feature("shadow") Handle_MAT_Zone::~Handle_MAT_Zone %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_MAT_Zone {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

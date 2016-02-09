@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include ChFiDS_headers.i
 
@@ -118,20 +115,6 @@ class ChFiDS_CircSection {
 };
 
 
-%feature("shadow") ChFiDS_CircSection::~ChFiDS_CircSection %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_CircSection {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_CommonPoint;
 class ChFiDS_CommonPoint {
 	public:
@@ -270,20 +253,6 @@ class ChFiDS_CommonPoint {
 };
 
 
-%feature("shadow") ChFiDS_CommonPoint::~ChFiDS_CommonPoint %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_CommonPoint {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_ElSpine;
 class ChFiDS_ElSpine : public Adaptor3d_Curve {
 	public:
@@ -462,19 +431,19 @@ class ChFiDS_ElSpine : public Adaptor3d_Curve {
 		%feature("compactdefaultargs") Previous;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_SurfData
 ") Previous;
-		const Handle_ChFiDS_SurfData & Previous ();
+		Handle_ChFiDS_SurfData Previous ();
 		%feature("compactdefaultargs") ChangePrevious;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_SurfData
 ") ChangePrevious;
-		Handle_ChFiDS_SurfData & ChangePrevious ();
+		Handle_ChFiDS_SurfData ChangePrevious ();
 		%feature("compactdefaultargs") Next;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_SurfData
 ") Next;
-		const Handle_ChFiDS_SurfData & Next ();
+		Handle_ChFiDS_SurfData Next ();
 		%feature("compactdefaultargs") ChangeNext;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_SurfData
 ") ChangeNext;
-		Handle_ChFiDS_SurfData & ChangeNext ();
+		Handle_ChFiDS_SurfData ChangeNext ();
 		%feature("compactdefaultargs") Line;
 		%feature("autodoc", "	:rtype: gp_Lin
 ") Line;
@@ -506,20 +475,6 @@ class ChFiDS_ElSpine : public Adaptor3d_Curve {
 };
 
 
-%feature("shadow") ChFiDS_ElSpine::~ChFiDS_ElSpine %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_ElSpine {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_FaceInterference;
 class ChFiDS_FaceInterference {
 	public:
@@ -582,19 +537,19 @@ class ChFiDS_FaceInterference {
 		%feature("compactdefaultargs") PCurveOnFace;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") PCurveOnFace;
-		const Handle_Geom2d_Curve & PCurveOnFace ();
+		Handle_Geom2d_Curve PCurveOnFace ();
 		%feature("compactdefaultargs") PCurveOnSurf;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") PCurveOnSurf;
-		const Handle_Geom2d_Curve & PCurveOnSurf ();
+		Handle_Geom2d_Curve PCurveOnSurf ();
 		%feature("compactdefaultargs") ChangePCurveOnFace;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") ChangePCurveOnFace;
-		Handle_Geom2d_Curve & ChangePCurveOnFace ();
+		Handle_Geom2d_Curve ChangePCurveOnFace ();
 		%feature("compactdefaultargs") ChangePCurveOnSurf;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") ChangePCurveOnSurf;
-		Handle_Geom2d_Curve & ChangePCurveOnSurf ();
+		Handle_Geom2d_Curve ChangePCurveOnSurf ();
 		%feature("compactdefaultargs") FirstParameter;
 		%feature("autodoc", "	:rtype: float
 ") FirstParameter;
@@ -612,20 +567,6 @@ class ChFiDS_FaceInterference {
 };
 
 
-%feature("shadow") ChFiDS_FaceInterference::~ChFiDS_FaceInterference %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_FaceInterference {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_HData;
 class ChFiDS_HData : public MMgt_TShared {
 	public:
@@ -732,13 +673,13 @@ class ChFiDS_HData : public MMgt_TShared {
 	:type anIndex: int
 	:rtype: Handle_ChFiDS_SurfData
 ") Value;
-		const Handle_ChFiDS_SurfData & Value (const Standard_Integer anIndex);
+		Handle_ChFiDS_SurfData Value (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
 	:rtype: Handle_ChFiDS_SurfData
 ") ChangeValue;
-		Handle_ChFiDS_SurfData & ChangeValue (const Standard_Integer anIndex);
+		Handle_ChFiDS_SurfData ChangeValue (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
@@ -768,23 +709,15 @@ class ChFiDS_HData : public MMgt_TShared {
 };
 
 
-%feature("shadow") ChFiDS_HData::~ChFiDS_HData %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_HData {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_HData {
-	Handle_ChFiDS_HData GetHandle() {
-	return *(Handle_ChFiDS_HData*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_HData(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -804,20 +737,6 @@ class Handle_ChFiDS_HData : public Handle_MMgt_TShared {
 %extend Handle_ChFiDS_HData {
     ChFiDS_HData* GetObject() {
     return (ChFiDS_HData*)$self->Access();
-    }
-};
-%feature("shadow") Handle_ChFiDS_HData::~Handle_ChFiDS_HData %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_HData {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -855,23 +774,15 @@ class ChFiDS_HElSpine : public Adaptor3d_HCurve {
 };
 
 
-%feature("shadow") ChFiDS_HElSpine::~ChFiDS_HElSpine %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_HElSpine {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_HElSpine {
-	Handle_ChFiDS_HElSpine GetHandle() {
-	return *(Handle_ChFiDS_HElSpine*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_HElSpine(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -891,20 +802,6 @@ class Handle_ChFiDS_HElSpine : public Handle_Adaptor3d_HCurve {
 %extend Handle_ChFiDS_HElSpine {
     ChFiDS_HElSpine* GetObject() {
     return (ChFiDS_HElSpine*)$self->Access();
-    }
-};
-%feature("shadow") Handle_ChFiDS_HElSpine::~Handle_ChFiDS_HElSpine %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_HElSpine {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -953,23 +850,15 @@ class ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe : public TCo
 };
 
 
-%feature("shadow") ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe::~ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe {
-	Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe GetHandle() {
-	return *(Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -989,20 +878,6 @@ class Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe : pub
 %extend Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe {
     ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe* GetObject() {
     return (ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe*)$self->Access();
-    }
-};
-%feature("shadow") Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe::~Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1116,20 +991,6 @@ class ChFiDS_IndexedDataMapOfVertexListOfStripe : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") ChFiDS_IndexedDataMapOfVertexListOfStripe::~ChFiDS_IndexedDataMapOfVertexListOfStripe %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_IndexedDataMapOfVertexListOfStripe {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_ListIteratorOfListOfHElSpine;
 class ChFiDS_ListIteratorOfListOfHElSpine {
 	public:
@@ -1160,24 +1021,10 @@ class ChFiDS_ListIteratorOfListOfHElSpine {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_HElSpine
 ") Value;
-		Handle_ChFiDS_HElSpine & Value ();
+		Handle_ChFiDS_HElSpine Value ();
 };
 
 
-%feature("shadow") ChFiDS_ListIteratorOfListOfHElSpine::~ChFiDS_ListIteratorOfListOfHElSpine %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_ListIteratorOfListOfHElSpine {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_ListIteratorOfListOfStripe;
 class ChFiDS_ListIteratorOfListOfStripe {
 	public:
@@ -1208,24 +1055,10 @@ class ChFiDS_ListIteratorOfListOfStripe {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_Stripe
 ") Value;
-		Handle_ChFiDS_Stripe & Value ();
+		Handle_ChFiDS_Stripe Value ();
 };
 
 
-%feature("shadow") ChFiDS_ListIteratorOfListOfStripe::~ChFiDS_ListIteratorOfListOfStripe %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_ListIteratorOfListOfStripe {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_ListIteratorOfRegularities;
 class ChFiDS_ListIteratorOfRegularities {
 	public:
@@ -1260,20 +1093,6 @@ class ChFiDS_ListIteratorOfRegularities {
 };
 
 
-%feature("shadow") ChFiDS_ListIteratorOfRegularities::~ChFiDS_ListIteratorOfRegularities %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_ListIteratorOfRegularities {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_ListNodeOfListOfHElSpine;
 class ChFiDS_ListNodeOfListOfHElSpine : public TCollection_MapNode {
 	public:
@@ -1288,27 +1107,19 @@ class ChFiDS_ListNodeOfListOfHElSpine : public TCollection_MapNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_HElSpine
 ") Value;
-		Handle_ChFiDS_HElSpine & Value ();
+		Handle_ChFiDS_HElSpine Value ();
 };
 
 
-%feature("shadow") ChFiDS_ListNodeOfListOfHElSpine::~ChFiDS_ListNodeOfListOfHElSpine %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_ListNodeOfListOfHElSpine {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_ListNodeOfListOfHElSpine {
-	Handle_ChFiDS_ListNodeOfListOfHElSpine GetHandle() {
-	return *(Handle_ChFiDS_ListNodeOfListOfHElSpine*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_ListNodeOfListOfHElSpine(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1330,20 +1141,6 @@ class Handle_ChFiDS_ListNodeOfListOfHElSpine : public Handle_TCollection_MapNode
     return (ChFiDS_ListNodeOfListOfHElSpine*)$self->Access();
     }
 };
-%feature("shadow") Handle_ChFiDS_ListNodeOfListOfHElSpine::~Handle_ChFiDS_ListNodeOfListOfHElSpine %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_ListNodeOfListOfHElSpine {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor ChFiDS_ListNodeOfListOfStripe;
 class ChFiDS_ListNodeOfListOfStripe : public TCollection_MapNode {
@@ -1359,27 +1156,19 @@ class ChFiDS_ListNodeOfListOfStripe : public TCollection_MapNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_Stripe
 ") Value;
-		Handle_ChFiDS_Stripe & Value ();
+		Handle_ChFiDS_Stripe Value ();
 };
 
 
-%feature("shadow") ChFiDS_ListNodeOfListOfStripe::~ChFiDS_ListNodeOfListOfStripe %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_ListNodeOfListOfStripe {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_ListNodeOfListOfStripe {
-	Handle_ChFiDS_ListNodeOfListOfStripe GetHandle() {
-	return *(Handle_ChFiDS_ListNodeOfListOfStripe*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_ListNodeOfListOfStripe(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1401,20 +1190,6 @@ class Handle_ChFiDS_ListNodeOfListOfStripe : public Handle_TCollection_MapNode {
     return (ChFiDS_ListNodeOfListOfStripe*)$self->Access();
     }
 };
-%feature("shadow") Handle_ChFiDS_ListNodeOfListOfStripe::~Handle_ChFiDS_ListNodeOfListOfStripe %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_ListNodeOfListOfStripe {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor ChFiDS_ListNodeOfRegularities;
 class ChFiDS_ListNodeOfRegularities : public TCollection_MapNode {
@@ -1434,23 +1209,15 @@ class ChFiDS_ListNodeOfRegularities : public TCollection_MapNode {
 };
 
 
-%feature("shadow") ChFiDS_ListNodeOfRegularities::~ChFiDS_ListNodeOfRegularities %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_ListNodeOfRegularities {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_ListNodeOfRegularities {
-	Handle_ChFiDS_ListNodeOfRegularities GetHandle() {
-	return *(Handle_ChFiDS_ListNodeOfRegularities*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_ListNodeOfRegularities(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1470,20 +1237,6 @@ class Handle_ChFiDS_ListNodeOfRegularities : public Handle_TCollection_MapNode {
 %extend Handle_ChFiDS_ListNodeOfRegularities {
     ChFiDS_ListNodeOfRegularities* GetObject() {
     return (ChFiDS_ListNodeOfRegularities*)$self->Access();
-    }
-};
-%feature("shadow") Handle_ChFiDS_ListNodeOfRegularities::~Handle_ChFiDS_ListNodeOfRegularities %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_ListNodeOfRegularities {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1561,11 +1314,11 @@ class ChFiDS_ListOfHElSpine {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_HElSpine
 ") First;
-		Handle_ChFiDS_HElSpine & First ();
+		Handle_ChFiDS_HElSpine First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_HElSpine
 ") Last;
-		Handle_ChFiDS_HElSpine & Last ();
+		Handle_ChFiDS_HElSpine Last ();
 		%feature("compactdefaultargs") RemoveFirst;
 		%feature("autodoc", "	:rtype: None
 ") RemoveFirst;
@@ -1611,20 +1364,6 @@ class ChFiDS_ListOfHElSpine {
 };
 
 
-%feature("shadow") ChFiDS_ListOfHElSpine::~ChFiDS_ListOfHElSpine %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_ListOfHElSpine {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_ListOfStripe;
 class ChFiDS_ListOfStripe {
 	public:
@@ -1699,11 +1438,11 @@ class ChFiDS_ListOfStripe {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_Stripe
 ") First;
-		Handle_ChFiDS_Stripe & First ();
+		Handle_ChFiDS_Stripe First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_Stripe
 ") Last;
-		Handle_ChFiDS_Stripe & Last ();
+		Handle_ChFiDS_Stripe Last ();
 		%feature("compactdefaultargs") RemoveFirst;
 		%feature("autodoc", "	:rtype: None
 ") RemoveFirst;
@@ -1749,20 +1488,6 @@ class ChFiDS_ListOfStripe {
 };
 
 
-%feature("shadow") ChFiDS_ListOfStripe::~ChFiDS_ListOfStripe %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_ListOfStripe {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_Map;
 class ChFiDS_Map {
 	public:
@@ -1805,20 +1530,6 @@ class ChFiDS_Map {
 };
 
 
-%feature("shadow") ChFiDS_Map::~ChFiDS_Map %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_Map {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_Regul;
 class ChFiDS_Regul {
 	public:
@@ -1871,20 +1582,6 @@ class ChFiDS_Regul {
 };
 
 
-%feature("shadow") ChFiDS_Regul::~ChFiDS_Regul %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_Regul {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_Regularities;
 class ChFiDS_Regularities {
 	public:
@@ -2009,20 +1706,6 @@ class ChFiDS_Regularities {
 };
 
 
-%feature("shadow") ChFiDS_Regularities::~ChFiDS_Regularities %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_Regularities {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_SecArray1;
 class ChFiDS_SecArray1 {
 	public:
@@ -2105,20 +1788,6 @@ class ChFiDS_SecArray1 {
 };
 
 
-%feature("shadow") ChFiDS_SecArray1::~ChFiDS_SecArray1 %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_SecArray1 {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_SecHArray1;
 class ChFiDS_SecHArray1 : public MMgt_TShared {
 	public:
@@ -2189,23 +1858,15 @@ class ChFiDS_SecHArray1 : public MMgt_TShared {
 };
 
 
-%feature("shadow") ChFiDS_SecHArray1::~ChFiDS_SecHArray1 %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_SecHArray1 {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_SecHArray1 {
-	Handle_ChFiDS_SecHArray1 GetHandle() {
-	return *(Handle_ChFiDS_SecHArray1*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_SecHArray1(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2227,20 +1888,6 @@ class Handle_ChFiDS_SecHArray1 : public Handle_MMgt_TShared {
     return (ChFiDS_SecHArray1*)$self->Access();
     }
 };
-%feature("shadow") Handle_ChFiDS_SecHArray1::~Handle_ChFiDS_SecHArray1 %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_SecHArray1 {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor ChFiDS_SequenceNodeOfSequenceOfSpine;
 class ChFiDS_SequenceNodeOfSequenceOfSpine : public TCollection_SeqNode {
@@ -2258,27 +1905,19 @@ class ChFiDS_SequenceNodeOfSequenceOfSpine : public TCollection_SeqNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_Spine
 ") Value;
-		Handle_ChFiDS_Spine & Value ();
+		Handle_ChFiDS_Spine Value ();
 };
 
 
-%feature("shadow") ChFiDS_SequenceNodeOfSequenceOfSpine::~ChFiDS_SequenceNodeOfSequenceOfSpine %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_SequenceNodeOfSequenceOfSpine {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_SequenceNodeOfSequenceOfSpine {
-	Handle_ChFiDS_SequenceNodeOfSequenceOfSpine GetHandle() {
-	return *(Handle_ChFiDS_SequenceNodeOfSequenceOfSpine*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_SequenceNodeOfSequenceOfSpine(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2300,20 +1939,6 @@ class Handle_ChFiDS_SequenceNodeOfSequenceOfSpine : public Handle_TCollection_Se
     return (ChFiDS_SequenceNodeOfSequenceOfSpine*)$self->Access();
     }
 };
-%feature("shadow") Handle_ChFiDS_SequenceNodeOfSequenceOfSpine::~Handle_ChFiDS_SequenceNodeOfSequenceOfSpine %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_SequenceNodeOfSequenceOfSpine {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor ChFiDS_SequenceNodeOfSequenceOfSurfData;
 class ChFiDS_SequenceNodeOfSequenceOfSurfData : public TCollection_SeqNode {
@@ -2331,27 +1956,19 @@ class ChFiDS_SequenceNodeOfSequenceOfSurfData : public TCollection_SeqNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_SurfData
 ") Value;
-		Handle_ChFiDS_SurfData & Value ();
+		Handle_ChFiDS_SurfData Value ();
 };
 
 
-%feature("shadow") ChFiDS_SequenceNodeOfSequenceOfSurfData::~ChFiDS_SequenceNodeOfSequenceOfSurfData %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_SequenceNodeOfSequenceOfSurfData {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_SequenceNodeOfSequenceOfSurfData {
-	Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData GetHandle() {
-	return *(Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2371,20 +1988,6 @@ class Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData : public Handle_TCollection
 %extend Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData {
     ChFiDS_SequenceNodeOfSequenceOfSurfData* GetObject() {
     return (ChFiDS_SequenceNodeOfSequenceOfSurfData*)$self->Access();
-    }
-};
-%feature("shadow") Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData::~Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2470,11 +2073,11 @@ class ChFiDS_SequenceOfSpine : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_Spine
 ") First;
-		const Handle_ChFiDS_Spine & First ();
+		Handle_ChFiDS_Spine First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_Spine
 ") Last;
-		const Handle_ChFiDS_Spine & Last ();
+		Handle_ChFiDS_Spine Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2488,7 +2091,7 @@ class ChFiDS_SequenceOfSpine : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_ChFiDS_Spine
 ") Value;
-		const Handle_ChFiDS_Spine & Value (const Standard_Integer Index);
+		Handle_ChFiDS_Spine Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2502,7 +2105,7 @@ class ChFiDS_SequenceOfSpine : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_ChFiDS_Spine
 ") ChangeValue;
-		Handle_ChFiDS_Spine & ChangeValue (const Standard_Integer Index);
+		Handle_ChFiDS_Spine ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2520,20 +2123,6 @@ class ChFiDS_SequenceOfSpine : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") ChFiDS_SequenceOfSpine::~ChFiDS_SequenceOfSpine %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_SequenceOfSpine {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_SequenceOfSurfData;
 class ChFiDS_SequenceOfSurfData : public TCollection_BaseSequence {
 	public:
@@ -2616,11 +2205,11 @@ class ChFiDS_SequenceOfSurfData : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_SurfData
 ") First;
-		const Handle_ChFiDS_SurfData & First ();
+		Handle_ChFiDS_SurfData First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_SurfData
 ") Last;
-		const Handle_ChFiDS_SurfData & Last ();
+		Handle_ChFiDS_SurfData Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2634,7 +2223,7 @@ class ChFiDS_SequenceOfSurfData : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_ChFiDS_SurfData
 ") Value;
-		const Handle_ChFiDS_SurfData & Value (const Standard_Integer Index);
+		Handle_ChFiDS_SurfData Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2648,7 +2237,7 @@ class ChFiDS_SequenceOfSurfData : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_ChFiDS_SurfData
 ") ChangeValue;
-		Handle_ChFiDS_SurfData & ChangeValue (const Standard_Integer Index);
+		Handle_ChFiDS_SurfData ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -2666,20 +2255,6 @@ class ChFiDS_SequenceOfSurfData : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") ChFiDS_SequenceOfSurfData::~ChFiDS_SequenceOfSurfData %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_SequenceOfSurfData {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_Spine;
 class ChFiDS_Spine : public MMgt_TShared {
 	public:
@@ -3072,23 +2647,15 @@ class ChFiDS_Spine : public MMgt_TShared {
 };
 
 
-%feature("shadow") ChFiDS_Spine::~ChFiDS_Spine %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_Spine {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_Spine {
-	Handle_ChFiDS_Spine GetHandle() {
-	return *(Handle_ChFiDS_Spine*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_Spine(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -3110,20 +2677,6 @@ class Handle_ChFiDS_Spine : public Handle_MMgt_TShared {
     return (ChFiDS_Spine*)$self->Access();
     }
 };
-%feature("shadow") Handle_ChFiDS_Spine::~Handle_ChFiDS_Spine %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_Spine {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor ChFiDS_Stripe;
 class ChFiDS_Stripe : public MMgt_TShared {
@@ -3141,11 +2694,11 @@ class ChFiDS_Stripe : public MMgt_TShared {
 		%feature("compactdefaultargs") SetOfSurfData;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_HData
 ") SetOfSurfData;
-		const Handle_ChFiDS_HData & SetOfSurfData ();
+		Handle_ChFiDS_HData SetOfSurfData ();
 		%feature("compactdefaultargs") Spine;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_Spine
 ") Spine;
-		const Handle_ChFiDS_Spine & Spine ();
+		Handle_ChFiDS_Spine Spine ();
 		%feature("compactdefaultargs") OrientationOnFace1;
 		%feature("autodoc", "	:rtype: TopAbs_Orientation
 ") OrientationOnFace1;
@@ -3161,11 +2714,11 @@ class ChFiDS_Stripe : public MMgt_TShared {
 		%feature("compactdefaultargs") ChangeSetOfSurfData;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_HData
 ") ChangeSetOfSurfData;
-		Handle_ChFiDS_HData & ChangeSetOfSurfData ();
+		Handle_ChFiDS_HData ChangeSetOfSurfData ();
 		%feature("compactdefaultargs") ChangeSpine;
 		%feature("autodoc", "	:rtype: Handle_ChFiDS_Spine
 ") ChangeSpine;
-		Handle_ChFiDS_Spine & ChangeSpine ();
+		Handle_ChFiDS_Spine ChangeSpine ();
 		%feature("compactdefaultargs") OrientationOnFace1;
 		%feature("autodoc", "	:param Or1:
 	:type Or1: TopAbs_Orientation
@@ -3239,19 +2792,19 @@ class ChFiDS_Stripe : public MMgt_TShared {
 		%feature("compactdefaultargs") FirstPCurve;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") FirstPCurve;
-		const Handle_Geom2d_Curve & FirstPCurve ();
+		Handle_Geom2d_Curve FirstPCurve ();
 		%feature("compactdefaultargs") LastPCurve;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") LastPCurve;
-		const Handle_Geom2d_Curve & LastPCurve ();
+		Handle_Geom2d_Curve LastPCurve ();
 		%feature("compactdefaultargs") ChangeFirstPCurve;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") ChangeFirstPCurve;
-		Handle_Geom2d_Curve & ChangeFirstPCurve ();
+		Handle_Geom2d_Curve ChangeFirstPCurve ();
 		%feature("compactdefaultargs") ChangeLastPCurve;
 		%feature("autodoc", "	:rtype: Handle_Geom2d_Curve
 ") ChangeLastPCurve;
-		Handle_Geom2d_Curve & ChangeLastPCurve ();
+		Handle_Geom2d_Curve ChangeLastPCurve ();
 		%feature("compactdefaultargs") FirstPCurveOrientation;
 		%feature("autodoc", "	:rtype: TopAbs_Orientation
 ") FirstPCurveOrientation;
@@ -3351,13 +2904,13 @@ class ChFiDS_Stripe : public MMgt_TShared {
 	:type First: bool
 	:rtype: Handle_Geom2d_Curve
 ") PCurve;
-		const Handle_Geom2d_Curve & PCurve (const Standard_Boolean First);
+		Handle_Geom2d_Curve PCurve (const Standard_Boolean First);
 		%feature("compactdefaultargs") ChangePCurve;
 		%feature("autodoc", "	:param First:
 	:type First: bool
 	:rtype: Handle_Geom2d_Curve
 ") ChangePCurve;
-		Handle_Geom2d_Curve & ChangePCurve (const Standard_Boolean First);
+		Handle_Geom2d_Curve ChangePCurve (const Standard_Boolean First);
 		%feature("compactdefaultargs") Orientation;
 		%feature("autodoc", "	:param OnS:
 	:type OnS: int
@@ -3435,23 +2988,15 @@ class ChFiDS_Stripe : public MMgt_TShared {
 };
 
 
-%feature("shadow") ChFiDS_Stripe::~ChFiDS_Stripe %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_Stripe {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_Stripe {
-	Handle_ChFiDS_Stripe GetHandle() {
-	return *(Handle_ChFiDS_Stripe*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_Stripe(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -3471,20 +3016,6 @@ class Handle_ChFiDS_Stripe : public Handle_MMgt_TShared {
 %extend Handle_ChFiDS_Stripe {
     ChFiDS_Stripe* GetObject() {
     return (ChFiDS_Stripe*)$self->Access();
-    }
-};
-%feature("shadow") Handle_ChFiDS_Stripe::~Handle_ChFiDS_Stripe %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_Stripe {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -3560,30 +3091,16 @@ class ChFiDS_StripeArray1 {
 	:type Index: int
 	:rtype: Handle_ChFiDS_Stripe
 ") Value;
-		const Handle_ChFiDS_Stripe & Value (const Standard_Integer Index);
+		Handle_ChFiDS_Stripe Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
 	:rtype: Handle_ChFiDS_Stripe
 ") ChangeValue;
-		Handle_ChFiDS_Stripe & ChangeValue (const Standard_Integer Index);
+		Handle_ChFiDS_Stripe ChangeValue (const Standard_Integer Index);
 };
 
 
-%feature("shadow") ChFiDS_StripeArray1::~ChFiDS_StripeArray1 %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_StripeArray1 {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_StripeMap;
 class ChFiDS_StripeMap {
 	public:
@@ -3628,20 +3145,6 @@ class ChFiDS_StripeMap {
 };
 
 
-%feature("shadow") ChFiDS_StripeMap::~ChFiDS_StripeMap %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFiDS_StripeMap {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFiDS_SurfData;
 class ChFiDS_SurfData : public MMgt_TShared {
 	public:
@@ -3928,23 +3431,15 @@ class ChFiDS_SurfData : public MMgt_TShared {
 };
 
 
-%feature("shadow") ChFiDS_SurfData::~ChFiDS_SurfData %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_SurfData {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_SurfData {
-	Handle_ChFiDS_SurfData GetHandle() {
-	return *(Handle_ChFiDS_SurfData*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_SurfData(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -3964,20 +3459,6 @@ class Handle_ChFiDS_SurfData : public Handle_MMgt_TShared {
 %extend Handle_ChFiDS_SurfData {
     ChFiDS_SurfData* GetObject() {
     return (ChFiDS_SurfData*)$self->Access();
-    }
-};
-%feature("shadow") Handle_ChFiDS_SurfData::~Handle_ChFiDS_SurfData %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_SurfData {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -4051,23 +3532,15 @@ class ChFiDS_ChamfSpine : public ChFiDS_Spine {
 };
 
 
-%feature("shadow") ChFiDS_ChamfSpine::~ChFiDS_ChamfSpine %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_ChamfSpine {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_ChamfSpine {
-	Handle_ChFiDS_ChamfSpine GetHandle() {
-	return *(Handle_ChFiDS_ChamfSpine*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_ChamfSpine(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -4087,20 +3560,6 @@ class Handle_ChFiDS_ChamfSpine : public Handle_ChFiDS_Spine {
 %extend Handle_ChFiDS_ChamfSpine {
     ChFiDS_ChamfSpine* GetObject() {
     return (ChFiDS_ChamfSpine*)$self->Access();
-    }
-};
-%feature("shadow") Handle_ChFiDS_ChamfSpine::~Handle_ChFiDS_ChamfSpine %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_ChamfSpine {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -4242,7 +3701,7 @@ class ChFiDS_FilSpine : public ChFiDS_Spine {
 	:type E: TopoDS_Edge &
 	:rtype: Handle_Law_Function
 ") ChangeLaw;
-		Handle_Law_Function & ChangeLaw (const TopoDS_Edge & E);
+		Handle_Law_Function ChangeLaw (const TopoDS_Edge & E);
 		%feature("compactdefaultargs") MaxRadFromSeqAndLaws;
 		%feature("autodoc", "	* returns the maximum radius if the fillet is non-constant
 
@@ -4252,23 +3711,15 @@ class ChFiDS_FilSpine : public ChFiDS_Spine {
 };
 
 
-%feature("shadow") ChFiDS_FilSpine::~ChFiDS_FilSpine %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ChFiDS_FilSpine {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ChFiDS_FilSpine {
-	Handle_ChFiDS_FilSpine GetHandle() {
-	return *(Handle_ChFiDS_FilSpine*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ChFiDS_FilSpine(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -4288,20 +3739,6 @@ class Handle_ChFiDS_FilSpine : public Handle_ChFiDS_Spine {
 %extend Handle_ChFiDS_FilSpine {
     ChFiDS_FilSpine* GetObject() {
     return (ChFiDS_FilSpine*)$self->Access();
-    }
-};
-%feature("shadow") Handle_ChFiDS_FilSpine::~Handle_ChFiDS_FilSpine %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ChFiDS_FilSpine {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include IntStart_headers.i
 
@@ -58,23 +55,15 @@ class IntStart_SITopolTool : public MMgt_TShared {
 };
 
 
-%feature("shadow") IntStart_SITopolTool::~IntStart_SITopolTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend IntStart_SITopolTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend IntStart_SITopolTool {
-	Handle_IntStart_SITopolTool GetHandle() {
-	return *(Handle_IntStart_SITopolTool*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_IntStart_SITopolTool(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -94,20 +83,6 @@ class Handle_IntStart_SITopolTool : public Handle_MMgt_TShared {
 %extend Handle_IntStart_SITopolTool {
     IntStart_SITopolTool* GetObject() {
     return (IntStart_SITopolTool*)$self->Access();
-    }
-};
-%feature("shadow") Handle_IntStart_SITopolTool::~Handle_IntStart_SITopolTool %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_IntStart_SITopolTool {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

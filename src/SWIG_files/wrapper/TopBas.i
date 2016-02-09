@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include TopBas_headers.i
 
@@ -78,20 +75,6 @@ class TopBas_ListIteratorOfListOfTestInterference {
 };
 
 
-%feature("shadow") TopBas_ListIteratorOfListOfTestInterference::~TopBas_ListIteratorOfListOfTestInterference %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopBas_ListIteratorOfListOfTestInterference {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopBas_ListNodeOfListOfTestInterference;
 class TopBas_ListNodeOfListOfTestInterference : public TCollection_MapNode {
 	public:
@@ -110,23 +93,15 @@ class TopBas_ListNodeOfListOfTestInterference : public TCollection_MapNode {
 };
 
 
-%feature("shadow") TopBas_ListNodeOfListOfTestInterference::~TopBas_ListNodeOfListOfTestInterference %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TopBas_ListNodeOfListOfTestInterference {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TopBas_ListNodeOfListOfTestInterference {
-	Handle_TopBas_ListNodeOfListOfTestInterference GetHandle() {
-	return *(Handle_TopBas_ListNodeOfListOfTestInterference*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TopBas_ListNodeOfListOfTestInterference(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -146,20 +121,6 @@ class Handle_TopBas_ListNodeOfListOfTestInterference : public Handle_TCollection
 %extend Handle_TopBas_ListNodeOfListOfTestInterference {
     TopBas_ListNodeOfListOfTestInterference* GetObject() {
     return (TopBas_ListNodeOfListOfTestInterference*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TopBas_ListNodeOfListOfTestInterference::~Handle_TopBas_ListNodeOfListOfTestInterference %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TopBas_ListNodeOfListOfTestInterference {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -287,20 +248,6 @@ class TopBas_ListOfTestInterference {
 };
 
 
-%feature("shadow") TopBas_ListOfTestInterference::~TopBas_ListOfTestInterference %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopBas_ListOfTestInterference {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopBas_TestInterference;
 class TopBas_TestInterference {
 	public:
@@ -401,17 +348,3 @@ class TopBas_TestInterference {
 };
 
 
-%feature("shadow") TopBas_TestInterference::~TopBas_TestInterference %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopBas_TestInterference {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

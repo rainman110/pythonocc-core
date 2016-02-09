@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include LProp_headers.i
 
@@ -79,20 +76,6 @@ class LProp_AnalyticCurInf {
 };
 
 
-%feature("shadow") LProp_AnalyticCurInf::~LProp_AnalyticCurInf %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend LProp_AnalyticCurInf {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor LProp_CurAndInf;
 class LProp_CurAndInf {
 	public:
@@ -147,20 +130,6 @@ class LProp_CurAndInf {
 };
 
 
-%feature("shadow") LProp_CurAndInf::~LProp_CurAndInf %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend LProp_CurAndInf {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor LProp_SequenceNodeOfSequenceOfCIType;
 class LProp_SequenceNodeOfSequenceOfCIType : public TCollection_SeqNode {
 	public:
@@ -181,23 +150,15 @@ class LProp_SequenceNodeOfSequenceOfCIType : public TCollection_SeqNode {
 };
 
 
-%feature("shadow") LProp_SequenceNodeOfSequenceOfCIType::~LProp_SequenceNodeOfSequenceOfCIType %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend LProp_SequenceNodeOfSequenceOfCIType {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend LProp_SequenceNodeOfSequenceOfCIType {
-	Handle_LProp_SequenceNodeOfSequenceOfCIType GetHandle() {
-	return *(Handle_LProp_SequenceNodeOfSequenceOfCIType*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_LProp_SequenceNodeOfSequenceOfCIType(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -217,20 +178,6 @@ class Handle_LProp_SequenceNodeOfSequenceOfCIType : public Handle_TCollection_Se
 %extend Handle_LProp_SequenceNodeOfSequenceOfCIType {
     LProp_SequenceNodeOfSequenceOfCIType* GetObject() {
     return (LProp_SequenceNodeOfSequenceOfCIType*)$self->Access();
-    }
-};
-%feature("shadow") Handle_LProp_SequenceNodeOfSequenceOfCIType::~Handle_LProp_SequenceNodeOfSequenceOfCIType %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_LProp_SequenceNodeOfSequenceOfCIType {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -366,17 +313,3 @@ class LProp_SequenceOfCIType : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") LProp_SequenceOfCIType::~LProp_SequenceOfCIType %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend LProp_SequenceOfCIType {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Materials_headers.i
 
@@ -108,20 +105,6 @@ class Materials {
 };
 
 
-%feature("shadow") Materials::~Materials %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Materials {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Materials_Color;
 class Materials_Color : public Standard_Transient {
 	public:
@@ -212,23 +195,15 @@ class Materials_Color : public Standard_Transient {
 };
 
 
-%feature("shadow") Materials_Color::~Materials_Color %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Materials_Color {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Materials_Color {
-	Handle_Materials_Color GetHandle() {
-	return *(Handle_Materials_Color*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Materials_Color(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -248,20 +223,6 @@ class Handle_Materials_Color : public Handle_Standard_Transient {
 %extend Handle_Materials_Color {
     Materials_Color* GetObject() {
     return (Materials_Color*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Materials_Color::~Handle_Materials_Color %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Materials_Color {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -379,23 +340,15 @@ class Materials_FuzzyInstance : public Dynamic_FuzzyClass {
         };
 
 
-%feature("shadow") Materials_FuzzyInstance::~Materials_FuzzyInstance %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Materials_FuzzyInstance {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Materials_FuzzyInstance {
-	Handle_Materials_FuzzyInstance GetHandle() {
-	return *(Handle_Materials_FuzzyInstance*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Materials_FuzzyInstance(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -415,20 +368,6 @@ class Handle_Materials_FuzzyInstance : public Handle_Dynamic_FuzzyClass {
 %extend Handle_Materials_FuzzyInstance {
     Materials_FuzzyInstance* GetObject() {
     return (Materials_FuzzyInstance*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Materials_FuzzyInstance::~Handle_Materials_FuzzyInstance %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Materials_FuzzyInstance {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -456,23 +395,15 @@ class Materials_MaterialDefinition : public Dynamic_FuzzyDefinitionsDictionary {
 };
 
 
-%feature("shadow") Materials_MaterialDefinition::~Materials_MaterialDefinition %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Materials_MaterialDefinition {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Materials_MaterialDefinition {
-	Handle_Materials_MaterialDefinition GetHandle() {
-	return *(Handle_Materials_MaterialDefinition*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Materials_MaterialDefinition(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -492,20 +423,6 @@ class Handle_Materials_MaterialDefinition : public Handle_Dynamic_FuzzyDefinitio
 %extend Handle_Materials_MaterialDefinition {
     Materials_MaterialDefinition* GetObject() {
     return (Materials_MaterialDefinition*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Materials_MaterialDefinition::~Handle_Materials_MaterialDefinition %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Materials_MaterialDefinition {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -565,23 +482,15 @@ class Materials_MaterialsDictionary : public Standard_Transient {
         };
 
 
-%feature("shadow") Materials_MaterialsDictionary::~Materials_MaterialsDictionary %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Materials_MaterialsDictionary {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Materials_MaterialsDictionary {
-	Handle_Materials_MaterialsDictionary GetHandle() {
-	return *(Handle_Materials_MaterialsDictionary*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Materials_MaterialsDictionary(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -601,20 +510,6 @@ class Handle_Materials_MaterialsDictionary : public Handle_Standard_Transient {
 %extend Handle_Materials_MaterialsDictionary {
     Materials_MaterialsDictionary* GetObject() {
     return (Materials_MaterialsDictionary*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Materials_MaterialsDictionary::~Handle_Materials_MaterialsDictionary %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Materials_MaterialsDictionary {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -724,13 +619,13 @@ class Materials_MaterialsSequence : public MMgt_TShared {
 	:type anIndex: int
 	:rtype: Handle_Materials_Material
 ") Value;
-		const Handle_Materials_Material & Value (const Standard_Integer anIndex);
+		Handle_Materials_Material Value (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") ChangeValue;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
 	:rtype: Handle_Materials_Material
 ") ChangeValue;
-		Handle_Materials_Material & ChangeValue (const Standard_Integer anIndex);
+		Handle_Materials_Material ChangeValue (const Standard_Integer anIndex);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param anIndex:
 	:type anIndex: int
@@ -760,23 +655,15 @@ class Materials_MaterialsSequence : public MMgt_TShared {
 };
 
 
-%feature("shadow") Materials_MaterialsSequence::~Materials_MaterialsSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Materials_MaterialsSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Materials_MaterialsSequence {
-	Handle_Materials_MaterialsSequence GetHandle() {
-	return *(Handle_Materials_MaterialsSequence*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Materials_MaterialsSequence(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -796,20 +683,6 @@ class Handle_Materials_MaterialsSequence : public Handle_MMgt_TShared {
 %extend Handle_Materials_MaterialsSequence {
     Materials_MaterialsSequence* GetObject() {
     return (Materials_MaterialsSequence*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Materials_MaterialsSequence::~Handle_Materials_MaterialsSequence %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Materials_MaterialsSequence {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -895,11 +768,11 @@ class Materials_MtsSequence : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_Materials_Material
 ") First;
-		const Handle_Materials_Material & First ();
+		Handle_Materials_Material First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_Materials_Material
 ") Last;
-		const Handle_Materials_Material & Last ();
+		Handle_Materials_Material Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -913,7 +786,7 @@ class Materials_MtsSequence : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_Materials_Material
 ") Value;
-		const Handle_Materials_Material & Value (const Standard_Integer Index);
+		Handle_Materials_Material Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -927,7 +800,7 @@ class Materials_MtsSequence : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_Materials_Material
 ") ChangeValue;
-		Handle_Materials_Material & ChangeValue (const Standard_Integer Index);
+		Handle_Materials_Material ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -945,20 +818,6 @@ class Materials_MtsSequence : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") Materials_MtsSequence::~Materials_MtsSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Materials_MtsSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Materials_SequenceNodeOfMtsSequence;
 class Materials_SequenceNodeOfMtsSequence : public TCollection_SeqNode {
 	public:
@@ -975,27 +834,19 @@ class Materials_SequenceNodeOfMtsSequence : public TCollection_SeqNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_Materials_Material
 ") Value;
-		Handle_Materials_Material & Value ();
+		Handle_Materials_Material Value ();
 };
 
 
-%feature("shadow") Materials_SequenceNodeOfMtsSequence::~Materials_SequenceNodeOfMtsSequence %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Materials_SequenceNodeOfMtsSequence {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Materials_SequenceNodeOfMtsSequence {
-	Handle_Materials_SequenceNodeOfMtsSequence GetHandle() {
-	return *(Handle_Materials_SequenceNodeOfMtsSequence*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Materials_SequenceNodeOfMtsSequence(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1015,20 +866,6 @@ class Handle_Materials_SequenceNodeOfMtsSequence : public Handle_TCollection_Seq
 %extend Handle_Materials_SequenceNodeOfMtsSequence {
     Materials_SequenceNodeOfMtsSequence* GetObject() {
     return (Materials_SequenceNodeOfMtsSequence*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Materials_SequenceNodeOfMtsSequence::~Handle_Materials_SequenceNodeOfMtsSequence %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Materials_SequenceNodeOfMtsSequence {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1060,23 +897,15 @@ class Materials_Material : public Materials_FuzzyInstance {
         };
 
 
-%feature("shadow") Materials_Material::~Materials_Material %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Materials_Material {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Materials_Material {
-	Handle_Materials_Material GetHandle() {
-	return *(Handle_Materials_Material*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Materials_Material(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1096,20 +925,6 @@ class Handle_Materials_Material : public Handle_Materials_FuzzyInstance {
 %extend Handle_Materials_Material {
     Materials_Material* GetObject() {
     return (Materials_Material*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Materials_Material::~Handle_Materials_Material %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Materials_Material {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

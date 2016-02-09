@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include GccInt_headers.i
 
@@ -101,23 +98,15 @@ class GccInt_Bisec : public MMgt_TShared {
 };
 
 
-%feature("shadow") GccInt_Bisec::~GccInt_Bisec %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GccInt_Bisec {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GccInt_Bisec {
-	Handle_GccInt_Bisec GetHandle() {
-	return *(Handle_GccInt_Bisec*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GccInt_Bisec(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -137,20 +126,6 @@ class Handle_GccInt_Bisec : public Handle_MMgt_TShared {
 %extend Handle_GccInt_Bisec {
     GccInt_Bisec* GetObject() {
     return (GccInt_Bisec*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GccInt_Bisec::~Handle_GccInt_Bisec %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GccInt_Bisec {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -180,23 +155,15 @@ class GccInt_BCirc : public GccInt_Bisec {
 };
 
 
-%feature("shadow") GccInt_BCirc::~GccInt_BCirc %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GccInt_BCirc {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GccInt_BCirc {
-	Handle_GccInt_BCirc GetHandle() {
-	return *(Handle_GccInt_BCirc*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GccInt_BCirc(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -216,20 +183,6 @@ class Handle_GccInt_BCirc : public Handle_GccInt_Bisec {
 %extend Handle_GccInt_BCirc {
     GccInt_BCirc* GetObject() {
     return (GccInt_BCirc*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GccInt_BCirc::~Handle_GccInt_BCirc %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GccInt_BCirc {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -259,23 +212,15 @@ class GccInt_BElips : public GccInt_Bisec {
 };
 
 
-%feature("shadow") GccInt_BElips::~GccInt_BElips %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GccInt_BElips {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GccInt_BElips {
-	Handle_GccInt_BElips GetHandle() {
-	return *(Handle_GccInt_BElips*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GccInt_BElips(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -295,20 +240,6 @@ class Handle_GccInt_BElips : public Handle_GccInt_Bisec {
 %extend Handle_GccInt_BElips {
     GccInt_BElips* GetObject() {
     return (GccInt_BElips*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GccInt_BElips::~Handle_GccInt_BElips %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GccInt_BElips {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -338,23 +269,15 @@ class GccInt_BHyper : public GccInt_Bisec {
 };
 
 
-%feature("shadow") GccInt_BHyper::~GccInt_BHyper %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GccInt_BHyper {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GccInt_BHyper {
-	Handle_GccInt_BHyper GetHandle() {
-	return *(Handle_GccInt_BHyper*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GccInt_BHyper(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -374,20 +297,6 @@ class Handle_GccInt_BHyper : public Handle_GccInt_Bisec {
 %extend Handle_GccInt_BHyper {
     GccInt_BHyper* GetObject() {
     return (GccInt_BHyper*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GccInt_BHyper::~Handle_GccInt_BHyper %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GccInt_BHyper {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -417,23 +326,15 @@ class GccInt_BLine : public GccInt_Bisec {
 };
 
 
-%feature("shadow") GccInt_BLine::~GccInt_BLine %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GccInt_BLine {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GccInt_BLine {
-	Handle_GccInt_BLine GetHandle() {
-	return *(Handle_GccInt_BLine*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GccInt_BLine(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -453,20 +354,6 @@ class Handle_GccInt_BLine : public Handle_GccInt_Bisec {
 %extend Handle_GccInt_BLine {
     GccInt_BLine* GetObject() {
     return (GccInt_BLine*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GccInt_BLine::~Handle_GccInt_BLine %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GccInt_BLine {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -496,23 +383,15 @@ class GccInt_BParab : public GccInt_Bisec {
 };
 
 
-%feature("shadow") GccInt_BParab::~GccInt_BParab %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GccInt_BParab {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GccInt_BParab {
-	Handle_GccInt_BParab GetHandle() {
-	return *(Handle_GccInt_BParab*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GccInt_BParab(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -532,20 +411,6 @@ class Handle_GccInt_BParab : public Handle_GccInt_Bisec {
 %extend Handle_GccInt_BParab {
     GccInt_BParab* GetObject() {
     return (GccInt_BParab*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GccInt_BParab::~Handle_GccInt_BParab %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GccInt_BParab {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -575,23 +440,15 @@ class GccInt_BPoint : public GccInt_Bisec {
 };
 
 
-%feature("shadow") GccInt_BPoint::~GccInt_BPoint %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GccInt_BPoint {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GccInt_BPoint {
-	Handle_GccInt_BPoint GetHandle() {
-	return *(Handle_GccInt_BPoint*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GccInt_BPoint(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -611,20 +468,6 @@ class Handle_GccInt_BPoint : public Handle_GccInt_Bisec {
 %extend Handle_GccInt_BPoint {
     GccInt_BPoint* GetObject() {
     return (GccInt_BPoint*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GccInt_BPoint::~Handle_GccInt_BPoint %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GccInt_BPoint {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

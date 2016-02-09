@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include BiTgte_headers.i
 
@@ -279,20 +276,6 @@ class BiTgte_Blend {
 };
 
 
-%feature("shadow") BiTgte_Blend::~BiTgte_Blend %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BiTgte_Blend {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BiTgte_CurveOnEdge;
 class BiTgte_CurveOnEdge : public Adaptor3d_Curve {
 	public:
@@ -501,20 +484,6 @@ class BiTgte_CurveOnEdge : public Adaptor3d_Curve {
 };
 
 
-%feature("shadow") BiTgte_CurveOnEdge::~BiTgte_CurveOnEdge %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BiTgte_CurveOnEdge {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BiTgte_CurveOnVertex;
 class BiTgte_CurveOnVertex : public Adaptor3d_Curve {
 	public:
@@ -723,20 +692,6 @@ class BiTgte_CurveOnVertex : public Adaptor3d_Curve {
 };
 
 
-%feature("shadow") BiTgte_CurveOnVertex::~BiTgte_CurveOnVertex %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BiTgte_CurveOnVertex {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BiTgte_DataMapIteratorOfDataMapOfShapeBox;
 class BiTgte_DataMapIteratorOfDataMapOfShapeBox : public TCollection_BasicMapIterator {
 	public:
@@ -767,20 +722,6 @@ class BiTgte_DataMapIteratorOfDataMapOfShapeBox : public TCollection_BasicMapIte
 };
 
 
-%feature("shadow") BiTgte_DataMapIteratorOfDataMapOfShapeBox::~BiTgte_DataMapIteratorOfDataMapOfShapeBox %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BiTgte_DataMapIteratorOfDataMapOfShapeBox {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BiTgte_DataMapNodeOfDataMapOfShapeBox;
 class BiTgte_DataMapNodeOfDataMapOfShapeBox : public TCollection_MapNode {
 	public:
@@ -805,23 +746,15 @@ class BiTgte_DataMapNodeOfDataMapOfShapeBox : public TCollection_MapNode {
 };
 
 
-%feature("shadow") BiTgte_DataMapNodeOfDataMapOfShapeBox::~BiTgte_DataMapNodeOfDataMapOfShapeBox %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BiTgte_DataMapNodeOfDataMapOfShapeBox {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BiTgte_DataMapNodeOfDataMapOfShapeBox {
-	Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox GetHandle() {
-	return *(Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -841,20 +774,6 @@ class Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox : public Handle_TCollection_M
 %extend Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox {
     BiTgte_DataMapNodeOfDataMapOfShapeBox* GetObject() {
     return (BiTgte_DataMapNodeOfDataMapOfShapeBox*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox::~Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -936,20 +855,6 @@ class BiTgte_DataMapOfShapeBox : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") BiTgte_DataMapOfShapeBox::~BiTgte_DataMapOfShapeBox %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BiTgte_DataMapOfShapeBox {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BiTgte_HCurveOnEdge;
 class BiTgte_HCurveOnEdge : public Adaptor3d_HCurve {
 	public:
@@ -984,23 +889,15 @@ class BiTgte_HCurveOnEdge : public Adaptor3d_HCurve {
 };
 
 
-%feature("shadow") BiTgte_HCurveOnEdge::~BiTgte_HCurveOnEdge %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BiTgte_HCurveOnEdge {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BiTgte_HCurveOnEdge {
-	Handle_BiTgte_HCurveOnEdge GetHandle() {
-	return *(Handle_BiTgte_HCurveOnEdge*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BiTgte_HCurveOnEdge(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1020,20 +917,6 @@ class Handle_BiTgte_HCurveOnEdge : public Handle_Adaptor3d_HCurve {
 %extend Handle_BiTgte_HCurveOnEdge {
     BiTgte_HCurveOnEdge* GetObject() {
     return (BiTgte_HCurveOnEdge*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BiTgte_HCurveOnEdge::~Handle_BiTgte_HCurveOnEdge %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BiTgte_HCurveOnEdge {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1071,23 +954,15 @@ class BiTgte_HCurveOnVertex : public Adaptor3d_HCurve {
 };
 
 
-%feature("shadow") BiTgte_HCurveOnVertex::~BiTgte_HCurveOnVertex %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BiTgte_HCurveOnVertex {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BiTgte_HCurveOnVertex {
-	Handle_BiTgte_HCurveOnVertex GetHandle() {
-	return *(Handle_BiTgte_HCurveOnVertex*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BiTgte_HCurveOnVertex(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1107,20 +982,6 @@ class Handle_BiTgte_HCurveOnVertex : public Handle_Adaptor3d_HCurve {
 %extend Handle_BiTgte_HCurveOnVertex {
     BiTgte_HCurveOnVertex* GetObject() {
     return (BiTgte_HCurveOnVertex*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BiTgte_HCurveOnVertex::~Handle_BiTgte_HCurveOnVertex %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BiTgte_HCurveOnVertex {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

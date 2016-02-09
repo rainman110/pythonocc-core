@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include BOPInt_headers.i
 
@@ -288,23 +285,15 @@ class BOPInt_Context : public MMgt_TShared {
 };
 
 
-%feature("shadow") BOPInt_Context::~BOPInt_Context %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BOPInt_Context {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BOPInt_Context {
-	Handle_BOPInt_Context GetHandle() {
-	return *(Handle_BOPInt_Context*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BOPInt_Context(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -324,20 +313,6 @@ class Handle_BOPInt_Context : public Handle_MMgt_TShared {
 %extend Handle_BOPInt_Context {
     BOPInt_Context* GetObject() {
     return (BOPInt_Context*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BOPInt_Context::~Handle_BOPInt_Context %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BOPInt_Context {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -371,7 +346,7 @@ class BOPInt_ShrunkRange {
 		%feature("compactdefaultargs") Context;
 		%feature("autodoc", "	:rtype: Handle_BOPInt_Context
 ") Context;
-		const Handle_BOPInt_Context & Context ();
+		Handle_BOPInt_Context Context ();
 		%feature("compactdefaultargs") SetShrunkRange;
 		%feature("autodoc", "	:param aT1:
 	:type aT1: float
@@ -409,20 +384,6 @@ class BOPInt_ShrunkRange {
 };
 
 
-%feature("shadow") BOPInt_ShrunkRange::~BOPInt_ShrunkRange %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPInt_ShrunkRange {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class BOPInt_Tools {
 	public:
 		%feature("compactdefaultargs") CheckCurve;
@@ -514,17 +475,3 @@ class BOPInt_Tools {
 };
 
 
-%feature("shadow") BOPInt_Tools::~BOPInt_Tools %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BOPInt_Tools {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include IGESCAFControl_headers.i
 
@@ -66,20 +63,6 @@ class IGESCAFControl {
 };
 
 
-%feature("shadow") IGESCAFControl::~IGESCAFControl %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend IGESCAFControl {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor IGESCAFControl_Reader;
 class IGESCAFControl_Reader : public IGESControl_Reader {
 	public:
@@ -164,20 +147,6 @@ class IGESCAFControl_Reader : public IGESControl_Reader {
 };
 
 
-%feature("shadow") IGESCAFControl_Reader::~IGESCAFControl_Reader %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend IGESCAFControl_Reader {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor IGESCAFControl_Writer;
 class IGESCAFControl_Writer : public IGESControl_Writer {
 	public:
@@ -262,17 +231,3 @@ class IGESCAFControl_Writer : public IGESControl_Writer {
 };
 
 
-%feature("shadow") IGESCAFControl_Writer::~IGESCAFControl_Writer %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend IGESCAFControl_Writer {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include TFunction_headers.i
 
@@ -134,20 +131,6 @@ class TFunction_Array1OfDataMapOfGUIDDriver {
 };
 
 
-%feature("shadow") TFunction_Array1OfDataMapOfGUIDDriver::~TFunction_Array1OfDataMapOfGUIDDriver %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TFunction_Array1OfDataMapOfGUIDDriver {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TFunction_DataMapIteratorOfDataMapOfGUIDDriver;
 class TFunction_DataMapIteratorOfDataMapOfGUIDDriver : public TCollection_BasicMapIterator {
 	public:
@@ -174,24 +157,10 @@ class TFunction_DataMapIteratorOfDataMapOfGUIDDriver : public TCollection_BasicM
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_TFunction_Driver
 ") Value;
-		const Handle_TFunction_Driver & Value ();
+		Handle_TFunction_Driver Value ();
 };
 
 
-%feature("shadow") TFunction_DataMapIteratorOfDataMapOfGUIDDriver::~TFunction_DataMapIteratorOfDataMapOfGUIDDriver %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TFunction_DataMapIteratorOfDataMapOfGUIDDriver {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel;
 class TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel : public TCollection_BasicMapIterator {
 	public:
@@ -222,20 +191,6 @@ class TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel : public TCollection_
 };
 
 
-%feature("shadow") TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel::~TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TFunction_DataMapIteratorOfDataMapOfLabelListOfLabel {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TFunction_DataMapNodeOfDataMapOfGUIDDriver;
 class TFunction_DataMapNodeOfDataMapOfGUIDDriver : public TCollection_MapNode {
 	public:
@@ -256,27 +211,19 @@ class TFunction_DataMapNodeOfDataMapOfGUIDDriver : public TCollection_MapNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_TFunction_Driver
 ") Value;
-		Handle_TFunction_Driver & Value ();
+		Handle_TFunction_Driver Value ();
 };
 
 
-%feature("shadow") TFunction_DataMapNodeOfDataMapOfGUIDDriver::~TFunction_DataMapNodeOfDataMapOfGUIDDriver %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TFunction_DataMapNodeOfDataMapOfGUIDDriver {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TFunction_DataMapNodeOfDataMapOfGUIDDriver {
-	Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver GetHandle() {
-	return *(Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -296,20 +243,6 @@ class Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver : public Handle_TCollect
 %extend Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver {
     TFunction_DataMapNodeOfDataMapOfGUIDDriver* GetObject() {
     return (TFunction_DataMapNodeOfDataMapOfGUIDDriver*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver::~Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -337,23 +270,15 @@ class TFunction_DataMapNodeOfDataMapOfLabelListOfLabel : public TCollection_MapN
 };
 
 
-%feature("shadow") TFunction_DataMapNodeOfDataMapOfLabelListOfLabel::~TFunction_DataMapNodeOfDataMapOfLabelListOfLabel %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TFunction_DataMapNodeOfDataMapOfLabelListOfLabel {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TFunction_DataMapNodeOfDataMapOfLabelListOfLabel {
-	Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel GetHandle() {
-	return *(Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -373,20 +298,6 @@ class Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel : public Handle_TC
 %extend Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel {
     TFunction_DataMapNodeOfDataMapOfLabelListOfLabel* GetObject() {
     return (TFunction_DataMapNodeOfDataMapOfLabelListOfLabel*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel::~Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -446,13 +357,13 @@ class TFunction_DataMapOfGUIDDriver : public TCollection_BasicMap {
 	:type K: Standard_GUID &
 	:rtype: Handle_TFunction_Driver
 ") Find;
-		const Handle_TFunction_Driver & Find (const Standard_GUID & K);
+		Handle_TFunction_Driver Find (const Standard_GUID & K);
 		%feature("compactdefaultargs") ChangeFind;
 		%feature("autodoc", "	:param K:
 	:type K: Standard_GUID &
 	:rtype: Handle_TFunction_Driver
 ") ChangeFind;
-		Handle_TFunction_Driver & ChangeFind (const Standard_GUID & K);
+		Handle_TFunction_Driver ChangeFind (const Standard_GUID & K);
 		%feature("compactdefaultargs") Find1;
 		%feature("autodoc", "	:param K:
 	:type K: Standard_GUID &
@@ -468,20 +379,6 @@ class TFunction_DataMapOfGUIDDriver : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") TFunction_DataMapOfGUIDDriver::~TFunction_DataMapOfGUIDDriver %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TFunction_DataMapOfGUIDDriver {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TFunction_DataMapOfLabelListOfLabel;
 class TFunction_DataMapOfLabelListOfLabel : public TCollection_BasicMap {
 	public:
@@ -560,20 +457,6 @@ class TFunction_DataMapOfLabelListOfLabel : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") TFunction_DataMapOfLabelListOfLabel::~TFunction_DataMapOfLabelListOfLabel %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TFunction_DataMapOfLabelListOfLabel {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel;
 class TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel : public TCollection_BasicMapIterator {
 	public:
@@ -604,20 +487,6 @@ class TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel : public TCollection_
 };
 
 
-%feature("shadow") TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel::~TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TFunction_DoubleMapIteratorOfDoubleMapOfIntegerLabel {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel;
 class TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel : public TCollection_MapNode {
 	public:
@@ -657,23 +526,15 @@ class TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel : public TCollection_MapN
 };
 
 
-%feature("shadow") TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel::~TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel {
-	Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel GetHandle() {
-	return *(Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -693,20 +554,6 @@ class Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel : public Handle_TC
 %extend Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel {
     TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel* GetObject() {
     return (TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel::~Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -796,20 +643,6 @@ class TFunction_DoubleMapOfIntegerLabel : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") TFunction_DoubleMapOfIntegerLabel::~TFunction_DoubleMapOfIntegerLabel %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TFunction_DoubleMapOfIntegerLabel {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TFunction_Driver;
 class TFunction_Driver : public MMgt_TShared {
 	public:
@@ -870,23 +703,15 @@ class TFunction_Driver : public MMgt_TShared {
 };
 
 
-%feature("shadow") TFunction_Driver::~TFunction_Driver %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TFunction_Driver {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TFunction_Driver {
-	Handle_TFunction_Driver GetHandle() {
-	return *(Handle_TFunction_Driver*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TFunction_Driver(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -906,20 +731,6 @@ class Handle_TFunction_Driver : public Handle_MMgt_TShared {
 %extend Handle_TFunction_Driver {
     TFunction_Driver* GetObject() {
     return (TFunction_Driver*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TFunction_Driver::~Handle_TFunction_Driver %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TFunction_Driver {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -999,23 +810,15 @@ class TFunction_DriverTable : public MMgt_TShared {
 };
 
 
-%feature("shadow") TFunction_DriverTable::~TFunction_DriverTable %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TFunction_DriverTable {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TFunction_DriverTable {
-	Handle_TFunction_DriverTable GetHandle() {
-	return *(Handle_TFunction_DriverTable*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TFunction_DriverTable(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1035,20 +838,6 @@ class Handle_TFunction_DriverTable : public Handle_MMgt_TShared {
 %extend Handle_TFunction_DriverTable {
     TFunction_DriverTable* GetObject() {
     return (TFunction_DriverTable*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TFunction_DriverTable::~Handle_TFunction_DriverTable %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TFunction_DriverTable {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1156,23 +945,15 @@ class TFunction_Function : public TDF_Attribute {
         };
 
 
-%feature("shadow") TFunction_Function::~TFunction_Function %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TFunction_Function {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TFunction_Function {
-	Handle_TFunction_Function GetHandle() {
-	return *(Handle_TFunction_Function*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TFunction_Function(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1192,20 +973,6 @@ class Handle_TFunction_Function : public Handle_TDF_Attribute {
 %extend Handle_TFunction_Function {
     TFunction_Function* GetObject() {
     return (TFunction_Function*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TFunction_Function::~Handle_TFunction_Function %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TFunction_Function {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1371,23 +1138,15 @@ class TFunction_GraphNode : public TDF_Attribute {
         };
 
 
-%feature("shadow") TFunction_GraphNode::~TFunction_GraphNode %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TFunction_GraphNode {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TFunction_GraphNode {
-	Handle_TFunction_GraphNode GetHandle() {
-	return *(Handle_TFunction_GraphNode*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TFunction_GraphNode(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1407,20 +1166,6 @@ class Handle_TFunction_GraphNode : public Handle_TDF_Attribute {
 %extend Handle_TFunction_GraphNode {
     TFunction_GraphNode* GetObject() {
     return (TFunction_GraphNode*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TFunction_GraphNode::~Handle_TFunction_GraphNode %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TFunction_GraphNode {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1494,23 +1239,15 @@ class TFunction_HArray1OfDataMapOfGUIDDriver : public MMgt_TShared {
 };
 
 
-%feature("shadow") TFunction_HArray1OfDataMapOfGUIDDriver::~TFunction_HArray1OfDataMapOfGUIDDriver %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TFunction_HArray1OfDataMapOfGUIDDriver {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TFunction_HArray1OfDataMapOfGUIDDriver {
-	Handle_TFunction_HArray1OfDataMapOfGUIDDriver GetHandle() {
-	return *(Handle_TFunction_HArray1OfDataMapOfGUIDDriver*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TFunction_HArray1OfDataMapOfGUIDDriver(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1530,20 +1267,6 @@ class Handle_TFunction_HArray1OfDataMapOfGUIDDriver : public Handle_MMgt_TShared
 %extend Handle_TFunction_HArray1OfDataMapOfGUIDDriver {
     TFunction_HArray1OfDataMapOfGUIDDriver* GetObject() {
     return (TFunction_HArray1OfDataMapOfGUIDDriver*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TFunction_HArray1OfDataMapOfGUIDDriver::~Handle_TFunction_HArray1OfDataMapOfGUIDDriver %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TFunction_HArray1OfDataMapOfGUIDDriver {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1682,20 +1405,6 @@ class TFunction_IFunction {
 };
 
 
-%feature("shadow") TFunction_IFunction::~TFunction_IFunction %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TFunction_IFunction {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TFunction_Iterator;
 class TFunction_Iterator {
 	public:
@@ -1788,20 +1497,6 @@ class TFunction_Iterator {
         };
 
 
-%feature("shadow") TFunction_Iterator::~TFunction_Iterator %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TFunction_Iterator {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TFunction_Logbook;
 class TFunction_Logbook {
 	public:
@@ -1904,20 +1599,6 @@ class TFunction_Logbook {
         };
 
 
-%feature("shadow") TFunction_Logbook::~TFunction_Logbook %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TFunction_Logbook {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TFunction_Scope;
 class TFunction_Scope : public TDF_Attribute {
 	public:
@@ -2062,23 +1743,15 @@ class TFunction_Scope : public TDF_Attribute {
 };
 
 
-%feature("shadow") TFunction_Scope::~TFunction_Scope %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend TFunction_Scope {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend TFunction_Scope {
-	Handle_TFunction_Scope GetHandle() {
-	return *(Handle_TFunction_Scope*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_TFunction_Scope(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2098,20 +1771,6 @@ class Handle_TFunction_Scope : public Handle_TDF_Attribute {
 %extend Handle_TFunction_Scope {
     TFunction_Scope* GetObject() {
     return (TFunction_Scope*)$self->Access();
-    }
-};
-%feature("shadow") Handle_TFunction_Scope::~Handle_TFunction_Scope %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_TFunction_Scope {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include BRepTopAdaptor_headers.i
 
@@ -75,20 +72,6 @@ class BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool : public TCollection_BasicM
 };
 
 
-%feature("shadow") BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool::~BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepTopAdaptor_DataMapIteratorOfMapOfShapeTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepTopAdaptor_DataMapNodeOfMapOfShapeTool;
 class BRepTopAdaptor_DataMapNodeOfMapOfShapeTool : public TCollection_MapNode {
 	public:
@@ -113,23 +96,15 @@ class BRepTopAdaptor_DataMapNodeOfMapOfShapeTool : public TCollection_MapNode {
 };
 
 
-%feature("shadow") BRepTopAdaptor_DataMapNodeOfMapOfShapeTool::~BRepTopAdaptor_DataMapNodeOfMapOfShapeTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepTopAdaptor_DataMapNodeOfMapOfShapeTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepTopAdaptor_DataMapNodeOfMapOfShapeTool {
-	Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool GetHandle() {
-	return *(Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -149,20 +124,6 @@ class Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool : public Handle_TCollect
 %extend Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool {
     BRepTopAdaptor_DataMapNodeOfMapOfShapeTool* GetObject() {
     return (BRepTopAdaptor_DataMapNodeOfMapOfShapeTool*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool::~Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -220,20 +181,6 @@ class BRepTopAdaptor_FClass2d {
 };
 
 
-%feature("shadow") BRepTopAdaptor_FClass2d::~BRepTopAdaptor_FClass2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepTopAdaptor_FClass2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepTopAdaptor_HVertex;
 class BRepTopAdaptor_HVertex : public Adaptor3d_HVertex {
 	public:
@@ -284,23 +231,15 @@ class BRepTopAdaptor_HVertex : public Adaptor3d_HVertex {
 };
 
 
-%feature("shadow") BRepTopAdaptor_HVertex::~BRepTopAdaptor_HVertex %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepTopAdaptor_HVertex {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepTopAdaptor_HVertex {
-	Handle_BRepTopAdaptor_HVertex GetHandle() {
-	return *(Handle_BRepTopAdaptor_HVertex*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepTopAdaptor_HVertex(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -320,20 +259,6 @@ class Handle_BRepTopAdaptor_HVertex : public Handle_Adaptor3d_HVertex {
 %extend Handle_BRepTopAdaptor_HVertex {
     BRepTopAdaptor_HVertex* GetObject() {
     return (BRepTopAdaptor_HVertex*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepTopAdaptor_HVertex::~Handle_BRepTopAdaptor_HVertex %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepTopAdaptor_HVertex {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -415,20 +340,6 @@ class BRepTopAdaptor_MapOfShapeTool : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") BRepTopAdaptor_MapOfShapeTool::~BRepTopAdaptor_MapOfShapeTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepTopAdaptor_MapOfShapeTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepTopAdaptor_Tool;
 class BRepTopAdaptor_Tool {
 	public:
@@ -489,20 +400,6 @@ class BRepTopAdaptor_Tool {
 };
 
 
-%feature("shadow") BRepTopAdaptor_Tool::~BRepTopAdaptor_Tool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepTopAdaptor_Tool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepTopAdaptor_TopolTool;
 class BRepTopAdaptor_TopolTool : public Adaptor3d_TopolTool {
 	public:
@@ -679,23 +576,15 @@ class BRepTopAdaptor_TopolTool : public Adaptor3d_TopolTool {
 };
 
 
-%feature("shadow") BRepTopAdaptor_TopolTool::~BRepTopAdaptor_TopolTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepTopAdaptor_TopolTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepTopAdaptor_TopolTool {
-	Handle_BRepTopAdaptor_TopolTool GetHandle() {
-	return *(Handle_BRepTopAdaptor_TopolTool*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepTopAdaptor_TopolTool(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -715,20 +604,6 @@ class Handle_BRepTopAdaptor_TopolTool : public Handle_Adaptor3d_TopolTool {
 %extend Handle_BRepTopAdaptor_TopolTool {
     BRepTopAdaptor_TopolTool* GetObject() {
     return (BRepTopAdaptor_TopolTool*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepTopAdaptor_TopolTool::~Handle_BRepTopAdaptor_TopolTool %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepTopAdaptor_TopolTool {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

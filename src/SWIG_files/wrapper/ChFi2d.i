@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include ChFi2d_headers.i
 
@@ -67,20 +64,6 @@ class ChFi2d {
 };
 
 
-%feature("shadow") ChFi2d::~ChFi2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFi2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFi2d_AnaFilletAlgo;
 class ChFi2d_AnaFilletAlgo {
 	public:
@@ -155,20 +138,6 @@ class ChFi2d_AnaFilletAlgo {
 };
 
 
-%feature("shadow") ChFi2d_AnaFilletAlgo::~ChFi2d_AnaFilletAlgo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFi2d_AnaFilletAlgo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFi2d_Builder;
 class ChFi2d_Builder {
 	public:
@@ -353,20 +322,6 @@ class ChFi2d_Builder {
 };
 
 
-%feature("shadow") ChFi2d_Builder::~ChFi2d_Builder %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFi2d_Builder {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFi2d_ChamferAPI;
 class ChFi2d_ChamferAPI {
 	public:
@@ -433,20 +388,6 @@ class ChFi2d_ChamferAPI {
 };
 
 
-%feature("shadow") ChFi2d_ChamferAPI::~ChFi2d_ChamferAPI %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFi2d_ChamferAPI {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFi2d_FilletAPI;
 class ChFi2d_FilletAPI {
 	public:
@@ -533,20 +474,6 @@ class ChFi2d_FilletAPI {
 };
 
 
-%feature("shadow") ChFi2d_FilletAPI::~ChFi2d_FilletAPI %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFi2d_FilletAPI {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ChFi2d_FilletAlgo;
 class ChFi2d_FilletAlgo {
 	public:
@@ -633,17 +560,3 @@ class ChFi2d_FilletAlgo {
 };
 
 
-%feature("shadow") ChFi2d_FilletAlgo::~ChFi2d_FilletAlgo %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ChFi2d_FilletAlgo {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

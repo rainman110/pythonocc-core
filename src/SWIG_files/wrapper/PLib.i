@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include PLib_headers.i
 
@@ -536,20 +533,6 @@ class PLib {
 };
 
 
-%feature("shadow") PLib::~PLib %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend PLib {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor PLib_Base;
 class PLib_Base : public MMgt_TShared {
 	public:
@@ -646,23 +629,15 @@ class PLib_Base : public MMgt_TShared {
 };
 
 
-%feature("shadow") PLib_Base::~PLib_Base %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend PLib_Base {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend PLib_Base {
-	Handle_PLib_Base GetHandle() {
-	return *(Handle_PLib_Base*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_PLib_Base(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -682,20 +657,6 @@ class Handle_PLib_Base : public Handle_MMgt_TShared {
 %extend Handle_PLib_Base {
     PLib_Base* GetObject() {
     return (PLib_Base*)$self->Access();
-    }
-};
-%feature("shadow") Handle_PLib_Base::~Handle_PLib_Base %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_PLib_Base {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -843,20 +804,6 @@ class PLib_DoubleJacobiPolynomial {
 };
 
 
-%feature("shadow") PLib_DoubleJacobiPolynomial::~PLib_DoubleJacobiPolynomial %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend PLib_DoubleJacobiPolynomial {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor PLib_JacobiPolynomial;
 class PLib_JacobiPolynomial : public PLib_Base {
 	public:
@@ -1019,23 +966,15 @@ class PLib_JacobiPolynomial : public PLib_Base {
 };
 
 
-%feature("shadow") PLib_JacobiPolynomial::~PLib_JacobiPolynomial %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend PLib_JacobiPolynomial {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend PLib_JacobiPolynomial {
-	Handle_PLib_JacobiPolynomial GetHandle() {
-	return *(Handle_PLib_JacobiPolynomial*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_PLib_JacobiPolynomial(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1055,20 +994,6 @@ class Handle_PLib_JacobiPolynomial : public Handle_PLib_Base {
 %extend Handle_PLib_JacobiPolynomial {
     PLib_JacobiPolynomial* GetObject() {
     return (PLib_JacobiPolynomial*)$self->Access();
-    }
-};
-%feature("shadow") Handle_PLib_JacobiPolynomial::~Handle_PLib_JacobiPolynomial %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_PLib_JacobiPolynomial {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

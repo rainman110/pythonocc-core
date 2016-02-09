@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include ShapeBuild_headers.i
 
@@ -56,20 +53,6 @@ class ShapeBuild {
 };
 
 
-%feature("shadow") ShapeBuild::~ShapeBuild %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ShapeBuild {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class ShapeBuild_Edge {
 	public:
 		%feature("compactdefaultargs") CopyReplaceVertices;
@@ -309,20 +292,6 @@ class ShapeBuild_Edge {
 };
 
 
-%feature("shadow") ShapeBuild_Edge::~ShapeBuild_Edge %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ShapeBuild_Edge {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor ShapeBuild_ReShape;
 class ShapeBuild_ReShape : public BRepTools_ReShape {
 	public:
@@ -377,23 +346,15 @@ class ShapeBuild_ReShape : public BRepTools_ReShape {
 };
 
 
-%feature("shadow") ShapeBuild_ReShape::~ShapeBuild_ReShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend ShapeBuild_ReShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend ShapeBuild_ReShape {
-	Handle_ShapeBuild_ReShape GetHandle() {
-	return *(Handle_ShapeBuild_ReShape*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_ShapeBuild_ReShape(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -413,20 +374,6 @@ class Handle_ShapeBuild_ReShape : public Handle_BRepTools_ReShape {
 %extend Handle_ShapeBuild_ReShape {
     ShapeBuild_ReShape* GetObject() {
     return (ShapeBuild_ReShape*)$self->Access();
-    }
-};
-%feature("shadow") Handle_ShapeBuild_ReShape::~Handle_ShapeBuild_ReShape %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_ShapeBuild_ReShape {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -463,17 +410,3 @@ class ShapeBuild_Vertex {
 };
 
 
-%feature("shadow") ShapeBuild_Vertex::~ShapeBuild_Vertex %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend ShapeBuild_Vertex {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

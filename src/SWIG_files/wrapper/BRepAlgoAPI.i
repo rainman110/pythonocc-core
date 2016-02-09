@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include BRepAlgoAPI_headers.i
 
@@ -68,20 +65,6 @@ class BRepAlgoAPI {
 };
 
 
-%feature("shadow") BRepAlgoAPI::~BRepAlgoAPI %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAlgoAPI {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepAlgoAPI_BooleanOperation;
 class BRepAlgoAPI_BooleanOperation : public BRepBuilderAPI_MakeShape {
 	public:
@@ -194,20 +177,6 @@ class BRepAlgoAPI_BooleanOperation : public BRepBuilderAPI_MakeShape {
 };
 
 
-%feature("shadow") BRepAlgoAPI_BooleanOperation::~BRepAlgoAPI_BooleanOperation %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAlgoAPI_BooleanOperation {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepAlgoAPI_Check;
 class BRepAlgoAPI_Check {
 	public:
@@ -294,20 +263,6 @@ class BRepAlgoAPI_Check {
 };
 
 
-%feature("shadow") BRepAlgoAPI_Check::~BRepAlgoAPI_Check %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAlgoAPI_Check {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepAlgoAPI_Common;
 class BRepAlgoAPI_Common : public BRepAlgoAPI_BooleanOperation {
 	public:
@@ -334,20 +289,6 @@ class BRepAlgoAPI_Common : public BRepAlgoAPI_BooleanOperation {
 };
 
 
-%feature("shadow") BRepAlgoAPI_Common::~BRepAlgoAPI_Common %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAlgoAPI_Common {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepAlgoAPI_Cut;
 class BRepAlgoAPI_Cut : public BRepAlgoAPI_BooleanOperation {
 	public:
@@ -378,20 +319,6 @@ class BRepAlgoAPI_Cut : public BRepAlgoAPI_BooleanOperation {
 };
 
 
-%feature("shadow") BRepAlgoAPI_Cut::~BRepAlgoAPI_Cut %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAlgoAPI_Cut {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepAlgoAPI_Fuse;
 class BRepAlgoAPI_Fuse : public BRepAlgoAPI_BooleanOperation {
 	public:
@@ -420,20 +347,6 @@ class BRepAlgoAPI_Fuse : public BRepAlgoAPI_BooleanOperation {
 };
 
 
-%feature("shadow") BRepAlgoAPI_Fuse::~BRepAlgoAPI_Fuse %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAlgoAPI_Fuse {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepAlgoAPI_Section;
 class BRepAlgoAPI_Section : public BRepAlgoAPI_BooleanOperation {
 	public:
@@ -610,17 +523,3 @@ class BRepAlgoAPI_Section : public BRepAlgoAPI_BooleanOperation {
 };
 
 
-%feature("shadow") BRepAlgoAPI_Section::~BRepAlgoAPI_Section %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAlgoAPI_Section {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

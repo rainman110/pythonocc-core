@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Visual3d_headers.i
 
@@ -160,20 +157,6 @@ class Visual3d_ContextPick {
 };
 
 
-%feature("shadow") Visual3d_ContextPick::~Visual3d_ContextPick %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_ContextPick {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_ContextView;
 class Visual3d_ContextView {
 	public:
@@ -424,20 +407,6 @@ class Visual3d_ContextView {
 };
 
 
-%feature("shadow") Visual3d_ContextView::~Visual3d_ContextView %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_ContextView {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_HSequenceOfPickPath;
 class Visual3d_HSequenceOfPickPath : public MMgt_TShared {
 	public:
@@ -580,23 +549,15 @@ class Visual3d_HSequenceOfPickPath : public MMgt_TShared {
 };
 
 
-%feature("shadow") Visual3d_HSequenceOfPickPath::~Visual3d_HSequenceOfPickPath %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_HSequenceOfPickPath {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_HSequenceOfPickPath {
-	Handle_Visual3d_HSequenceOfPickPath GetHandle() {
-	return *(Handle_Visual3d_HSequenceOfPickPath*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_HSequenceOfPickPath(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -616,20 +577,6 @@ class Handle_Visual3d_HSequenceOfPickPath : public Handle_MMgt_TShared {
 %extend Handle_Visual3d_HSequenceOfPickPath {
     Visual3d_HSequenceOfPickPath* GetObject() {
     return (Visual3d_HSequenceOfPickPath*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Visual3d_HSequenceOfPickPath::~Handle_Visual3d_HSequenceOfPickPath %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_HSequenceOfPickPath {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -715,23 +662,15 @@ class Visual3d_HSetOfLight : public MMgt_TShared {
 };
 
 
-%feature("shadow") Visual3d_HSetOfLight::~Visual3d_HSetOfLight %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_HSetOfLight {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_HSetOfLight {
-	Handle_Visual3d_HSetOfLight GetHandle() {
-	return *(Handle_Visual3d_HSetOfLight*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_HSetOfLight(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -751,20 +690,6 @@ class Handle_Visual3d_HSetOfLight : public Handle_MMgt_TShared {
 %extend Handle_Visual3d_HSetOfLight {
     Visual3d_HSetOfLight* GetObject() {
     return (Visual3d_HSetOfLight*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Visual3d_HSetOfLight::~Handle_Visual3d_HSetOfLight %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_HSetOfLight {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -850,23 +775,15 @@ class Visual3d_HSetOfView : public MMgt_TShared {
 };
 
 
-%feature("shadow") Visual3d_HSetOfView::~Visual3d_HSetOfView %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_HSetOfView {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_HSetOfView {
-	Handle_Visual3d_HSetOfView GetHandle() {
-	return *(Handle_Visual3d_HSetOfView*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_HSetOfView(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -886,20 +803,6 @@ class Handle_Visual3d_HSetOfView : public Handle_MMgt_TShared {
 %extend Handle_Visual3d_HSetOfView {
     Visual3d_HSetOfView* GetObject() {
     return (Visual3d_HSetOfView*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Visual3d_HSetOfView::~Handle_Visual3d_HSetOfView %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_HSetOfView {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1111,23 +1014,15 @@ class Visual3d_Layer : public MMgt_TShared {
 };
 
 
-%feature("shadow") Visual3d_Layer::~Visual3d_Layer %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_Layer {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_Layer {
-	Handle_Visual3d_Layer GetHandle() {
-	return *(Handle_Visual3d_Layer*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_Layer(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1147,20 +1042,6 @@ class Handle_Visual3d_Layer : public Handle_MMgt_TShared {
 %extend Handle_Visual3d_Layer {
     Visual3d_Layer* GetObject() {
     return (Visual3d_Layer*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Visual3d_Layer::~Handle_Visual3d_Layer %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_Layer {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1198,23 +1079,15 @@ class Visual3d_LayerItem : public MMgt_TShared {
 };
 
 
-%feature("shadow") Visual3d_LayerItem::~Visual3d_LayerItem %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_LayerItem {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_LayerItem {
-	Handle_Visual3d_LayerItem GetHandle() {
-	return *(Handle_Visual3d_LayerItem*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_LayerItem(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1234,20 +1107,6 @@ class Handle_Visual3d_LayerItem : public Handle_MMgt_TShared {
 %extend Handle_Visual3d_LayerItem {
     Visual3d_LayerItem* GetObject() {
     return (Visual3d_LayerItem*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Visual3d_LayerItem::~Handle_Visual3d_LayerItem %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_LayerItem {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1457,23 +1316,15 @@ class Visual3d_Light : public MMgt_TShared {
 };
 
 
-%feature("shadow") Visual3d_Light::~Visual3d_Light %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_Light {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_Light {
-	Handle_Visual3d_Light GetHandle() {
-	return *(Handle_Visual3d_Light*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_Light(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1493,20 +1344,6 @@ class Handle_Visual3d_Light : public Handle_MMgt_TShared {
 %extend Handle_Visual3d_Light {
     Visual3d_Light* GetObject() {
     return (Visual3d_Light*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Visual3d_Light::~Handle_Visual3d_Light %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_Light {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1540,24 +1377,10 @@ class Visual3d_ListIteratorOfSetListOfSetOfLight {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_Visual3d_Light
 ") Value;
-		Handle_Visual3d_Light & Value ();
+		Handle_Visual3d_Light Value ();
 };
 
 
-%feature("shadow") Visual3d_ListIteratorOfSetListOfSetOfLight::~Visual3d_ListIteratorOfSetListOfSetOfLight %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_ListIteratorOfSetListOfSetOfLight {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_ListIteratorOfSetListOfSetOfView;
 class Visual3d_ListIteratorOfSetListOfSetOfView {
 	public:
@@ -1588,24 +1411,10 @@ class Visual3d_ListIteratorOfSetListOfSetOfView {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_Visual3d_View
 ") Value;
-		Handle_Visual3d_View & Value ();
+		Handle_Visual3d_View Value ();
 };
 
 
-%feature("shadow") Visual3d_ListIteratorOfSetListOfSetOfView::~Visual3d_ListIteratorOfSetListOfSetOfView %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_ListIteratorOfSetListOfSetOfView {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_ListNodeOfSetListOfSetOfLight;
 class Visual3d_ListNodeOfSetListOfSetOfLight : public TCollection_MapNode {
 	public:
@@ -1620,27 +1429,19 @@ class Visual3d_ListNodeOfSetListOfSetOfLight : public TCollection_MapNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_Visual3d_Light
 ") Value;
-		Handle_Visual3d_Light & Value ();
+		Handle_Visual3d_Light Value ();
 };
 
 
-%feature("shadow") Visual3d_ListNodeOfSetListOfSetOfLight::~Visual3d_ListNodeOfSetListOfSetOfLight %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_ListNodeOfSetListOfSetOfLight {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_ListNodeOfSetListOfSetOfLight {
-	Handle_Visual3d_ListNodeOfSetListOfSetOfLight GetHandle() {
-	return *(Handle_Visual3d_ListNodeOfSetListOfSetOfLight*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_ListNodeOfSetListOfSetOfLight(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1662,20 +1463,6 @@ class Handle_Visual3d_ListNodeOfSetListOfSetOfLight : public Handle_TCollection_
     return (Visual3d_ListNodeOfSetListOfSetOfLight*)$self->Access();
     }
 };
-%feature("shadow") Handle_Visual3d_ListNodeOfSetListOfSetOfLight::~Handle_Visual3d_ListNodeOfSetListOfSetOfLight %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_ListNodeOfSetListOfSetOfLight {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor Visual3d_ListNodeOfSetListOfSetOfView;
 class Visual3d_ListNodeOfSetListOfSetOfView : public TCollection_MapNode {
@@ -1691,27 +1478,19 @@ class Visual3d_ListNodeOfSetListOfSetOfView : public TCollection_MapNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_Visual3d_View
 ") Value;
-		Handle_Visual3d_View & Value ();
+		Handle_Visual3d_View Value ();
 };
 
 
-%feature("shadow") Visual3d_ListNodeOfSetListOfSetOfView::~Visual3d_ListNodeOfSetListOfSetOfView %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_ListNodeOfSetListOfSetOfView {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_ListNodeOfSetListOfSetOfView {
-	Handle_Visual3d_ListNodeOfSetListOfSetOfView GetHandle() {
-	return *(Handle_Visual3d_ListNodeOfSetListOfSetOfView*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_ListNodeOfSetListOfSetOfView(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1731,20 +1510,6 @@ class Handle_Visual3d_ListNodeOfSetListOfSetOfView : public Handle_TCollection_M
 %extend Handle_Visual3d_ListNodeOfSetListOfSetOfView {
     Visual3d_ListNodeOfSetListOfSetOfView* GetObject() {
     return (Visual3d_ListNodeOfSetListOfSetOfView*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Visual3d_ListNodeOfSetListOfSetOfView::~Handle_Visual3d_ListNodeOfSetListOfSetOfView %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_ListNodeOfSetListOfSetOfView {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1806,20 +1571,6 @@ class Visual3d_PickDescriptor {
 };
 
 
-%feature("shadow") Visual3d_PickDescriptor::~Visual3d_PickDescriptor %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_PickDescriptor {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_PickPath;
 class Visual3d_PickPath {
 	public:
@@ -1886,20 +1637,6 @@ class Visual3d_PickPath {
 };
 
 
-%feature("shadow") Visual3d_PickPath::~Visual3d_PickPath %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_PickPath {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_SequenceNodeOfSequenceOfPickPath;
 class Visual3d_SequenceNodeOfSequenceOfPickPath : public TCollection_SeqNode {
 	public:
@@ -1920,23 +1657,15 @@ class Visual3d_SequenceNodeOfSequenceOfPickPath : public TCollection_SeqNode {
 };
 
 
-%feature("shadow") Visual3d_SequenceNodeOfSequenceOfPickPath::~Visual3d_SequenceNodeOfSequenceOfPickPath %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_SequenceNodeOfSequenceOfPickPath {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_SequenceNodeOfSequenceOfPickPath {
-	Handle_Visual3d_SequenceNodeOfSequenceOfPickPath GetHandle() {
-	return *(Handle_Visual3d_SequenceNodeOfSequenceOfPickPath*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_SequenceNodeOfSequenceOfPickPath(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1956,20 +1685,6 @@ class Handle_Visual3d_SequenceNodeOfSequenceOfPickPath : public Handle_TCollecti
 %extend Handle_Visual3d_SequenceNodeOfSequenceOfPickPath {
     Visual3d_SequenceNodeOfSequenceOfPickPath* GetObject() {
     return (Visual3d_SequenceNodeOfSequenceOfPickPath*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Visual3d_SequenceNodeOfSequenceOfPickPath::~Handle_Visual3d_SequenceNodeOfSequenceOfPickPath %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_SequenceNodeOfSequenceOfPickPath {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -2105,20 +1820,6 @@ class Visual3d_SequenceOfPickPath : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") Visual3d_SequenceOfPickPath::~Visual3d_SequenceOfPickPath %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_SequenceOfPickPath {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_SetIteratorOfSetOfLight;
 class Visual3d_SetIteratorOfSetOfLight {
 	public:
@@ -2149,24 +1850,10 @@ class Visual3d_SetIteratorOfSetOfLight {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_Visual3d_Light
 ") Value;
-		const Handle_Visual3d_Light & Value ();
+		Handle_Visual3d_Light Value ();
 };
 
 
-%feature("shadow") Visual3d_SetIteratorOfSetOfLight::~Visual3d_SetIteratorOfSetOfLight %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_SetIteratorOfSetOfLight {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_SetIteratorOfSetOfView;
 class Visual3d_SetIteratorOfSetOfView {
 	public:
@@ -2197,24 +1884,10 @@ class Visual3d_SetIteratorOfSetOfView {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_Visual3d_View
 ") Value;
-		const Handle_Visual3d_View & Value ();
+		Handle_Visual3d_View Value ();
 };
 
 
-%feature("shadow") Visual3d_SetIteratorOfSetOfView::~Visual3d_SetIteratorOfSetOfView %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_SetIteratorOfSetOfView {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_SetListOfSetOfLight;
 class Visual3d_SetListOfSetOfLight {
 	public:
@@ -2289,11 +1962,11 @@ class Visual3d_SetListOfSetOfLight {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_Visual3d_Light
 ") First;
-		Handle_Visual3d_Light & First ();
+		Handle_Visual3d_Light First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_Visual3d_Light
 ") Last;
-		Handle_Visual3d_Light & Last ();
+		Handle_Visual3d_Light Last ();
 		%feature("compactdefaultargs") RemoveFirst;
 		%feature("autodoc", "	:rtype: None
 ") RemoveFirst;
@@ -2339,20 +2012,6 @@ class Visual3d_SetListOfSetOfLight {
 };
 
 
-%feature("shadow") Visual3d_SetListOfSetOfLight::~Visual3d_SetListOfSetOfLight %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_SetListOfSetOfLight {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_SetListOfSetOfView;
 class Visual3d_SetListOfSetOfView {
 	public:
@@ -2427,11 +2086,11 @@ class Visual3d_SetListOfSetOfView {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_Visual3d_View
 ") First;
-		Handle_Visual3d_View & First ();
+		Handle_Visual3d_View First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_Visual3d_View
 ") Last;
-		Handle_Visual3d_View & Last ();
+		Handle_Visual3d_View Last ();
 		%feature("compactdefaultargs") RemoveFirst;
 		%feature("autodoc", "	:rtype: None
 ") RemoveFirst;
@@ -2477,20 +2136,6 @@ class Visual3d_SetListOfSetOfView {
 };
 
 
-%feature("shadow") Visual3d_SetListOfSetOfView::~Visual3d_SetListOfSetOfView %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_SetListOfSetOfView {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_SetOfLight;
 class Visual3d_SetOfLight {
 	public:
@@ -2561,20 +2206,6 @@ class Visual3d_SetOfLight {
 };
 
 
-%feature("shadow") Visual3d_SetOfLight::~Visual3d_SetOfLight %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_SetOfLight {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_SetOfView;
 class Visual3d_SetOfView {
 	public:
@@ -2645,20 +2276,6 @@ class Visual3d_SetOfView {
 };
 
 
-%feature("shadow") Visual3d_SetOfView::~Visual3d_SetOfView %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_SetOfView {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_TransientManager;
 class Visual3d_TransientManager : public MMgt_TShared {
 	public:
@@ -2729,23 +2346,15 @@ class Visual3d_TransientManager : public MMgt_TShared {
 };
 
 
-%feature("shadow") Visual3d_TransientManager::~Visual3d_TransientManager %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_TransientManager {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_TransientManager {
-	Handle_Visual3d_TransientManager GetHandle() {
-	return *(Handle_Visual3d_TransientManager*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_TransientManager(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -2765,20 +2374,6 @@ class Handle_Visual3d_TransientManager : public Handle_MMgt_TShared {
 %extend Handle_Visual3d_TransientManager {
     Visual3d_TransientManager* GetObject() {
     return (Visual3d_TransientManager*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Visual3d_TransientManager::~Handle_Visual3d_TransientManager %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_TransientManager {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -3518,7 +3113,7 @@ class Visual3d_View : public Graphic3d_DataStructureManager {
 
 	:rtype: Handle_Graphic3d_GraphicDriver
 ") GraphicDriver;
-		const Handle_Graphic3d_GraphicDriver & GraphicDriver ();
+		Handle_Graphic3d_GraphicDriver GraphicDriver ();
 		%feature("compactdefaultargs") Plot;
 		%feature("autodoc", "	* Calls the method Plot for each Structure //!	 displayed in <self>.
 
@@ -3554,13 +3149,13 @@ class Visual3d_View : public Graphic3d_DataStructureManager {
 
 	:rtype: Handle_Visual3d_Layer
 ") UnderLayer;
-		const Handle_Visual3d_Layer & UnderLayer ();
+		Handle_Visual3d_Layer UnderLayer ();
 		%feature("compactdefaultargs") OverLayer;
 		%feature("autodoc", "	* Returns the underlay of the view <self>.
 
 	:rtype: Handle_Visual3d_Layer
 ") OverLayer;
-		const Handle_Visual3d_Layer & OverLayer ();
+		Handle_Visual3d_Layer OverLayer ();
 		%feature("compactdefaultargs") EnableDepthTest;
 		%feature("autodoc", "	* turns on/off opengl depth
 
@@ -3682,23 +3277,15 @@ class Visual3d_View : public Graphic3d_DataStructureManager {
 };
 
 
-%feature("shadow") Visual3d_View::~Visual3d_View %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_View {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_View {
-	Handle_Visual3d_View GetHandle() {
-	return *(Handle_Visual3d_View*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_View(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -3718,20 +3305,6 @@ class Handle_Visual3d_View : public Handle_Graphic3d_DataStructureManager {
 %extend Handle_Visual3d_View {
     Visual3d_View* GetObject() {
     return (Visual3d_View*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Visual3d_View::~Handle_Visual3d_View %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_View {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -4043,13 +3616,13 @@ class Visual3d_ViewManager : public Graphic3d_StructureManager {
 
 	:rtype: Handle_Visual3d_Layer
 ") UnderLayer;
-		const Handle_Visual3d_Layer & UnderLayer ();
+		Handle_Visual3d_Layer UnderLayer ();
 		%feature("compactdefaultargs") OverLayer;
 		%feature("autodoc", "	* Returns the underlay of the viewer <self>.
 
 	:rtype: Handle_Visual3d_Layer
 ") OverLayer;
-		const Handle_Visual3d_Layer & OverLayer ();
+		Handle_Visual3d_Layer OverLayer ();
 		%feature("compactdefaultargs") ReCompute;
 		%feature("autodoc", "	* Forces a new construction of the structure <AStructure> //!	 if <AStructure> is displayed and TOS_COMPUTED.
 
@@ -4099,23 +3672,15 @@ class Visual3d_ViewManager : public Graphic3d_StructureManager {
 };
 
 
-%feature("shadow") Visual3d_ViewManager::~Visual3d_ViewManager %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Visual3d_ViewManager {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Visual3d_ViewManager {
-	Handle_Visual3d_ViewManager GetHandle() {
-	return *(Handle_Visual3d_ViewManager*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Visual3d_ViewManager(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -4135,20 +3700,6 @@ class Handle_Visual3d_ViewManager : public Handle_Graphic3d_StructureManager {
 %extend Handle_Visual3d_ViewManager {
     Visual3d_ViewManager* GetObject() {
     return (Visual3d_ViewManager*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Visual3d_ViewManager::~Handle_Visual3d_ViewManager %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Visual3d_ViewManager {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -4300,20 +3851,6 @@ class Visual3d_ViewMapping {
 };
 
 
-%feature("shadow") Visual3d_ViewMapping::~Visual3d_ViewMapping %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_ViewMapping {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Visual3d_ViewOrientation;
 class Visual3d_ViewOrientation {
 	public:
@@ -4450,17 +3987,3 @@ class Visual3d_ViewOrientation {
 };
 
 
-%feature("shadow") Visual3d_ViewOrientation::~Visual3d_ViewOrientation %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Visual3d_ViewOrientation {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

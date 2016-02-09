@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include GraphDS_headers.i
 
@@ -78,7 +75,7 @@ class GraphDS_DataMapIteratorOfEntityRoleMap : public TCollection_BasicMapIterat
 		%feature("compactdefaultargs") Key;
 		%feature("autodoc", "	:rtype: Handle_Standard_Transient
 ") Key;
-		const Handle_Standard_Transient & Key ();
+		Handle_Standard_Transient Key ();
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: GraphDS_EntityRole
 ") Value;
@@ -86,20 +83,6 @@ class GraphDS_DataMapIteratorOfEntityRoleMap : public TCollection_BasicMapIterat
 };
 
 
-%feature("shadow") GraphDS_DataMapIteratorOfEntityRoleMap::~GraphDS_DataMapIteratorOfEntityRoleMap %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GraphDS_DataMapIteratorOfEntityRoleMap {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GraphDS_DataMapNodeOfEntityRoleMap;
 class GraphDS_DataMapNodeOfEntityRoleMap : public TCollection_MapNode {
 	public:
@@ -116,7 +99,7 @@ class GraphDS_DataMapNodeOfEntityRoleMap : public TCollection_MapNode {
 		%feature("compactdefaultargs") Key;
 		%feature("autodoc", "	:rtype: Handle_Standard_Transient
 ") Key;
-		Handle_Standard_Transient & Key ();
+		Handle_Standard_Transient Key ();
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: GraphDS_EntityRole
 ") Value;
@@ -124,23 +107,15 @@ class GraphDS_DataMapNodeOfEntityRoleMap : public TCollection_MapNode {
 };
 
 
-%feature("shadow") GraphDS_DataMapNodeOfEntityRoleMap::~GraphDS_DataMapNodeOfEntityRoleMap %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GraphDS_DataMapNodeOfEntityRoleMap {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GraphDS_DataMapNodeOfEntityRoleMap {
-	Handle_GraphDS_DataMapNodeOfEntityRoleMap GetHandle() {
-	return *(Handle_GraphDS_DataMapNodeOfEntityRoleMap*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GraphDS_DataMapNodeOfEntityRoleMap(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -160,20 +135,6 @@ class Handle_GraphDS_DataMapNodeOfEntityRoleMap : public Handle_TCollection_MapN
 %extend Handle_GraphDS_DataMapNodeOfEntityRoleMap {
     GraphDS_DataMapNodeOfEntityRoleMap* GetObject() {
     return (GraphDS_DataMapNodeOfEntityRoleMap*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GraphDS_DataMapNodeOfEntityRoleMap::~Handle_GraphDS_DataMapNodeOfEntityRoleMap %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GraphDS_DataMapNodeOfEntityRoleMap {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -255,17 +216,3 @@ class GraphDS_EntityRoleMap : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") GraphDS_EntityRoleMap::~GraphDS_EntityRoleMap %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GraphDS_EntityRoleMap {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

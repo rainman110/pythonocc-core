@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Geom2dLProp_headers.i
 
@@ -134,20 +131,6 @@ class Geom2dLProp_CLProps2d {
 };
 
 
-%feature("shadow") Geom2dLProp_CLProps2d::~Geom2dLProp_CLProps2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dLProp_CLProps2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dLProp_CurAndInf2d;
 class Geom2dLProp_CurAndInf2d : public LProp_CurAndInf {
 	public:
@@ -190,20 +173,6 @@ class Geom2dLProp_CurAndInf2d : public LProp_CurAndInf {
 };
 
 
-%feature("shadow") Geom2dLProp_CurAndInf2d::~Geom2dLProp_CurAndInf2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dLProp_CurAndInf2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class Geom2dLProp_Curve2dTool {
 	public:
 		%feature("compactdefaultargs") Value;
@@ -293,20 +262,6 @@ class Geom2dLProp_Curve2dTool {
 };
 
 
-%feature("shadow") Geom2dLProp_Curve2dTool::~Geom2dLProp_Curve2dTool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dLProp_Curve2dTool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dLProp_FCurExtOfNumericCurInf2d;
 class Geom2dLProp_FCurExtOfNumericCurInf2d : public math_FunctionWithDerivative {
 	public:
@@ -353,20 +308,6 @@ class Geom2dLProp_FCurExtOfNumericCurInf2d : public math_FunctionWithDerivative 
 };
 
 
-%feature("shadow") Geom2dLProp_FCurExtOfNumericCurInf2d::~Geom2dLProp_FCurExtOfNumericCurInf2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dLProp_FCurExtOfNumericCurInf2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dLProp_FCurNulOfNumericCurInf2d;
 class Geom2dLProp_FCurNulOfNumericCurInf2d : public math_FunctionWithDerivative {
 	public:
@@ -405,20 +346,6 @@ class Geom2dLProp_FCurNulOfNumericCurInf2d : public math_FunctionWithDerivative 
 };
 
 
-%feature("shadow") Geom2dLProp_FCurNulOfNumericCurInf2d::~Geom2dLProp_FCurNulOfNumericCurInf2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dLProp_FCurNulOfNumericCurInf2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dLProp_NumericCurInf2d;
 class Geom2dLProp_NumericCurInf2d {
 	public:
@@ -473,17 +400,3 @@ class Geom2dLProp_NumericCurInf2d {
 };
 
 
-%feature("shadow") Geom2dLProp_NumericCurInf2d::~Geom2dLProp_NumericCurInf2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dLProp_NumericCurInf2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

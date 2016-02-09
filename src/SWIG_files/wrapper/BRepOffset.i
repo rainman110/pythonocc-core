@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include BRepOffset_headers.i
 
@@ -92,20 +89,6 @@ class BRepOffset {
 };
 
 
-%feature("shadow") BRepOffset::~BRepOffset %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_Analyse;
 class BRepOffset_Analyse {
 	public:
@@ -246,20 +229,6 @@ class BRepOffset_Analyse {
 };
 
 
-%feature("shadow") BRepOffset_Analyse::~BRepOffset_Analyse %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_Analyse {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_DataMapIteratorOfDataMapOfShapeListOfInterval;
 class BRepOffset_DataMapIteratorOfDataMapOfShapeListOfInterval : public TCollection_BasicMapIterator {
 	public:
@@ -290,20 +259,6 @@ class BRepOffset_DataMapIteratorOfDataMapOfShapeListOfInterval : public TCollect
 };
 
 
-%feature("shadow") BRepOffset_DataMapIteratorOfDataMapOfShapeListOfInterval::~BRepOffset_DataMapIteratorOfDataMapOfShapeListOfInterval %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_DataMapIteratorOfDataMapOfShapeListOfInterval {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_DataMapIteratorOfDataMapOfShapeMapOfShape;
 class BRepOffset_DataMapIteratorOfDataMapOfShapeMapOfShape : public TCollection_BasicMapIterator {
 	public:
@@ -334,20 +289,6 @@ class BRepOffset_DataMapIteratorOfDataMapOfShapeMapOfShape : public TCollection_
 };
 
 
-%feature("shadow") BRepOffset_DataMapIteratorOfDataMapOfShapeMapOfShape::~BRepOffset_DataMapIteratorOfDataMapOfShapeMapOfShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_DataMapIteratorOfDataMapOfShapeMapOfShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_DataMapIteratorOfDataMapOfShapeOffset;
 class BRepOffset_DataMapIteratorOfDataMapOfShapeOffset : public TCollection_BasicMapIterator {
 	public:
@@ -378,20 +319,6 @@ class BRepOffset_DataMapIteratorOfDataMapOfShapeOffset : public TCollection_Basi
 };
 
 
-%feature("shadow") BRepOffset_DataMapIteratorOfDataMapOfShapeOffset::~BRepOffset_DataMapIteratorOfDataMapOfShapeOffset %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_DataMapIteratorOfDataMapOfShapeOffset {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval;
 class BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval : public TCollection_MapNode {
 	public:
@@ -416,23 +343,15 @@ class BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval : public TCollection_
 };
 
 
-%feature("shadow") BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval::~BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval {
-	Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval GetHandle() {
-	return *(Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -452,20 +371,6 @@ class Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval : public Handl
 %extend Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval {
     BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval* GetObject() {
     return (BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval::~Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -493,23 +398,15 @@ class BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape : public TCollection_MapN
 };
 
 
-%feature("shadow") BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape::~BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape {
-	Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape GetHandle() {
-	return *(Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -529,20 +426,6 @@ class Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape : public Handle_TC
 %extend Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape {
     BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape* GetObject() {
     return (BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape::~Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -570,23 +453,15 @@ class BRepOffset_DataMapNodeOfDataMapOfShapeOffset : public TCollection_MapNode 
 };
 
 
-%feature("shadow") BRepOffset_DataMapNodeOfDataMapOfShapeOffset::~BRepOffset_DataMapNodeOfDataMapOfShapeOffset %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepOffset_DataMapNodeOfDataMapOfShapeOffset {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepOffset_DataMapNodeOfDataMapOfShapeOffset {
-	Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset GetHandle() {
-	return *(Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -606,20 +481,6 @@ class Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset : public Handle_TColle
 %extend Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset {
     BRepOffset_DataMapNodeOfDataMapOfShapeOffset* GetObject() {
     return (BRepOffset_DataMapNodeOfDataMapOfShapeOffset*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset::~Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -701,20 +562,6 @@ class BRepOffset_DataMapOfShapeListOfInterval : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") BRepOffset_DataMapOfShapeListOfInterval::~BRepOffset_DataMapOfShapeListOfInterval %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_DataMapOfShapeListOfInterval {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_DataMapOfShapeMapOfShape;
 class BRepOffset_DataMapOfShapeMapOfShape : public TCollection_BasicMap {
 	public:
@@ -793,20 +640,6 @@ class BRepOffset_DataMapOfShapeMapOfShape : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") BRepOffset_DataMapOfShapeMapOfShape::~BRepOffset_DataMapOfShapeMapOfShape %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_DataMapOfShapeMapOfShape {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_DataMapOfShapeOffset;
 class BRepOffset_DataMapOfShapeOffset : public TCollection_BasicMap {
 	public:
@@ -885,20 +718,6 @@ class BRepOffset_DataMapOfShapeOffset : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") BRepOffset_DataMapOfShapeOffset::~BRepOffset_DataMapOfShapeOffset %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_DataMapOfShapeOffset {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class BRepOffset_Inter2d {
 	public:
 		%feature("compactdefaultargs") Compute;
@@ -936,20 +755,6 @@ class BRepOffset_Inter2d {
 };
 
 
-%feature("shadow") BRepOffset_Inter2d::~BRepOffset_Inter2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_Inter2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_Inter3d;
 class BRepOffset_Inter3d {
 	public:
@@ -1078,20 +883,6 @@ class BRepOffset_Inter3d {
 };
 
 
-%feature("shadow") BRepOffset_Inter3d::~BRepOffset_Inter3d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_Inter3d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_Interval;
 class BRepOffset_Interval {
 	public:
@@ -1142,20 +933,6 @@ class BRepOffset_Interval {
 };
 
 
-%feature("shadow") BRepOffset_Interval::~BRepOffset_Interval %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_Interval {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_ListIteratorOfListOfInterval;
 class BRepOffset_ListIteratorOfListOfInterval {
 	public:
@@ -1190,20 +967,6 @@ class BRepOffset_ListIteratorOfListOfInterval {
 };
 
 
-%feature("shadow") BRepOffset_ListIteratorOfListOfInterval::~BRepOffset_ListIteratorOfListOfInterval %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_ListIteratorOfListOfInterval {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_ListNodeOfListOfInterval;
 class BRepOffset_ListNodeOfListOfInterval : public TCollection_MapNode {
 	public:
@@ -1222,23 +985,15 @@ class BRepOffset_ListNodeOfListOfInterval : public TCollection_MapNode {
 };
 
 
-%feature("shadow") BRepOffset_ListNodeOfListOfInterval::~BRepOffset_ListNodeOfListOfInterval %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepOffset_ListNodeOfListOfInterval {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepOffset_ListNodeOfListOfInterval {
-	Handle_BRepOffset_ListNodeOfListOfInterval GetHandle() {
-	return *(Handle_BRepOffset_ListNodeOfListOfInterval*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepOffset_ListNodeOfListOfInterval(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1258,20 +1013,6 @@ class Handle_BRepOffset_ListNodeOfListOfInterval : public Handle_TCollection_Map
 %extend Handle_BRepOffset_ListNodeOfListOfInterval {
     BRepOffset_ListNodeOfListOfInterval* GetObject() {
     return (BRepOffset_ListNodeOfListOfInterval*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepOffset_ListNodeOfListOfInterval::~Handle_BRepOffset_ListNodeOfListOfInterval %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepOffset_ListNodeOfListOfInterval {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1399,20 +1140,6 @@ class BRepOffset_ListOfInterval {
 };
 
 
-%feature("shadow") BRepOffset_ListOfInterval::~BRepOffset_ListOfInterval %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_ListOfInterval {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_MakeLoops;
 class BRepOffset_MakeLoops {
 	public:
@@ -1457,20 +1184,6 @@ class BRepOffset_MakeLoops {
 };
 
 
-%feature("shadow") BRepOffset_MakeLoops::~BRepOffset_MakeLoops %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_MakeLoops {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_MakeOffset;
 class BRepOffset_MakeOffset {
 	public:
@@ -1589,20 +1302,6 @@ class BRepOffset_MakeOffset {
 };
 
 
-%feature("shadow") BRepOffset_MakeOffset::~BRepOffset_MakeOffset %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_MakeOffset {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepOffset_Offset;
 class BRepOffset_Offset {
 	public:
@@ -1811,20 +1510,6 @@ class BRepOffset_Offset {
 };
 
 
-%feature("shadow") BRepOffset_Offset::~BRepOffset_Offset %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_Offset {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class BRepOffset_Tool {
 	public:
 		%feature("compactdefaultargs") EdgeVertices;
@@ -2068,17 +1753,3 @@ class BRepOffset_Tool {
 };
 
 
-%feature("shadow") BRepOffset_Tool::~BRepOffset_Tool %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepOffset_Tool {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

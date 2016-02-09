@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include TopTrans_headers.i
 
@@ -148,20 +145,6 @@ class TopTrans_Array2OfOrientation {
 };
 
 
-%feature("shadow") TopTrans_Array2OfOrientation::~TopTrans_Array2OfOrientation %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopTrans_Array2OfOrientation {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopTrans_CurveTransition;
 class TopTrans_CurveTransition {
 	public:
@@ -224,20 +207,6 @@ class TopTrans_CurveTransition {
 };
 
 
-%feature("shadow") TopTrans_CurveTransition::~TopTrans_CurveTransition %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopTrans_CurveTransition {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor TopTrans_SurfaceTransition;
 class TopTrans_SurfaceTransition {
 	public:
@@ -338,17 +307,3 @@ class TopTrans_SurfaceTransition {
 };
 
 
-%feature("shadow") TopTrans_SurfaceTransition::~TopTrans_SurfaceTransition %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopTrans_SurfaceTransition {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

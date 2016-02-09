@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include AppStdL_headers.i
 
@@ -72,23 +69,15 @@ class AppStdL_Application : public TDocStd_Application {
 };
 
 
-%feature("shadow") AppStdL_Application::~AppStdL_Application %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend AppStdL_Application {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend AppStdL_Application {
-	Handle_AppStdL_Application GetHandle() {
-	return *(Handle_AppStdL_Application*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_AppStdL_Application(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -108,20 +97,6 @@ class Handle_AppStdL_Application : public Handle_TDocStd_Application {
 %extend Handle_AppStdL_Application {
     AppStdL_Application* GetObject() {
     return (AppStdL_Application*)$self->Access();
-    }
-};
-%feature("shadow") Handle_AppStdL_Application::~Handle_AppStdL_Application %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_AppStdL_Application {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

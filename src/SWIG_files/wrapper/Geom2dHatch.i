@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Geom2dHatch_headers.i
 
@@ -98,20 +95,6 @@ class Geom2dHatch_ClassifierOfHatcher {
 };
 
 
-%feature("shadow") Geom2dHatch_ClassifierOfHatcher::~Geom2dHatch_ClassifierOfHatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dHatch_ClassifierOfHatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dHatch_DataMapIteratorOfHatchingsOfHatcher;
 class Geom2dHatch_DataMapIteratorOfHatchingsOfHatcher : public TCollection_BasicMapIterator {
 	public:
@@ -142,20 +125,6 @@ class Geom2dHatch_DataMapIteratorOfHatchingsOfHatcher : public TCollection_Basic
 };
 
 
-%feature("shadow") Geom2dHatch_DataMapIteratorOfHatchingsOfHatcher::~Geom2dHatch_DataMapIteratorOfHatchingsOfHatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dHatch_DataMapIteratorOfHatchingsOfHatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dHatch_DataMapIteratorOfMapOfElementsOfElementsOfHatcher;
 class Geom2dHatch_DataMapIteratorOfMapOfElementsOfElementsOfHatcher : public TCollection_BasicMapIterator {
 	public:
@@ -186,20 +155,6 @@ class Geom2dHatch_DataMapIteratorOfMapOfElementsOfElementsOfHatcher : public TCo
 };
 
 
-%feature("shadow") Geom2dHatch_DataMapIteratorOfMapOfElementsOfElementsOfHatcher::~Geom2dHatch_DataMapIteratorOfMapOfElementsOfElementsOfHatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dHatch_DataMapIteratorOfMapOfElementsOfElementsOfHatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dHatch_DataMapNodeOfHatchingsOfHatcher;
 class Geom2dHatch_DataMapNodeOfHatchingsOfHatcher : public TCollection_MapNode {
 	public:
@@ -233,23 +188,15 @@ class Geom2dHatch_DataMapNodeOfHatchingsOfHatcher : public TCollection_MapNode {
 };
 
 
-%feature("shadow") Geom2dHatch_DataMapNodeOfHatchingsOfHatcher::~Geom2dHatch_DataMapNodeOfHatchingsOfHatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Geom2dHatch_DataMapNodeOfHatchingsOfHatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Geom2dHatch_DataMapNodeOfHatchingsOfHatcher {
-	Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher GetHandle() {
-	return *(Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -269,20 +216,6 @@ class Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher : public Handle_TCollec
 %extend Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher {
     Geom2dHatch_DataMapNodeOfHatchingsOfHatcher* GetObject() {
     return (Geom2dHatch_DataMapNodeOfHatchingsOfHatcher*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher::~Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -319,23 +252,15 @@ class Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher : public TCollec
 };
 
 
-%feature("shadow") Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher::~Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher {
-	Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher GetHandle() {
-	return *(Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -355,20 +280,6 @@ class Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher : public 
 %extend Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher {
     Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher* GetObject() {
     return (Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher*)$self->Access();
-    }
-};
-%feature("shadow") Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher::~Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -414,20 +325,6 @@ class Geom2dHatch_ElementOfHatcher {
 };
 
 
-%feature("shadow") Geom2dHatch_ElementOfHatcher::~Geom2dHatch_ElementOfHatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dHatch_ElementOfHatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dHatch_ElementsOfHatcher;
 class Geom2dHatch_ElementsOfHatcher {
 	public:
@@ -554,20 +451,6 @@ class Geom2dHatch_ElementsOfHatcher {
 };
 
 
-%feature("shadow") Geom2dHatch_ElementsOfHatcher::~Geom2dHatch_ElementsOfHatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dHatch_ElementsOfHatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dHatch_FClass2dOfClassifierOfHatcher;
 class Geom2dHatch_FClass2dOfClassifierOfHatcher {
 	public:
@@ -616,20 +499,6 @@ class Geom2dHatch_FClass2dOfClassifierOfHatcher {
 };
 
 
-%feature("shadow") Geom2dHatch_FClass2dOfClassifierOfHatcher::~Geom2dHatch_FClass2dOfClassifierOfHatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dHatch_FClass2dOfClassifierOfHatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dHatch_Hatcher;
 class Geom2dHatch_Hatcher {
 	public:
@@ -830,20 +699,6 @@ class Geom2dHatch_Hatcher {
 };
 
 
-%feature("shadow") Geom2dHatch_Hatcher::~Geom2dHatch_Hatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dHatch_Hatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dHatch_HatchingOfHatcher;
 class Geom2dHatch_HatchingOfHatcher {
 	public:
@@ -972,20 +827,6 @@ class Geom2dHatch_HatchingOfHatcher {
 };
 
 
-%feature("shadow") Geom2dHatch_HatchingOfHatcher::~Geom2dHatch_HatchingOfHatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dHatch_HatchingOfHatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dHatch_HatchingsOfHatcher;
 class Geom2dHatch_HatchingsOfHatcher : public TCollection_BasicMap {
 	public:
@@ -1064,20 +905,6 @@ class Geom2dHatch_HatchingsOfHatcher : public TCollection_BasicMap {
 };
 
 
-%feature("shadow") Geom2dHatch_HatchingsOfHatcher::~Geom2dHatch_HatchingsOfHatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dHatch_HatchingsOfHatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dHatch_Intersector;
 class Geom2dHatch_Intersector : public Geom2dInt_GInter {
 	public:
@@ -1166,20 +993,6 @@ class Geom2dHatch_Intersector : public Geom2dInt_GInter {
 };
 
 
-%feature("shadow") Geom2dHatch_Intersector::~Geom2dHatch_Intersector %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dHatch_Intersector {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor Geom2dHatch_MapOfElementsOfElementsOfHatcher;
 class Geom2dHatch_MapOfElementsOfElementsOfHatcher : public TCollection_BasicMap {
 	public:
@@ -1258,17 +1071,3 @@ class Geom2dHatch_MapOfElementsOfElementsOfHatcher : public TCollection_BasicMap
 };
 
 
-%feature("shadow") Geom2dHatch_MapOfElementsOfElementsOfHatcher::~Geom2dHatch_MapOfElementsOfElementsOfHatcher %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Geom2dHatch_MapOfElementsOfElementsOfHatcher {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

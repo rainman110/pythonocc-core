@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include StlMesh_headers.i
 
@@ -60,20 +57,6 @@ class StlMesh {
 };
 
 
-%feature("shadow") StlMesh::~StlMesh %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend StlMesh {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor StlMesh_Mesh;
 class StlMesh_Mesh : public MMgt_TShared {
 	public:
@@ -218,23 +201,15 @@ class StlMesh_Mesh : public MMgt_TShared {
 };
 
 
-%feature("shadow") StlMesh_Mesh::~StlMesh_Mesh %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend StlMesh_Mesh {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend StlMesh_Mesh {
-	Handle_StlMesh_Mesh GetHandle() {
-	return *(Handle_StlMesh_Mesh*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_StlMesh_Mesh(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -254,20 +229,6 @@ class Handle_StlMesh_Mesh : public Handle_MMgt_TShared {
 %extend Handle_StlMesh_Mesh {
     StlMesh_Mesh* GetObject() {
     return (StlMesh_Mesh*)$self->Access();
-    }
-};
-%feature("shadow") Handle_StlMesh_Mesh::~Handle_StlMesh_Mesh %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_StlMesh_Mesh {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -363,23 +324,15 @@ class StlMesh_MeshDomain : public MMgt_TShared {
 };
 
 
-%feature("shadow") StlMesh_MeshDomain::~StlMesh_MeshDomain %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend StlMesh_MeshDomain {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend StlMesh_MeshDomain {
-	Handle_StlMesh_MeshDomain GetHandle() {
-	return *(Handle_StlMesh_MeshDomain*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_StlMesh_MeshDomain(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -399,20 +352,6 @@ class Handle_StlMesh_MeshDomain : public Handle_MMgt_TShared {
 %extend Handle_StlMesh_MeshDomain {
     StlMesh_MeshDomain* GetObject() {
     return (StlMesh_MeshDomain*)$self->Access();
-    }
-};
-%feature("shadow") Handle_StlMesh_MeshDomain::~Handle_StlMesh_MeshDomain %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_StlMesh_MeshDomain {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -488,20 +427,6 @@ class StlMesh_MeshExplorer {
 };
 
 
-%feature("shadow") StlMesh_MeshExplorer::~StlMesh_MeshExplorer %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend StlMesh_MeshExplorer {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor StlMesh_MeshTriangle;
 class StlMesh_MeshTriangle : public MMgt_TShared {
 	public:
@@ -592,23 +517,15 @@ class StlMesh_MeshTriangle : public MMgt_TShared {
 };
 
 
-%feature("shadow") StlMesh_MeshTriangle::~StlMesh_MeshTriangle %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend StlMesh_MeshTriangle {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend StlMesh_MeshTriangle {
-	Handle_StlMesh_MeshTriangle GetHandle() {
-	return *(Handle_StlMesh_MeshTriangle*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_StlMesh_MeshTriangle(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -630,20 +547,6 @@ class Handle_StlMesh_MeshTriangle : public Handle_MMgt_TShared {
     return (StlMesh_MeshTriangle*)$self->Access();
     }
 };
-%feature("shadow") Handle_StlMesh_MeshTriangle::~Handle_StlMesh_MeshTriangle %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_StlMesh_MeshTriangle {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor StlMesh_SequenceNodeOfSequenceOfMesh;
 class StlMesh_SequenceNodeOfSequenceOfMesh : public TCollection_SeqNode {
@@ -661,27 +564,19 @@ class StlMesh_SequenceNodeOfSequenceOfMesh : public TCollection_SeqNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_StlMesh_Mesh
 ") Value;
-		Handle_StlMesh_Mesh & Value ();
+		Handle_StlMesh_Mesh Value ();
 };
 
 
-%feature("shadow") StlMesh_SequenceNodeOfSequenceOfMesh::~StlMesh_SequenceNodeOfSequenceOfMesh %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend StlMesh_SequenceNodeOfSequenceOfMesh {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend StlMesh_SequenceNodeOfSequenceOfMesh {
-	Handle_StlMesh_SequenceNodeOfSequenceOfMesh GetHandle() {
-	return *(Handle_StlMesh_SequenceNodeOfSequenceOfMesh*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_StlMesh_SequenceNodeOfSequenceOfMesh(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -703,20 +598,6 @@ class Handle_StlMesh_SequenceNodeOfSequenceOfMesh : public Handle_TCollection_Se
     return (StlMesh_SequenceNodeOfSequenceOfMesh*)$self->Access();
     }
 };
-%feature("shadow") Handle_StlMesh_SequenceNodeOfSequenceOfMesh::~Handle_StlMesh_SequenceNodeOfSequenceOfMesh %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_StlMesh_SequenceNodeOfSequenceOfMesh {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor StlMesh_SequenceNodeOfSequenceOfMeshDomain;
 class StlMesh_SequenceNodeOfSequenceOfMeshDomain : public TCollection_SeqNode {
@@ -734,27 +615,19 @@ class StlMesh_SequenceNodeOfSequenceOfMeshDomain : public TCollection_SeqNode {
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_StlMesh_MeshDomain
 ") Value;
-		Handle_StlMesh_MeshDomain & Value ();
+		Handle_StlMesh_MeshDomain Value ();
 };
 
 
-%feature("shadow") StlMesh_SequenceNodeOfSequenceOfMeshDomain::~StlMesh_SequenceNodeOfSequenceOfMeshDomain %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend StlMesh_SequenceNodeOfSequenceOfMeshDomain {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend StlMesh_SequenceNodeOfSequenceOfMeshDomain {
-	Handle_StlMesh_SequenceNodeOfSequenceOfMeshDomain GetHandle() {
-	return *(Handle_StlMesh_SequenceNodeOfSequenceOfMeshDomain*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_StlMesh_SequenceNodeOfSequenceOfMeshDomain(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -776,20 +649,6 @@ class Handle_StlMesh_SequenceNodeOfSequenceOfMeshDomain : public Handle_TCollect
     return (StlMesh_SequenceNodeOfSequenceOfMeshDomain*)$self->Access();
     }
 };
-%feature("shadow") Handle_StlMesh_SequenceNodeOfSequenceOfMeshDomain::~Handle_StlMesh_SequenceNodeOfSequenceOfMeshDomain %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_StlMesh_SequenceNodeOfSequenceOfMeshDomain {
-    void _kill_pointed() {
-        delete $self;
-    }
-};
 
 %nodefaultctor StlMesh_SequenceNodeOfSequenceOfMeshTriangle;
 class StlMesh_SequenceNodeOfSequenceOfMeshTriangle : public TCollection_SeqNode {
@@ -807,27 +666,19 @@ class StlMesh_SequenceNodeOfSequenceOfMeshTriangle : public TCollection_SeqNode 
 		%feature("compactdefaultargs") Value;
 		%feature("autodoc", "	:rtype: Handle_StlMesh_MeshTriangle
 ") Value;
-		Handle_StlMesh_MeshTriangle & Value ();
+		Handle_StlMesh_MeshTriangle Value ();
 };
 
 
-%feature("shadow") StlMesh_SequenceNodeOfSequenceOfMeshTriangle::~StlMesh_SequenceNodeOfSequenceOfMeshTriangle %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend StlMesh_SequenceNodeOfSequenceOfMeshTriangle {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend StlMesh_SequenceNodeOfSequenceOfMeshTriangle {
-	Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle GetHandle() {
-	return *(Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -847,20 +698,6 @@ class Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle : public Handle_TColle
 %extend Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle {
     StlMesh_SequenceNodeOfSequenceOfMeshTriangle* GetObject() {
     return (StlMesh_SequenceNodeOfSequenceOfMeshTriangle*)$self->Access();
-    }
-};
-%feature("shadow") Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle::~Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -946,11 +783,11 @@ class StlMesh_SequenceOfMesh : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_StlMesh_Mesh
 ") First;
-		const Handle_StlMesh_Mesh & First ();
+		Handle_StlMesh_Mesh First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_StlMesh_Mesh
 ") Last;
-		const Handle_StlMesh_Mesh & Last ();
+		Handle_StlMesh_Mesh Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -964,7 +801,7 @@ class StlMesh_SequenceOfMesh : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_StlMesh_Mesh
 ") Value;
-		const Handle_StlMesh_Mesh & Value (const Standard_Integer Index);
+		Handle_StlMesh_Mesh Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -978,7 +815,7 @@ class StlMesh_SequenceOfMesh : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_StlMesh_Mesh
 ") ChangeValue;
-		Handle_StlMesh_Mesh & ChangeValue (const Standard_Integer Index);
+		Handle_StlMesh_Mesh ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -996,20 +833,6 @@ class StlMesh_SequenceOfMesh : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") StlMesh_SequenceOfMesh::~StlMesh_SequenceOfMesh %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend StlMesh_SequenceOfMesh {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor StlMesh_SequenceOfMeshDomain;
 class StlMesh_SequenceOfMeshDomain : public TCollection_BaseSequence {
 	public:
@@ -1092,11 +915,11 @@ class StlMesh_SequenceOfMeshDomain : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_StlMesh_MeshDomain
 ") First;
-		const Handle_StlMesh_MeshDomain & First ();
+		Handle_StlMesh_MeshDomain First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_StlMesh_MeshDomain
 ") Last;
-		const Handle_StlMesh_MeshDomain & Last ();
+		Handle_StlMesh_MeshDomain Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -1110,7 +933,7 @@ class StlMesh_SequenceOfMeshDomain : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_StlMesh_MeshDomain
 ") Value;
-		const Handle_StlMesh_MeshDomain & Value (const Standard_Integer Index);
+		Handle_StlMesh_MeshDomain Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -1124,7 +947,7 @@ class StlMesh_SequenceOfMeshDomain : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_StlMesh_MeshDomain
 ") ChangeValue;
-		Handle_StlMesh_MeshDomain & ChangeValue (const Standard_Integer Index);
+		Handle_StlMesh_MeshDomain ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -1142,20 +965,6 @@ class StlMesh_SequenceOfMeshDomain : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") StlMesh_SequenceOfMeshDomain::~StlMesh_SequenceOfMeshDomain %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend StlMesh_SequenceOfMeshDomain {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor StlMesh_SequenceOfMeshTriangle;
 class StlMesh_SequenceOfMeshTriangle : public TCollection_BaseSequence {
 	public:
@@ -1238,11 +1047,11 @@ class StlMesh_SequenceOfMeshTriangle : public TCollection_BaseSequence {
 		%feature("compactdefaultargs") First;
 		%feature("autodoc", "	:rtype: Handle_StlMesh_MeshTriangle
 ") First;
-		const Handle_StlMesh_MeshTriangle & First ();
+		Handle_StlMesh_MeshTriangle First ();
 		%feature("compactdefaultargs") Last;
 		%feature("autodoc", "	:rtype: Handle_StlMesh_MeshTriangle
 ") Last;
-		const Handle_StlMesh_MeshTriangle & Last ();
+		Handle_StlMesh_MeshTriangle Last ();
 		%feature("compactdefaultargs") Split;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -1256,7 +1065,7 @@ class StlMesh_SequenceOfMeshTriangle : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_StlMesh_MeshTriangle
 ") Value;
-		const Handle_StlMesh_MeshTriangle & Value (const Standard_Integer Index);
+		Handle_StlMesh_MeshTriangle Value (const Standard_Integer Index);
 		%feature("compactdefaultargs") SetValue;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -1270,7 +1079,7 @@ class StlMesh_SequenceOfMeshTriangle : public TCollection_BaseSequence {
 	:type Index: int
 	:rtype: Handle_StlMesh_MeshTriangle
 ") ChangeValue;
-		Handle_StlMesh_MeshTriangle & ChangeValue (const Standard_Integer Index);
+		Handle_StlMesh_MeshTriangle ChangeValue (const Standard_Integer Index);
 		%feature("compactdefaultargs") Remove;
 		%feature("autodoc", "	:param Index:
 	:type Index: int
@@ -1288,17 +1097,3 @@ class StlMesh_SequenceOfMeshTriangle : public TCollection_BaseSequence {
 };
 
 
-%feature("shadow") StlMesh_SequenceOfMeshTriangle::~StlMesh_SequenceOfMeshTriangle %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend StlMesh_SequenceOfMeshTriangle {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

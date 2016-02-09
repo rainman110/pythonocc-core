@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include TopCnx_headers.i
 
@@ -108,17 +105,3 @@ class TopCnx_EdgeFaceTransition {
 };
 
 
-%feature("shadow") TopCnx_EdgeFaceTransition::~TopCnx_EdgeFaceTransition %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend TopCnx_EdgeFaceTransition {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

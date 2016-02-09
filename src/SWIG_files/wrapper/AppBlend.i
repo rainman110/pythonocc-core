@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include AppBlend_headers.i
 
@@ -180,17 +177,3 @@ class AppBlend_Approx {
 };
 
 
-%feature("shadow") AppBlend_Approx::~AppBlend_Approx %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend AppBlend_Approx {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

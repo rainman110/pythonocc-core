@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include Precision_headers.i
 
@@ -170,17 +167,3 @@ class Precision {
 };
 
 
-%feature("shadow") Precision::~Precision %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend Precision {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include GeomAdaptor_headers.i
 
@@ -66,20 +63,6 @@ class GeomAdaptor {
 };
 
 
-%feature("shadow") GeomAdaptor::~GeomAdaptor %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomAdaptor {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomAdaptor_Curve;
 class GeomAdaptor_Curve : public Adaptor3d_Curve {
 	public:
@@ -128,7 +111,7 @@ class GeomAdaptor_Curve : public Adaptor3d_Curve {
 
 	:rtype: Handle_Geom_Curve
 ") Curve;
-		const Handle_Geom_Curve & Curve ();
+		Handle_Geom_Curve Curve ();
 		%feature("compactdefaultargs") FirstParameter;
 		%feature("autodoc", "	:rtype: float
 ") FirstParameter;
@@ -324,20 +307,6 @@ class GeomAdaptor_Curve : public Adaptor3d_Curve {
 };
 
 
-%feature("shadow") GeomAdaptor_Curve::~GeomAdaptor_Curve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomAdaptor_Curve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomAdaptor_GHCurve;
 class GeomAdaptor_GHCurve : public Adaptor3d_HCurve {
 	public:
@@ -372,23 +341,15 @@ class GeomAdaptor_GHCurve : public Adaptor3d_HCurve {
 };
 
 
-%feature("shadow") GeomAdaptor_GHCurve::~GeomAdaptor_GHCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GeomAdaptor_GHCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GeomAdaptor_GHCurve {
-	Handle_GeomAdaptor_GHCurve GetHandle() {
-	return *(Handle_GeomAdaptor_GHCurve*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GeomAdaptor_GHCurve(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -408,20 +369,6 @@ class Handle_GeomAdaptor_GHCurve : public Handle_Adaptor3d_HCurve {
 %extend Handle_GeomAdaptor_GHCurve {
     GeomAdaptor_GHCurve* GetObject() {
     return (GeomAdaptor_GHCurve*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GeomAdaptor_GHCurve::~Handle_GeomAdaptor_GHCurve %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GeomAdaptor_GHCurve {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -455,23 +402,15 @@ class GeomAdaptor_GHSurface : public Adaptor3d_HSurface {
 };
 
 
-%feature("shadow") GeomAdaptor_GHSurface::~GeomAdaptor_GHSurface %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GeomAdaptor_GHSurface {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GeomAdaptor_GHSurface {
-	Handle_GeomAdaptor_GHSurface GetHandle() {
-	return *(Handle_GeomAdaptor_GHSurface*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GeomAdaptor_GHSurface(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -491,20 +430,6 @@ class Handle_GeomAdaptor_GHSurface : public Handle_Adaptor3d_HSurface {
 %extend Handle_GeomAdaptor_GHSurface {
     GeomAdaptor_GHSurface* GetObject() {
     return (GeomAdaptor_GHSurface*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GeomAdaptor_GHSurface::~Handle_GeomAdaptor_GHSurface %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GeomAdaptor_GHSurface {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -570,7 +495,7 @@ class GeomAdaptor_Surface : public Adaptor3d_Surface {
 		%feature("compactdefaultargs") Surface;
 		%feature("autodoc", "	:rtype: Handle_Geom_Surface
 ") Surface;
-		const Handle_Geom_Surface & Surface ();
+		Handle_Geom_Surface Surface ();
 		%feature("compactdefaultargs") FirstUParameter;
 		%feature("autodoc", "	:rtype: float
 ") FirstUParameter;
@@ -892,20 +817,6 @@ class GeomAdaptor_Surface : public Adaptor3d_Surface {
 };
 
 
-%feature("shadow") GeomAdaptor_Surface::~GeomAdaptor_Surface %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend GeomAdaptor_Surface {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor GeomAdaptor_HCurve;
 class GeomAdaptor_HCurve : public GeomAdaptor_GHCurve {
 	public:
@@ -940,23 +851,15 @@ class GeomAdaptor_HCurve : public GeomAdaptor_GHCurve {
 };
 
 
-%feature("shadow") GeomAdaptor_HCurve::~GeomAdaptor_HCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GeomAdaptor_HCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GeomAdaptor_HCurve {
-	Handle_GeomAdaptor_HCurve GetHandle() {
-	return *(Handle_GeomAdaptor_HCurve*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GeomAdaptor_HCurve(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -976,20 +879,6 @@ class Handle_GeomAdaptor_HCurve : public Handle_GeomAdaptor_GHCurve {
 %extend Handle_GeomAdaptor_HCurve {
     GeomAdaptor_HCurve* GetObject() {
     return (GeomAdaptor_HCurve*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GeomAdaptor_HCurve::~Handle_GeomAdaptor_HCurve %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GeomAdaptor_HCurve {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1035,23 +924,15 @@ class GeomAdaptor_HSurface : public GeomAdaptor_GHSurface {
 };
 
 
-%feature("shadow") GeomAdaptor_HSurface::~GeomAdaptor_HSurface %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend GeomAdaptor_HSurface {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend GeomAdaptor_HSurface {
-	Handle_GeomAdaptor_HSurface GetHandle() {
-	return *(Handle_GeomAdaptor_HSurface*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_GeomAdaptor_HSurface(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1071,20 +952,6 @@ class Handle_GeomAdaptor_HSurface : public Handle_GeomAdaptor_GHSurface {
 %extend Handle_GeomAdaptor_HSurface {
     GeomAdaptor_HSurface* GetObject() {
     return (GeomAdaptor_HSurface*)$self->Access();
-    }
-};
-%feature("shadow") Handle_GeomAdaptor_HSurface::~Handle_GeomAdaptor_HSurface %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_GeomAdaptor_HSurface {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 

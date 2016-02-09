@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include BndLib_headers.i
 
@@ -376,20 +373,6 @@ class BndLib {
 };
 
 
-%feature("shadow") BndLib::~BndLib %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BndLib {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class BndLib_Add2dCurve {
 	public:
 		%feature("compactdefaultargs") Add;
@@ -423,20 +406,6 @@ class BndLib_Add2dCurve {
 };
 
 
-%feature("shadow") BndLib_Add2dCurve::~BndLib_Add2dCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BndLib_Add2dCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class BndLib_Add3dCurve {
 	public:
 		%feature("compactdefaultargs") Add;
@@ -470,20 +439,6 @@ class BndLib_Add3dCurve {
 };
 
 
-%feature("shadow") BndLib_Add3dCurve::~BndLib_Add3dCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BndLib_Add3dCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 class BndLib_AddSurface {
 	public:
 		%feature("compactdefaultargs") Add;
@@ -521,17 +476,3 @@ class BndLib_AddSurface {
 };
 
 
-%feature("shadow") BndLib_AddSurface::~BndLib_AddSurface %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BndLib_AddSurface {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

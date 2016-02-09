@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include BRepAdaptor_headers.i
 
@@ -126,20 +123,6 @@ class BRepAdaptor_Array1OfCurve {
 };
 
 
-%feature("shadow") BRepAdaptor_Array1OfCurve::~BRepAdaptor_Array1OfCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAdaptor_Array1OfCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepAdaptor_CompCurve;
 class BRepAdaptor_CompCurve : public Adaptor3d_Curve {
 	public:
@@ -408,20 +391,6 @@ class BRepAdaptor_CompCurve : public Adaptor3d_Curve {
 };
 
 
-%feature("shadow") BRepAdaptor_CompCurve::~BRepAdaptor_CompCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAdaptor_CompCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepAdaptor_Curve;
 class BRepAdaptor_Curve : public Adaptor3d_Curve {
 	public:
@@ -696,20 +665,6 @@ class BRepAdaptor_Curve : public Adaptor3d_Curve {
 };
 
 
-%feature("shadow") BRepAdaptor_Curve::~BRepAdaptor_Curve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAdaptor_Curve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepAdaptor_Curve2d;
 class BRepAdaptor_Curve2d : public Geom2dAdaptor_Curve {
 	public:
@@ -754,20 +709,6 @@ class BRepAdaptor_Curve2d : public Geom2dAdaptor_Curve {
 };
 
 
-%feature("shadow") BRepAdaptor_Curve2d::~BRepAdaptor_Curve2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAdaptor_Curve2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
 %nodefaultctor BRepAdaptor_HArray1OfCurve;
 class BRepAdaptor_HArray1OfCurve : public MMgt_TShared {
 	public:
@@ -838,23 +779,15 @@ class BRepAdaptor_HArray1OfCurve : public MMgt_TShared {
 };
 
 
-%feature("shadow") BRepAdaptor_HArray1OfCurve::~BRepAdaptor_HArray1OfCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepAdaptor_HArray1OfCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepAdaptor_HArray1OfCurve {
-	Handle_BRepAdaptor_HArray1OfCurve GetHandle() {
-	return *(Handle_BRepAdaptor_HArray1OfCurve*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepAdaptor_HArray1OfCurve(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -874,20 +807,6 @@ class Handle_BRepAdaptor_HArray1OfCurve : public Handle_MMgt_TShared {
 %extend Handle_BRepAdaptor_HArray1OfCurve {
     BRepAdaptor_HArray1OfCurve* GetObject() {
     return (BRepAdaptor_HArray1OfCurve*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepAdaptor_HArray1OfCurve::~Handle_BRepAdaptor_HArray1OfCurve %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepAdaptor_HArray1OfCurve {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -925,23 +844,15 @@ class BRepAdaptor_HCompCurve : public Adaptor3d_HCurve {
 };
 
 
-%feature("shadow") BRepAdaptor_HCompCurve::~BRepAdaptor_HCompCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepAdaptor_HCompCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepAdaptor_HCompCurve {
-	Handle_BRepAdaptor_HCompCurve GetHandle() {
-	return *(Handle_BRepAdaptor_HCompCurve*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepAdaptor_HCompCurve(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -961,20 +872,6 @@ class Handle_BRepAdaptor_HCompCurve : public Handle_Adaptor3d_HCurve {
 %extend Handle_BRepAdaptor_HCompCurve {
     BRepAdaptor_HCompCurve* GetObject() {
     return (BRepAdaptor_HCompCurve*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepAdaptor_HCompCurve::~Handle_BRepAdaptor_HCompCurve %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepAdaptor_HCompCurve {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1012,23 +909,15 @@ class BRepAdaptor_HCurve : public Adaptor3d_HCurve {
 };
 
 
-%feature("shadow") BRepAdaptor_HCurve::~BRepAdaptor_HCurve %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepAdaptor_HCurve {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepAdaptor_HCurve {
-	Handle_BRepAdaptor_HCurve GetHandle() {
-	return *(Handle_BRepAdaptor_HCurve*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepAdaptor_HCurve(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1048,20 +937,6 @@ class Handle_BRepAdaptor_HCurve : public Handle_Adaptor3d_HCurve {
 %extend Handle_BRepAdaptor_HCurve {
     BRepAdaptor_HCurve* GetObject() {
     return (BRepAdaptor_HCurve*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepAdaptor_HCurve::~Handle_BRepAdaptor_HCurve %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepAdaptor_HCurve {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1095,23 +970,15 @@ class BRepAdaptor_HCurve2d : public Adaptor2d_HCurve2d {
 };
 
 
-%feature("shadow") BRepAdaptor_HCurve2d::~BRepAdaptor_HCurve2d %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepAdaptor_HCurve2d {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepAdaptor_HCurve2d {
-	Handle_BRepAdaptor_HCurve2d GetHandle() {
-	return *(Handle_BRepAdaptor_HCurve2d*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepAdaptor_HCurve2d(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1131,20 +998,6 @@ class Handle_BRepAdaptor_HCurve2d : public Handle_Adaptor2d_HCurve2d {
 %extend Handle_BRepAdaptor_HCurve2d {
     BRepAdaptor_HCurve2d* GetObject() {
     return (BRepAdaptor_HCurve2d*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepAdaptor_HCurve2d::~Handle_BRepAdaptor_HCurve2d %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepAdaptor_HCurve2d {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1178,23 +1031,15 @@ class BRepAdaptor_HSurface : public Adaptor3d_HSurface {
 };
 
 
-%feature("shadow") BRepAdaptor_HSurface::~BRepAdaptor_HSurface %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
 %extend BRepAdaptor_HSurface {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
-%extend BRepAdaptor_HSurface {
-	Handle_BRepAdaptor_HSurface GetHandle() {
-	return *(Handle_BRepAdaptor_HSurface*) &$self;
+	%pythoncode {
+		def GetHandle(self):
+		    try:
+		        return self.thisHandle
+		    except:
+		        self.thisHandle = Handle_BRepAdaptor_HSurface(self)
+		        self.thisown = False
+		        return self.thisHandle
 	}
 };
 
@@ -1214,20 +1059,6 @@ class Handle_BRepAdaptor_HSurface : public Handle_Adaptor3d_HSurface {
 %extend Handle_BRepAdaptor_HSurface {
     BRepAdaptor_HSurface* GetObject() {
     return (BRepAdaptor_HSurface*)$self->Access();
-    }
-};
-%feature("shadow") Handle_BRepAdaptor_HSurface::~Handle_BRepAdaptor_HSurface %{
-def __del__(self):
-    try:
-        self.thisown = False
-        OCC.GarbageCollector.garbage.collect_object(self)
-    except:
-        pass
-%}
-
-%extend Handle_BRepAdaptor_HSurface {
-    void _kill_pointed() {
-        delete $self;
     }
 };
 
@@ -1611,17 +1442,3 @@ class BRepAdaptor_Surface : public Adaptor3d_Surface {
 };
 
 
-%feature("shadow") BRepAdaptor_Surface::~BRepAdaptor_Surface %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BRepAdaptor_Surface {
-	void _kill_pointed() {
-		delete $self;
-	}
-};

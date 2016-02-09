@@ -32,9 +32,6 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 %include ../common/FunctionTransformers.i
 %include ../common/Operators.i
 
-%pythoncode {
-import OCC.GarbageCollector
-};
 
 %include BSplSLib_headers.i
 
@@ -1018,17 +1015,3 @@ class BSplSLib {
 };
 
 
-%feature("shadow") BSplSLib::~BSplSLib %{
-def __del__(self):
-	try:
-		self.thisown = False
-		OCC.GarbageCollector.garbage.collect_object(self)
-	except:
-		pass
-%}
-
-%extend BSplSLib {
-	void _kill_pointed() {
-		delete $self;
-	}
-};
