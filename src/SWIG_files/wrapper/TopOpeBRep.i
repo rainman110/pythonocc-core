@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TopOpeBRep_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef TopOpeBRep_EdgesIntersector * TopOpeBRep_PEdgesIntersector;
 typedef IntPatch_Point * TopOpeBRep_PThePointOfIntersection;
@@ -514,6 +529,12 @@ class TopOpeBRep_DataMapNodeOfDataMapOfTopolTool : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool::Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool;
 class Handle_TopOpeBRep_DataMapNodeOfDataMapOfTopolTool : public Handle_TCollection_MapNode {
 
@@ -910,6 +931,12 @@ class TopOpeBRep_FFDumper : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRep_FFDumper::Handle_TopOpeBRep_FFDumper %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRep_FFDumper;
 class Handle_TopOpeBRep_FFDumper : public Handle_MMgt_TShared {
@@ -1826,6 +1853,12 @@ class TopOpeBRep_HArray1OfLineInter : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TopOpeBRep_HArray1OfLineInter::Handle_TopOpeBRep_HArray1OfLineInter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRep_HArray1OfLineInter;
 class Handle_TopOpeBRep_HArray1OfLineInter : public Handle_MMgt_TShared {
 
@@ -1927,6 +1960,12 @@ class TopOpeBRep_HArray1OfVPointInter : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TopOpeBRep_HArray1OfVPointInter::Handle_TopOpeBRep_HArray1OfVPointInter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRep_HArray1OfVPointInter;
 class Handle_TopOpeBRep_HArray1OfVPointInter : public Handle_MMgt_TShared {
 
@@ -1997,6 +2036,12 @@ class TopOpeBRep_Hctxee2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRep_Hctxee2d::Handle_TopOpeBRep_Hctxee2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRep_Hctxee2d;
 class Handle_TopOpeBRep_Hctxee2d : public Handle_MMgt_TShared {
@@ -2100,6 +2145,12 @@ class TopOpeBRep_Hctxff2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRep_Hctxff2d::Handle_TopOpeBRep_Hctxff2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRep_Hctxff2d;
 class Handle_TopOpeBRep_Hctxff2d : public Handle_MMgt_TShared {
@@ -2439,6 +2490,12 @@ class TopOpeBRep_ListNodeOfListOfBipoint : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRep_ListNodeOfListOfBipoint::Handle_TopOpeBRep_ListNodeOfListOfBipoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRep_ListNodeOfListOfBipoint;
 class Handle_TopOpeBRep_ListNodeOfListOfBipoint : public Handle_TCollection_MapNode {
@@ -2897,6 +2954,12 @@ class TopOpeBRep_SequenceNodeOfSequenceOfPoint2d : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d::Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d;
 class Handle_TopOpeBRep_SequenceNodeOfSequenceOfPoint2d : public Handle_TCollection_SeqNode {

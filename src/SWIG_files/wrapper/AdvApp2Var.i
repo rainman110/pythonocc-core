@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include AdvApp2Var_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -2053,6 +2068,12 @@ class AdvApp2Var_SequenceNodeOfSequenceOfNode : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_AdvApp2Var_SequenceNodeOfSequenceOfNode::Handle_AdvApp2Var_SequenceNodeOfSequenceOfNode %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AdvApp2Var_SequenceNodeOfSequenceOfNode;
 class Handle_AdvApp2Var_SequenceNodeOfSequenceOfNode : public Handle_TCollection_SeqNode {
 
@@ -2103,6 +2124,12 @@ class AdvApp2Var_SequenceNodeOfSequenceOfPatch : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AdvApp2Var_SequenceNodeOfSequenceOfPatch::Handle_AdvApp2Var_SequenceNodeOfSequenceOfPatch %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AdvApp2Var_SequenceNodeOfSequenceOfPatch;
 class Handle_AdvApp2Var_SequenceNodeOfSequenceOfPatch : public Handle_TCollection_SeqNode {
@@ -2155,6 +2182,12 @@ class AdvApp2Var_SequenceNodeOfSequenceOfStrip : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_AdvApp2Var_SequenceNodeOfSequenceOfStrip::Handle_AdvApp2Var_SequenceNodeOfSequenceOfStrip %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AdvApp2Var_SequenceNodeOfSequenceOfStrip;
 class Handle_AdvApp2Var_SequenceNodeOfSequenceOfStrip : public Handle_TCollection_SeqNode {
 
@@ -2205,6 +2238,12 @@ class AdvApp2Var_SequenceNodeOfStrip : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AdvApp2Var_SequenceNodeOfStrip::Handle_AdvApp2Var_SequenceNodeOfStrip %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AdvApp2Var_SequenceNodeOfStrip;
 class Handle_AdvApp2Var_SequenceNodeOfStrip : public Handle_TCollection_SeqNode {

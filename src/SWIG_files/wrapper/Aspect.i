@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Aspect_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef void * 	 Aspect_Display;
 typedef unsigned long Aspect_Drawable;
@@ -618,6 +633,12 @@ class Aspect_AspectFillArea : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Aspect_AspectFillArea::Handle_Aspect_AspectFillArea %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Aspect_AspectFillArea;
 class Handle_Aspect_AspectFillArea : public Handle_MMgt_TShared {
 
@@ -691,6 +712,12 @@ class Aspect_AspectLine : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Aspect_AspectLine::Handle_Aspect_AspectLine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Aspect_AspectLine;
 class Handle_Aspect_AspectLine : public Handle_MMgt_TShared {
 
@@ -763,6 +790,12 @@ class Aspect_AspectMarker : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_AspectMarker::Handle_Aspect_AspectMarker %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_AspectMarker;
 class Handle_Aspect_AspectMarker : public Handle_MMgt_TShared {
@@ -904,6 +937,12 @@ class Aspect_ColorMap : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_ColorMap::Handle_Aspect_ColorMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_ColorMap;
 class Handle_Aspect_ColorMap : public Handle_MMgt_TShared {
@@ -1500,6 +1539,12 @@ class Aspect_ColorScale : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Aspect_ColorScale::Handle_Aspect_ColorScale %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Aspect_ColorScale;
 class Handle_Aspect_ColorScale : public Handle_MMgt_TShared {
 
@@ -1977,6 +2022,12 @@ class Aspect_Driver : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Aspect_Driver::Handle_Aspect_Driver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Aspect_Driver;
 class Handle_Aspect_Driver : public Handle_MMgt_TShared {
 
@@ -2125,6 +2176,12 @@ class Aspect_FontMap : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_FontMap::Handle_Aspect_FontMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_FontMap;
 class Handle_Aspect_FontMap : public Handle_MMgt_TShared {
@@ -2793,6 +2850,12 @@ class Aspect_Grid : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Aspect_Grid::Handle_Aspect_Grid %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Aspect_Grid;
 class Handle_Aspect_Grid : public Handle_MMgt_TShared {
 
@@ -2991,6 +3054,12 @@ class Aspect_MarkMap : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_MarkMap::Handle_Aspect_MarkMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_MarkMap;
 class Handle_Aspect_MarkMap : public Handle_MMgt_TShared {
@@ -3297,6 +3366,12 @@ class Aspect_SequenceNodeOfSequenceOfColor : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Aspect_SequenceNodeOfSequenceOfColor::Handle_Aspect_SequenceNodeOfSequenceOfColor %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Aspect_SequenceNodeOfSequenceOfColor;
 class Handle_Aspect_SequenceNodeOfSequenceOfColor : public Handle_TCollection_SeqNode {
 
@@ -3347,6 +3422,12 @@ class Aspect_SequenceNodeOfSequenceOfColorMapEntry : public TCollection_SeqNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_SequenceNodeOfSequenceOfColorMapEntry::Handle_Aspect_SequenceNodeOfSequenceOfColorMapEntry %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_SequenceNodeOfSequenceOfColorMapEntry;
 class Handle_Aspect_SequenceNodeOfSequenceOfColorMapEntry : public Handle_TCollection_SeqNode {
@@ -3399,6 +3480,12 @@ class Aspect_SequenceNodeOfSequenceOfFontMapEntry : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Aspect_SequenceNodeOfSequenceOfFontMapEntry::Handle_Aspect_SequenceNodeOfSequenceOfFontMapEntry %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Aspect_SequenceNodeOfSequenceOfFontMapEntry;
 class Handle_Aspect_SequenceNodeOfSequenceOfFontMapEntry : public Handle_TCollection_SeqNode {
 
@@ -3449,6 +3536,12 @@ class Aspect_SequenceNodeOfSequenceOfMarkMapEntry : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_SequenceNodeOfSequenceOfMarkMapEntry::Handle_Aspect_SequenceNodeOfSequenceOfMarkMapEntry %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_SequenceNodeOfSequenceOfMarkMapEntry;
 class Handle_Aspect_SequenceNodeOfSequenceOfMarkMapEntry : public Handle_TCollection_SeqNode {
@@ -3501,6 +3594,12 @@ class Aspect_SequenceNodeOfSequenceOfTypeMapEntry : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Aspect_SequenceNodeOfSequenceOfTypeMapEntry::Handle_Aspect_SequenceNodeOfSequenceOfTypeMapEntry %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Aspect_SequenceNodeOfSequenceOfTypeMapEntry;
 class Handle_Aspect_SequenceNodeOfSequenceOfTypeMapEntry : public Handle_TCollection_SeqNode {
 
@@ -3551,6 +3650,12 @@ class Aspect_SequenceNodeOfSequenceOfWidthMapEntry : public TCollection_SeqNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_SequenceNodeOfSequenceOfWidthMapEntry::Handle_Aspect_SequenceNodeOfSequenceOfWidthMapEntry %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_SequenceNodeOfSequenceOfWidthMapEntry;
 class Handle_Aspect_SequenceNodeOfSequenceOfWidthMapEntry : public Handle_TCollection_SeqNode {
@@ -4427,6 +4532,12 @@ class Aspect_TypeMap : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Aspect_TypeMap::Handle_Aspect_TypeMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Aspect_TypeMap;
 class Handle_Aspect_TypeMap : public Handle_MMgt_TShared {
 
@@ -4615,6 +4726,12 @@ class Aspect_WidthMap : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_WidthMap::Handle_Aspect_WidthMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_WidthMap;
 class Handle_Aspect_WidthMap : public Handle_MMgt_TShared {
@@ -4925,6 +5042,12 @@ class Aspect_Window : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Aspect_Window::Handle_Aspect_Window %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Aspect_Window;
 class Handle_Aspect_Window : public Handle_MMgt_TShared {
 
@@ -5037,6 +5160,12 @@ class Aspect_CircularGrid : public Aspect_Grid {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_CircularGrid::Handle_Aspect_CircularGrid %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_CircularGrid;
 class Handle_Aspect_CircularGrid : public Handle_Aspect_Grid {
@@ -5152,6 +5281,12 @@ class Aspect_ColorCubeColorMap : public Aspect_ColorMap {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_ColorCubeColorMap::Handle_Aspect_ColorCubeColorMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_ColorCubeColorMap;
 class Handle_Aspect_ColorCubeColorMap : public Handle_Aspect_ColorMap {
@@ -5358,6 +5493,12 @@ class Aspect_ColorRampColorMap : public Aspect_ColorMap {
 	}
 };
 
+%pythonappend Handle_Aspect_ColorRampColorMap::Handle_Aspect_ColorRampColorMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Aspect_ColorRampColorMap;
 class Handle_Aspect_ColorRampColorMap : public Handle_Aspect_ColorMap {
 
@@ -5456,6 +5597,12 @@ class Aspect_GenericColorMap : public Aspect_ColorMap {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_GenericColorMap::Handle_Aspect_GenericColorMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_GenericColorMap;
 class Handle_Aspect_GenericColorMap : public Handle_Aspect_ColorMap {
@@ -5745,6 +5892,12 @@ class Aspect_RectangularGrid : public Aspect_Grid {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_RectangularGrid::Handle_Aspect_RectangularGrid %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_RectangularGrid;
 class Handle_Aspect_RectangularGrid : public Handle_Aspect_Grid {
@@ -6088,6 +6241,12 @@ class Aspect_WindowDriver : public Aspect_Driver {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Aspect_WindowDriver::Handle_Aspect_WindowDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Aspect_WindowDriver;
 class Handle_Aspect_WindowDriver : public Handle_Aspect_Driver {

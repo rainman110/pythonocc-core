@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include IntTools_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -1055,6 +1070,12 @@ class IntTools_DataMapNodeOfDataMapOfCurveSampleBox : public TCollection_MapNode
 	}
 };
 
+%pythonappend Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox::Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox;
 class Handle_IntTools_DataMapNodeOfDataMapOfCurveSampleBox : public Handle_TCollection_MapNode {
 
@@ -1109,6 +1130,12 @@ class IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox : public TCollection_MapNo
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox::Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox;
 class Handle_IntTools_DataMapNodeOfDataMapOfSurfaceSampleBox : public Handle_TCollection_MapNode {
@@ -1810,6 +1837,12 @@ class IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress : public TCo
 	}
 };
 
+%pythonappend Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress::Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress;
 class Handle_IntTools_IndexedDataMapNodeOfIndexedDataMapOfTransientAddress : public Handle_TCollection_MapNode {
 
@@ -2071,6 +2104,12 @@ class IntTools_ListNodeOfListOfBox : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_IntTools_ListNodeOfListOfBox::Handle_IntTools_ListNodeOfListOfBox %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntTools_ListNodeOfListOfBox;
 class Handle_IntTools_ListNodeOfListOfBox : public Handle_TCollection_MapNode {
 
@@ -2120,6 +2159,12 @@ class IntTools_ListNodeOfListOfCurveRangeSample : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_IntTools_ListNodeOfListOfCurveRangeSample::Handle_IntTools_ListNodeOfListOfCurveRangeSample %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntTools_ListNodeOfListOfCurveRangeSample;
 class Handle_IntTools_ListNodeOfListOfCurveRangeSample : public Handle_TCollection_MapNode {
 
@@ -2168,6 +2213,12 @@ class IntTools_ListNodeOfListOfSurfaceRangeSample : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IntTools_ListNodeOfListOfSurfaceRangeSample::Handle_IntTools_ListNodeOfListOfSurfaceRangeSample %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IntTools_ListNodeOfListOfSurfaceRangeSample;
 class Handle_IntTools_ListNodeOfListOfSurfaceRangeSample : public Handle_TCollection_MapNode {
@@ -3266,6 +3317,12 @@ class IntTools_SequenceNodeOfSequenceOfCommonPrts : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts::Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts;
 class Handle_IntTools_SequenceNodeOfSequenceOfCommonPrts : public Handle_TCollection_SeqNode {
 
@@ -3316,6 +3373,12 @@ class IntTools_SequenceNodeOfSequenceOfCurves : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IntTools_SequenceNodeOfSequenceOfCurves::Handle_IntTools_SequenceNodeOfSequenceOfCurves %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IntTools_SequenceNodeOfSequenceOfCurves;
 class Handle_IntTools_SequenceNodeOfSequenceOfCurves : public Handle_TCollection_SeqNode {
@@ -3368,6 +3431,12 @@ class IntTools_SequenceNodeOfSequenceOfPntOn2Faces : public TCollection_SeqNode 
 	}
 };
 
+%pythonappend Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces::Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces;
 class Handle_IntTools_SequenceNodeOfSequenceOfPntOn2Faces : public Handle_TCollection_SeqNode {
 
@@ -3419,6 +3488,12 @@ class IntTools_SequenceNodeOfSequenceOfRanges : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_IntTools_SequenceNodeOfSequenceOfRanges::Handle_IntTools_SequenceNodeOfSequenceOfRanges %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntTools_SequenceNodeOfSequenceOfRanges;
 class Handle_IntTools_SequenceNodeOfSequenceOfRanges : public Handle_TCollection_SeqNode {
 
@@ -3469,6 +3544,12 @@ class IntTools_SequenceNodeOfSequenceOfRoots : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IntTools_SequenceNodeOfSequenceOfRoots::Handle_IntTools_SequenceNodeOfSequenceOfRoots %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IntTools_SequenceNodeOfSequenceOfRoots;
 class Handle_IntTools_SequenceNodeOfSequenceOfRoots : public Handle_TCollection_SeqNode {
@@ -4179,6 +4260,12 @@ class IntTools_StdMapNodeOfMapOfCurveSample : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_IntTools_StdMapNodeOfMapOfCurveSample::Handle_IntTools_StdMapNodeOfMapOfCurveSample %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntTools_StdMapNodeOfMapOfCurveSample;
 class Handle_IntTools_StdMapNodeOfMapOfCurveSample : public Handle_TCollection_MapNode {
 
@@ -4227,6 +4314,12 @@ class IntTools_StdMapNodeOfMapOfSurfaceSample : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IntTools_StdMapNodeOfMapOfSurfaceSample::Handle_IntTools_StdMapNodeOfMapOfSurfaceSample %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IntTools_StdMapNodeOfMapOfSurfaceSample;
 class Handle_IntTools_StdMapNodeOfMapOfSurfaceSample : public Handle_TCollection_MapNode {
@@ -4970,6 +5063,12 @@ class IntTools_TopolTool : public Adaptor3d_TopolTool {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IntTools_TopolTool::Handle_IntTools_TopolTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IntTools_TopolTool;
 class Handle_IntTools_TopolTool : public Handle_Adaptor3d_TopolTool {

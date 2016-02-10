@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TDataStd_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef TDataStd_TreeNode * TDataStd_PtrTreeNode;
 /* end typedefs declaration */
@@ -153,6 +168,12 @@ class TDataStd_AsciiString : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_AsciiString::Handle_TDataStd_AsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_AsciiString;
 class Handle_TDataStd_AsciiString : public Handle_TDF_Attribute {
@@ -299,6 +320,12 @@ class TDataStd_BooleanArray : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_BooleanArray::Handle_TDataStd_BooleanArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_BooleanArray;
 class Handle_TDataStd_BooleanArray : public Handle_TDF_Attribute {
 
@@ -421,6 +448,12 @@ class TDataStd_BooleanList : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_BooleanList::Handle_TDataStd_BooleanList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_BooleanList;
 class Handle_TDataStd_BooleanList : public Handle_TDF_Attribute {
@@ -593,6 +626,12 @@ class TDataStd_ByteArray : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_ByteArray::Handle_TDataStd_ByteArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_ByteArray;
 class Handle_TDataStd_ByteArray : public Handle_TDF_Attribute {
 
@@ -762,6 +801,12 @@ class TDataStd_Comment : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_Comment::Handle_TDataStd_Comment %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_Comment;
 class Handle_TDataStd_Comment : public Handle_TDF_Attribute {
 
@@ -872,6 +917,12 @@ class TDataStd_Current : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_Current::Handle_TDataStd_Current %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_Current;
 class Handle_TDataStd_Current : public Handle_TDF_Attribute {
@@ -1078,6 +1129,12 @@ class TDataStd_DataMapNodeOfDataMapOfStringByte : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDataStd_DataMapNodeOfDataMapOfStringByte::Handle_TDataStd_DataMapNodeOfDataMapOfStringByte %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_DataMapNodeOfDataMapOfStringByte;
 class Handle_TDataStd_DataMapNodeOfDataMapOfStringByte : public Handle_TCollection_MapNode {
 
@@ -1133,6 +1190,12 @@ class TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger : public TCollection
 	}
 };
 
+%pythonappend Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger::Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger;
 class Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfInteger : public Handle_TCollection_MapNode {
 
@@ -1187,6 +1250,12 @@ class TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal : public TCollection_Ma
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal::Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal;
 class Handle_TDataStd_DataMapNodeOfDataMapOfStringHArray1OfReal : public Handle_TCollection_MapNode {
@@ -1252,6 +1321,12 @@ class TDataStd_DataMapNodeOfDataMapOfStringReal : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDataStd_DataMapNodeOfDataMapOfStringReal::Handle_TDataStd_DataMapNodeOfDataMapOfStringReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_DataMapNodeOfDataMapOfStringReal;
 class Handle_TDataStd_DataMapNodeOfDataMapOfStringReal : public Handle_TCollection_MapNode {
 
@@ -1306,6 +1381,12 @@ class TDataStd_DataMapNodeOfDataMapOfStringString : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_DataMapNodeOfDataMapOfStringString::Handle_TDataStd_DataMapNodeOfDataMapOfStringString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_DataMapNodeOfDataMapOfStringString;
 class Handle_TDataStd_DataMapNodeOfDataMapOfStringString : public Handle_TCollection_MapNode {
@@ -1748,6 +1829,12 @@ class TDataStd_DeltaOnModificationOfByteArray : public TDF_DeltaOnModification {
 	}
 };
 
+%pythonappend Handle_TDataStd_DeltaOnModificationOfByteArray::Handle_TDataStd_DeltaOnModificationOfByteArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_DeltaOnModificationOfByteArray;
 class Handle_TDataStd_DeltaOnModificationOfByteArray : public Handle_TDF_DeltaOnModification {
 
@@ -1798,6 +1885,12 @@ class TDataStd_DeltaOnModificationOfExtStringArray : public TDF_DeltaOnModificat
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_DeltaOnModificationOfExtStringArray::Handle_TDataStd_DeltaOnModificationOfExtStringArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_DeltaOnModificationOfExtStringArray;
 class Handle_TDataStd_DeltaOnModificationOfExtStringArray : public Handle_TDF_DeltaOnModification {
@@ -1850,6 +1943,12 @@ class TDataStd_DeltaOnModificationOfIntArray : public TDF_DeltaOnModification {
 	}
 };
 
+%pythonappend Handle_TDataStd_DeltaOnModificationOfIntArray::Handle_TDataStd_DeltaOnModificationOfIntArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_DeltaOnModificationOfIntArray;
 class Handle_TDataStd_DeltaOnModificationOfIntArray : public Handle_TDF_DeltaOnModification {
 
@@ -1901,6 +2000,12 @@ class TDataStd_DeltaOnModificationOfIntPackedMap : public TDF_DeltaOnModificatio
 	}
 };
 
+%pythonappend Handle_TDataStd_DeltaOnModificationOfIntPackedMap::Handle_TDataStd_DeltaOnModificationOfIntPackedMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_DeltaOnModificationOfIntPackedMap;
 class Handle_TDataStd_DeltaOnModificationOfIntPackedMap : public Handle_TDF_DeltaOnModification {
 
@@ -1951,6 +2056,12 @@ class TDataStd_DeltaOnModificationOfRealArray : public TDF_DeltaOnModification {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_DeltaOnModificationOfRealArray::Handle_TDataStd_DeltaOnModificationOfRealArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_DeltaOnModificationOfRealArray;
 class Handle_TDataStd_DeltaOnModificationOfRealArray : public Handle_TDF_DeltaOnModification {
@@ -2069,6 +2180,12 @@ class TDataStd_Directory : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_Directory::Handle_TDataStd_Directory %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_Directory;
 class Handle_TDataStd_Directory : public Handle_TDF_Attribute {
 
@@ -2173,6 +2290,12 @@ class TDataStd_Expression : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_Expression::Handle_TDataStd_Expression %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_Expression;
 class Handle_TDataStd_Expression : public Handle_TDF_Attribute {
@@ -2347,6 +2470,12 @@ class TDataStd_ExtStringArray : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_ExtStringArray::Handle_TDataStd_ExtStringArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_ExtStringArray;
 class Handle_TDataStd_ExtStringArray : public Handle_TDF_Attribute {
 
@@ -2496,6 +2625,12 @@ class TDataStd_ExtStringList : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_ExtStringList::Handle_TDataStd_ExtStringList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_ExtStringList;
 class Handle_TDataStd_ExtStringList : public Handle_TDF_Attribute {
 
@@ -2552,6 +2687,12 @@ class TDataStd_HDataMapOfStringByte : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_HDataMapOfStringByte::Handle_TDataStd_HDataMapOfStringByte %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_HDataMapOfStringByte;
 class Handle_TDataStd_HDataMapOfStringByte : public Handle_MMgt_TShared {
@@ -2610,6 +2751,12 @@ class TDataStd_HDataMapOfStringHArray1OfInteger : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TDataStd_HDataMapOfStringHArray1OfInteger::Handle_TDataStd_HDataMapOfStringHArray1OfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_HDataMapOfStringHArray1OfInteger;
 class Handle_TDataStd_HDataMapOfStringHArray1OfInteger : public Handle_MMgt_TShared {
 
@@ -2666,6 +2813,12 @@ class TDataStd_HDataMapOfStringHArray1OfReal : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_HDataMapOfStringHArray1OfReal::Handle_TDataStd_HDataMapOfStringHArray1OfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_HDataMapOfStringHArray1OfReal;
 class Handle_TDataStd_HDataMapOfStringHArray1OfReal : public Handle_MMgt_TShared {
@@ -2724,6 +2877,12 @@ class TDataStd_HDataMapOfStringInteger : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TDataStd_HDataMapOfStringInteger::Handle_TDataStd_HDataMapOfStringInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_HDataMapOfStringInteger;
 class Handle_TDataStd_HDataMapOfStringInteger : public Handle_MMgt_TShared {
 
@@ -2781,6 +2940,12 @@ class TDataStd_HDataMapOfStringReal : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TDataStd_HDataMapOfStringReal::Handle_TDataStd_HDataMapOfStringReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_HDataMapOfStringReal;
 class Handle_TDataStd_HDataMapOfStringReal : public Handle_MMgt_TShared {
 
@@ -2837,6 +3002,12 @@ class TDataStd_HDataMapOfStringString : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_HDataMapOfStringString::Handle_TDataStd_HDataMapOfStringString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_HDataMapOfStringString;
 class Handle_TDataStd_HDataMapOfStringString : public Handle_MMgt_TShared {
@@ -2938,6 +3109,12 @@ class TDataStd_HLabelArray1 : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_HLabelArray1::Handle_TDataStd_HLabelArray1 %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_HLabelArray1;
 class Handle_TDataStd_HLabelArray1 : public Handle_MMgt_TShared {
@@ -3090,6 +3267,12 @@ class TDataStd_IntPackedMap : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_IntPackedMap::Handle_TDataStd_IntPackedMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_IntPackedMap;
 class Handle_TDataStd_IntPackedMap : public Handle_TDF_Attribute {
 
@@ -3194,6 +3377,12 @@ class TDataStd_Integer : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_Integer::Handle_TDataStd_Integer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_Integer;
 class Handle_TDataStd_Integer : public Handle_TDF_Attribute {
@@ -3370,6 +3559,12 @@ class TDataStd_IntegerArray : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_IntegerArray::Handle_TDataStd_IntegerArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_IntegerArray;
 class Handle_TDataStd_IntegerArray : public Handle_TDF_Attribute {
 
@@ -3518,6 +3713,12 @@ class TDataStd_IntegerList : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_IntegerList::Handle_TDataStd_IntegerList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_IntegerList;
 class Handle_TDataStd_IntegerList : public Handle_TDF_Attribute {
@@ -3718,6 +3919,12 @@ class TDataStd_ListNodeOfListOfByte : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDataStd_ListNodeOfListOfByte::Handle_TDataStd_ListNodeOfListOfByte %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_ListNodeOfListOfByte;
 class Handle_TDataStd_ListNodeOfListOfByte : public Handle_TCollection_MapNode {
 
@@ -3766,6 +3973,12 @@ class TDataStd_ListNodeOfListOfExtendedString : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_ListNodeOfListOfExtendedString::Handle_TDataStd_ListNodeOfListOfExtendedString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_ListNodeOfListOfExtendedString;
 class Handle_TDataStd_ListNodeOfListOfExtendedString : public Handle_TCollection_MapNode {
@@ -4115,6 +4328,12 @@ class TDataStd_Name : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_Name::Handle_TDataStd_Name %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_Name;
 class Handle_TDataStd_Name : public Handle_TDF_Attribute {
@@ -4477,6 +4696,12 @@ class TDataStd_NamedData : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_NamedData::Handle_TDataStd_NamedData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_NamedData;
 class Handle_TDataStd_NamedData : public Handle_TDF_Attribute {
 
@@ -4591,6 +4816,12 @@ class TDataStd_NoteBook : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_NoteBook::Handle_TDataStd_NoteBook %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_NoteBook;
 class Handle_TDataStd_NoteBook : public Handle_TDF_Attribute {
@@ -4708,6 +4939,12 @@ class TDataStd_Real : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_Real::Handle_TDataStd_Real %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_Real;
 class Handle_TDataStd_Real : public Handle_TDF_Attribute {
@@ -4884,6 +5121,12 @@ class TDataStd_RealArray : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_RealArray::Handle_TDataStd_RealArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_RealArray;
 class Handle_TDataStd_RealArray : public Handle_TDF_Attribute {
 
@@ -5032,6 +5275,12 @@ class TDataStd_RealList : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_RealList::Handle_TDataStd_RealList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_RealList;
 class Handle_TDataStd_RealList : public Handle_TDF_Attribute {
@@ -5185,6 +5434,12 @@ class TDataStd_ReferenceArray : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_ReferenceArray::Handle_TDataStd_ReferenceArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_ReferenceArray;
 class Handle_TDataStd_ReferenceArray : public Handle_TDF_Attribute {
@@ -5341,6 +5596,12 @@ class TDataStd_ReferenceList : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_ReferenceList::Handle_TDataStd_ReferenceList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_ReferenceList;
 class Handle_TDataStd_ReferenceList : public Handle_TDF_Attribute {
 
@@ -5446,6 +5707,12 @@ class TDataStd_Relation : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_Relation::Handle_TDataStd_Relation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_Relation;
 class Handle_TDataStd_Relation : public Handle_TDF_Attribute {
 
@@ -5530,6 +5797,12 @@ class TDataStd_Tick : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_Tick::Handle_TDataStd_Tick %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_Tick;
 class Handle_TDataStd_Tick : public Handle_TDF_Attribute {
@@ -5882,6 +6155,12 @@ class TDataStd_TreeNode : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDataStd_TreeNode::Handle_TDataStd_TreeNode %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDataStd_TreeNode;
 class Handle_TDataStd_TreeNode : public Handle_TDF_Attribute {
 
@@ -5974,6 +6253,12 @@ class TDataStd_UAttribute : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_UAttribute::Handle_TDataStd_UAttribute %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_UAttribute;
 class Handle_TDataStd_UAttribute : public Handle_TDF_Attribute {
@@ -6165,6 +6450,12 @@ class TDataStd_Variable : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDataStd_Variable::Handle_TDataStd_Variable %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDataStd_Variable;
 class Handle_TDataStd_Variable : public Handle_TDF_Attribute {

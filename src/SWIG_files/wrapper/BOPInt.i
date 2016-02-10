@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BOPInt_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -296,6 +311,12 @@ class BOPInt_Context : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BOPInt_Context::Handle_BOPInt_Context %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BOPInt_Context;
 class Handle_BOPInt_Context : public Handle_MMgt_TShared {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include XCAFPrs_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -150,6 +165,12 @@ class XCAFPrs_AISObject : public AIS_Shape {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFPrs_AISObject::Handle_XCAFPrs_AISObject %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFPrs_AISObject;
 class Handle_XCAFPrs_AISObject : public Handle_AIS_Shape {
@@ -296,6 +317,12 @@ class XCAFPrs_DataMapNodeOfDataMapOfShapeStyle : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_XCAFPrs_DataMapNodeOfDataMapOfShapeStyle::Handle_XCAFPrs_DataMapNodeOfDataMapOfShapeStyle %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_XCAFPrs_DataMapNodeOfDataMapOfShapeStyle;
 class Handle_XCAFPrs_DataMapNodeOfDataMapOfShapeStyle : public Handle_TCollection_MapNode {
 
@@ -351,6 +378,12 @@ class XCAFPrs_DataMapNodeOfDataMapOfStyleShape : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_XCAFPrs_DataMapNodeOfDataMapOfStyleShape::Handle_XCAFPrs_DataMapNodeOfDataMapOfStyleShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_XCAFPrs_DataMapNodeOfDataMapOfStyleShape;
 class Handle_XCAFPrs_DataMapNodeOfDataMapOfStyleShape : public Handle_TCollection_MapNode {
 
@@ -405,6 +438,12 @@ class XCAFPrs_DataMapNodeOfDataMapOfStyleTransient : public TCollection_MapNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFPrs_DataMapNodeOfDataMapOfStyleTransient::Handle_XCAFPrs_DataMapNodeOfDataMapOfStyleTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFPrs_DataMapNodeOfDataMapOfStyleTransient;
 class Handle_XCAFPrs_DataMapNodeOfDataMapOfStyleTransient : public Handle_TCollection_MapNode {
@@ -690,6 +729,12 @@ class XCAFPrs_Driver : public TPrsStd_Driver {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFPrs_Driver::Handle_XCAFPrs_Driver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFPrs_Driver;
 class Handle_XCAFPrs_Driver : public Handle_TPrsStd_Driver {

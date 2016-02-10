@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Contap_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -701,6 +716,12 @@ class Contap_SequenceNodeOfSequenceOfIWLineOfTheIWalkingOfContour : public TColl
 	}
 };
 
+%pythonappend Handle_Contap_SequenceNodeOfSequenceOfIWLineOfTheIWalkingOfContour::Handle_Contap_SequenceNodeOfSequenceOfIWLineOfTheIWalkingOfContour %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Contap_SequenceNodeOfSequenceOfIWLineOfTheIWalkingOfContour;
 class Handle_Contap_SequenceNodeOfSequenceOfIWLineOfTheIWalkingOfContour : public Handle_TCollection_SeqNode {
 
@@ -751,6 +772,12 @@ class Contap_SequenceNodeOfSequenceOfPathPointOfTheSearchOfContour : public TCol
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Contap_SequenceNodeOfSequenceOfPathPointOfTheSearchOfContour::Handle_Contap_SequenceNodeOfSequenceOfPathPointOfTheSearchOfContour %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Contap_SequenceNodeOfSequenceOfPathPointOfTheSearchOfContour;
 class Handle_Contap_SequenceNodeOfSequenceOfPathPointOfTheSearchOfContour : public Handle_TCollection_SeqNode {
@@ -803,6 +830,12 @@ class Contap_SequenceNodeOfSequenceOfSegmentOfTheSearchOfContour : public TColle
 	}
 };
 
+%pythonappend Handle_Contap_SequenceNodeOfSequenceOfSegmentOfTheSearchOfContour::Handle_Contap_SequenceNodeOfSequenceOfSegmentOfTheSearchOfContour %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Contap_SequenceNodeOfSequenceOfSegmentOfTheSearchOfContour;
 class Handle_Contap_SequenceNodeOfSequenceOfSegmentOfTheSearchOfContour : public Handle_TCollection_SeqNode {
 
@@ -854,6 +887,12 @@ class Contap_SequenceNodeOfTheSequenceOfLineOfContour : public TCollection_SeqNo
 	}
 };
 
+%pythonappend Handle_Contap_SequenceNodeOfTheSequenceOfLineOfContour::Handle_Contap_SequenceNodeOfTheSequenceOfLineOfContour %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Contap_SequenceNodeOfTheSequenceOfLineOfContour;
 class Handle_Contap_SequenceNodeOfTheSequenceOfLineOfContour : public Handle_TCollection_SeqNode {
 
@@ -904,6 +943,12 @@ class Contap_SequenceNodeOfTheSequenceOfPointOfContour : public TCollection_SeqN
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Contap_SequenceNodeOfTheSequenceOfPointOfContour::Handle_Contap_SequenceNodeOfTheSequenceOfPointOfContour %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Contap_SequenceNodeOfTheSequenceOfPointOfContour;
 class Handle_Contap_SequenceNodeOfTheSequenceOfPointOfContour : public Handle_TCollection_SeqNode {
@@ -1568,6 +1613,12 @@ class Contap_TheHSequenceOfPointOfContour : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Contap_TheHSequenceOfPointOfContour::Handle_Contap_TheHSequenceOfPointOfContour %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Contap_TheHSequenceOfPointOfContour;
 class Handle_Contap_TheHSequenceOfPointOfContour : public Handle_MMgt_TShared {
 
@@ -1768,6 +1819,12 @@ class Contap_TheIWLineOfTheIWalkingOfContour : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Contap_TheIWLineOfTheIWalkingOfContour::Handle_Contap_TheIWLineOfTheIWalkingOfContour %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Contap_TheIWLineOfTheIWalkingOfContour;
 class Handle_Contap_TheIWLineOfTheIWalkingOfContour : public Handle_MMgt_TShared {

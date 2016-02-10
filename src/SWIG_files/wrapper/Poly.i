@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Poly_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef NCollection_Vector <Poly_CoherentLink>::Iterator Poly_BaseIteratorOfCoherentLink;
 typedef NCollection_Vector <Poly_CoherentNode>::Iterator Poly_BaseIteratorOfCoherentNode;
@@ -724,6 +739,12 @@ class Poly_HArray1OfTriangle : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Poly_HArray1OfTriangle::Handle_Poly_HArray1OfTriangle %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Poly_HArray1OfTriangle;
 class Handle_Poly_HArray1OfTriangle : public Handle_MMgt_TShared {
 
@@ -794,6 +815,12 @@ class Poly_Polygon2D : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Poly_Polygon2D::Handle_Poly_Polygon2D %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Poly_Polygon2D;
 class Handle_Poly_Polygon2D : public Handle_MMgt_TShared {
@@ -894,6 +921,12 @@ class Poly_Polygon3D : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Poly_Polygon3D::Handle_Poly_Polygon3D %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Poly_Polygon3D;
 class Handle_Poly_Polygon3D : public Handle_MMgt_TShared {
 
@@ -986,6 +1019,12 @@ class Poly_PolygonOnTriangulation : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Poly_PolygonOnTriangulation::Handle_Poly_PolygonOnTriangulation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Poly_PolygonOnTriangulation;
 class Handle_Poly_PolygonOnTriangulation : public Handle_MMgt_TShared {
@@ -1225,6 +1264,12 @@ class Poly_Triangulation : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Poly_Triangulation::Handle_Poly_Triangulation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Poly_Triangulation;
 class Handle_Poly_Triangulation : public Handle_MMgt_TShared {

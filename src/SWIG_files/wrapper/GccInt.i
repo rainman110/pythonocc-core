@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include GccInt_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -110,6 +125,12 @@ class GccInt_Bisec : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_GccInt_Bisec::Handle_GccInt_Bisec %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GccInt_Bisec;
 class Handle_GccInt_Bisec : public Handle_MMgt_TShared {
 
@@ -166,6 +187,12 @@ class GccInt_BCirc : public GccInt_Bisec {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GccInt_BCirc::Handle_GccInt_BCirc %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GccInt_BCirc;
 class Handle_GccInt_BCirc : public Handle_GccInt_Bisec {
@@ -224,6 +251,12 @@ class GccInt_BElips : public GccInt_Bisec {
 	}
 };
 
+%pythonappend Handle_GccInt_BElips::Handle_GccInt_BElips %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GccInt_BElips;
 class Handle_GccInt_BElips : public Handle_GccInt_Bisec {
 
@@ -280,6 +313,12 @@ class GccInt_BHyper : public GccInt_Bisec {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GccInt_BHyper::Handle_GccInt_BHyper %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GccInt_BHyper;
 class Handle_GccInt_BHyper : public Handle_GccInt_Bisec {
@@ -338,6 +377,12 @@ class GccInt_BLine : public GccInt_Bisec {
 	}
 };
 
+%pythonappend Handle_GccInt_BLine::Handle_GccInt_BLine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GccInt_BLine;
 class Handle_GccInt_BLine : public Handle_GccInt_Bisec {
 
@@ -395,6 +440,12 @@ class GccInt_BParab : public GccInt_Bisec {
 	}
 };
 
+%pythonappend Handle_GccInt_BParab::Handle_GccInt_BParab %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GccInt_BParab;
 class Handle_GccInt_BParab : public Handle_GccInt_Bisec {
 
@@ -451,6 +502,12 @@ class GccInt_BPoint : public GccInt_Bisec {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GccInt_BPoint::Handle_GccInt_BPoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GccInt_BPoint;
 class Handle_GccInt_BPoint : public Handle_GccInt_Bisec {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TColStd_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -1554,6 +1569,12 @@ class TColStd_DataMapNodeOfDataMapOfAsciiStringInteger : public TCollection_MapN
 	}
 };
 
+%pythonappend Handle_TColStd_DataMapNodeOfDataMapOfAsciiStringInteger::Handle_TColStd_DataMapNodeOfDataMapOfAsciiStringInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_DataMapNodeOfDataMapOfAsciiStringInteger;
 class Handle_TColStd_DataMapNodeOfDataMapOfAsciiStringInteger : public Handle_TCollection_MapNode {
 
@@ -1627,6 +1648,12 @@ class TColStd_DataMapNodeOfDataMapOfIntegerInteger : public TCollection_MapNode 
 	}
 };
 
+%pythonappend Handle_TColStd_DataMapNodeOfDataMapOfIntegerInteger::Handle_TColStd_DataMapNodeOfDataMapOfIntegerInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_DataMapNodeOfDataMapOfIntegerInteger;
 class Handle_TColStd_DataMapNodeOfDataMapOfIntegerInteger : public Handle_TCollection_MapNode {
 
@@ -1690,6 +1717,12 @@ class TColStd_DataMapNodeOfDataMapOfIntegerListOfInteger : public TCollection_Ma
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_DataMapNodeOfDataMapOfIntegerListOfInteger::Handle_TColStd_DataMapNodeOfDataMapOfIntegerListOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_DataMapNodeOfDataMapOfIntegerListOfInteger;
 class Handle_TColStd_DataMapNodeOfDataMapOfIntegerListOfInteger : public Handle_TCollection_MapNode {
@@ -1764,6 +1797,12 @@ class TColStd_DataMapNodeOfDataMapOfIntegerReal : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_DataMapNodeOfDataMapOfIntegerReal::Handle_TColStd_DataMapNodeOfDataMapOfIntegerReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_DataMapNodeOfDataMapOfIntegerReal;
 class Handle_TColStd_DataMapNodeOfDataMapOfIntegerReal : public Handle_TCollection_MapNode {
 
@@ -1827,6 +1866,12 @@ class TColStd_DataMapNodeOfDataMapOfIntegerTransient : public TCollection_MapNod
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_DataMapNodeOfDataMapOfIntegerTransient::Handle_TColStd_DataMapNodeOfDataMapOfIntegerTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_DataMapNodeOfDataMapOfIntegerTransient;
 class Handle_TColStd_DataMapNodeOfDataMapOfIntegerTransient : public Handle_TCollection_MapNode {
@@ -1892,6 +1937,12 @@ class TColStd_DataMapNodeOfDataMapOfStringInteger : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_DataMapNodeOfDataMapOfStringInteger::Handle_TColStd_DataMapNodeOfDataMapOfStringInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_DataMapNodeOfDataMapOfStringInteger;
 class Handle_TColStd_DataMapNodeOfDataMapOfStringInteger : public Handle_TCollection_MapNode {
 
@@ -1946,6 +1997,12 @@ class TColStd_DataMapNodeOfDataMapOfTransientTransient : public TCollection_MapN
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_DataMapNodeOfDataMapOfTransientTransient::Handle_TColStd_DataMapNodeOfDataMapOfTransientTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_DataMapNodeOfDataMapOfTransientTransient;
 class Handle_TColStd_DataMapNodeOfDataMapOfTransientTransient : public Handle_TCollection_MapNode {
@@ -2594,6 +2651,12 @@ class TColStd_HArray1OfAsciiString : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HArray1OfAsciiString::Handle_TColStd_HArray1OfAsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HArray1OfAsciiString;
 class Handle_TColStd_HArray1OfAsciiString : public Handle_MMgt_TShared {
 
@@ -2694,6 +2757,12 @@ class TColStd_HArray1OfBoolean : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_HArray1OfBoolean::Handle_TColStd_HArray1OfBoolean %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_HArray1OfBoolean;
 class Handle_TColStd_HArray1OfBoolean : public Handle_MMgt_TShared {
@@ -2796,6 +2865,12 @@ class TColStd_HArray1OfByte : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HArray1OfByte::Handle_TColStd_HArray1OfByte %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HArray1OfByte;
 class Handle_TColStd_HArray1OfByte : public Handle_MMgt_TShared {
 
@@ -2896,6 +2971,12 @@ class TColStd_HArray1OfCharacter : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_HArray1OfCharacter::Handle_TColStd_HArray1OfCharacter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_HArray1OfCharacter;
 class Handle_TColStd_HArray1OfCharacter : public Handle_MMgt_TShared {
@@ -2998,6 +3079,12 @@ class TColStd_HArray1OfExtendedString : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HArray1OfExtendedString::Handle_TColStd_HArray1OfExtendedString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HArray1OfExtendedString;
 class Handle_TColStd_HArray1OfExtendedString : public Handle_MMgt_TShared {
 
@@ -3098,6 +3185,12 @@ class TColStd_HArray1OfInteger : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_HArray1OfInteger::Handle_TColStd_HArray1OfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_HArray1OfInteger;
 class Handle_TColStd_HArray1OfInteger : public Handle_MMgt_TShared {
@@ -3200,6 +3293,12 @@ class TColStd_HArray1OfListOfInteger : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HArray1OfListOfInteger::Handle_TColStd_HArray1OfListOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HArray1OfListOfInteger;
 class Handle_TColStd_HArray1OfListOfInteger : public Handle_MMgt_TShared {
 
@@ -3301,6 +3400,12 @@ class TColStd_HArray1OfReal : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HArray1OfReal::Handle_TColStd_HArray1OfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HArray1OfReal;
 class Handle_TColStd_HArray1OfReal : public Handle_MMgt_TShared {
 
@@ -3401,6 +3506,12 @@ class TColStd_HArray1OfTransient : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_HArray1OfTransient::Handle_TColStd_HArray1OfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_HArray1OfTransient;
 class Handle_TColStd_HArray1OfTransient : public Handle_MMgt_TShared {
@@ -3529,6 +3640,12 @@ class TColStd_HArray2OfBoolean : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HArray2OfBoolean::Handle_TColStd_HArray2OfBoolean %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HArray2OfBoolean;
 class Handle_TColStd_HArray2OfBoolean : public Handle_MMgt_TShared {
 
@@ -3655,6 +3772,12 @@ class TColStd_HArray2OfCharacter : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_HArray2OfCharacter::Handle_TColStd_HArray2OfCharacter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_HArray2OfCharacter;
 class Handle_TColStd_HArray2OfCharacter : public Handle_MMgt_TShared {
@@ -3783,6 +3906,12 @@ class TColStd_HArray2OfInteger : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HArray2OfInteger::Handle_TColStd_HArray2OfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HArray2OfInteger;
 class Handle_TColStd_HArray2OfInteger : public Handle_MMgt_TShared {
 
@@ -3909,6 +4038,12 @@ class TColStd_HArray2OfReal : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_HArray2OfReal::Handle_TColStd_HArray2OfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_HArray2OfReal;
 class Handle_TColStd_HArray2OfReal : public Handle_MMgt_TShared {
@@ -4037,6 +4172,12 @@ class TColStd_HArray2OfTransient : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HArray2OfTransient::Handle_TColStd_HArray2OfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HArray2OfTransient;
 class Handle_TColStd_HArray2OfTransient : public Handle_MMgt_TShared {
 
@@ -4093,6 +4234,12 @@ class TColStd_HPackedMapOfInteger : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_HPackedMapOfInteger::Handle_TColStd_HPackedMapOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_HPackedMapOfInteger;
 class Handle_TColStd_HPackedMapOfInteger : public Handle_MMgt_TShared {
@@ -4267,6 +4414,12 @@ class TColStd_HSequenceOfAsciiString : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HSequenceOfAsciiString::Handle_TColStd_HSequenceOfAsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HSequenceOfAsciiString;
 class Handle_TColStd_HSequenceOfAsciiString : public Handle_MMgt_TShared {
 
@@ -4439,6 +4592,12 @@ class TColStd_HSequenceOfExtendedString : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_HSequenceOfExtendedString::Handle_TColStd_HSequenceOfExtendedString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_HSequenceOfExtendedString;
 class Handle_TColStd_HSequenceOfExtendedString : public Handle_MMgt_TShared {
@@ -4613,6 +4772,12 @@ class TColStd_HSequenceOfHAsciiString : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HSequenceOfHAsciiString::Handle_TColStd_HSequenceOfHAsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HSequenceOfHAsciiString;
 class Handle_TColStd_HSequenceOfHAsciiString : public Handle_MMgt_TShared {
 
@@ -4785,6 +4950,12 @@ class TColStd_HSequenceOfHExtendedString : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_HSequenceOfHExtendedString::Handle_TColStd_HSequenceOfHExtendedString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_HSequenceOfHExtendedString;
 class Handle_TColStd_HSequenceOfHExtendedString : public Handle_MMgt_TShared {
@@ -4959,6 +5130,12 @@ class TColStd_HSequenceOfInteger : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HSequenceOfInteger::Handle_TColStd_HSequenceOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HSequenceOfInteger;
 class Handle_TColStd_HSequenceOfInteger : public Handle_MMgt_TShared {
 
@@ -5131,6 +5308,12 @@ class TColStd_HSequenceOfReal : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_HSequenceOfReal::Handle_TColStd_HSequenceOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_HSequenceOfReal;
 class Handle_TColStd_HSequenceOfReal : public Handle_MMgt_TShared {
@@ -5305,6 +5488,12 @@ class TColStd_HSequenceOfTransient : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HSequenceOfTransient::Handle_TColStd_HSequenceOfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HSequenceOfTransient;
 class Handle_TColStd_HSequenceOfTransient : public Handle_MMgt_TShared {
 
@@ -5417,6 +5606,12 @@ class TColStd_HSetOfInteger : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_HSetOfInteger::Handle_TColStd_HSetOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_HSetOfInteger;
 class Handle_TColStd_HSetOfInteger : public Handle_MMgt_TShared {
@@ -5531,6 +5726,12 @@ class TColStd_HSetOfReal : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HSetOfReal::Handle_TColStd_HSetOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HSetOfReal;
 class Handle_TColStd_HSetOfReal : public Handle_MMgt_TShared {
 
@@ -5644,6 +5845,12 @@ class TColStd_HSetOfTransient : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColStd_HSetOfTransient::Handle_TColStd_HSetOfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_HSetOfTransient;
 class Handle_TColStd_HSetOfTransient : public Handle_MMgt_TShared {
 
@@ -5719,6 +5926,12 @@ class TColStd_IndexedDataMapNodeOfIndexedDataMapOfTransientTransient : public TC
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_IndexedDataMapNodeOfIndexedDataMapOfTransientTransient::Handle_TColStd_IndexedDataMapNodeOfIndexedDataMapOfTransientTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_IndexedDataMapNodeOfIndexedDataMapOfTransientTransient;
 class Handle_TColStd_IndexedDataMapNodeOfIndexedDataMapOfTransientTransient : public Handle_TCollection_MapNode {
@@ -5909,6 +6122,12 @@ class TColStd_IndexedMapNodeOfIndexedMapOfInteger : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_IndexedMapNodeOfIndexedMapOfInteger::Handle_TColStd_IndexedMapNodeOfIndexedMapOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_IndexedMapNodeOfIndexedMapOfInteger;
 class Handle_TColStd_IndexedMapNodeOfIndexedMapOfInteger : public Handle_TCollection_MapNode {
 
@@ -5988,6 +6207,12 @@ class TColStd_IndexedMapNodeOfIndexedMapOfReal : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_IndexedMapNodeOfIndexedMapOfReal::Handle_TColStd_IndexedMapNodeOfIndexedMapOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_IndexedMapNodeOfIndexedMapOfReal;
 class Handle_TColStd_IndexedMapNodeOfIndexedMapOfReal : public Handle_TCollection_MapNode {
 
@@ -6057,6 +6282,12 @@ class TColStd_IndexedMapNodeOfIndexedMapOfTransient : public TCollection_MapNode
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_IndexedMapNodeOfIndexedMapOfTransient::Handle_TColStd_IndexedMapNodeOfIndexedMapOfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_IndexedMapNodeOfIndexedMapOfTransient;
 class Handle_TColStd_IndexedMapNodeOfIndexedMapOfTransient : public Handle_TCollection_MapNode {
@@ -6591,6 +6822,12 @@ class TColStd_ListNodeOfListOfAsciiString : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_ListNodeOfListOfAsciiString::Handle_TColStd_ListNodeOfListOfAsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_ListNodeOfListOfAsciiString;
 class Handle_TColStd_ListNodeOfListOfAsciiString : public Handle_TCollection_MapNode {
 
@@ -6648,6 +6885,12 @@ class TColStd_ListNodeOfListOfInteger : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_ListNodeOfListOfInteger::Handle_TColStd_ListNodeOfListOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_ListNodeOfListOfInteger;
 class Handle_TColStd_ListNodeOfListOfInteger : public Handle_TCollection_MapNode {
@@ -6707,6 +6950,12 @@ class TColStd_ListNodeOfListOfReal : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_ListNodeOfListOfReal::Handle_TColStd_ListNodeOfListOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_ListNodeOfListOfReal;
 class Handle_TColStd_ListNodeOfListOfReal : public Handle_TCollection_MapNode {
 
@@ -6755,6 +7004,12 @@ class TColStd_ListNodeOfListOfTransient : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_ListNodeOfListOfTransient::Handle_TColStd_ListNodeOfListOfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_ListNodeOfListOfTransient;
 class Handle_TColStd_ListNodeOfListOfTransient : public Handle_TCollection_MapNode {
@@ -6814,6 +7069,12 @@ class TColStd_ListNodeOfSetListOfSetOfInteger : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_ListNodeOfSetListOfSetOfInteger::Handle_TColStd_ListNodeOfSetListOfSetOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_ListNodeOfSetListOfSetOfInteger;
 class Handle_TColStd_ListNodeOfSetListOfSetOfInteger : public Handle_TCollection_MapNode {
 
@@ -6872,6 +7133,12 @@ class TColStd_ListNodeOfSetListOfSetOfReal : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_ListNodeOfSetListOfSetOfReal::Handle_TColStd_ListNodeOfSetListOfSetOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_ListNodeOfSetListOfSetOfReal;
 class Handle_TColStd_ListNodeOfSetListOfSetOfReal : public Handle_TCollection_MapNode {
 
@@ -6920,6 +7187,12 @@ class TColStd_ListNodeOfSetListOfSetOfTransient : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_ListNodeOfSetListOfSetOfTransient::Handle_TColStd_ListNodeOfSetListOfSetOfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_ListNodeOfSetListOfSetOfTransient;
 class Handle_TColStd_ListNodeOfSetListOfSetOfTransient : public Handle_TCollection_MapNode {
@@ -7932,6 +8205,12 @@ class TColStd_QueueNodeOfQueueOfInteger : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_QueueNodeOfQueueOfInteger::Handle_TColStd_QueueNodeOfQueueOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_QueueNodeOfQueueOfInteger;
 class Handle_TColStd_QueueNodeOfQueueOfInteger : public Handle_TCollection_MapNode {
 
@@ -7990,6 +8269,12 @@ class TColStd_QueueNodeOfQueueOfReal : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_QueueNodeOfQueueOfReal::Handle_TColStd_QueueNodeOfQueueOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_QueueNodeOfQueueOfReal;
 class Handle_TColStd_QueueNodeOfQueueOfReal : public Handle_TCollection_MapNode {
 
@@ -8038,6 +8323,12 @@ class TColStd_QueueNodeOfQueueOfTransient : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_QueueNodeOfQueueOfTransient::Handle_TColStd_QueueNodeOfQueueOfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_QueueNodeOfQueueOfTransient;
 class Handle_TColStd_QueueNodeOfQueueOfTransient : public Handle_TCollection_MapNode {
@@ -8264,6 +8555,12 @@ class TColStd_SequenceNodeOfSequenceOfAddress : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_TColStd_SequenceNodeOfSequenceOfAddress::Handle_TColStd_SequenceNodeOfSequenceOfAddress %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_SequenceNodeOfSequenceOfAddress;
 class Handle_TColStd_SequenceNodeOfSequenceOfAddress : public Handle_TCollection_SeqNode {
 
@@ -8314,6 +8611,12 @@ class TColStd_SequenceNodeOfSequenceOfAsciiString : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_SequenceNodeOfSequenceOfAsciiString::Handle_TColStd_SequenceNodeOfSequenceOfAsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_SequenceNodeOfSequenceOfAsciiString;
 class Handle_TColStd_SequenceNodeOfSequenceOfAsciiString : public Handle_TCollection_SeqNode {
@@ -8375,6 +8678,12 @@ class TColStd_SequenceNodeOfSequenceOfBoolean : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_TColStd_SequenceNodeOfSequenceOfBoolean::Handle_TColStd_SequenceNodeOfSequenceOfBoolean %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_SequenceNodeOfSequenceOfBoolean;
 class Handle_TColStd_SequenceNodeOfSequenceOfBoolean : public Handle_TCollection_SeqNode {
 
@@ -8425,6 +8734,12 @@ class TColStd_SequenceNodeOfSequenceOfExtendedString : public TCollection_SeqNod
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_SequenceNodeOfSequenceOfExtendedString::Handle_TColStd_SequenceNodeOfSequenceOfExtendedString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_SequenceNodeOfSequenceOfExtendedString;
 class Handle_TColStd_SequenceNodeOfSequenceOfExtendedString : public Handle_TCollection_SeqNode {
@@ -8477,6 +8792,12 @@ class TColStd_SequenceNodeOfSequenceOfHAsciiString : public TCollection_SeqNode 
 	}
 };
 
+%pythonappend Handle_TColStd_SequenceNodeOfSequenceOfHAsciiString::Handle_TColStd_SequenceNodeOfSequenceOfHAsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_SequenceNodeOfSequenceOfHAsciiString;
 class Handle_TColStd_SequenceNodeOfSequenceOfHAsciiString : public Handle_TCollection_SeqNode {
 
@@ -8527,6 +8848,12 @@ class TColStd_SequenceNodeOfSequenceOfHExtendedString : public TCollection_SeqNo
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_SequenceNodeOfSequenceOfHExtendedString::Handle_TColStd_SequenceNodeOfSequenceOfHExtendedString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_SequenceNodeOfSequenceOfHExtendedString;
 class Handle_TColStd_SequenceNodeOfSequenceOfHExtendedString : public Handle_TCollection_SeqNode {
@@ -8588,6 +8915,12 @@ class TColStd_SequenceNodeOfSequenceOfInteger : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_TColStd_SequenceNodeOfSequenceOfInteger::Handle_TColStd_SequenceNodeOfSequenceOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_SequenceNodeOfSequenceOfInteger;
 class Handle_TColStd_SequenceNodeOfSequenceOfInteger : public Handle_TCollection_SeqNode {
 
@@ -8648,6 +8981,12 @@ class TColStd_SequenceNodeOfSequenceOfReal : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_TColStd_SequenceNodeOfSequenceOfReal::Handle_TColStd_SequenceNodeOfSequenceOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_SequenceNodeOfSequenceOfReal;
 class Handle_TColStd_SequenceNodeOfSequenceOfReal : public Handle_TCollection_SeqNode {
 
@@ -8698,6 +9037,12 @@ class TColStd_SequenceNodeOfSequenceOfTransient : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_SequenceNodeOfSequenceOfTransient::Handle_TColStd_SequenceNodeOfSequenceOfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_SequenceNodeOfSequenceOfTransient;
 class Handle_TColStd_SequenceNodeOfSequenceOfTransient : public Handle_TCollection_SeqNode {
@@ -10767,6 +11112,12 @@ class TColStd_StackNodeOfStackOfInteger : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_StackNodeOfStackOfInteger::Handle_TColStd_StackNodeOfStackOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_StackNodeOfStackOfInteger;
 class Handle_TColStd_StackNodeOfStackOfInteger : public Handle_TCollection_MapNode {
 
@@ -10825,6 +11176,12 @@ class TColStd_StackNodeOfStackOfReal : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_StackNodeOfStackOfReal::Handle_TColStd_StackNodeOfStackOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_StackNodeOfStackOfReal;
 class Handle_TColStd_StackNodeOfStackOfReal : public Handle_TCollection_MapNode {
 
@@ -10873,6 +11230,12 @@ class TColStd_StackNodeOfStackOfTransient : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_StackNodeOfStackOfTransient::Handle_TColStd_StackNodeOfStackOfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_StackNodeOfStackOfTransient;
 class Handle_TColStd_StackNodeOfStackOfTransient : public Handle_TCollection_MapNode {
@@ -11097,6 +11460,12 @@ class TColStd_StdMapNodeOfMapOfAsciiString : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_StdMapNodeOfMapOfAsciiString::Handle_TColStd_StdMapNodeOfMapOfAsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_StdMapNodeOfMapOfAsciiString;
 class Handle_TColStd_StdMapNodeOfMapOfAsciiString : public Handle_TCollection_MapNode {
 
@@ -11154,6 +11523,12 @@ class TColStd_StdMapNodeOfMapOfInteger : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_StdMapNodeOfMapOfInteger::Handle_TColStd_StdMapNodeOfMapOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_StdMapNodeOfMapOfInteger;
 class Handle_TColStd_StdMapNodeOfMapOfInteger : public Handle_TCollection_MapNode {
@@ -11213,6 +11588,12 @@ class TColStd_StdMapNodeOfMapOfReal : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColStd_StdMapNodeOfMapOfReal::Handle_TColStd_StdMapNodeOfMapOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColStd_StdMapNodeOfMapOfReal;
 class Handle_TColStd_StdMapNodeOfMapOfReal : public Handle_TCollection_MapNode {
 
@@ -11261,6 +11642,12 @@ class TColStd_StdMapNodeOfMapOfTransient : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColStd_StdMapNodeOfMapOfTransient::Handle_TColStd_StdMapNodeOfMapOfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColStd_StdMapNodeOfMapOfTransient;
 class Handle_TColStd_StdMapNodeOfMapOfTransient : public Handle_TCollection_MapNode {

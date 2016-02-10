@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRepFill_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -379,6 +394,12 @@ class BRepFill_CurveConstraint : public GeomPlate_CurveConstraint {
 	}
 };
 
+%pythonappend Handle_BRepFill_CurveConstraint::Handle_BRepFill_CurveConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_CurveConstraint;
 class Handle_BRepFill_CurveConstraint : public Handle_GeomPlate_CurveConstraint {
 
@@ -644,6 +665,12 @@ class BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape : public TCollectio
 	}
 };
 
+%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape::Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape;
 class Handle_BRepFill_DataMapNodeOfDataMapOfNodeDataMapOfShapeShape : public Handle_TCollection_MapNode {
 
@@ -698,6 +725,12 @@ class BRepFill_DataMapNodeOfDataMapOfNodeShape : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape::Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape;
 class Handle_BRepFill_DataMapNodeOfDataMapOfNodeShape : public Handle_TCollection_MapNode {
@@ -754,6 +787,12 @@ class BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape : public TCollecti
 	}
 };
 
+%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape::Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape;
 class Handle_BRepFill_DataMapNodeOfDataMapOfOrientedShapeListOfShape : public Handle_TCollection_MapNode {
 
@@ -808,6 +847,12 @@ class BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape : public TCo
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape::Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape;
 class Handle_BRepFill_DataMapNodeOfDataMapOfShapeDataMapOfShapeListOfShape : public Handle_TCollection_MapNode {
@@ -864,6 +909,12 @@ class BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape : public TCollection_Ma
 	}
 };
 
+%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape::Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape;
 class Handle_BRepFill_DataMapNodeOfDataMapOfShapeHArray2OfShape : public Handle_TCollection_MapNode {
 
@@ -919,6 +970,12 @@ class BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt : public TCollection_Map
 	}
 };
 
+%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt::Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt;
 class Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfPnt : public Handle_TCollection_MapNode {
 
@@ -973,6 +1030,12 @@ class BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal : public TCollection_Ma
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal::Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal;
 class Handle_BRepFill_DataMapNodeOfDataMapOfShapeSequenceOfReal : public Handle_TCollection_MapNode {
@@ -2048,6 +2111,12 @@ class BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape : pu
 	}
 };
 
+%pythonappend Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape::Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape;
 class Handle_BRepFill_IndexedDataMapNodeOfIndexedDataMapOfOrientedShapeListOfShape : public Handle_TCollection_MapNode {
 
@@ -2240,6 +2309,12 @@ class BRepFill_ListNodeOfListOfOffsetWire : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepFill_ListNodeOfListOfOffsetWire::Handle_BRepFill_ListNodeOfListOfOffsetWire %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepFill_ListNodeOfListOfOffsetWire;
 class Handle_BRepFill_ListNodeOfListOfOffsetWire : public Handle_TCollection_MapNode {
@@ -2549,6 +2624,12 @@ class BRepFill_LocationLaw : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepFill_LocationLaw::Handle_BRepFill_LocationLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepFill_LocationLaw;
 class Handle_BRepFill_LocationLaw : public Handle_MMgt_TShared {
@@ -3268,6 +3349,12 @@ class BRepFill_PipeShell : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_BRepFill_PipeShell::Handle_BRepFill_PipeShell %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_PipeShell;
 class Handle_BRepFill_PipeShell : public Handle_MMgt_TShared {
 
@@ -3427,6 +3514,12 @@ class BRepFill_SectionLaw : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_BRepFill_SectionLaw::Handle_BRepFill_SectionLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_SectionLaw;
 class Handle_BRepFill_SectionLaw : public Handle_MMgt_TShared {
 
@@ -3522,6 +3615,12 @@ class BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder : public TCollection_Seq
 	}
 };
 
+%pythonappend Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder::Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder;
 class Handle_BRepFill_SequenceNodeOfSequenceOfEdgeFaceAndOrder : public Handle_TCollection_SeqNode {
 
@@ -3573,6 +3672,12 @@ class BRepFill_SequenceNodeOfSequenceOfFaceAndOrder : public TCollection_SeqNode
 	}
 };
 
+%pythonappend Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder::Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder;
 class Handle_BRepFill_SequenceNodeOfSequenceOfFaceAndOrder : public Handle_TCollection_SeqNode {
 
@@ -3623,6 +3728,12 @@ class BRepFill_SequenceNodeOfSequenceOfSection : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepFill_SequenceNodeOfSequenceOfSection::Handle_BRepFill_SequenceNodeOfSequenceOfSection %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepFill_SequenceNodeOfSequenceOfSection;
 class Handle_BRepFill_SequenceNodeOfSequenceOfSection : public Handle_TCollection_SeqNode {
@@ -4357,6 +4468,12 @@ class BRepFill_ACRLaw : public BRepFill_LocationLaw {
 	}
 };
 
+%pythonappend Handle_BRepFill_ACRLaw::Handle_BRepFill_ACRLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_ACRLaw;
 class Handle_BRepFill_ACRLaw : public Handle_BRepFill_LocationLaw {
 
@@ -4401,6 +4518,12 @@ class BRepFill_Edge3DLaw : public BRepFill_LocationLaw {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepFill_Edge3DLaw::Handle_BRepFill_Edge3DLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepFill_Edge3DLaw;
 class Handle_BRepFill_Edge3DLaw : public Handle_BRepFill_LocationLaw {
@@ -4452,6 +4575,12 @@ class BRepFill_EdgeOnSurfLaw : public BRepFill_LocationLaw {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepFill_EdgeOnSurfLaw::Handle_BRepFill_EdgeOnSurfLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepFill_EdgeOnSurfLaw;
 class Handle_BRepFill_EdgeOnSurfLaw : public Handle_BRepFill_LocationLaw {
@@ -4567,6 +4696,12 @@ class BRepFill_NSections : public BRepFill_SectionLaw {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepFill_NSections::Handle_BRepFill_NSections %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepFill_NSections;
 class Handle_BRepFill_NSections : public Handle_BRepFill_SectionLaw {
@@ -4693,6 +4828,12 @@ class BRepFill_ShapeLaw : public BRepFill_SectionLaw {
 	}
 };
 
+%pythonappend Handle_BRepFill_ShapeLaw::Handle_BRepFill_ShapeLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepFill_ShapeLaw;
 class Handle_BRepFill_ShapeLaw : public Handle_BRepFill_SectionLaw {
 
@@ -4745,6 +4886,12 @@ class BRepFill_DraftLaw : public BRepFill_Edge3DLaw {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepFill_DraftLaw::Handle_BRepFill_DraftLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepFill_DraftLaw;
 class Handle_BRepFill_DraftLaw : public Handle_BRepFill_Edge3DLaw {

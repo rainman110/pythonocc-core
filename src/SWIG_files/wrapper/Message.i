@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Message_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef Handle_Message_ArrayOfMsg Message_HArrayOfMsg;
 typedef NCollection_Array1 <Handle_Message_Msg> Message_ArrayOfMsg;
@@ -436,6 +451,12 @@ class Message_Algorithm : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Message_Algorithm::Handle_Message_Algorithm %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Message_Algorithm;
 class Handle_Message_Algorithm : public Handle_MMgt_TShared {
 
@@ -518,6 +539,12 @@ class Message_ListNodeOfListOfMsg : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Message_ListNodeOfListOfMsg::Handle_Message_ListNodeOfListOfMsg %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Message_ListNodeOfListOfMsg;
 class Handle_Message_ListNodeOfListOfMsg : public Handle_TCollection_MapNode {
@@ -766,6 +793,12 @@ class Message_Messenger : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Message_Messenger::Handle_Message_Messenger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Message_Messenger;
 class Handle_Message_Messenger : public Handle_MMgt_TShared {
 
@@ -897,6 +930,12 @@ class Message_Printer : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Message_Printer::Handle_Message_Printer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Message_Printer;
 class Handle_Message_Printer : public Handle_MMgt_TShared {
@@ -1132,6 +1171,12 @@ class Message_ProgressIndicator : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Message_ProgressIndicator::Handle_Message_ProgressIndicator %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Message_ProgressIndicator;
 class Handle_Message_ProgressIndicator : public Handle_MMgt_TShared {
@@ -1416,6 +1461,12 @@ class Message_SequenceNodeOfSequenceOfPrinters : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Message_SequenceNodeOfSequenceOfPrinters::Handle_Message_SequenceNodeOfSequenceOfPrinters %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Message_SequenceNodeOfSequenceOfPrinters;
 class Handle_Message_SequenceNodeOfSequenceOfPrinters : public Handle_TCollection_SeqNode {
 
@@ -1466,6 +1517,12 @@ class Message_SequenceNodeOfSequenceOfProgressScale : public TCollection_SeqNode
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Message_SequenceNodeOfSequenceOfProgressScale::Handle_Message_SequenceNodeOfSequenceOfProgressScale %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Message_SequenceNodeOfSequenceOfProgressScale;
 class Handle_Message_SequenceNodeOfSequenceOfProgressScale : public Handle_TCollection_SeqNode {
@@ -1863,6 +1920,12 @@ class Message_PrinterOStream : public Message_Printer {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Message_PrinterOStream::Handle_Message_PrinterOStream %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Message_PrinterOStream;
 class Handle_Message_PrinterOStream : public Handle_Message_Printer {

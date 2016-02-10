@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include GeomAdaptor_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -353,6 +368,12 @@ class GeomAdaptor_GHCurve : public Adaptor3d_HCurve {
 	}
 };
 
+%pythonappend Handle_GeomAdaptor_GHCurve::Handle_GeomAdaptor_GHCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomAdaptor_GHCurve;
 class Handle_GeomAdaptor_GHCurve : public Handle_Adaptor3d_HCurve {
 
@@ -413,6 +434,12 @@ class GeomAdaptor_GHSurface : public Adaptor3d_HSurface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomAdaptor_GHSurface::Handle_GeomAdaptor_GHSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomAdaptor_GHSurface;
 class Handle_GeomAdaptor_GHSurface : public Handle_Adaptor3d_HSurface {
@@ -863,6 +890,12 @@ class GeomAdaptor_HCurve : public GeomAdaptor_GHCurve {
 	}
 };
 
+%pythonappend Handle_GeomAdaptor_HCurve::Handle_GeomAdaptor_HCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomAdaptor_HCurve;
 class Handle_GeomAdaptor_HCurve : public Handle_GeomAdaptor_GHCurve {
 
@@ -935,6 +968,12 @@ class GeomAdaptor_HSurface : public GeomAdaptor_GHSurface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomAdaptor_HSurface::Handle_GeomAdaptor_HSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomAdaptor_HSurface;
 class Handle_GeomAdaptor_HSurface : public Handle_GeomAdaptor_GHSurface {

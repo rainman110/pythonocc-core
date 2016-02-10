@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRepAdaptor_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -791,6 +806,12 @@ class BRepAdaptor_HArray1OfCurve : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_BRepAdaptor_HArray1OfCurve::Handle_BRepAdaptor_HArray1OfCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepAdaptor_HArray1OfCurve;
 class Handle_BRepAdaptor_HArray1OfCurve : public Handle_MMgt_TShared {
 
@@ -855,6 +876,12 @@ class BRepAdaptor_HCompCurve : public Adaptor3d_HCurve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepAdaptor_HCompCurve::Handle_BRepAdaptor_HCompCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepAdaptor_HCompCurve;
 class Handle_BRepAdaptor_HCompCurve : public Handle_Adaptor3d_HCurve {
@@ -921,6 +948,12 @@ class BRepAdaptor_HCurve : public Adaptor3d_HCurve {
 	}
 };
 
+%pythonappend Handle_BRepAdaptor_HCurve::Handle_BRepAdaptor_HCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepAdaptor_HCurve;
 class Handle_BRepAdaptor_HCurve : public Handle_Adaptor3d_HCurve {
 
@@ -982,6 +1015,12 @@ class BRepAdaptor_HCurve2d : public Adaptor2d_HCurve2d {
 	}
 };
 
+%pythonappend Handle_BRepAdaptor_HCurve2d::Handle_BRepAdaptor_HCurve2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepAdaptor_HCurve2d;
 class Handle_BRepAdaptor_HCurve2d : public Handle_Adaptor2d_HCurve2d {
 
@@ -1042,6 +1081,12 @@ class BRepAdaptor_HSurface : public Adaptor3d_HSurface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepAdaptor_HSurface::Handle_BRepAdaptor_HSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepAdaptor_HSurface;
 class Handle_BRepAdaptor_HSurface : public Handle_Adaptor3d_HSurface {

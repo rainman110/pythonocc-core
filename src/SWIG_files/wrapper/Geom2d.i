@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Geom2d_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -172,6 +187,12 @@ class Geom2d_Geometry : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2d_Geometry::Handle_Geom2d_Geometry %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2d_Geometry;
 class Handle_Geom2d_Geometry : public Handle_MMgt_TShared {
@@ -418,6 +439,12 @@ class Geom2d_Transformation : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Geom2d_Transformation::Handle_Geom2d_Transformation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom2d_Transformation;
 class Handle_Geom2d_Transformation : public Handle_MMgt_TShared {
 
@@ -546,6 +573,12 @@ class Geom2d_AxisPlacement : public Geom2d_Geometry {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2d_AxisPlacement::Handle_Geom2d_AxisPlacement %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2d_AxisPlacement;
 class Handle_Geom2d_AxisPlacement : public Handle_Geom2d_Geometry {
@@ -736,6 +769,12 @@ class Geom2d_Curve : public Geom2d_Geometry {
 	}
 };
 
+%pythonappend Handle_Geom2d_Curve::Handle_Geom2d_Curve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom2d_Curve;
 class Handle_Geom2d_Curve : public Handle_Geom2d_Geometry {
 
@@ -816,6 +855,12 @@ class Geom2d_Point : public Geom2d_Geometry {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2d_Point::Handle_Geom2d_Point %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2d_Point;
 class Handle_Geom2d_Point : public Handle_Geom2d_Geometry {
@@ -930,6 +975,12 @@ class Geom2d_Vector : public Geom2d_Geometry {
 	}
 };
 
+%pythonappend Handle_Geom2d_Vector::Handle_Geom2d_Vector %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom2d_Vector;
 class Handle_Geom2d_Vector : public Handle_Geom2d_Geometry {
 
@@ -978,6 +1029,12 @@ class Geom2d_BoundedCurve : public Geom2d_Curve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2d_BoundedCurve::Handle_Geom2d_BoundedCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2d_BoundedCurve;
 class Handle_Geom2d_BoundedCurve : public Handle_Geom2d_Curve {
@@ -1104,6 +1161,12 @@ class Geom2d_CartesianPoint : public Geom2d_Point {
 	}
 };
 
+%pythonappend Handle_Geom2d_CartesianPoint::Handle_Geom2d_CartesianPoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom2d_CartesianPoint;
 class Handle_Geom2d_CartesianPoint : public Handle_Geom2d_Point {
 
@@ -1228,6 +1291,12 @@ class Geom2d_Conic : public Geom2d_Curve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2d_Conic::Handle_Geom2d_Conic %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2d_Conic;
 class Handle_Geom2d_Conic : public Handle_Geom2d_Curve {
@@ -1363,6 +1432,12 @@ class Geom2d_Direction : public Geom2d_Vector {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2d_Direction::Handle_Geom2d_Direction %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2d_Direction;
 class Handle_Geom2d_Direction : public Handle_Geom2d_Vector {
@@ -1634,6 +1709,12 @@ class Geom2d_Line : public Geom2d_Curve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2d_Line::Handle_Geom2d_Line %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2d_Line;
 class Handle_Geom2d_Line : public Handle_Geom2d_Curve {
@@ -1914,6 +1995,12 @@ class Geom2d_OffsetCurve : public Geom2d_Curve {
 	}
 };
 
+%pythonappend Handle_Geom2d_OffsetCurve::Handle_Geom2d_OffsetCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom2d_OffsetCurve;
 class Handle_Geom2d_OffsetCurve : public Handle_Geom2d_Curve {
 
@@ -2168,6 +2255,12 @@ class Geom2d_VectorWithMagnitude : public Geom2d_Vector {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2d_VectorWithMagnitude::Handle_Geom2d_VectorWithMagnitude %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2d_VectorWithMagnitude;
 class Handle_Geom2d_VectorWithMagnitude : public Handle_Geom2d_Vector {
@@ -2866,6 +2959,12 @@ class Geom2d_BSplineCurve : public Geom2d_BoundedCurve {
 	}
 };
 
+%pythonappend Handle_Geom2d_BSplineCurve::Handle_Geom2d_BSplineCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom2d_BSplineCurve;
 class Handle_Geom2d_BSplineCurve : public Handle_Geom2d_BoundedCurve {
 
@@ -3201,6 +3300,12 @@ class Geom2d_BezierCurve : public Geom2d_BoundedCurve {
 	}
 };
 
+%pythonappend Handle_Geom2d_BezierCurve::Handle_Geom2d_BezierCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom2d_BezierCurve;
 class Handle_Geom2d_BezierCurve : public Handle_Geom2d_BoundedCurve {
 
@@ -3407,6 +3512,12 @@ class Geom2d_Circle : public Geom2d_Conic {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2d_Circle::Handle_Geom2d_Circle %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2d_Circle;
 class Handle_Geom2d_Circle : public Handle_Geom2d_Conic {
@@ -3668,6 +3779,12 @@ class Geom2d_Ellipse : public Geom2d_Conic {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2d_Ellipse::Handle_Geom2d_Ellipse %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2d_Ellipse;
 class Handle_Geom2d_Ellipse : public Handle_Geom2d_Conic {
@@ -3962,6 +4079,12 @@ class Geom2d_Hyperbola : public Geom2d_Conic {
 	}
 };
 
+%pythonappend Handle_Geom2d_Hyperbola::Handle_Geom2d_Hyperbola %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom2d_Hyperbola;
 class Handle_Geom2d_Hyperbola : public Handle_Geom2d_Conic {
 
@@ -4217,6 +4340,12 @@ class Geom2d_Parabola : public Geom2d_Conic {
 	}
 };
 
+%pythonappend Handle_Geom2d_Parabola::Handle_Geom2d_Parabola %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom2d_Parabola;
 class Handle_Geom2d_Parabola : public Handle_Geom2d_Conic {
 
@@ -4449,6 +4578,12 @@ class Geom2d_TrimmedCurve : public Geom2d_BoundedCurve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2d_TrimmedCurve::Handle_Geom2d_TrimmedCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2d_TrimmedCurve;
 class Handle_Geom2d_TrimmedCurve : public Handle_Geom2d_BoundedCurve {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ShapeProcess_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef Standard_Boolean ( * ShapeProcess_OperFunc ) ( const Handle_ShapeProcess_Context & context );
 /* end typedefs declaration */
@@ -268,6 +283,12 @@ class ShapeProcess_Context : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeProcess_Context::Handle_ShapeProcess_Context %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeProcess_Context;
 class Handle_ShapeProcess_Context : public Handle_MMgt_TShared {
 
@@ -443,6 +464,12 @@ class ShapeProcess_DictionaryOfOperator : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeProcess_DictionaryOfOperator::Handle_ShapeProcess_DictionaryOfOperator %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeProcess_DictionaryOfOperator;
 class Handle_ShapeProcess_DictionaryOfOperator : public Handle_MMgt_TShared {
 
@@ -561,6 +588,12 @@ class ShapeProcess_Operator : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeProcess_Operator::Handle_ShapeProcess_Operator %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeProcess_Operator;
 class Handle_ShapeProcess_Operator : public Handle_MMgt_TShared {
 
@@ -621,6 +654,12 @@ class ShapeProcess_StackItemOfDictionaryOfOperator : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeProcess_StackItemOfDictionaryOfOperator::Handle_ShapeProcess_StackItemOfDictionaryOfOperator %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeProcess_StackItemOfDictionaryOfOperator;
 class Handle_ShapeProcess_StackItemOfDictionaryOfOperator : public Handle_MMgt_TShared {
@@ -803,6 +842,12 @@ class ShapeProcess_ShapeContext : public ShapeProcess_Context {
 	}
 };
 
+%pythonappend Handle_ShapeProcess_ShapeContext::Handle_ShapeProcess_ShapeContext %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeProcess_ShapeContext;
 class Handle_ShapeProcess_ShapeContext : public Handle_ShapeProcess_Context {
 
@@ -855,6 +900,12 @@ class ShapeProcess_UOperator : public ShapeProcess_Operator {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeProcess_UOperator::Handle_ShapeProcess_UOperator %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeProcess_UOperator;
 class Handle_ShapeProcess_UOperator : public Handle_ShapeProcess_Operator {

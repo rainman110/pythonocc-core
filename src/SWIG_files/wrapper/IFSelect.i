@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include IFSelect_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef IFSelect_ReturnStatus ( * IFSelect_ActFunc ) ( const Handle_IFSelect_SessionPilot & );
 typedef Handle_MoniTool_Option Handle_IFSelect_Option;
@@ -267,6 +282,12 @@ class IFSelect_Activator : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_IFSelect_Activator::Handle_IFSelect_Activator %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_Activator;
 class Handle_IFSelect_Activator : public Handle_MMgt_TShared {
 
@@ -367,6 +388,12 @@ class IFSelect_AppliedModifiers : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_AppliedModifiers::Handle_IFSelect_AppliedModifiers %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_AppliedModifiers;
 class Handle_IFSelect_AppliedModifiers : public Handle_MMgt_TShared {
@@ -917,6 +944,12 @@ class IFSelect_Dispatch : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_IFSelect_Dispatch::Handle_IFSelect_Dispatch %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_Dispatch;
 class Handle_IFSelect_Dispatch : public Handle_MMgt_TShared {
 
@@ -1307,6 +1340,12 @@ class IFSelect_EditForm : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_IFSelect_EditForm::Handle_IFSelect_EditForm %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_EditForm;
 class Handle_IFSelect_EditForm : public Handle_MMgt_TShared {
 
@@ -1550,6 +1589,12 @@ class IFSelect_Editor : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_IFSelect_Editor::Handle_IFSelect_Editor %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_Editor;
 class Handle_IFSelect_Editor : public Handle_MMgt_TShared {
 
@@ -1701,6 +1746,12 @@ class IFSelect_GeneralModifier : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_GeneralModifier::Handle_IFSelect_GeneralModifier %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_GeneralModifier;
 class Handle_IFSelect_GeneralModifier : public Handle_MMgt_TShared {
@@ -1875,6 +1926,12 @@ class IFSelect_HSeqOfSelection : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_IFSelect_HSeqOfSelection::Handle_IFSelect_HSeqOfSelection %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_HSeqOfSelection;
 class Handle_IFSelect_HSeqOfSelection : public Handle_MMgt_TShared {
 
@@ -1939,6 +1996,12 @@ class IFSelect_IntParam : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_IntParam::Handle_IFSelect_IntParam %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_IntParam;
 class Handle_IFSelect_IntParam : public Handle_MMgt_TShared {
@@ -2118,6 +2181,12 @@ class IFSelect_ListEditor : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_ListEditor::Handle_IFSelect_ListEditor %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_ListEditor;
 class Handle_IFSelect_ListEditor : public Handle_MMgt_TShared {
@@ -2362,6 +2431,12 @@ class IFSelect_ModelCopier : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_IFSelect_ModelCopier::Handle_IFSelect_ModelCopier %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_ModelCopier;
 class Handle_IFSelect_ModelCopier : public Handle_MMgt_TShared {
 
@@ -2497,6 +2572,12 @@ class IFSelect_PacketList : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_IFSelect_PacketList::Handle_IFSelect_PacketList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_PacketList;
 class Handle_IFSelect_PacketList : public Handle_MMgt_TShared {
 
@@ -2571,6 +2652,12 @@ class IFSelect_Selection : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_Selection::Handle_IFSelect_Selection %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_Selection;
 class Handle_IFSelect_Selection : public Handle_MMgt_TShared {
@@ -2685,6 +2772,12 @@ class IFSelect_SequenceNodeOfSequenceOfAppliedModifiers : public TCollection_Seq
 	}
 };
 
+%pythonappend Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers::Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers;
 class Handle_IFSelect_SequenceNodeOfSequenceOfAppliedModifiers : public Handle_TCollection_SeqNode {
 
@@ -2735,6 +2828,12 @@ class IFSelect_SequenceNodeOfSequenceOfGeneralModifier : public TCollection_SeqN
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier::Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier;
 class Handle_IFSelect_SequenceNodeOfSequenceOfGeneralModifier : public Handle_TCollection_SeqNode {
@@ -2787,6 +2886,12 @@ class IFSelect_SequenceNodeOfSequenceOfInterfaceModel : public TCollection_SeqNo
 	}
 };
 
+%pythonappend Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel::Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel;
 class Handle_IFSelect_SequenceNodeOfSequenceOfInterfaceModel : public Handle_TCollection_SeqNode {
 
@@ -2838,6 +2943,12 @@ class IFSelect_SequenceNodeOfTSeqOfDispatch : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_IFSelect_SequenceNodeOfTSeqOfDispatch::Handle_IFSelect_SequenceNodeOfTSeqOfDispatch %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SequenceNodeOfTSeqOfDispatch;
 class Handle_IFSelect_SequenceNodeOfTSeqOfDispatch : public Handle_TCollection_SeqNode {
 
@@ -2888,6 +2999,12 @@ class IFSelect_SequenceNodeOfTSeqOfSelection : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SequenceNodeOfTSeqOfSelection::Handle_IFSelect_SequenceNodeOfTSeqOfSelection %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SequenceNodeOfTSeqOfSelection;
 class Handle_IFSelect_SequenceNodeOfTSeqOfSelection : public Handle_TCollection_SeqNode {
@@ -3355,6 +3472,12 @@ class IFSelect_SessionDumper : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SessionDumper::Handle_IFSelect_SessionDumper %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SessionDumper;
 class Handle_IFSelect_SessionDumper : public Handle_MMgt_TShared {
@@ -3937,6 +4060,12 @@ class IFSelect_ShareOut : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_IFSelect_ShareOut::Handle_IFSelect_ShareOut %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_ShareOut;
 class Handle_IFSelect_ShareOut : public Handle_MMgt_TShared {
 
@@ -4210,6 +4339,12 @@ class IFSelect_Signature : public Interface_SignType {
 	}
 };
 
+%pythonappend Handle_IFSelect_Signature::Handle_IFSelect_Signature %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_Signature;
 class Handle_IFSelect_Signature : public Handle_Interface_SignType {
 
@@ -4387,6 +4522,12 @@ class IFSelect_SignatureList : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SignatureList::Handle_IFSelect_SignatureList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SignatureList;
 class Handle_IFSelect_SignatureList : public Handle_MMgt_TShared {
@@ -4727,6 +4868,12 @@ class IFSelect_Transformer : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_IFSelect_Transformer::Handle_IFSelect_Transformer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_Transformer;
 class Handle_IFSelect_Transformer : public Handle_MMgt_TShared {
 
@@ -4865,6 +5012,12 @@ class IFSelect_WorkLibrary : public Standard_Transient {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_WorkLibrary::Handle_IFSelect_WorkLibrary %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_WorkLibrary;
 class Handle_IFSelect_WorkLibrary : public Handle_Standard_Transient {
@@ -6255,6 +6408,12 @@ class IFSelect_WorkSession : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_IFSelect_WorkSession::Handle_IFSelect_WorkSession %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_WorkSession;
 class Handle_IFSelect_WorkSession : public Handle_MMgt_TShared {
 
@@ -6356,6 +6515,12 @@ class IFSelect_Act : public IFSelect_Activator {
 	}
 };
 
+%pythonappend Handle_IFSelect_Act::Handle_IFSelect_Act %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_Act;
 class Handle_IFSelect_Act : public Handle_IFSelect_Activator {
 
@@ -6420,6 +6585,12 @@ class IFSelect_BasicDumper : public IFSelect_SessionDumper {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_BasicDumper::Handle_IFSelect_BasicDumper %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_BasicDumper;
 class Handle_IFSelect_BasicDumper : public Handle_IFSelect_SessionDumper {
@@ -6493,6 +6664,12 @@ class IFSelect_CheckCounter : public IFSelect_SignatureList {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_CheckCounter::Handle_IFSelect_CheckCounter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_CheckCounter;
 class Handle_IFSelect_CheckCounter : public Handle_IFSelect_SignatureList {
@@ -6572,6 +6749,12 @@ class IFSelect_DispGlobal : public IFSelect_Dispatch {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_DispGlobal::Handle_IFSelect_DispGlobal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_DispGlobal;
 class Handle_IFSelect_DispGlobal : public Handle_IFSelect_Dispatch {
@@ -6672,6 +6855,12 @@ class IFSelect_DispPerCount : public IFSelect_Dispatch {
 	}
 };
 
+%pythonappend Handle_IFSelect_DispPerCount::Handle_IFSelect_DispPerCount %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_DispPerCount;
 class Handle_IFSelect_DispPerCount : public Handle_IFSelect_Dispatch {
 
@@ -6771,6 +6960,12 @@ class IFSelect_DispPerFiles : public IFSelect_Dispatch {
 	}
 };
 
+%pythonappend Handle_IFSelect_DispPerFiles::Handle_IFSelect_DispPerFiles %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_DispPerFiles;
 class Handle_IFSelect_DispPerFiles : public Handle_IFSelect_Dispatch {
 
@@ -6849,6 +7044,12 @@ class IFSelect_DispPerOne : public IFSelect_Dispatch {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_DispPerOne::Handle_IFSelect_DispPerOne %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_DispPerOne;
 class Handle_IFSelect_DispPerOne : public Handle_IFSelect_Dispatch {
@@ -6939,6 +7140,12 @@ class IFSelect_DispPerSignature : public IFSelect_Dispatch {
 	}
 };
 
+%pythonappend Handle_IFSelect_DispPerSignature::Handle_IFSelect_DispPerSignature %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_DispPerSignature;
 class Handle_IFSelect_DispPerSignature : public Handle_IFSelect_Dispatch {
 
@@ -6989,6 +7196,12 @@ class IFSelect_Modifier : public IFSelect_GeneralModifier {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_Modifier::Handle_IFSelect_Modifier %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_Modifier;
 class Handle_IFSelect_Modifier : public Handle_IFSelect_GeneralModifier {
@@ -7107,6 +7320,12 @@ class IFSelect_ParamEditor : public IFSelect_Editor {
 	}
 };
 
+%pythonappend Handle_IFSelect_ParamEditor::Handle_IFSelect_ParamEditor %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_ParamEditor;
 class Handle_IFSelect_ParamEditor : public Handle_IFSelect_Editor {
 
@@ -7151,6 +7370,12 @@ class IFSelect_SelectBase : public IFSelect_Selection {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectBase::Handle_IFSelect_SelectBase %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectBase;
 class Handle_IFSelect_SelectBase : public Handle_IFSelect_Selection {
@@ -7245,6 +7470,12 @@ class IFSelect_SelectCombine : public IFSelect_Selection {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectCombine::Handle_IFSelect_SelectCombine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectCombine;
 class Handle_IFSelect_SelectCombine : public Handle_IFSelect_Selection {
 
@@ -7323,6 +7554,12 @@ class IFSelect_SelectControl : public IFSelect_Selection {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectControl::Handle_IFSelect_SelectControl %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectControl;
 class Handle_IFSelect_SelectControl : public Handle_IFSelect_Selection {
@@ -7408,6 +7645,12 @@ class IFSelect_SelectDeduct : public IFSelect_Selection {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectDeduct::Handle_IFSelect_SelectDeduct %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectDeduct;
 class Handle_IFSelect_SelectDeduct : public Handle_IFSelect_Selection {
@@ -7650,6 +7893,12 @@ class IFSelect_SessionPilot : public IFSelect_Activator {
 	}
 };
 
+%pythonappend Handle_IFSelect_SessionPilot::Handle_IFSelect_SessionPilot %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SessionPilot;
 class Handle_IFSelect_SessionPilot : public Handle_IFSelect_Activator {
 
@@ -7702,6 +7951,12 @@ class IFSelect_SignCategory : public IFSelect_Signature {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SignCategory::Handle_IFSelect_SignCategory %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SignCategory;
 class Handle_IFSelect_SignCategory : public Handle_IFSelect_Signature {
@@ -7892,6 +8147,12 @@ class IFSelect_SignCounter : public IFSelect_SignatureList {
 	}
 };
 
+%pythonappend Handle_IFSelect_SignCounter::Handle_IFSelect_SignCounter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SignCounter;
 class Handle_IFSelect_SignCounter : public Handle_IFSelect_SignatureList {
 
@@ -7973,6 +8234,12 @@ class IFSelect_SignMultiple : public IFSelect_Signature {
 	}
 };
 
+%pythonappend Handle_IFSelect_SignMultiple::Handle_IFSelect_SignMultiple %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SignMultiple;
 class Handle_IFSelect_SignMultiple : public Handle_IFSelect_Signature {
 
@@ -8027,6 +8294,12 @@ class IFSelect_SignType : public IFSelect_Signature {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SignType::Handle_IFSelect_SignType %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SignType;
 class Handle_IFSelect_SignType : public Handle_IFSelect_Signature {
@@ -8090,6 +8363,12 @@ class IFSelect_SignValidity : public IFSelect_Signature {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SignValidity::Handle_IFSelect_SignValidity %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SignValidity;
 class Handle_IFSelect_SignValidity : public Handle_IFSelect_Signature {
@@ -8292,6 +8571,12 @@ class IFSelect_TransformStandard : public IFSelect_Transformer {
 	}
 };
 
+%pythonappend Handle_IFSelect_TransformStandard::Handle_IFSelect_TransformStandard %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_TransformStandard;
 class Handle_IFSelect_TransformStandard : public Handle_IFSelect_Transformer {
 
@@ -8362,6 +8647,12 @@ class IFSelect_GraphCounter : public IFSelect_SignCounter {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_GraphCounter::Handle_IFSelect_GraphCounter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_GraphCounter;
 class Handle_IFSelect_GraphCounter : public Handle_IFSelect_SignCounter {
@@ -8434,6 +8725,12 @@ class IFSelect_ModifEditForm : public IFSelect_Modifier {
 	}
 };
 
+%pythonappend Handle_IFSelect_ModifEditForm::Handle_IFSelect_ModifEditForm %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_ModifEditForm;
 class Handle_IFSelect_ModifEditForm : public Handle_IFSelect_Modifier {
 
@@ -8498,6 +8795,12 @@ class IFSelect_ModifReorder : public IFSelect_Modifier {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_ModifReorder::Handle_IFSelect_ModifReorder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_ModifReorder;
 class Handle_IFSelect_ModifReorder : public Handle_IFSelect_Modifier {
@@ -8656,6 +8959,12 @@ class IFSelect_SelectAnyList : public IFSelect_SelectDeduct {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectAnyList::Handle_IFSelect_SelectAnyList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectAnyList;
 class Handle_IFSelect_SelectAnyList : public Handle_IFSelect_SelectDeduct {
 
@@ -8712,6 +9021,12 @@ class IFSelect_SelectDiff : public IFSelect_SelectControl {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectDiff::Handle_IFSelect_SelectDiff %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectDiff;
 class Handle_IFSelect_SelectDiff : public Handle_IFSelect_SelectControl {
@@ -8783,6 +9098,12 @@ class IFSelect_SelectEntityNumber : public IFSelect_SelectBase {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectEntityNumber::Handle_IFSelect_SelectEntityNumber %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectEntityNumber;
 class Handle_IFSelect_SelectEntityNumber : public Handle_IFSelect_SelectBase {
@@ -8860,6 +9181,12 @@ class IFSelect_SelectExplore : public IFSelect_SelectDeduct {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectExplore::Handle_IFSelect_SelectExplore %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectExplore;
 class Handle_IFSelect_SelectExplore : public Handle_IFSelect_SelectDeduct {
@@ -8956,6 +9283,12 @@ class IFSelect_SelectExtract : public IFSelect_SelectDeduct {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectExtract::Handle_IFSelect_SelectExtract %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectExtract;
 class Handle_IFSelect_SelectExtract : public Handle_IFSelect_SelectDeduct {
 
@@ -9012,6 +9345,12 @@ class IFSelect_SelectIntersection : public IFSelect_SelectCombine {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectIntersection::Handle_IFSelect_SelectIntersection %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectIntersection;
 class Handle_IFSelect_SelectIntersection : public Handle_IFSelect_SelectCombine {
@@ -9078,6 +9417,12 @@ class IFSelect_SelectModelEntities : public IFSelect_SelectBase {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectModelEntities::Handle_IFSelect_SelectModelEntities %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectModelEntities;
 class Handle_IFSelect_SelectModelEntities : public Handle_IFSelect_SelectBase {
 
@@ -9134,6 +9479,12 @@ class IFSelect_SelectModelRoots : public IFSelect_SelectBase {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectModelRoots::Handle_IFSelect_SelectModelRoots %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectModelRoots;
 class Handle_IFSelect_SelectModelRoots : public Handle_IFSelect_SelectBase {
@@ -9306,6 +9657,12 @@ class IFSelect_SelectPointed : public IFSelect_SelectBase {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectPointed::Handle_IFSelect_SelectPointed %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectPointed;
 class Handle_IFSelect_SelectPointed : public Handle_IFSelect_SelectBase {
 
@@ -9363,6 +9720,12 @@ class IFSelect_SelectShared : public IFSelect_SelectDeduct {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectShared::Handle_IFSelect_SelectShared %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectShared;
 class Handle_IFSelect_SelectShared : public Handle_IFSelect_SelectDeduct {
 
@@ -9419,6 +9782,12 @@ class IFSelect_SelectSharing : public IFSelect_SelectDeduct {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectSharing::Handle_IFSelect_SelectSharing %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectSharing;
 class Handle_IFSelect_SelectSharing : public Handle_IFSelect_SelectDeduct {
@@ -9523,6 +9892,12 @@ class IFSelect_SelectSuite : public IFSelect_SelectDeduct {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectSuite::Handle_IFSelect_SelectSuite %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectSuite;
 class Handle_IFSelect_SelectSuite : public Handle_IFSelect_SelectDeduct {
 
@@ -9580,6 +9955,12 @@ class IFSelect_SelectUnion : public IFSelect_SelectCombine {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectUnion::Handle_IFSelect_SelectUnion %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectUnion;
 class Handle_IFSelect_SelectUnion : public Handle_IFSelect_SelectCombine {
 
@@ -9635,6 +10016,12 @@ class IFSelect_SignAncestor : public IFSelect_SignType {
 	}
 };
 
+%pythonappend Handle_IFSelect_SignAncestor::Handle_IFSelect_SignAncestor %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SignAncestor;
 class Handle_IFSelect_SignAncestor : public Handle_IFSelect_SignType {
 
@@ -9689,6 +10076,12 @@ class IFSelect_SelectAnyType : public IFSelect_SelectExtract {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectAnyType::Handle_IFSelect_SelectAnyType %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectAnyType;
 class Handle_IFSelect_SelectAnyType : public Handle_IFSelect_SelectExtract {
@@ -9750,6 +10143,12 @@ class IFSelect_SelectErrorEntities : public IFSelect_SelectExtract {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectErrorEntities::Handle_IFSelect_SelectErrorEntities %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectErrorEntities;
 class Handle_IFSelect_SelectErrorEntities : public Handle_IFSelect_SelectExtract {
@@ -9828,6 +10227,12 @@ class IFSelect_SelectFlag : public IFSelect_SelectExtract {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectFlag::Handle_IFSelect_SelectFlag %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectFlag;
 class Handle_IFSelect_SelectFlag : public Handle_IFSelect_SelectExtract {
 
@@ -9888,6 +10293,12 @@ class IFSelect_SelectInList : public IFSelect_SelectAnyList {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectInList::Handle_IFSelect_SelectInList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectInList;
 class Handle_IFSelect_SelectInList : public Handle_IFSelect_SelectAnyList {
@@ -10020,6 +10431,12 @@ class IFSelect_SelectRange : public IFSelect_SelectExtract {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectRange::Handle_IFSelect_SelectRange %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectRange;
 class Handle_IFSelect_SelectRange : public Handle_IFSelect_SelectExtract {
 
@@ -10089,6 +10506,12 @@ class IFSelect_SelectRootComps : public IFSelect_SelectExtract {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectRootComps::Handle_IFSelect_SelectRootComps %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectRootComps;
 class Handle_IFSelect_SelectRootComps : public Handle_IFSelect_SelectExtract {
 
@@ -10157,6 +10580,12 @@ class IFSelect_SelectRoots : public IFSelect_SelectExtract {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectRoots::Handle_IFSelect_SelectRoots %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectRoots;
 class Handle_IFSelect_SelectRoots : public Handle_IFSelect_SelectExtract {
@@ -10242,6 +10671,12 @@ class IFSelect_SelectSent : public IFSelect_SelectExtract {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectSent::Handle_IFSelect_SelectSent %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectSent;
 class Handle_IFSelect_SelectSent : public Handle_IFSelect_SelectExtract {
@@ -10370,6 +10805,12 @@ class IFSelect_SelectSignature : public IFSelect_SelectExtract {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectSignature::Handle_IFSelect_SelectSignature %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectSignature;
 class Handle_IFSelect_SelectSignature : public Handle_IFSelect_SelectExtract {
 
@@ -10458,6 +10899,12 @@ class IFSelect_SelectSignedShared : public IFSelect_SelectExplore {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectSignedShared::Handle_IFSelect_SelectSignedShared %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectSignedShared;
 class Handle_IFSelect_SelectSignedShared : public Handle_IFSelect_SelectExplore {
@@ -10548,6 +10995,12 @@ class IFSelect_SelectSignedSharing : public IFSelect_SelectExplore {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectSignedSharing::Handle_IFSelect_SelectSignedSharing %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectSignedSharing;
 class Handle_IFSelect_SelectSignedSharing : public Handle_IFSelect_SelectExplore {
 
@@ -10609,6 +11062,12 @@ class IFSelect_SelectUnknownEntities : public IFSelect_SelectExtract {
 	}
 };
 
+%pythonappend Handle_IFSelect_SelectUnknownEntities::Handle_IFSelect_SelectUnknownEntities %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IFSelect_SelectUnknownEntities;
 class Handle_IFSelect_SelectUnknownEntities : public Handle_IFSelect_SelectExtract {
 
@@ -10651,6 +11110,12 @@ class IFSelect_SelectIncorrectEntities : public IFSelect_SelectFlag {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectIncorrectEntities::Handle_IFSelect_SelectIncorrectEntities %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectIncorrectEntities;
 class Handle_IFSelect_SelectIncorrectEntities : public Handle_IFSelect_SelectFlag {
@@ -10722,6 +11187,12 @@ class IFSelect_SelectType : public IFSelect_SelectAnyType {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IFSelect_SelectType::Handle_IFSelect_SelectType %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IFSelect_SelectType;
 class Handle_IFSelect_SelectType : public Handle_IFSelect_SelectAnyType {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include MMgt_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -62,6 +77,12 @@ class MMgt_TShared : public Standard_Transient {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MMgt_TShared::Handle_MMgt_TShared %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MMgt_TShared;
 class Handle_MMgt_TShared : public Handle_Standard_Transient {

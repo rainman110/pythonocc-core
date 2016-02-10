@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ChFiDS_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -721,6 +736,12 @@ class ChFiDS_HData : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ChFiDS_HData::Handle_ChFiDS_HData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ChFiDS_HData;
 class Handle_ChFiDS_HData : public Handle_MMgt_TShared {
 
@@ -785,6 +806,12 @@ class ChFiDS_HElSpine : public Adaptor3d_HCurve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ChFiDS_HElSpine::Handle_ChFiDS_HElSpine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ChFiDS_HElSpine;
 class Handle_ChFiDS_HElSpine : public Handle_Adaptor3d_HCurve {
@@ -861,6 +888,12 @@ class ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe : public TCo
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe::Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe;
 class Handle_ChFiDS_IndexedDataMapNodeOfIndexedDataMapOfVertexListOfStripe : public Handle_TCollection_MapNode {
@@ -1123,6 +1156,12 @@ class ChFiDS_ListNodeOfListOfHElSpine : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_ChFiDS_ListNodeOfListOfHElSpine::Handle_ChFiDS_ListNodeOfListOfHElSpine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ChFiDS_ListNodeOfListOfHElSpine;
 class Handle_ChFiDS_ListNodeOfListOfHElSpine : public Handle_TCollection_MapNode {
 
@@ -1172,6 +1211,12 @@ class ChFiDS_ListNodeOfListOfStripe : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_ChFiDS_ListNodeOfListOfStripe::Handle_ChFiDS_ListNodeOfListOfStripe %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ChFiDS_ListNodeOfListOfStripe;
 class Handle_ChFiDS_ListNodeOfListOfStripe : public Handle_TCollection_MapNode {
 
@@ -1220,6 +1265,12 @@ class ChFiDS_ListNodeOfRegularities : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ChFiDS_ListNodeOfRegularities::Handle_ChFiDS_ListNodeOfRegularities %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ChFiDS_ListNodeOfRegularities;
 class Handle_ChFiDS_ListNodeOfRegularities : public Handle_TCollection_MapNode {
@@ -1870,6 +1921,12 @@ class ChFiDS_SecHArray1 : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ChFiDS_SecHArray1::Handle_ChFiDS_SecHArray1 %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ChFiDS_SecHArray1;
 class Handle_ChFiDS_SecHArray1 : public Handle_MMgt_TShared {
 
@@ -1921,6 +1978,12 @@ class ChFiDS_SequenceNodeOfSequenceOfSpine : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_ChFiDS_SequenceNodeOfSequenceOfSpine::Handle_ChFiDS_SequenceNodeOfSequenceOfSpine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ChFiDS_SequenceNodeOfSequenceOfSpine;
 class Handle_ChFiDS_SequenceNodeOfSequenceOfSpine : public Handle_TCollection_SeqNode {
 
@@ -1971,6 +2034,12 @@ class ChFiDS_SequenceNodeOfSequenceOfSurfData : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData::Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData;
 class Handle_ChFiDS_SequenceNodeOfSequenceOfSurfData : public Handle_TCollection_SeqNode {
@@ -2659,6 +2728,12 @@ class ChFiDS_Spine : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ChFiDS_Spine::Handle_ChFiDS_Spine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ChFiDS_Spine;
 class Handle_ChFiDS_Spine : public Handle_MMgt_TShared {
 
@@ -2999,6 +3074,12 @@ class ChFiDS_Stripe : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ChFiDS_Stripe::Handle_ChFiDS_Stripe %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ChFiDS_Stripe;
 class Handle_ChFiDS_Stripe : public Handle_MMgt_TShared {
@@ -3443,6 +3524,12 @@ class ChFiDS_SurfData : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ChFiDS_SurfData::Handle_ChFiDS_SurfData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ChFiDS_SurfData;
 class Handle_ChFiDS_SurfData : public Handle_MMgt_TShared {
 
@@ -3543,6 +3630,12 @@ class ChFiDS_ChamfSpine : public ChFiDS_Spine {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ChFiDS_ChamfSpine::Handle_ChFiDS_ChamfSpine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ChFiDS_ChamfSpine;
 class Handle_ChFiDS_ChamfSpine : public Handle_ChFiDS_Spine {
@@ -3722,6 +3815,12 @@ class ChFiDS_FilSpine : public ChFiDS_Spine {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ChFiDS_FilSpine::Handle_ChFiDS_FilSpine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ChFiDS_FilSpine;
 class Handle_ChFiDS_FilSpine : public Handle_ChFiDS_Spine {

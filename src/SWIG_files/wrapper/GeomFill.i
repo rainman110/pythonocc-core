@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include GeomFill_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -1220,6 +1235,12 @@ class GeomFill_Boundary : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_GeomFill_Boundary::Handle_GeomFill_Boundary %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_Boundary;
 class Handle_GeomFill_Boundary : public Handle_MMgt_TShared {
 
@@ -1456,6 +1477,12 @@ class GeomFill_CircularBlendFunc : public Approx_SweepFunction {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_CircularBlendFunc::Handle_GeomFill_CircularBlendFunc %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_CircularBlendFunc;
 class Handle_GeomFill_CircularBlendFunc : public Handle_Approx_SweepFunction {
@@ -1703,6 +1730,12 @@ class GeomFill_CoonsAlgPatch : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_CoonsAlgPatch::Handle_GeomFill_CoonsAlgPatch %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_CoonsAlgPatch;
 class Handle_GeomFill_CoonsAlgPatch : public Handle_MMgt_TShared {
@@ -2101,6 +2134,12 @@ class GeomFill_HArray1OfLocationLaw : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_GeomFill_HArray1OfLocationLaw::Handle_GeomFill_HArray1OfLocationLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_HArray1OfLocationLaw;
 class Handle_GeomFill_HArray1OfLocationLaw : public Handle_MMgt_TShared {
 
@@ -2201,6 +2240,12 @@ class GeomFill_HArray1OfSectionLaw : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_HArray1OfSectionLaw::Handle_GeomFill_HArray1OfSectionLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_HArray1OfSectionLaw;
 class Handle_GeomFill_HArray1OfSectionLaw : public Handle_MMgt_TShared {
@@ -2375,6 +2420,12 @@ class GeomFill_HSequenceOfAx2 : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_GeomFill_HSequenceOfAx2::Handle_GeomFill_HSequenceOfAx2 %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_HSequenceOfAx2;
 class Handle_GeomFill_HSequenceOfAx2 : public Handle_MMgt_TShared {
 
@@ -2431,6 +2482,12 @@ class GeomFill_Line : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_Line::Handle_GeomFill_Line %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_Line;
 class Handle_GeomFill_Line : public Handle_MMgt_TShared {
@@ -2766,6 +2823,12 @@ class GeomFill_LocationLaw : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_LocationLaw::Handle_GeomFill_LocationLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_LocationLaw;
 class Handle_GeomFill_LocationLaw : public Handle_MMgt_TShared {
@@ -3666,6 +3729,12 @@ class GeomFill_SectionLaw : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_GeomFill_SectionLaw::Handle_GeomFill_SectionLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_SectionLaw;
 class Handle_GeomFill_SectionLaw : public Handle_MMgt_TShared {
 
@@ -3805,6 +3874,12 @@ class GeomFill_SequenceNodeOfSequenceOfAx2 : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_GeomFill_SequenceNodeOfSequenceOfAx2::Handle_GeomFill_SequenceNodeOfSequenceOfAx2 %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_SequenceNodeOfSequenceOfAx2;
 class Handle_GeomFill_SequenceNodeOfSequenceOfAx2 : public Handle_TCollection_SeqNode {
 
@@ -3855,6 +3930,12 @@ class GeomFill_SequenceNodeOfSequenceOfTrsf : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_SequenceNodeOfSequenceOfTrsf::Handle_GeomFill_SequenceNodeOfSequenceOfTrsf %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_SequenceNodeOfSequenceOfTrsf;
 class Handle_GeomFill_SequenceNodeOfSequenceOfTrsf : public Handle_TCollection_SeqNode {
@@ -4645,6 +4726,12 @@ class GeomFill_SweepFunction : public Approx_SweepFunction {
 	}
 };
 
+%pythonappend Handle_GeomFill_SweepFunction::Handle_GeomFill_SweepFunction %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_SweepFunction;
 class Handle_GeomFill_SweepFunction : public Handle_Approx_SweepFunction {
 
@@ -4775,6 +4862,12 @@ class GeomFill_TgtField : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_TgtField::Handle_GeomFill_TgtField %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_TgtField;
 class Handle_GeomFill_TgtField : public Handle_MMgt_TShared {
@@ -4951,6 +5044,12 @@ class GeomFill_TrihedronLaw : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_GeomFill_TrihedronLaw::Handle_GeomFill_TrihedronLaw %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_TrihedronLaw;
 class Handle_GeomFill_TrihedronLaw : public Handle_MMgt_TShared {
 
@@ -5065,6 +5164,12 @@ class GeomFill_BoundWithSurf : public GeomFill_Boundary {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_BoundWithSurf::Handle_GeomFill_BoundWithSurf %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_BoundWithSurf;
 class Handle_GeomFill_BoundWithSurf : public Handle_GeomFill_Boundary {
@@ -5220,6 +5325,12 @@ class GeomFill_ConstantBiNormal : public GeomFill_TrihedronLaw {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_ConstantBiNormal::Handle_GeomFill_ConstantBiNormal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_ConstantBiNormal;
 class Handle_GeomFill_ConstantBiNormal : public Handle_GeomFill_TrihedronLaw {
@@ -5468,6 +5579,12 @@ class GeomFill_CorrectedFrenet : public GeomFill_TrihedronLaw {
 	}
 };
 
+%pythonappend Handle_GeomFill_CorrectedFrenet::Handle_GeomFill_CorrectedFrenet %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_CorrectedFrenet;
 class Handle_GeomFill_CorrectedFrenet : public Handle_GeomFill_TrihedronLaw {
 
@@ -5690,6 +5807,12 @@ class GeomFill_CurveAndTrihedron : public GeomFill_LocationLaw {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_CurveAndTrihedron::Handle_GeomFill_CurveAndTrihedron %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_CurveAndTrihedron;
 class Handle_GeomFill_CurveAndTrihedron : public Handle_GeomFill_LocationLaw {
@@ -6004,6 +6127,12 @@ class GeomFill_Darboux : public GeomFill_TrihedronLaw {
 	}
 };
 
+%pythonappend Handle_GeomFill_Darboux::Handle_GeomFill_Darboux %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_Darboux;
 class Handle_GeomFill_Darboux : public Handle_GeomFill_TrihedronLaw {
 
@@ -6100,6 +6229,12 @@ class GeomFill_DegeneratedBound : public GeomFill_Boundary {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_DegeneratedBound::Handle_GeomFill_DegeneratedBound %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_DegeneratedBound;
 class Handle_GeomFill_DegeneratedBound : public Handle_GeomFill_Boundary {
@@ -6258,6 +6393,12 @@ class GeomFill_DiscreteTrihedron : public GeomFill_TrihedronLaw {
 	}
 };
 
+%pythonappend Handle_GeomFill_DiscreteTrihedron::Handle_GeomFill_DiscreteTrihedron %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_DiscreteTrihedron;
 class Handle_GeomFill_DiscreteTrihedron : public Handle_GeomFill_TrihedronLaw {
 
@@ -6412,6 +6553,12 @@ class GeomFill_DraftTrihedron : public GeomFill_TrihedronLaw {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_DraftTrihedron::Handle_GeomFill_DraftTrihedron %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_DraftTrihedron;
 class Handle_GeomFill_DraftTrihedron : public Handle_GeomFill_TrihedronLaw {
@@ -6656,6 +6803,12 @@ class GeomFill_EvolvedSection : public GeomFill_SectionLaw {
 	}
 };
 
+%pythonappend Handle_GeomFill_EvolvedSection::Handle_GeomFill_EvolvedSection %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_EvolvedSection;
 class Handle_GeomFill_EvolvedSection : public Handle_GeomFill_SectionLaw {
 
@@ -6800,6 +6953,12 @@ class GeomFill_Fixed : public GeomFill_TrihedronLaw {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_Fixed::Handle_GeomFill_Fixed %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_Fixed;
 class Handle_GeomFill_Fixed : public Handle_GeomFill_TrihedronLaw {
@@ -6957,6 +7116,12 @@ class GeomFill_Frenet : public GeomFill_TrihedronLaw {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_Frenet::Handle_GeomFill_Frenet %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_Frenet;
 class Handle_GeomFill_Frenet : public Handle_GeomFill_TrihedronLaw {
@@ -7256,6 +7421,12 @@ class GeomFill_LocationDraft : public GeomFill_LocationLaw {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_LocationDraft::Handle_GeomFill_LocationDraft %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_LocationDraft;
 class Handle_GeomFill_LocationDraft : public Handle_GeomFill_LocationLaw {
@@ -7568,6 +7739,12 @@ class GeomFill_LocationGuide : public GeomFill_LocationLaw {
 	}
 };
 
+%pythonappend Handle_GeomFill_LocationGuide::Handle_GeomFill_LocationGuide %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_LocationGuide;
 class Handle_GeomFill_LocationGuide : public Handle_GeomFill_LocationLaw {
 
@@ -7743,6 +7920,12 @@ class GeomFill_SimpleBound : public GeomFill_Boundary {
 	}
 };
 
+%pythonappend Handle_GeomFill_SimpleBound::Handle_GeomFill_SimpleBound %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_SimpleBound;
 class Handle_GeomFill_SimpleBound : public Handle_GeomFill_Boundary {
 
@@ -7890,6 +8073,12 @@ class GeomFill_TgtOnCoons : public GeomFill_TgtField {
 	}
 };
 
+%pythonappend Handle_GeomFill_TgtOnCoons::Handle_GeomFill_TgtOnCoons %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_TgtOnCoons;
 class Handle_GeomFill_TgtOnCoons : public Handle_GeomFill_TgtField {
 
@@ -7944,6 +8133,12 @@ class GeomFill_TrihedronWithGuide : public GeomFill_TrihedronLaw {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_TrihedronWithGuide::Handle_GeomFill_TrihedronWithGuide %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_TrihedronWithGuide;
 class Handle_GeomFill_TrihedronWithGuide : public Handle_GeomFill_TrihedronLaw {
@@ -8190,6 +8385,12 @@ class GeomFill_UniformSection : public GeomFill_SectionLaw {
 	}
 };
 
+%pythonappend Handle_GeomFill_UniformSection::Handle_GeomFill_UniformSection %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomFill_UniformSection;
 class Handle_GeomFill_UniformSection : public Handle_GeomFill_SectionLaw {
 
@@ -8360,6 +8561,12 @@ class GeomFill_GuideTrihedronAC : public GeomFill_TrihedronWithGuide {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_GuideTrihedronAC::Handle_GeomFill_GuideTrihedronAC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_GuideTrihedronAC;
 class Handle_GeomFill_GuideTrihedronAC : public Handle_GeomFill_TrihedronWithGuide {
@@ -8537,6 +8744,12 @@ class GeomFill_GuideTrihedronPlan : public GeomFill_TrihedronWithGuide {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomFill_GuideTrihedronPlan::Handle_GeomFill_GuideTrihedronPlan %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomFill_GuideTrihedronPlan;
 class Handle_GeomFill_GuideTrihedronPlan : public Handle_GeomFill_TrihedronWithGuide {

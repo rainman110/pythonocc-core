@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Draft_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -190,6 +205,12 @@ class Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo::Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo;
 class Handle_Draft_DataMapNodeOfDataMapOfEdgeEdgeInfo : public Handle_TCollection_MapNode {
 
@@ -245,6 +266,12 @@ class Draft_DataMapNodeOfDataMapOfFaceFaceInfo : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo::Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo;
 class Handle_Draft_DataMapNodeOfDataMapOfFaceFaceInfo : public Handle_TCollection_MapNode {
 
@@ -299,6 +326,12 @@ class Draft_DataMapNodeOfDataMapOfVertexVertexInfo : public TCollection_MapNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo::Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo;
 class Handle_Draft_DataMapNodeOfDataMapOfVertexVertexInfo : public Handle_TCollection_MapNode {
@@ -902,6 +935,12 @@ class Draft_Modification : public BRepTools_Modification {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Draft_Modification::Handle_Draft_Modification %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Draft_Modification;
 class Handle_Draft_Modification : public Handle_BRepTools_Modification {

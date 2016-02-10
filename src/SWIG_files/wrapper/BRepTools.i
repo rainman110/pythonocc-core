@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRepTools_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -415,6 +430,12 @@ class BRepTools_DataMapNodeOfMapOfVertexPnt2d : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_BRepTools_DataMapNodeOfMapOfVertexPnt2d::Handle_BRepTools_DataMapNodeOfMapOfVertexPnt2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepTools_DataMapNodeOfMapOfVertexPnt2d;
 class Handle_BRepTools_DataMapNodeOfMapOfVertexPnt2d : public Handle_TCollection_MapNode {
 
@@ -623,6 +644,12 @@ class BRepTools_Modification : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepTools_Modification::Handle_BRepTools_Modification %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepTools_Modification;
 class Handle_BRepTools_Modification : public Handle_MMgt_TShared {
@@ -890,6 +917,12 @@ class BRepTools_ReShape : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepTools_ReShape::Handle_BRepTools_ReShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepTools_ReShape;
 class Handle_BRepTools_ReShape : public Handle_MMgt_TShared {
@@ -1354,6 +1387,12 @@ class BRepTools_GTrsfModification : public BRepTools_Modification {
 	}
 };
 
+%pythonappend Handle_BRepTools_GTrsfModification::Handle_BRepTools_GTrsfModification %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepTools_GTrsfModification;
 class Handle_BRepTools_GTrsfModification : public Handle_BRepTools_Modification {
 
@@ -1488,6 +1527,12 @@ class BRepTools_NurbsConvertModification : public BRepTools_Modification {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepTools_NurbsConvertModification::Handle_BRepTools_NurbsConvertModification %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepTools_NurbsConvertModification;
 class Handle_BRepTools_NurbsConvertModification : public Handle_BRepTools_Modification {
@@ -1631,6 +1676,12 @@ class BRepTools_TrsfModification : public BRepTools_Modification {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepTools_TrsfModification::Handle_BRepTools_TrsfModification %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepTools_TrsfModification;
 class Handle_BRepTools_TrsfModification : public Handle_BRepTools_Modification {

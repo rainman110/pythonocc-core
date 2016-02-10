@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ShapeAlgo_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -102,6 +117,12 @@ class ShapeAlgo_ToolContainer : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeAlgo_ToolContainer::Handle_ShapeAlgo_ToolContainer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeAlgo_ToolContainer;
 class Handle_ShapeAlgo_ToolContainer : public Handle_MMgt_TShared {

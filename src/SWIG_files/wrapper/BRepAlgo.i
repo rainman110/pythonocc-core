@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRepAlgo_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -215,6 +230,12 @@ class BRepAlgo_AsDes : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepAlgo_AsDes::Handle_BRepAlgo_AsDes %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepAlgo_AsDes;
 class Handle_BRepAlgo_AsDes : public Handle_MMgt_TShared {
@@ -714,6 +735,12 @@ class BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean::Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean;
 class Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeBoolean : public Handle_TCollection_MapNode {
 
@@ -768,6 +795,12 @@ class BRepAlgo_DataMapNodeOfDataMapOfShapeInterference : public TCollection_MapN
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference::Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference;
 class Handle_BRepAlgo_DataMapNodeOfDataMapOfShapeInterference : public Handle_TCollection_MapNode {
@@ -1017,6 +1050,12 @@ class BRepAlgo_EdgeConnector : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepAlgo_EdgeConnector::Handle_BRepAlgo_EdgeConnector %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepAlgo_EdgeConnector;
 class Handle_BRepAlgo_EdgeConnector : public Handle_MMgt_TShared {
@@ -1492,6 +1531,12 @@ class BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger : public TCollection_Se
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger::Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger;
 class Handle_BRepAlgo_SequenceNodeOfSequenceOfSequenceOfInteger : public Handle_TCollection_SeqNode {

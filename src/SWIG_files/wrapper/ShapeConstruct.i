@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ShapeConstruct_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -557,6 +572,12 @@ class ShapeConstruct_ProjectCurveOnSurface : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeConstruct_ProjectCurveOnSurface::Handle_ShapeConstruct_ProjectCurveOnSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeConstruct_ProjectCurveOnSurface;
 class Handle_ShapeConstruct_ProjectCurveOnSurface : public Handle_MMgt_TShared {

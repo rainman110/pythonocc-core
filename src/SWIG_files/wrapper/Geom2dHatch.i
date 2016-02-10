@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Geom2dHatch_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -200,6 +215,12 @@ class Geom2dHatch_DataMapNodeOfHatchingsOfHatcher : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher::Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher;
 class Handle_Geom2dHatch_DataMapNodeOfHatchingsOfHatcher : public Handle_TCollection_MapNode {
 
@@ -263,6 +284,12 @@ class Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher : public TCollec
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher::Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher;
 class Handle_Geom2dHatch_DataMapNodeOfMapOfElementsOfElementsOfHatcher : public Handle_TCollection_MapNode {

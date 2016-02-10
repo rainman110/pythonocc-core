@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ProjLib_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -577,6 +592,12 @@ class ProjLib_HCompProjectedCurve : public Adaptor2d_HCurve2d {
 	}
 };
 
+%pythonappend Handle_ProjLib_HCompProjectedCurve::Handle_ProjLib_HCompProjectedCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ProjLib_HCompProjectedCurve;
 class Handle_ProjLib_HCompProjectedCurve : public Handle_Adaptor2d_HCurve2d {
 
@@ -637,6 +658,12 @@ class ProjLib_HProjectedCurve : public Adaptor2d_HCurve2d {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ProjLib_HProjectedCurve::Handle_ProjLib_HProjectedCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ProjLib_HProjectedCurve;
 class Handle_ProjLib_HProjectedCurve : public Handle_Adaptor2d_HCurve2d {
@@ -810,6 +837,12 @@ class ProjLib_HSequenceOfHSequenceOfPnt : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ProjLib_HSequenceOfHSequenceOfPnt::Handle_ProjLib_HSequenceOfHSequenceOfPnt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ProjLib_HSequenceOfHSequenceOfPnt;
 class Handle_ProjLib_HSequenceOfHSequenceOfPnt : public Handle_MMgt_TShared {
@@ -1627,6 +1660,12 @@ class ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt : public TCollection_SeqNod
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt::Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt;
 class Handle_ProjLib_SequenceNodeOfSequenceOfHSequenceOfPnt : public Handle_TCollection_SeqNode {

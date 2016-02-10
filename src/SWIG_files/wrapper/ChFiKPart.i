@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ChFiKPart_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -232,6 +247,12 @@ class ChFiKPart_DataMapNodeOfRstMap : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ChFiKPart_DataMapNodeOfRstMap::Handle_ChFiKPart_DataMapNodeOfRstMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ChFiKPart_DataMapNodeOfRstMap;
 class Handle_ChFiKPart_DataMapNodeOfRstMap : public Handle_TCollection_MapNode {

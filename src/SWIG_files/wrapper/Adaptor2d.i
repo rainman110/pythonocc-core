@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Adaptor2d_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef Adaptor2d_Curve2d * Adaptor2d_Curve2dPtr;
 /* end typedefs declaration */
@@ -423,6 +438,12 @@ class Adaptor2d_HCurve2d : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Adaptor2d_HCurve2d::Handle_Adaptor2d_HCurve2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Adaptor2d_HCurve2d;
 class Handle_Adaptor2d_HCurve2d : public Handle_MMgt_TShared {
 
@@ -483,6 +504,12 @@ class Adaptor2d_HLine2d : public Adaptor2d_HCurve2d {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Adaptor2d_HLine2d::Handle_Adaptor2d_HLine2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Adaptor2d_HLine2d;
 class Handle_Adaptor2d_HLine2d : public Handle_Adaptor2d_HCurve2d {

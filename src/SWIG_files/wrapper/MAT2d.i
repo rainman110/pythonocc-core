@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include MAT2d_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -281,6 +296,12 @@ class MAT2d_Circuit : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_MAT2d_Circuit::Handle_MAT2d_Circuit %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT2d_Circuit;
 class Handle_MAT2d_Circuit : public Handle_MMgt_TShared {
 
@@ -477,6 +498,12 @@ class MAT2d_Connexion : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT2d_Connexion::Handle_MAT2d_Connexion %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT2d_Connexion;
 class Handle_MAT2d_Connexion : public Handle_MMgt_TShared {
@@ -752,6 +779,12 @@ class MAT2d_DataMapNodeOfDataMapOfBiIntInteger : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_MAT2d_DataMapNodeOfDataMapOfBiIntInteger::Handle_MAT2d_DataMapNodeOfDataMapOfBiIntInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT2d_DataMapNodeOfDataMapOfBiIntInteger;
 class Handle_MAT2d_DataMapNodeOfDataMapOfBiIntInteger : public Handle_TCollection_MapNode {
 
@@ -806,6 +839,12 @@ class MAT2d_DataMapNodeOfDataMapOfBiIntSequenceOfInteger : public TCollection_Ma
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT2d_DataMapNodeOfDataMapOfBiIntSequenceOfInteger::Handle_MAT2d_DataMapNodeOfDataMapOfBiIntSequenceOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT2d_DataMapNodeOfDataMapOfBiIntSequenceOfInteger;
 class Handle_MAT2d_DataMapNodeOfDataMapOfBiIntSequenceOfInteger : public Handle_TCollection_MapNode {
@@ -871,6 +910,12 @@ class MAT2d_DataMapNodeOfDataMapOfIntegerBisec : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_MAT2d_DataMapNodeOfDataMapOfIntegerBisec::Handle_MAT2d_DataMapNodeOfDataMapOfIntegerBisec %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT2d_DataMapNodeOfDataMapOfIntegerBisec;
 class Handle_MAT2d_DataMapNodeOfDataMapOfIntegerBisec : public Handle_TCollection_MapNode {
 
@@ -934,6 +979,12 @@ class MAT2d_DataMapNodeOfDataMapOfIntegerConnexion : public TCollection_MapNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT2d_DataMapNodeOfDataMapOfIntegerConnexion::Handle_MAT2d_DataMapNodeOfDataMapOfIntegerConnexion %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT2d_DataMapNodeOfDataMapOfIntegerConnexion;
 class Handle_MAT2d_DataMapNodeOfDataMapOfIntegerConnexion : public Handle_TCollection_MapNode {
@@ -999,6 +1050,12 @@ class MAT2d_DataMapNodeOfDataMapOfIntegerPnt2d : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_MAT2d_DataMapNodeOfDataMapOfIntegerPnt2d::Handle_MAT2d_DataMapNodeOfDataMapOfIntegerPnt2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT2d_DataMapNodeOfDataMapOfIntegerPnt2d;
 class Handle_MAT2d_DataMapNodeOfDataMapOfIntegerPnt2d : public Handle_TCollection_MapNode {
 
@@ -1063,6 +1120,12 @@ class MAT2d_DataMapNodeOfDataMapOfIntegerSequenceOfConnexion : public TCollectio
 	}
 };
 
+%pythonappend Handle_MAT2d_DataMapNodeOfDataMapOfIntegerSequenceOfConnexion::Handle_MAT2d_DataMapNodeOfDataMapOfIntegerSequenceOfConnexion %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT2d_DataMapNodeOfDataMapOfIntegerSequenceOfConnexion;
 class Handle_MAT2d_DataMapNodeOfDataMapOfIntegerSequenceOfConnexion : public Handle_TCollection_MapNode {
 
@@ -1126,6 +1189,12 @@ class MAT2d_DataMapNodeOfDataMapOfIntegerVec2d : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT2d_DataMapNodeOfDataMapOfIntegerVec2d::Handle_MAT2d_DataMapNodeOfDataMapOfIntegerVec2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT2d_DataMapNodeOfDataMapOfIntegerVec2d;
 class Handle_MAT2d_DataMapNodeOfDataMapOfIntegerVec2d : public Handle_TCollection_MapNode {
@@ -1855,6 +1924,12 @@ class MAT2d_SequenceNodeOfSequenceOfConnexion : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_MAT2d_SequenceNodeOfSequenceOfConnexion::Handle_MAT2d_SequenceNodeOfSequenceOfConnexion %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT2d_SequenceNodeOfSequenceOfConnexion;
 class Handle_MAT2d_SequenceNodeOfSequenceOfConnexion : public Handle_TCollection_SeqNode {
 
@@ -1906,6 +1981,12 @@ class MAT2d_SequenceNodeOfSequenceOfSequenceOfCurve : public TCollection_SeqNode
 	}
 };
 
+%pythonappend Handle_MAT2d_SequenceNodeOfSequenceOfSequenceOfCurve::Handle_MAT2d_SequenceNodeOfSequenceOfSequenceOfCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT2d_SequenceNodeOfSequenceOfSequenceOfCurve;
 class Handle_MAT2d_SequenceNodeOfSequenceOfSequenceOfCurve : public Handle_TCollection_SeqNode {
 
@@ -1956,6 +2037,12 @@ class MAT2d_SequenceNodeOfSequenceOfSequenceOfGeometry : public TCollection_SeqN
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT2d_SequenceNodeOfSequenceOfSequenceOfGeometry::Handle_MAT2d_SequenceNodeOfSequenceOfSequenceOfGeometry %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT2d_SequenceNodeOfSequenceOfSequenceOfGeometry;
 class Handle_MAT2d_SequenceNodeOfSequenceOfSequenceOfGeometry : public Handle_TCollection_SeqNode {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include StlMesh_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -213,6 +228,12 @@ class StlMesh_Mesh : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_StlMesh_Mesh::Handle_StlMesh_Mesh %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_StlMesh_Mesh;
 class Handle_StlMesh_Mesh : public Handle_MMgt_TShared {
 
@@ -335,6 +356,12 @@ class StlMesh_MeshDomain : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_StlMesh_MeshDomain::Handle_StlMesh_MeshDomain %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_StlMesh_MeshDomain;
 class Handle_StlMesh_MeshDomain : public Handle_MMgt_TShared {
@@ -529,6 +556,12 @@ class StlMesh_MeshTriangle : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_StlMesh_MeshTriangle::Handle_StlMesh_MeshTriangle %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_StlMesh_MeshTriangle;
 class Handle_StlMesh_MeshTriangle : public Handle_MMgt_TShared {
 
@@ -579,6 +612,12 @@ class StlMesh_SequenceNodeOfSequenceOfMesh : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_StlMesh_SequenceNodeOfSequenceOfMesh::Handle_StlMesh_SequenceNodeOfSequenceOfMesh %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_StlMesh_SequenceNodeOfSequenceOfMesh;
 class Handle_StlMesh_SequenceNodeOfSequenceOfMesh : public Handle_TCollection_SeqNode {
@@ -631,6 +670,12 @@ class StlMesh_SequenceNodeOfSequenceOfMeshDomain : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_StlMesh_SequenceNodeOfSequenceOfMeshDomain::Handle_StlMesh_SequenceNodeOfSequenceOfMeshDomain %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_StlMesh_SequenceNodeOfSequenceOfMeshDomain;
 class Handle_StlMesh_SequenceNodeOfSequenceOfMeshDomain : public Handle_TCollection_SeqNode {
 
@@ -681,6 +726,12 @@ class StlMesh_SequenceNodeOfSequenceOfMeshTriangle : public TCollection_SeqNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle::Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle;
 class Handle_StlMesh_SequenceNodeOfSequenceOfMeshTriangle : public Handle_TCollection_SeqNode {

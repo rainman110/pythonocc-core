@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BiTgte_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -758,6 +773,12 @@ class BiTgte_DataMapNodeOfDataMapOfShapeBox : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox::Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox;
 class Handle_BiTgte_DataMapNodeOfDataMapOfShapeBox : public Handle_TCollection_MapNode {
 
@@ -901,6 +922,12 @@ class BiTgte_HCurveOnEdge : public Adaptor3d_HCurve {
 	}
 };
 
+%pythonappend Handle_BiTgte_HCurveOnEdge::Handle_BiTgte_HCurveOnEdge %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BiTgte_HCurveOnEdge;
 class Handle_BiTgte_HCurveOnEdge : public Handle_Adaptor3d_HCurve {
 
@@ -965,6 +992,12 @@ class BiTgte_HCurveOnVertex : public Adaptor3d_HCurve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BiTgte_HCurveOnVertex::Handle_BiTgte_HCurveOnVertex %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BiTgte_HCurveOnVertex;
 class Handle_BiTgte_HCurveOnVertex : public Handle_Adaptor3d_HCurve {

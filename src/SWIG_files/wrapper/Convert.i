@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Convert_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef void Convert_CosAndSinEvalFunction ( Standard_Real , 	 	 	 	 	 const Standard_Integer , 	 	 	 	 	 const TColgp_Array1OfPnt2d & , 	 	 	 	 	 const TColStd_Array1OfReal & , 	 	 	 	 	 const TColStd_Array1OfInteger & , 	 	 	 	 	 Standard_Real Result [ 2 ] );
 typedef TColgp_SequenceOfArray1OfPnt2d Convert_SequenceOfArray1OfPoles2d;
@@ -661,6 +676,12 @@ class Convert_SequenceNodeOfSequenceOfArray1OfPoles : public TCollection_SeqNode
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles::Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles;
 class Handle_Convert_SequenceNodeOfSequenceOfArray1OfPoles : public Handle_TCollection_SeqNode {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TShort_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -309,6 +324,12 @@ class TShort_HArray1OfShortReal : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TShort_HArray1OfShortReal::Handle_TShort_HArray1OfShortReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TShort_HArray1OfShortReal;
 class Handle_TShort_HArray1OfShortReal : public Handle_MMgt_TShared {
 
@@ -435,6 +456,12 @@ class TShort_HArray2OfShortReal : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TShort_HArray2OfShortReal::Handle_TShort_HArray2OfShortReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TShort_HArray2OfShortReal;
 class Handle_TShort_HArray2OfShortReal : public Handle_MMgt_TShared {
@@ -609,6 +636,12 @@ class TShort_HSequenceOfShortReal : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TShort_HSequenceOfShortReal::Handle_TShort_HSequenceOfShortReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TShort_HSequenceOfShortReal;
 class Handle_TShort_HSequenceOfShortReal : public Handle_MMgt_TShared {
 
@@ -659,6 +692,12 @@ class TShort_SequenceNodeOfSequenceOfShortReal : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TShort_SequenceNodeOfSequenceOfShortReal::Handle_TShort_SequenceNodeOfSequenceOfShortReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TShort_SequenceNodeOfSequenceOfShortReal;
 class Handle_TShort_SequenceNodeOfSequenceOfShortReal : public Handle_TCollection_SeqNode {

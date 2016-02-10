@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include PrsMgr_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef PrsMgr_Presentation3d * PrsMgr_Presentation3dPointer;
 typedef PrsMgr_PresentableObject * PrsMgr_PresentableObjectPointer;
@@ -237,6 +252,12 @@ class PrsMgr_PresentableObject : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_PrsMgr_PresentableObject::Handle_PrsMgr_PresentableObject %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_PrsMgr_PresentableObject;
 class Handle_PrsMgr_PresentableObject : public Handle_MMgt_TShared {
 
@@ -301,6 +322,12 @@ class PrsMgr_Presentation : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_PrsMgr_Presentation::Handle_PrsMgr_Presentation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_PrsMgr_Presentation;
 class Handle_PrsMgr_Presentation : public Handle_MMgt_TShared {
@@ -537,6 +564,12 @@ class PrsMgr_PresentationManager : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_PrsMgr_PresentationManager::Handle_PrsMgr_PresentationManager %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_PrsMgr_PresentationManager;
 class Handle_PrsMgr_PresentationManager : public Handle_MMgt_TShared {
 
@@ -758,6 +791,12 @@ class PrsMgr_Prs : public Prs3d_Presentation {
 	}
 };
 
+%pythonappend Handle_PrsMgr_Prs::Handle_PrsMgr_Prs %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_PrsMgr_Prs;
 class Handle_PrsMgr_Prs : public Handle_Prs3d_Presentation {
 
@@ -809,6 +848,12 @@ class PrsMgr_SequenceNodeOfPresentations : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_PrsMgr_SequenceNodeOfPresentations::Handle_PrsMgr_SequenceNodeOfPresentations %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_PrsMgr_SequenceNodeOfPresentations;
 class Handle_PrsMgr_SequenceNodeOfPresentations : public Handle_TCollection_SeqNode {
 
@@ -859,6 +904,12 @@ class PrsMgr_Presentation3d : public PrsMgr_Presentation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_PrsMgr_Presentation3d::Handle_PrsMgr_Presentation3d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_PrsMgr_Presentation3d;
 class Handle_PrsMgr_Presentation3d : public Handle_PrsMgr_Presentation {
@@ -1058,6 +1109,12 @@ class PrsMgr_PresentationManager3d : public PrsMgr_PresentationManager {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_PrsMgr_PresentationManager3d::Handle_PrsMgr_PresentationManager3d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_PrsMgr_PresentationManager3d;
 class Handle_PrsMgr_PresentationManager3d : public Handle_PrsMgr_PresentationManager {

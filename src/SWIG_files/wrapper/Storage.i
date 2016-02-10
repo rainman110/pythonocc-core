@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Storage_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef Storage_BaseDriver * Storage_Container;
 typedef long Storage_Position;
@@ -747,6 +762,12 @@ class Storage_CallBack : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Storage_CallBack::Handle_Storage_CallBack %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_CallBack;
 class Handle_Storage_CallBack : public Handle_MMgt_TShared {
 
@@ -980,6 +1001,12 @@ class Storage_Data : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Storage_Data::Handle_Storage_Data %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_Data;
 class Handle_Storage_Data : public Handle_MMgt_TShared {
 
@@ -1095,6 +1122,12 @@ class Storage_DataMapNodeOfMapOfCallBack : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_Storage_DataMapNodeOfMapOfCallBack::Handle_Storage_DataMapNodeOfMapOfCallBack %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_DataMapNodeOfMapOfCallBack;
 class Handle_Storage_DataMapNodeOfMapOfCallBack : public Handle_TCollection_MapNode {
 
@@ -1149,6 +1182,12 @@ class Storage_DataMapNodeOfMapOfPers : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Storage_DataMapNodeOfMapOfPers::Handle_Storage_DataMapNodeOfMapOfPers %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Storage_DataMapNodeOfMapOfPers;
 class Handle_Storage_DataMapNodeOfMapOfPers : public Handle_TCollection_MapNode {
@@ -1251,6 +1290,12 @@ class Storage_HArrayOfCallBack : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Storage_HArrayOfCallBack::Handle_Storage_HArrayOfCallBack %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_HArrayOfCallBack;
 class Handle_Storage_HArrayOfCallBack : public Handle_MMgt_TShared {
 
@@ -1352,6 +1397,12 @@ class Storage_HArrayOfSchema : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Storage_HArrayOfSchema::Handle_Storage_HArrayOfSchema %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_HArrayOfSchema;
 class Handle_Storage_HArrayOfSchema : public Handle_MMgt_TShared {
 
@@ -1452,6 +1503,12 @@ class Storage_HPArray : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Storage_HPArray::Handle_Storage_HPArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Storage_HPArray;
 class Handle_Storage_HPArray : public Handle_MMgt_TShared {
@@ -1626,6 +1683,12 @@ class Storage_HSeqOfCallBack : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Storage_HSeqOfCallBack::Handle_Storage_HSeqOfCallBack %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_HSeqOfCallBack;
 class Handle_Storage_HSeqOfCallBack : public Handle_MMgt_TShared {
 
@@ -1798,6 +1861,12 @@ class Storage_HSeqOfPersistent : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Storage_HSeqOfPersistent::Handle_Storage_HSeqOfPersistent %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Storage_HSeqOfPersistent;
 class Handle_Storage_HSeqOfPersistent : public Handle_MMgt_TShared {
@@ -1972,6 +2041,12 @@ class Storage_HSeqOfRoot : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Storage_HSeqOfRoot::Handle_Storage_HSeqOfRoot %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_HSeqOfRoot;
 class Handle_Storage_HSeqOfRoot : public Handle_MMgt_TShared {
 
@@ -2125,6 +2200,12 @@ class Storage_HeaderData : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Storage_HeaderData::Handle_Storage_HeaderData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_HeaderData;
 class Handle_Storage_HeaderData : public Handle_MMgt_TShared {
 
@@ -2210,6 +2291,12 @@ class Storage_IndexedDataMapNodeOfPType : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_Storage_IndexedDataMapNodeOfPType::Handle_Storage_IndexedDataMapNodeOfPType %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_IndexedDataMapNodeOfPType;
 class Handle_Storage_IndexedDataMapNodeOfPType : public Handle_TCollection_MapNode {
 
@@ -2254,6 +2341,12 @@ class Storage_InternalData : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Storage_InternalData::Handle_Storage_InternalData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Storage_InternalData;
 class Handle_Storage_InternalData : public Handle_MMgt_TShared {
@@ -2703,6 +2796,12 @@ class Storage_Root : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Storage_Root::Handle_Storage_Root %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_Root;
 class Handle_Storage_Root : public Handle_MMgt_TShared {
 
@@ -2797,6 +2896,12 @@ class Storage_RootData : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Storage_RootData::Handle_Storage_RootData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Storage_RootData;
 class Handle_Storage_RootData : public Handle_MMgt_TShared {
@@ -3086,6 +3191,12 @@ class Storage_Schema : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Storage_Schema::Handle_Storage_Schema %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Storage_Schema;
 class Handle_Storage_Schema : public Handle_MMgt_TShared {
@@ -3534,6 +3645,12 @@ class Storage_SequenceNodeOfSeqOfCallBack : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Storage_SequenceNodeOfSeqOfCallBack::Handle_Storage_SequenceNodeOfSeqOfCallBack %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_SequenceNodeOfSeqOfCallBack;
 class Handle_Storage_SequenceNodeOfSeqOfCallBack : public Handle_TCollection_SeqNode {
 
@@ -3585,6 +3702,12 @@ class Storage_SequenceNodeOfSeqOfPersistent : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Storage_SequenceNodeOfSeqOfPersistent::Handle_Storage_SequenceNodeOfSeqOfPersistent %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_SequenceNodeOfSeqOfPersistent;
 class Handle_Storage_SequenceNodeOfSeqOfPersistent : public Handle_TCollection_SeqNode {
 
@@ -3635,6 +3758,12 @@ class Storage_SequenceNodeOfSeqOfRoot : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Storage_SequenceNodeOfSeqOfRoot::Handle_Storage_SequenceNodeOfSeqOfRoot %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Storage_SequenceNodeOfSeqOfRoot;
 class Handle_Storage_SequenceNodeOfSeqOfRoot : public Handle_TCollection_SeqNode {
@@ -3706,6 +3835,12 @@ class Storage_TypeData : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Storage_TypeData::Handle_Storage_TypeData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Storage_TypeData;
 class Handle_Storage_TypeData : public Handle_MMgt_TShared {
@@ -3786,6 +3921,12 @@ class Storage_TypedCallBack : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Storage_TypedCallBack::Handle_Storage_TypedCallBack %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Storage_TypedCallBack;
 class Handle_Storage_TypedCallBack : public Handle_MMgt_TShared {
 
@@ -3864,6 +4005,12 @@ class Storage_DefaultCallBack : public Storage_CallBack {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Storage_DefaultCallBack::Handle_Storage_DefaultCallBack %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Storage_DefaultCallBack;
 class Handle_Storage_DefaultCallBack : public Handle_Storage_CallBack {

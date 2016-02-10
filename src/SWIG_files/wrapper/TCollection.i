@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TCollection_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef TCollection_SeqNode * TCollection_SeqNodePtr;
 typedef TCollection_MapNode * TCollection_MapNodePtr;
@@ -135,6 +150,12 @@ class TCollection_AVLBaseNode : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TCollection_AVLBaseNode::Handle_TCollection_AVLBaseNode %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TCollection_AVLBaseNode;
 class Handle_TCollection_AVLBaseNode : public Handle_MMgt_TShared {
@@ -2174,6 +2195,12 @@ class TCollection_HAsciiString : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TCollection_HAsciiString::Handle_TCollection_HAsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TCollection_HAsciiString;
 class Handle_TCollection_HAsciiString : public Handle_MMgt_TShared {
 
@@ -2487,6 +2514,12 @@ class TCollection_HExtendedString : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TCollection_HExtendedString::Handle_TCollection_HExtendedString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TCollection_HExtendedString;
 class Handle_TCollection_HExtendedString : public Handle_MMgt_TShared {
 
@@ -2533,6 +2566,12 @@ class TCollection_MapNode : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TCollection_MapNode::Handle_TCollection_MapNode %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TCollection_MapNode;
 class Handle_TCollection_MapNode : public Handle_MMgt_TShared {
@@ -2644,6 +2683,12 @@ class TCollection_SeqNode : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TCollection_SeqNode::Handle_TCollection_SeqNode %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TCollection_SeqNode;
 class Handle_TCollection_SeqNode : public Handle_MMgt_TShared {

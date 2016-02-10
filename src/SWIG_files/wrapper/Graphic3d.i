@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Graphic3d_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef NCollection_Vec4 <Standard_Integer> Graphic3d_Vec4i;
 typedef NCollection_Vec2 <Standard_Character> Graphic3d_Vec2b;
@@ -1245,6 +1260,12 @@ class Graphic3d_ArrayOfPrimitives : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Graphic3d_ArrayOfPrimitives::Handle_Graphic3d_ArrayOfPrimitives %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_ArrayOfPrimitives;
 class Handle_Graphic3d_ArrayOfPrimitives : public Handle_MMgt_TShared {
 
@@ -1448,6 +1469,12 @@ class Graphic3d_AspectFillArea3d : public Aspect_AspectFillArea {
 	}
 };
 
+%pythonappend Handle_Graphic3d_AspectFillArea3d::Handle_Graphic3d_AspectFillArea3d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_AspectFillArea3d;
 class Handle_Graphic3d_AspectFillArea3d : public Handle_Aspect_AspectFillArea {
 
@@ -1514,6 +1541,12 @@ class Graphic3d_AspectLine3d : public Aspect_AspectLine {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_AspectLine3d::Handle_Graphic3d_AspectLine3d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_AspectLine3d;
 class Handle_Graphic3d_AspectLine3d : public Handle_Aspect_AspectLine {
@@ -1627,6 +1660,12 @@ class Graphic3d_AspectMarker3d : public Aspect_AspectMarker {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_AspectMarker3d::Handle_Graphic3d_AspectMarker3d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_AspectMarker3d;
 class Handle_Graphic3d_AspectMarker3d : public Handle_Aspect_AspectMarker {
@@ -1799,6 +1838,12 @@ class Graphic3d_AspectText3d : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Graphic3d_AspectText3d::Handle_Graphic3d_AspectText3d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_AspectText3d;
 class Handle_Graphic3d_AspectText3d : public Handle_MMgt_TShared {
 
@@ -1969,6 +2014,12 @@ class Graphic3d_DataStructureManager : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_DataStructureManager::Handle_Graphic3d_DataStructureManager %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_DataStructureManager;
 class Handle_Graphic3d_DataStructureManager : public Handle_MMgt_TShared {
@@ -3367,6 +3418,12 @@ class Graphic3d_GraphicDriver : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Graphic3d_GraphicDriver::Handle_Graphic3d_GraphicDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_GraphicDriver;
 class Handle_Graphic3d_GraphicDriver : public Handle_MMgt_TShared {
 
@@ -3654,6 +3711,12 @@ class Graphic3d_Group : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Graphic3d_Group::Handle_Graphic3d_Group %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_Group;
 class Handle_Graphic3d_Group : public Handle_MMgt_TShared {
 
@@ -3826,6 +3889,12 @@ class Graphic3d_HSequenceOfGroup : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_HSequenceOfGroup::Handle_Graphic3d_HSequenceOfGroup %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_HSequenceOfGroup;
 class Handle_Graphic3d_HSequenceOfGroup : public Handle_MMgt_TShared {
@@ -4000,6 +4069,12 @@ class Graphic3d_HSequenceOfStructure : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Graphic3d_HSequenceOfStructure::Handle_Graphic3d_HSequenceOfStructure %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_HSequenceOfStructure;
 class Handle_Graphic3d_HSequenceOfStructure : public Handle_MMgt_TShared {
 
@@ -4112,6 +4187,12 @@ class Graphic3d_HSetOfGroup : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_HSetOfGroup::Handle_Graphic3d_HSetOfGroup %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_HSetOfGroup;
 class Handle_Graphic3d_HSetOfGroup : public Handle_MMgt_TShared {
@@ -4264,6 +4345,12 @@ class Graphic3d_ListNodeOfListOfPArray : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_Graphic3d_ListNodeOfListOfPArray::Handle_Graphic3d_ListNodeOfListOfPArray %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_ListNodeOfListOfPArray;
 class Handle_Graphic3d_ListNodeOfListOfPArray : public Handle_TCollection_MapNode {
 
@@ -4313,6 +4400,12 @@ class Graphic3d_ListNodeOfListOfShortReal : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_Graphic3d_ListNodeOfListOfShortReal::Handle_Graphic3d_ListNodeOfListOfShortReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_ListNodeOfListOfShortReal;
 class Handle_Graphic3d_ListNodeOfListOfShortReal : public Handle_TCollection_MapNode {
 
@@ -4361,6 +4454,12 @@ class Graphic3d_ListNodeOfSetListOfSetOfGroup : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_ListNodeOfSetListOfSetOfGroup::Handle_Graphic3d_ListNodeOfSetListOfSetOfGroup %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_ListNodeOfSetListOfSetOfGroup;
 class Handle_Graphic3d_ListNodeOfSetListOfSetOfGroup : public Handle_TCollection_MapNode {
@@ -5149,6 +5248,12 @@ class Graphic3d_Plotter : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Graphic3d_Plotter::Handle_Graphic3d_Plotter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_Plotter;
 class Handle_Graphic3d_Plotter : public Handle_MMgt_TShared {
 
@@ -5199,6 +5304,12 @@ class Graphic3d_SequenceNodeOfSequenceOfAddress : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_SequenceNodeOfSequenceOfAddress::Handle_Graphic3d_SequenceNodeOfSequenceOfAddress %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_SequenceNodeOfSequenceOfAddress;
 class Handle_Graphic3d_SequenceNodeOfSequenceOfAddress : public Handle_TCollection_SeqNode {
@@ -5251,6 +5362,12 @@ class Graphic3d_SequenceNodeOfSequenceOfGroup : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Graphic3d_SequenceNodeOfSequenceOfGroup::Handle_Graphic3d_SequenceNodeOfSequenceOfGroup %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_SequenceNodeOfSequenceOfGroup;
 class Handle_Graphic3d_SequenceNodeOfSequenceOfGroup : public Handle_TCollection_SeqNode {
 
@@ -5301,6 +5418,12 @@ class Graphic3d_SequenceNodeOfSequenceOfStructure : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_SequenceNodeOfSequenceOfStructure::Handle_Graphic3d_SequenceNodeOfSequenceOfStructure %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_SequenceNodeOfSequenceOfStructure;
 class Handle_Graphic3d_SequenceNodeOfSequenceOfStructure : public Handle_TCollection_SeqNode {
@@ -6141,6 +6264,12 @@ class Graphic3d_StdMapNodeOfMapOfStructure : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_Graphic3d_StdMapNodeOfMapOfStructure::Handle_Graphic3d_StdMapNodeOfMapOfStructure %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_StdMapNodeOfMapOfStructure;
 class Handle_Graphic3d_StdMapNodeOfMapOfStructure : public Handle_TCollection_MapNode {
 
@@ -6846,6 +6975,12 @@ class Graphic3d_Structure : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Graphic3d_Structure::Handle_Graphic3d_Structure %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_Structure;
 class Handle_Graphic3d_Structure : public Handle_MMgt_TShared {
 
@@ -7227,6 +7362,12 @@ class Graphic3d_StructureManager : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Graphic3d_StructureManager::Handle_Graphic3d_StructureManager %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_StructureManager;
 class Handle_Graphic3d_StructureManager : public Handle_MMgt_TShared {
 
@@ -7402,6 +7543,12 @@ class Graphic3d_TextureParams : public Standard_Transient {
 	}
 };
 
+%pythonappend Handle_Graphic3d_TextureParams::Handle_Graphic3d_TextureParams %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_TextureParams;
 class Handle_Graphic3d_TextureParams : public Handle_Standard_Transient {
 
@@ -7484,6 +7631,12 @@ class Graphic3d_TextureRoot : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_TextureRoot::Handle_Graphic3d_TextureRoot %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_TextureRoot;
 class Handle_Graphic3d_TextureRoot : public Handle_MMgt_TShared {
@@ -7904,6 +8057,12 @@ class Graphic3d_ArrayOfPoints : public Graphic3d_ArrayOfPrimitives {
 	}
 };
 
+%pythonappend Handle_Graphic3d_ArrayOfPoints::Handle_Graphic3d_ArrayOfPoints %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_ArrayOfPoints;
 class Handle_Graphic3d_ArrayOfPoints : public Handle_Graphic3d_ArrayOfPrimitives {
 
@@ -7963,6 +8122,12 @@ class Graphic3d_ArrayOfPolygons : public Graphic3d_ArrayOfPrimitives {
 	}
 };
 
+%pythonappend Handle_Graphic3d_ArrayOfPolygons::Handle_Graphic3d_ArrayOfPolygons %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_ArrayOfPolygons;
 class Handle_Graphic3d_ArrayOfPolygons : public Handle_Graphic3d_ArrayOfPrimitives {
 
@@ -8017,6 +8182,12 @@ class Graphic3d_ArrayOfPolylines : public Graphic3d_ArrayOfPrimitives {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_ArrayOfPolylines::Handle_Graphic3d_ArrayOfPolylines %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_ArrayOfPolylines;
 class Handle_Graphic3d_ArrayOfPolylines : public Handle_Graphic3d_ArrayOfPrimitives {
@@ -8073,6 +8244,12 @@ class Graphic3d_ArrayOfQuadrangleStrips : public Graphic3d_ArrayOfPrimitives {
 	}
 };
 
+%pythonappend Handle_Graphic3d_ArrayOfQuadrangleStrips::Handle_Graphic3d_ArrayOfQuadrangleStrips %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_ArrayOfQuadrangleStrips;
 class Handle_Graphic3d_ArrayOfQuadrangleStrips : public Handle_Graphic3d_ArrayOfPrimitives {
 
@@ -8128,6 +8305,12 @@ class Graphic3d_ArrayOfQuadrangles : public Graphic3d_ArrayOfPrimitives {
 	}
 };
 
+%pythonappend Handle_Graphic3d_ArrayOfQuadrangles::Handle_Graphic3d_ArrayOfQuadrangles %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_ArrayOfQuadrangles;
 class Handle_Graphic3d_ArrayOfQuadrangles : public Handle_Graphic3d_ArrayOfPrimitives {
 
@@ -8176,6 +8359,12 @@ class Graphic3d_ArrayOfSegments : public Graphic3d_ArrayOfPrimitives {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_ArrayOfSegments::Handle_Graphic3d_ArrayOfSegments %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_ArrayOfSegments;
 class Handle_Graphic3d_ArrayOfSegments : public Handle_Graphic3d_ArrayOfPrimitives {
@@ -8232,6 +8421,12 @@ class Graphic3d_ArrayOfTriangleFans : public Graphic3d_ArrayOfPrimitives {
 	}
 };
 
+%pythonappend Handle_Graphic3d_ArrayOfTriangleFans::Handle_Graphic3d_ArrayOfTriangleFans %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_ArrayOfTriangleFans;
 class Handle_Graphic3d_ArrayOfTriangleFans : public Handle_Graphic3d_ArrayOfPrimitives {
 
@@ -8287,6 +8482,12 @@ class Graphic3d_ArrayOfTriangleStrips : public Graphic3d_ArrayOfPrimitives {
 	}
 };
 
+%pythonappend Handle_Graphic3d_ArrayOfTriangleStrips::Handle_Graphic3d_ArrayOfTriangleStrips %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_ArrayOfTriangleStrips;
 class Handle_Graphic3d_ArrayOfTriangleStrips : public Handle_Graphic3d_ArrayOfPrimitives {
 
@@ -8341,6 +8542,12 @@ class Graphic3d_ArrayOfTriangles : public Graphic3d_ArrayOfPrimitives {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_ArrayOfTriangles::Handle_Graphic3d_ArrayOfTriangles %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_ArrayOfTriangles;
 class Handle_Graphic3d_ArrayOfTriangles : public Handle_Graphic3d_ArrayOfPrimitives {
@@ -8414,6 +8621,12 @@ class Graphic3d_TextureEnv : public Graphic3d_TextureRoot {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_TextureEnv::Handle_Graphic3d_TextureEnv %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_TextureEnv;
 class Handle_Graphic3d_TextureEnv : public Handle_Graphic3d_TextureRoot {
@@ -8520,6 +8733,12 @@ class Graphic3d_TextureMap : public Graphic3d_TextureRoot {
 	}
 };
 
+%pythonappend Handle_Graphic3d_TextureMap::Handle_Graphic3d_TextureMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_TextureMap;
 class Handle_Graphic3d_TextureMap : public Handle_Graphic3d_TextureRoot {
 
@@ -8577,6 +8796,12 @@ class Graphic3d_Texture1D : public Graphic3d_TextureMap {
 	}
 };
 
+%pythonappend Handle_Graphic3d_Texture1D::Handle_Graphic3d_Texture1D %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_Texture1D;
 class Handle_Graphic3d_Texture1D : public Handle_Graphic3d_TextureMap {
 
@@ -8633,6 +8858,12 @@ class Graphic3d_Texture2D : public Graphic3d_TextureMap {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_Texture2D::Handle_Graphic3d_Texture2D %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_Texture2D;
 class Handle_Graphic3d_Texture2D : public Handle_Graphic3d_TextureMap {
@@ -8694,6 +8925,12 @@ class Graphic3d_Texture1Dmanual : public Graphic3d_Texture1D {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_Texture1Dmanual::Handle_Graphic3d_Texture1Dmanual %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_Texture1Dmanual;
 class Handle_Graphic3d_Texture1Dmanual : public Handle_Graphic3d_Texture1D {
@@ -8792,6 +9029,12 @@ class Graphic3d_Texture1Dsegment : public Graphic3d_Texture1D {
 	}
 };
 
+%pythonappend Handle_Graphic3d_Texture1Dsegment::Handle_Graphic3d_Texture1Dsegment %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Graphic3d_Texture1Dsegment;
 class Handle_Graphic3d_Texture1Dsegment : public Handle_Graphic3d_Texture1D {
 
@@ -8852,6 +9095,12 @@ class Graphic3d_Texture2Dmanual : public Graphic3d_Texture2D {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_Texture2Dmanual::Handle_Graphic3d_Texture2Dmanual %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_Texture2Dmanual;
 class Handle_Graphic3d_Texture2Dmanual : public Handle_Graphic3d_Texture2D {
@@ -9063,6 +9312,12 @@ class Graphic3d_Texture2Dplane : public Graphic3d_Texture2D {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Graphic3d_Texture2Dplane::Handle_Graphic3d_Texture2Dplane %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Graphic3d_Texture2Dplane;
 class Handle_Graphic3d_Texture2Dplane : public Handle_Graphic3d_Texture2D {

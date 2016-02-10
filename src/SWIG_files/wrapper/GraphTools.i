@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include GraphTools_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -139,6 +154,12 @@ class GraphTools_ListNodeOfListOfSequenceOfInteger : public TCollection_MapNode 
 	}
 };
 
+%pythonappend Handle_GraphTools_ListNodeOfListOfSequenceOfInteger::Handle_GraphTools_ListNodeOfListOfSequenceOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GraphTools_ListNodeOfListOfSequenceOfInteger;
 class Handle_GraphTools_ListNodeOfListOfSequenceOfInteger : public Handle_TCollection_MapNode {
 
@@ -187,6 +208,12 @@ class GraphTools_ListNodeOfSCList : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GraphTools_ListNodeOfSCList::Handle_GraphTools_ListNodeOfSCList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GraphTools_ListNodeOfSCList;
 class Handle_GraphTools_ListNodeOfSCList : public Handle_TCollection_MapNode {
@@ -442,6 +469,12 @@ class GraphTools_SC : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GraphTools_SC::Handle_GraphTools_SC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GraphTools_SC;
 class Handle_GraphTools_SC : public Handle_MMgt_TShared {

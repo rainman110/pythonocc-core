@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Standard_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef bool Standard_Boolean;
 typedef const char * Standard_CString;
@@ -724,6 +739,12 @@ class Standard_Transient {
 	}
 };
 
+%pythonappend Handle_Standard_Transient::Handle_Standard_Transient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Standard_Transient;
 class Handle_Standard_Transient {
 
@@ -1116,6 +1137,12 @@ class Standard_Type : public Standard_Transient {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Standard_Type::Handle_Standard_Type %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Standard_Type;
 class Handle_Standard_Type : public Handle_Standard_Transient {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include GeomPlate_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -761,6 +776,12 @@ class GeomPlate_CurveConstraint : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_GeomPlate_CurveConstraint::Handle_GeomPlate_CurveConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomPlate_CurveConstraint;
 class Handle_GeomPlate_CurveConstraint : public Handle_MMgt_TShared {
 
@@ -862,6 +883,12 @@ class GeomPlate_HArray1OfHCurveOnSurface : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_GeomPlate_HArray1OfHCurveOnSurface::Handle_GeomPlate_HArray1OfHCurveOnSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomPlate_HArray1OfHCurveOnSurface;
 class Handle_GeomPlate_HArray1OfHCurveOnSurface : public Handle_MMgt_TShared {
 
@@ -962,6 +989,12 @@ class GeomPlate_HArray1OfSequenceOfReal : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomPlate_HArray1OfSequenceOfReal::Handle_GeomPlate_HArray1OfSequenceOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomPlate_HArray1OfSequenceOfReal;
 class Handle_GeomPlate_HArray1OfSequenceOfReal : public Handle_MMgt_TShared {
@@ -1136,6 +1169,12 @@ class GeomPlate_HSequenceOfCurveConstraint : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_GeomPlate_HSequenceOfCurveConstraint::Handle_GeomPlate_HSequenceOfCurveConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomPlate_HSequenceOfCurveConstraint;
 class Handle_GeomPlate_HSequenceOfCurveConstraint : public Handle_MMgt_TShared {
 
@@ -1308,6 +1347,12 @@ class GeomPlate_HSequenceOfPointConstraint : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomPlate_HSequenceOfPointConstraint::Handle_GeomPlate_HSequenceOfPointConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomPlate_HSequenceOfPointConstraint;
 class Handle_GeomPlate_HSequenceOfPointConstraint : public Handle_MMgt_TShared {
@@ -1616,6 +1661,12 @@ class GeomPlate_PointConstraint : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_GeomPlate_PointConstraint::Handle_GeomPlate_PointConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomPlate_PointConstraint;
 class Handle_GeomPlate_PointConstraint : public Handle_MMgt_TShared {
 
@@ -1666,6 +1717,12 @@ class GeomPlate_SequenceNodeOfSequenceOfAij : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomPlate_SequenceNodeOfSequenceOfAij::Handle_GeomPlate_SequenceNodeOfSequenceOfAij %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomPlate_SequenceNodeOfSequenceOfAij;
 class Handle_GeomPlate_SequenceNodeOfSequenceOfAij : public Handle_TCollection_SeqNode {
@@ -1718,6 +1775,12 @@ class GeomPlate_SequenceNodeOfSequenceOfCurveConstraint : public TCollection_Seq
 	}
 };
 
+%pythonappend Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint::Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint;
 class Handle_GeomPlate_SequenceNodeOfSequenceOfCurveConstraint : public Handle_TCollection_SeqNode {
 
@@ -1768,6 +1831,12 @@ class GeomPlate_SequenceNodeOfSequenceOfPointConstraint : public TCollection_Seq
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint::Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint;
 class Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint : public Handle_TCollection_SeqNode {
@@ -2483,6 +2552,12 @@ class GeomPlate_Surface : public Geom_Surface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_GeomPlate_Surface::Handle_GeomPlate_Surface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_GeomPlate_Surface;
 class Handle_GeomPlate_Surface : public Handle_Geom_Surface {

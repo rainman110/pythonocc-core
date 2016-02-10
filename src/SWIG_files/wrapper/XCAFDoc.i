@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include XCAFDoc_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -205,6 +220,12 @@ class XCAFDoc_Area : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_XCAFDoc_Area::Handle_XCAFDoc_Area %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_XCAFDoc_Area;
 class Handle_XCAFDoc_Area : public Handle_TDF_Attribute {
 
@@ -311,6 +332,12 @@ class XCAFDoc_Centroid : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFDoc_Centroid::Handle_XCAFDoc_Centroid %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFDoc_Centroid;
 class Handle_XCAFDoc_Centroid : public Handle_TDF_Attribute {
@@ -450,6 +477,12 @@ class XCAFDoc_Color : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFDoc_Color::Handle_XCAFDoc_Color %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFDoc_Color;
 class Handle_XCAFDoc_Color : public Handle_TDF_Attribute {
@@ -792,6 +825,12 @@ class XCAFDoc_ColorTool : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_XCAFDoc_ColorTool::Handle_XCAFDoc_ColorTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_XCAFDoc_ColorTool;
 class Handle_XCAFDoc_ColorTool : public Handle_TDF_Attribute {
 
@@ -876,6 +915,12 @@ class XCAFDoc_DataMapNodeOfDataMapOfShapeLabel : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel::Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel;
 class Handle_XCAFDoc_DataMapNodeOfDataMapOfShapeLabel : public Handle_TCollection_MapNode {
@@ -1056,6 +1101,12 @@ class XCAFDoc_Datum : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_XCAFDoc_Datum::Handle_XCAFDoc_Datum %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_XCAFDoc_Datum;
 class Handle_XCAFDoc_Datum : public Handle_TDF_Attribute {
 
@@ -1164,6 +1215,12 @@ class XCAFDoc_DimTol : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFDoc_DimTol::Handle_XCAFDoc_DimTol %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFDoc_DimTol;
 class Handle_XCAFDoc_DimTol : public Handle_TDF_Attribute {
@@ -1466,6 +1523,12 @@ class XCAFDoc_DimTolTool : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_XCAFDoc_DimTolTool::Handle_XCAFDoc_DimTolTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_XCAFDoc_DimTolTool;
 class Handle_XCAFDoc_DimTolTool : public Handle_TDF_Attribute {
 
@@ -1648,6 +1711,12 @@ class XCAFDoc_DocumentTool : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFDoc_DocumentTool::Handle_XCAFDoc_DocumentTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFDoc_DocumentTool;
 class Handle_XCAFDoc_DocumentTool : public Handle_TDF_Attribute {
@@ -1879,6 +1948,12 @@ class XCAFDoc_GraphNode : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFDoc_GraphNode::Handle_XCAFDoc_GraphNode %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFDoc_GraphNode;
 class Handle_XCAFDoc_GraphNode : public Handle_TDF_Attribute {
@@ -2387,6 +2462,12 @@ class XCAFDoc_LayerTool : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_XCAFDoc_LayerTool::Handle_XCAFDoc_LayerTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_XCAFDoc_LayerTool;
 class Handle_XCAFDoc_LayerTool : public Handle_TDF_Attribute {
 
@@ -2477,6 +2558,12 @@ class XCAFDoc_Location : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFDoc_Location::Handle_XCAFDoc_Location %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFDoc_Location;
 class Handle_XCAFDoc_Location : public Handle_TDF_Attribute {
@@ -2594,6 +2681,12 @@ class XCAFDoc_Material : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFDoc_Material::Handle_XCAFDoc_Material %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFDoc_Material;
 class Handle_XCAFDoc_Material : public Handle_TDF_Attribute {
@@ -2768,6 +2861,12 @@ class XCAFDoc_MaterialTool : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_XCAFDoc_MaterialTool::Handle_XCAFDoc_MaterialTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_XCAFDoc_MaterialTool;
 class Handle_XCAFDoc_MaterialTool : public Handle_TDF_Attribute {
 
@@ -2818,6 +2917,12 @@ class XCAFDoc_SequenceNodeOfGraphNodeSequence : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence::Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence;
 class Handle_XCAFDoc_SequenceNodeOfGraphNodeSequence : public Handle_TCollection_SeqNode {
@@ -2915,6 +3020,12 @@ class XCAFDoc_ShapeMapTool : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFDoc_ShapeMapTool::Handle_XCAFDoc_ShapeMapTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFDoc_ShapeMapTool;
 class Handle_XCAFDoc_ShapeMapTool : public Handle_TDF_Attribute {
@@ -3533,6 +3644,12 @@ class XCAFDoc_ShapeTool : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_XCAFDoc_ShapeTool::Handle_XCAFDoc_ShapeTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_XCAFDoc_ShapeTool;
 class Handle_XCAFDoc_ShapeTool : public Handle_TDF_Attribute {
 
@@ -3641,6 +3758,12 @@ class XCAFDoc_Volume : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_XCAFDoc_Volume::Handle_XCAFDoc_Volume %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_XCAFDoc_Volume;
 class Handle_XCAFDoc_Volume : public Handle_TDF_Attribute {

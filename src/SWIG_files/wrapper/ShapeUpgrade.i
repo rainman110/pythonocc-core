@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ShapeUpgrade_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -126,6 +141,12 @@ class ShapeUpgrade_RemoveLocations : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_RemoveLocations::Handle_ShapeUpgrade_RemoveLocations %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_RemoveLocations;
 class Handle_ShapeUpgrade_RemoveLocations : public Handle_MMgt_TShared {
@@ -360,6 +381,12 @@ class ShapeUpgrade_SplitCurve : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_SplitCurve::Handle_ShapeUpgrade_SplitCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_SplitCurve;
 class Handle_ShapeUpgrade_SplitCurve : public Handle_MMgt_TShared {
 
@@ -493,6 +520,12 @@ class ShapeUpgrade_SplitSurface : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_SplitSurface::Handle_ShapeUpgrade_SplitSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_SplitSurface;
 class Handle_ShapeUpgrade_SplitSurface : public Handle_MMgt_TShared {
 
@@ -608,6 +641,12 @@ class ShapeUpgrade_Tool : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_Tool::Handle_ShapeUpgrade_Tool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_Tool;
 class Handle_ShapeUpgrade_Tool : public Handle_MMgt_TShared {
 
@@ -710,6 +749,12 @@ class ShapeUpgrade_UnifySameDomain : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_UnifySameDomain::Handle_ShapeUpgrade_UnifySameDomain %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_UnifySameDomain;
 class Handle_ShapeUpgrade_UnifySameDomain : public Handle_MMgt_TShared {
@@ -832,6 +877,12 @@ class ShapeUpgrade_ConvertSurfaceToBezierBasis : public ShapeUpgrade_SplitSurfac
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_ConvertSurfaceToBezierBasis::Handle_ShapeUpgrade_ConvertSurfaceToBezierBasis %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_ConvertSurfaceToBezierBasis;
 class Handle_ShapeUpgrade_ConvertSurfaceToBezierBasis : public Handle_ShapeUpgrade_SplitSurface {
 
@@ -936,6 +987,12 @@ class ShapeUpgrade_EdgeDivide : public ShapeUpgrade_Tool {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_EdgeDivide::Handle_ShapeUpgrade_EdgeDivide %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_EdgeDivide;
 class Handle_ShapeUpgrade_EdgeDivide : public Handle_ShapeUpgrade_Tool {
@@ -1058,6 +1115,12 @@ class ShapeUpgrade_FaceDivide : public ShapeUpgrade_Tool {
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_FaceDivide::Handle_ShapeUpgrade_FaceDivide %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_FaceDivide;
 class Handle_ShapeUpgrade_FaceDivide : public Handle_ShapeUpgrade_Tool {
 
@@ -1144,6 +1207,12 @@ class ShapeUpgrade_FixSmallCurves : public ShapeUpgrade_Tool {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_FixSmallCurves::Handle_ShapeUpgrade_FixSmallCurves %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_FixSmallCurves;
 class Handle_ShapeUpgrade_FixSmallCurves : public Handle_ShapeUpgrade_Tool {
@@ -1267,6 +1336,12 @@ class ShapeUpgrade_RemoveInternalWires : public ShapeUpgrade_Tool {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_RemoveInternalWires::Handle_ShapeUpgrade_RemoveInternalWires %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_RemoveInternalWires;
 class Handle_ShapeUpgrade_RemoveInternalWires : public Handle_ShapeUpgrade_Tool {
@@ -1690,6 +1765,12 @@ class ShapeUpgrade_SplitCurve2d : public ShapeUpgrade_SplitCurve {
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_SplitCurve2d::Handle_ShapeUpgrade_SplitCurve2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_SplitCurve2d;
 class Handle_ShapeUpgrade_SplitCurve2d : public Handle_ShapeUpgrade_SplitCurve {
 
@@ -1765,6 +1846,12 @@ class ShapeUpgrade_SplitCurve3d : public ShapeUpgrade_SplitCurve {
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_SplitCurve3d::Handle_ShapeUpgrade_SplitCurve3d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_SplitCurve3d;
 class Handle_ShapeUpgrade_SplitCurve3d : public Handle_ShapeUpgrade_SplitCurve {
 
@@ -1832,6 +1919,12 @@ class ShapeUpgrade_SplitSurfaceAngle : public ShapeUpgrade_SplitSurface {
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_SplitSurfaceAngle::Handle_ShapeUpgrade_SplitSurfaceAngle %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_SplitSurfaceAngle;
 class Handle_ShapeUpgrade_SplitSurfaceAngle : public Handle_ShapeUpgrade_SplitSurface {
 
@@ -1893,6 +1986,12 @@ class ShapeUpgrade_SplitSurfaceArea : public ShapeUpgrade_SplitSurface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_SplitSurfaceArea::Handle_ShapeUpgrade_SplitSurfaceArea %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_SplitSurfaceArea;
 class Handle_ShapeUpgrade_SplitSurfaceArea : public Handle_ShapeUpgrade_SplitSurface {
@@ -1958,6 +2057,12 @@ class ShapeUpgrade_SplitSurfaceContinuity : public ShapeUpgrade_SplitSurface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_SplitSurfaceContinuity::Handle_ShapeUpgrade_SplitSurfaceContinuity %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_SplitSurfaceContinuity;
 class Handle_ShapeUpgrade_SplitSurfaceContinuity : public Handle_ShapeUpgrade_SplitSurface {
@@ -2150,6 +2255,12 @@ class ShapeUpgrade_WireDivide : public ShapeUpgrade_Tool {
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_WireDivide::Handle_ShapeUpgrade_WireDivide %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_WireDivide;
 class Handle_ShapeUpgrade_WireDivide : public Handle_ShapeUpgrade_Tool {
 
@@ -2198,6 +2309,12 @@ class ShapeUpgrade_ClosedEdgeDivide : public ShapeUpgrade_EdgeDivide {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_ClosedEdgeDivide::Handle_ShapeUpgrade_ClosedEdgeDivide %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_ClosedEdgeDivide;
 class Handle_ShapeUpgrade_ClosedEdgeDivide : public Handle_ShapeUpgrade_EdgeDivide {
@@ -2270,6 +2387,12 @@ class ShapeUpgrade_ClosedFaceDivide : public ShapeUpgrade_FaceDivide {
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_ClosedFaceDivide::Handle_ShapeUpgrade_ClosedFaceDivide %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_ClosedFaceDivide;
 class Handle_ShapeUpgrade_ClosedFaceDivide : public Handle_ShapeUpgrade_FaceDivide {
 
@@ -2332,6 +2455,12 @@ class ShapeUpgrade_ConvertCurve2dToBezier : public ShapeUpgrade_SplitCurve2d {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_ConvertCurve2dToBezier::Handle_ShapeUpgrade_ConvertCurve2dToBezier %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_ConvertCurve2dToBezier;
 class Handle_ShapeUpgrade_ConvertCurve2dToBezier : public Handle_ShapeUpgrade_SplitCurve2d {
@@ -2438,6 +2567,12 @@ class ShapeUpgrade_ConvertCurve3dToBezier : public ShapeUpgrade_SplitCurve3d {
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_ConvertCurve3dToBezier::Handle_ShapeUpgrade_ConvertCurve3dToBezier %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_ConvertCurve3dToBezier;
 class Handle_ShapeUpgrade_ConvertCurve3dToBezier : public Handle_ShapeUpgrade_SplitCurve3d {
 
@@ -2506,6 +2641,12 @@ class ShapeUpgrade_FaceDivideArea : public ShapeUpgrade_FaceDivide {
 	}
 };
 
+%pythonappend Handle_ShapeUpgrade_FaceDivideArea::Handle_ShapeUpgrade_FaceDivideArea %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeUpgrade_FaceDivideArea;
 class Handle_ShapeUpgrade_FaceDivideArea : public Handle_ShapeUpgrade_FaceDivide {
 
@@ -2560,6 +2701,12 @@ class ShapeUpgrade_FixSmallBezierCurves : public ShapeUpgrade_FixSmallCurves {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_FixSmallBezierCurves::Handle_ShapeUpgrade_FixSmallBezierCurves %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_FixSmallBezierCurves;
 class Handle_ShapeUpgrade_FixSmallBezierCurves : public Handle_ShapeUpgrade_FixSmallCurves {
@@ -2625,6 +2772,12 @@ class ShapeUpgrade_SplitCurve2dContinuity : public ShapeUpgrade_SplitCurve2d {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_SplitCurve2dContinuity::Handle_ShapeUpgrade_SplitCurve2dContinuity %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_SplitCurve2dContinuity;
 class Handle_ShapeUpgrade_SplitCurve2dContinuity : public Handle_ShapeUpgrade_SplitCurve2d {
@@ -2694,6 +2847,12 @@ class ShapeUpgrade_SplitCurve3dContinuity : public ShapeUpgrade_SplitCurve3d {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeUpgrade_SplitCurve3dContinuity::Handle_ShapeUpgrade_SplitCurve3dContinuity %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeUpgrade_SplitCurve3dContinuity;
 class Handle_ShapeUpgrade_SplitCurve3dContinuity : public Handle_ShapeUpgrade_SplitCurve3d {

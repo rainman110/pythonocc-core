@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include MeshVS_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef Standard_Integer MeshVS_DisplayModeFlags;
 typedef Standard_Integer MeshVS_BuilderPriority;
@@ -614,6 +629,12 @@ class MeshVS_DataMapNodeOfDataMapOfColorMapOfInteger : public TCollection_MapNod
 	}
 };
 
+%pythonappend Handle_MeshVS_DataMapNodeOfDataMapOfColorMapOfInteger::Handle_MeshVS_DataMapNodeOfDataMapOfColorMapOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_DataMapNodeOfDataMapOfColorMapOfInteger;
 class Handle_MeshVS_DataMapNodeOfDataMapOfColorMapOfInteger : public Handle_TCollection_MapNode {
 
@@ -678,6 +699,12 @@ class MeshVS_DataMapNodeOfDataMapOfHArray1OfSequenceOfInteger : public TCollecti
 	}
 };
 
+%pythonappend Handle_MeshVS_DataMapNodeOfDataMapOfHArray1OfSequenceOfInteger::Handle_MeshVS_DataMapNodeOfDataMapOfHArray1OfSequenceOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_DataMapNodeOfDataMapOfHArray1OfSequenceOfInteger;
 class Handle_MeshVS_DataMapNodeOfDataMapOfHArray1OfSequenceOfInteger : public Handle_TCollection_MapNode {
 
@@ -741,6 +768,12 @@ class MeshVS_DataMapNodeOfDataMapOfIntegerAsciiString : public TCollection_MapNo
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_DataMapNodeOfDataMapOfIntegerAsciiString::Handle_MeshVS_DataMapNodeOfDataMapOfIntegerAsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_DataMapNodeOfDataMapOfIntegerAsciiString;
 class Handle_MeshVS_DataMapNodeOfDataMapOfIntegerAsciiString : public Handle_TCollection_MapNode {
@@ -815,6 +848,12 @@ class MeshVS_DataMapNodeOfDataMapOfIntegerBoolean : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_MeshVS_DataMapNodeOfDataMapOfIntegerBoolean::Handle_MeshVS_DataMapNodeOfDataMapOfIntegerBoolean %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_DataMapNodeOfDataMapOfIntegerBoolean;
 class Handle_MeshVS_DataMapNodeOfDataMapOfIntegerBoolean : public Handle_TCollection_MapNode {
 
@@ -878,6 +917,12 @@ class MeshVS_DataMapNodeOfDataMapOfIntegerColor : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_DataMapNodeOfDataMapOfIntegerColor::Handle_MeshVS_DataMapNodeOfDataMapOfIntegerColor %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_DataMapNodeOfDataMapOfIntegerColor;
 class Handle_MeshVS_DataMapNodeOfDataMapOfIntegerColor : public Handle_TCollection_MapNode {
@@ -943,6 +988,12 @@ class MeshVS_DataMapNodeOfDataMapOfIntegerMaterial : public TCollection_MapNode 
 	}
 };
 
+%pythonappend Handle_MeshVS_DataMapNodeOfDataMapOfIntegerMaterial::Handle_MeshVS_DataMapNodeOfDataMapOfIntegerMaterial %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_DataMapNodeOfDataMapOfIntegerMaterial;
 class Handle_MeshVS_DataMapNodeOfDataMapOfIntegerMaterial : public Handle_TCollection_MapNode {
 
@@ -1006,6 +1057,12 @@ class MeshVS_DataMapNodeOfDataMapOfIntegerMeshEntityOwner : public TCollection_M
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_DataMapNodeOfDataMapOfIntegerMeshEntityOwner::Handle_MeshVS_DataMapNodeOfDataMapOfIntegerMeshEntityOwner %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_DataMapNodeOfDataMapOfIntegerMeshEntityOwner;
 class Handle_MeshVS_DataMapNodeOfDataMapOfIntegerMeshEntityOwner : public Handle_TCollection_MapNode {
@@ -1071,6 +1128,12 @@ class MeshVS_DataMapNodeOfDataMapOfIntegerOwner : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_MeshVS_DataMapNodeOfDataMapOfIntegerOwner::Handle_MeshVS_DataMapNodeOfDataMapOfIntegerOwner %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_DataMapNodeOfDataMapOfIntegerOwner;
 class Handle_MeshVS_DataMapNodeOfDataMapOfIntegerOwner : public Handle_TCollection_MapNode {
 
@@ -1134,6 +1197,12 @@ class MeshVS_DataMapNodeOfDataMapOfIntegerTwoColors : public TCollection_MapNode
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_DataMapNodeOfDataMapOfIntegerTwoColors::Handle_MeshVS_DataMapNodeOfDataMapOfIntegerTwoColors %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_DataMapNodeOfDataMapOfIntegerTwoColors;
 class Handle_MeshVS_DataMapNodeOfDataMapOfIntegerTwoColors : public Handle_TCollection_MapNode {
@@ -1199,6 +1268,12 @@ class MeshVS_DataMapNodeOfDataMapOfIntegerVector : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_MeshVS_DataMapNodeOfDataMapOfIntegerVector::Handle_MeshVS_DataMapNodeOfDataMapOfIntegerVector %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_DataMapNodeOfDataMapOfIntegerVector;
 class Handle_MeshVS_DataMapNodeOfDataMapOfIntegerVector : public Handle_TCollection_MapNode {
 
@@ -1253,6 +1328,12 @@ class MeshVS_DataMapNodeOfDataMapOfTwoColorsMapOfInteger : public TCollection_Ma
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_DataMapNodeOfDataMapOfTwoColorsMapOfInteger::Handle_MeshVS_DataMapNodeOfDataMapOfTwoColorsMapOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_DataMapNodeOfDataMapOfTwoColorsMapOfInteger;
 class Handle_MeshVS_DataMapNodeOfDataMapOfTwoColorsMapOfInteger : public Handle_TCollection_MapNode {
@@ -2381,6 +2462,12 @@ class MeshVS_DataSource : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_MeshVS_DataSource::Handle_MeshVS_DataSource %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_DataSource;
 class Handle_MeshVS_DataSource : public Handle_MMgt_TShared {
 
@@ -2558,6 +2645,12 @@ class MeshVS_Drawer : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_MeshVS_Drawer::Handle_MeshVS_Drawer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_Drawer;
 class Handle_MeshVS_Drawer : public Handle_MMgt_TShared {
 
@@ -2652,6 +2745,12 @@ class MeshVS_DummySensitiveEntity : public SelectBasics_SensitiveEntity {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_DummySensitiveEntity::Handle_MeshVS_DummySensitiveEntity %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_DummySensitiveEntity;
 class Handle_MeshVS_DummySensitiveEntity : public Handle_SelectBasics_SensitiveEntity {
@@ -2753,6 +2852,12 @@ class MeshVS_HArray1OfSequenceOfInteger : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_HArray1OfSequenceOfInteger::Handle_MeshVS_HArray1OfSequenceOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_HArray1OfSequenceOfInteger;
 class Handle_MeshVS_HArray1OfSequenceOfInteger : public Handle_MMgt_TShared {
@@ -3161,6 +3266,12 @@ class MeshVS_Mesh : public AIS_InteractiveObject {
 	}
 };
 
+%pythonappend Handle_MeshVS_Mesh::Handle_MeshVS_Mesh %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_Mesh;
 class Handle_MeshVS_Mesh : public Handle_AIS_InteractiveObject {
 
@@ -3294,6 +3405,12 @@ class MeshVS_MeshEntityOwner : public SelectMgr_EntityOwner {
 	}
 };
 
+%pythonappend Handle_MeshVS_MeshEntityOwner::Handle_MeshVS_MeshEntityOwner %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_MeshEntityOwner;
 class Handle_MeshVS_MeshEntityOwner : public Handle_SelectMgr_EntityOwner {
 
@@ -3416,6 +3533,12 @@ class MeshVS_MeshOwner : public SelectMgr_EntityOwner {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_MeshOwner::Handle_MeshVS_MeshOwner %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_MeshOwner;
 class Handle_MeshVS_MeshOwner : public Handle_SelectMgr_EntityOwner {
@@ -3576,6 +3699,12 @@ class MeshVS_PrsBuilder : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_MeshVS_PrsBuilder::Handle_MeshVS_PrsBuilder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_PrsBuilder;
 class Handle_MeshVS_PrsBuilder : public Handle_MMgt_TShared {
 
@@ -3652,6 +3781,12 @@ class MeshVS_SensitiveFace : public Select3D_SensitiveFace {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_SensitiveFace::Handle_MeshVS_SensitiveFace %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_SensitiveFace;
 class Handle_MeshVS_SensitiveFace : public Handle_Select3D_SensitiveFace {
@@ -3753,6 +3888,12 @@ class MeshVS_SensitiveMesh : public Select3D_SensitiveEntity {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_SensitiveMesh::Handle_MeshVS_SensitiveMesh %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_SensitiveMesh;
 class Handle_MeshVS_SensitiveMesh : public Handle_Select3D_SensitiveEntity {
@@ -3859,6 +4000,12 @@ class MeshVS_SensitivePolyhedron : public Select3D_SensitiveEntity {
 	}
 };
 
+%pythonappend Handle_MeshVS_SensitivePolyhedron::Handle_MeshVS_SensitivePolyhedron %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_SensitivePolyhedron;
 class Handle_MeshVS_SensitivePolyhedron : public Handle_Select3D_SensitiveEntity {
 
@@ -3938,6 +4085,12 @@ class MeshVS_SensitiveSegment : public Select3D_SensitiveSegment {
 	}
 };
 
+%pythonappend Handle_MeshVS_SensitiveSegment::Handle_MeshVS_SensitiveSegment %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_SensitiveSegment;
 class Handle_MeshVS_SensitiveSegment : public Handle_Select3D_SensitiveSegment {
 
@@ -3988,6 +4141,12 @@ class MeshVS_SequenceNodeOfSequenceOfPrsBuilder : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_SequenceNodeOfSequenceOfPrsBuilder::Handle_MeshVS_SequenceNodeOfSequenceOfPrsBuilder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_SequenceNodeOfSequenceOfPrsBuilder;
 class Handle_MeshVS_SequenceNodeOfSequenceOfPrsBuilder : public Handle_TCollection_SeqNode {
@@ -4169,6 +4328,12 @@ class MeshVS_StdMapNodeOfMapOfTwoNodes : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_StdMapNodeOfMapOfTwoNodes::Handle_MeshVS_StdMapNodeOfMapOfTwoNodes %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_StdMapNodeOfMapOfTwoNodes;
 class Handle_MeshVS_StdMapNodeOfMapOfTwoNodes : public Handle_TCollection_MapNode {
@@ -4370,6 +4535,12 @@ class MeshVS_DataSource3D : public MeshVS_DataSource {
 	}
 };
 
+%pythonappend Handle_MeshVS_DataSource3D::Handle_MeshVS_DataSource3D %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_DataSource3D;
 class Handle_MeshVS_DataSource3D : public Handle_MeshVS_DataSource {
 
@@ -4534,6 +4705,12 @@ class MeshVS_DeformedDataSource : public MeshVS_DataSource {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_DeformedDataSource::Handle_MeshVS_DeformedDataSource %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_DeformedDataSource;
 class Handle_MeshVS_DeformedDataSource : public Handle_MeshVS_DataSource {
@@ -4708,6 +4885,12 @@ class MeshVS_ElementalColorPrsBuilder : public MeshVS_PrsBuilder {
 	}
 };
 
+%pythonappend Handle_MeshVS_ElementalColorPrsBuilder::Handle_MeshVS_ElementalColorPrsBuilder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_ElementalColorPrsBuilder;
 class Handle_MeshVS_ElementalColorPrsBuilder : public Handle_MeshVS_PrsBuilder {
 
@@ -4856,6 +5039,12 @@ class MeshVS_MeshPrsBuilder : public MeshVS_PrsBuilder {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_MeshPrsBuilder::Handle_MeshVS_MeshPrsBuilder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_MeshPrsBuilder;
 class Handle_MeshVS_MeshPrsBuilder : public Handle_MeshVS_PrsBuilder {
@@ -5038,6 +5227,12 @@ class MeshVS_NodalColorPrsBuilder : public MeshVS_PrsBuilder {
 	}
 };
 
+%pythonappend Handle_MeshVS_NodalColorPrsBuilder::Handle_MeshVS_NodalColorPrsBuilder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MeshVS_NodalColorPrsBuilder;
 class Handle_MeshVS_NodalColorPrsBuilder : public Handle_MeshVS_PrsBuilder {
 
@@ -5158,6 +5353,12 @@ class MeshVS_TextPrsBuilder : public MeshVS_PrsBuilder {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_TextPrsBuilder::Handle_MeshVS_TextPrsBuilder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_TextPrsBuilder;
 class Handle_MeshVS_TextPrsBuilder : public Handle_MeshVS_PrsBuilder {
@@ -5345,6 +5546,12 @@ class MeshVS_VectorPrsBuilder : public MeshVS_PrsBuilder {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MeshVS_VectorPrsBuilder::Handle_MeshVS_VectorPrsBuilder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MeshVS_VectorPrsBuilder;
 class Handle_MeshVS_VectorPrsBuilder : public Handle_MeshVS_PrsBuilder {

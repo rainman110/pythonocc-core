@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TColQuantity_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -309,6 +324,12 @@ class TColQuantity_HArray1OfLength : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColQuantity_HArray1OfLength::Handle_TColQuantity_HArray1OfLength %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColQuantity_HArray1OfLength;
 class Handle_TColQuantity_HArray1OfLength : public Handle_MMgt_TShared {
 
@@ -435,6 +456,12 @@ class TColQuantity_HArray2OfLength : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColQuantity_HArray2OfLength::Handle_TColQuantity_HArray2OfLength %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColQuantity_HArray2OfLength;
 class Handle_TColQuantity_HArray2OfLength : public Handle_MMgt_TShared {

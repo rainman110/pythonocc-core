@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Extrema_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef NCollection_UBTree <Standard_Integer , Bnd_Sphere> Extrema_UBTreeOfSphere;
 typedef NCollection_UBTreeFiller <Standard_Integer , Bnd_Sphere> Extrema_UBTreeFillerOfSphere;
@@ -1560,6 +1575,12 @@ class Extrema_CCache2dOfExtCC2d : public Standard_Transient {
 	}
 };
 
+%pythonappend Handle_Extrema_CCache2dOfExtCC2d::Handle_Extrema_CCache2dOfExtCC2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_CCache2dOfExtCC2d;
 class Handle_Extrema_CCache2dOfExtCC2d : public Handle_Standard_Transient {
 
@@ -1706,6 +1727,12 @@ class Extrema_CCacheOfExtCC : public Standard_Transient {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_CCacheOfExtCC::Handle_Extrema_CCacheOfExtCC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_CCacheOfExtCC;
 class Handle_Extrema_CCacheOfExtCC : public Handle_Standard_Transient {
@@ -6612,6 +6639,12 @@ class Extrema_HArray1OfPOnCurv : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Extrema_HArray1OfPOnCurv::Handle_Extrema_HArray1OfPOnCurv %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_HArray1OfPOnCurv;
 class Handle_Extrema_HArray1OfPOnCurv : public Handle_MMgt_TShared {
 
@@ -6713,6 +6746,12 @@ class Extrema_HArray1OfPOnCurv2d : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Extrema_HArray1OfPOnCurv2d::Handle_Extrema_HArray1OfPOnCurv2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_HArray1OfPOnCurv2d;
 class Handle_Extrema_HArray1OfPOnCurv2d : public Handle_MMgt_TShared {
 
@@ -6813,6 +6852,12 @@ class Extrema_HArray1OfPOnSurf : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_HArray1OfPOnSurf::Handle_Extrema_HArray1OfPOnSurf %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_HArray1OfPOnSurf;
 class Handle_Extrema_HArray1OfPOnSurf : public Handle_MMgt_TShared {
@@ -6941,6 +6986,12 @@ class Extrema_HArray2OfPOnCurv : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Extrema_HArray2OfPOnCurv::Handle_Extrema_HArray2OfPOnCurv %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_HArray2OfPOnCurv;
 class Handle_Extrema_HArray2OfPOnCurv : public Handle_MMgt_TShared {
 
@@ -7067,6 +7118,12 @@ class Extrema_HArray2OfPOnCurv2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_HArray2OfPOnCurv2d::Handle_Extrema_HArray2OfPOnCurv2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_HArray2OfPOnCurv2d;
 class Handle_Extrema_HArray2OfPOnCurv2d : public Handle_MMgt_TShared {
@@ -7195,6 +7252,12 @@ class Extrema_HArray2OfPOnSurf : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Extrema_HArray2OfPOnSurf::Handle_Extrema_HArray2OfPOnSurf %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_HArray2OfPOnSurf;
 class Handle_Extrema_HArray2OfPOnSurf : public Handle_MMgt_TShared {
 
@@ -7321,6 +7384,12 @@ class Extrema_HArray2OfPOnSurfParams : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_HArray2OfPOnSurfParams::Handle_Extrema_HArray2OfPOnSurfParams %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_HArray2OfPOnSurfParams;
 class Handle_Extrema_HArray2OfPOnSurfParams : public Handle_MMgt_TShared {
@@ -7469,6 +7538,12 @@ class Extrema_LCCache2dOfLocateExtCC2d : public Standard_Transient {
 	}
 };
 
+%pythonappend Handle_Extrema_LCCache2dOfLocateExtCC2d::Handle_Extrema_LCCache2dOfLocateExtCC2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_LCCache2dOfLocateExtCC2d;
 class Handle_Extrema_LCCache2dOfLocateExtCC2d : public Handle_Standard_Transient {
 
@@ -7615,6 +7690,12 @@ class Extrema_LCCacheOfLocateExtCC : public Standard_Transient {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_LCCacheOfLocateExtCC::Handle_Extrema_LCCacheOfLocateExtCC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_LCCacheOfLocateExtCC;
 class Handle_Extrema_LCCacheOfLocateExtCC : public Handle_Standard_Transient {
@@ -10391,6 +10472,12 @@ class Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfELPCOfLocateExtPC : public TCollect
 	}
 };
 
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfELPCOfLocateExtPC::Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfELPCOfLocateExtPC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfELPCOfLocateExtPC;
 class Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfELPCOfLocateExtPC : public Handle_TCollection_SeqNode {
 
@@ -10441,6 +10528,12 @@ class Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfELPCOfLocateExtPC2d : public TColle
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfELPCOfLocateExtPC2d::Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfELPCOfLocateExtPC2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfELPCOfLocateExtPC2d;
 class Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfELPCOfLocateExtPC2d : public Handle_TCollection_SeqNode {
@@ -10493,6 +10586,12 @@ class Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfExtPC : public TCollection_SeqNode 
 	}
 };
 
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfExtPC::Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfExtPC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfExtPC;
 class Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfExtPC : public Handle_TCollection_SeqNode {
 
@@ -10543,6 +10642,12 @@ class Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfExtPC2d : public TCollection_SeqNod
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfExtPC2d::Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfExtPC2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfExtPC2d;
 class Handle_Extrema_SequenceNodeOfSeqPCOfPCFOfEPCOfExtPC2d : public Handle_TCollection_SeqNode {
@@ -10595,6 +10700,12 @@ class Extrema_SequenceNodeOfSeqPCOfPCLocFOfLocEPCOfLocateExtPC : public TCollect
 	}
 };
 
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPCOfPCLocFOfLocEPCOfLocateExtPC::Handle_Extrema_SequenceNodeOfSeqPCOfPCLocFOfLocEPCOfLocateExtPC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPCOfPCLocFOfLocEPCOfLocateExtPC;
 class Handle_Extrema_SequenceNodeOfSeqPCOfPCLocFOfLocEPCOfLocateExtPC : public Handle_TCollection_SeqNode {
 
@@ -10645,6 +10756,12 @@ class Extrema_SequenceNodeOfSeqPCOfPCLocFOfLocEPCOfLocateExtPC2d : public TColle
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPCOfPCLocFOfLocEPCOfLocateExtPC2d::Handle_Extrema_SequenceNodeOfSeqPCOfPCLocFOfLocEPCOfLocateExtPC2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPCOfPCLocFOfLocEPCOfLocateExtPC2d;
 class Handle_Extrema_SequenceNodeOfSeqPCOfPCLocFOfLocEPCOfLocateExtPC2d : public Handle_TCollection_SeqNode {
@@ -10697,6 +10814,12 @@ class Extrema_SequenceNodeOfSeqPOnCOfCCFOfECC2dOfExtCC2d : public TCollection_Se
 	}
 };
 
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfECC2dOfExtCC2d::Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfECC2dOfExtCC2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfECC2dOfExtCC2d;
 class Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfECC2dOfExtCC2d : public Handle_TCollection_SeqNode {
 
@@ -10747,6 +10870,12 @@ class Extrema_SequenceNodeOfSeqPOnCOfCCFOfECCOfExtCC : public TCollection_SeqNod
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfECCOfExtCC::Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfECCOfExtCC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfECCOfExtCC;
 class Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfECCOfExtCC : public Handle_TCollection_SeqNode {
@@ -10799,6 +10928,12 @@ class Extrema_SequenceNodeOfSeqPOnCOfCCFOfELCC2dOfLocateExtCC2d : public TCollec
 	}
 };
 
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfELCC2dOfLocateExtCC2d::Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfELCC2dOfLocateExtCC2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfELCC2dOfLocateExtCC2d;
 class Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfELCC2dOfLocateExtCC2d : public Handle_TCollection_SeqNode {
 
@@ -10849,6 +10984,12 @@ class Extrema_SequenceNodeOfSeqPOnCOfCCFOfELCCOfLocateExtCC : public TCollection
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfELCCOfLocateExtCC::Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfELCCOfLocateExtCC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfELCCOfLocateExtCC;
 class Handle_Extrema_SequenceNodeOfSeqPOnCOfCCFOfELCCOfLocateExtCC : public Handle_TCollection_SeqNode {
@@ -10901,6 +11042,12 @@ class Extrema_SequenceNodeOfSeqPOnCOfCCLocFOfLocECC2dOfLocateExtCC2d : public TC
 	}
 };
 
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPOnCOfCCLocFOfLocECC2dOfLocateExtCC2d::Handle_Extrema_SequenceNodeOfSeqPOnCOfCCLocFOfLocECC2dOfLocateExtCC2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPOnCOfCCLocFOfLocECC2dOfLocateExtCC2d;
 class Handle_Extrema_SequenceNodeOfSeqPOnCOfCCLocFOfLocECC2dOfLocateExtCC2d : public Handle_TCollection_SeqNode {
 
@@ -10951,6 +11098,12 @@ class Extrema_SequenceNodeOfSeqPOnCOfCCLocFOfLocECCOfLocateExtCC : public TColle
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_SequenceNodeOfSeqPOnCOfCCLocFOfLocECCOfLocateExtCC::Handle_Extrema_SequenceNodeOfSeqPOnCOfCCLocFOfLocECCOfLocateExtCC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_SequenceNodeOfSeqPOnCOfCCLocFOfLocECCOfLocateExtCC;
 class Handle_Extrema_SequenceNodeOfSeqPOnCOfCCLocFOfLocECCOfLocateExtCC : public Handle_TCollection_SeqNode {
@@ -11003,6 +11156,12 @@ class Extrema_SequenceNodeOfSequenceOfPOnCurv : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Extrema_SequenceNodeOfSequenceOfPOnCurv::Handle_Extrema_SequenceNodeOfSequenceOfPOnCurv %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_SequenceNodeOfSequenceOfPOnCurv;
 class Handle_Extrema_SequenceNodeOfSequenceOfPOnCurv : public Handle_TCollection_SeqNode {
 
@@ -11054,6 +11213,12 @@ class Extrema_SequenceNodeOfSequenceOfPOnCurv2d : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Extrema_SequenceNodeOfSequenceOfPOnCurv2d::Handle_Extrema_SequenceNodeOfSequenceOfPOnCurv2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Extrema_SequenceNodeOfSequenceOfPOnCurv2d;
 class Handle_Extrema_SequenceNodeOfSequenceOfPOnCurv2d : public Handle_TCollection_SeqNode {
 
@@ -11104,6 +11269,12 @@ class Extrema_SequenceNodeOfSequenceOfPOnSurf : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Extrema_SequenceNodeOfSequenceOfPOnSurf::Handle_Extrema_SequenceNodeOfSequenceOfPOnSurf %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Extrema_SequenceNodeOfSequenceOfPOnSurf;
 class Handle_Extrema_SequenceNodeOfSequenceOfPOnSurf : public Handle_TCollection_SeqNode {

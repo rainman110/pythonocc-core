@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TopLoc_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef gp_Trsf * TopLoc_TrsfPtr;
 /* end typedefs declaration */
@@ -87,6 +102,12 @@ class TopLoc_Datum3D : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopLoc_Datum3D::Handle_TopLoc_Datum3D %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopLoc_Datum3D;
 class Handle_TopLoc_Datum3D : public Handle_MMgt_TShared {
@@ -157,6 +178,12 @@ class TopLoc_IndexedMapNodeOfIndexedMapOfLocation : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopLoc_IndexedMapNodeOfIndexedMapOfLocation::Handle_TopLoc_IndexedMapNodeOfIndexedMapOfLocation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopLoc_IndexedMapNodeOfIndexedMapOfLocation;
 class Handle_TopLoc_IndexedMapNodeOfIndexedMapOfLocation : public Handle_TCollection_MapNode {
@@ -604,6 +631,12 @@ class TopLoc_SListNodeOfSListOfItemLocation : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TopLoc_SListNodeOfSListOfItemLocation::Handle_TopLoc_SListNodeOfSListOfItemLocation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopLoc_SListNodeOfSListOfItemLocation;
 class Handle_TopLoc_SListNodeOfSListOfItemLocation : public Handle_MMgt_TShared {
 
@@ -754,6 +787,12 @@ class TopLoc_StdMapNodeOfMapOfLocation : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopLoc_StdMapNodeOfMapOfLocation::Handle_TopLoc_StdMapNodeOfMapOfLocation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopLoc_StdMapNodeOfMapOfLocation;
 class Handle_TopLoc_StdMapNodeOfMapOfLocation : public Handle_TCollection_MapNode {

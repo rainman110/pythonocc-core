@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TopOpeBRepTool_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef TopOpeBRepTool_ShapeClassifier * TopOpeBRepTool_PShapeClassifier;
 typedef BRepClass3d_SolidClassifier * TopOpeBRepTool_PSoClassif;
@@ -841,6 +856,12 @@ class TopOpeBRepTool_DataMapNodeOfDataMapOfOrientedShapeC2DF : public TCollectio
 	}
 };
 
+%pythonappend Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfOrientedShapeC2DF::Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfOrientedShapeC2DF %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfOrientedShapeC2DF;
 class Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfOrientedShapeC2DF : public Handle_TCollection_MapNode {
 
@@ -896,6 +917,12 @@ class TopOpeBRepTool_DataMapNodeOfDataMapOfShapeListOfC2DF : public TCollection_
 	}
 };
 
+%pythonappend Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfShapeListOfC2DF::Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfShapeListOfC2DF %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfShapeListOfC2DF;
 class Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfShapeListOfC2DF : public Handle_TCollection_MapNode {
 
@@ -950,6 +977,12 @@ class TopOpeBRepTool_DataMapNodeOfDataMapOfShapeface : public TCollection_MapNod
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfShapeface::Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfShapeface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfShapeface;
 class Handle_TopOpeBRepTool_DataMapNodeOfDataMapOfShapeface : public Handle_TCollection_MapNode {
@@ -1500,6 +1533,12 @@ class TopOpeBRepTool_HBoxTool : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TopOpeBRepTool_HBoxTool::Handle_TopOpeBRepTool_HBoxTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepTool_HBoxTool;
 class Handle_TopOpeBRepTool_HBoxTool : public Handle_MMgt_TShared {
 
@@ -1575,6 +1614,12 @@ class TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeBox : public TColl
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeBox::Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeBox %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeBox;
 class Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeBox : public Handle_TCollection_MapNode {
@@ -1652,6 +1697,12 @@ class TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeBox2d : public TCo
 	}
 };
 
+%pythonappend Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeBox2d::Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeBox2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeBox2d;
 class Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeBox2d : public Handle_TCollection_MapNode {
 
@@ -1728,6 +1779,12 @@ class TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeconnexity : public
 	}
 };
 
+%pythonappend Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeconnexity::Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeconnexity %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeconnexity;
 class Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfShapeconnexity : public Handle_TCollection_MapNode {
 
@@ -1803,6 +1860,12 @@ class TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfSolidClassifier : publi
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfSolidClassifier::Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfSolidClassifier %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfSolidClassifier;
 class Handle_TopOpeBRepTool_IndexedDataMapNodeOfIndexedDataMapOfSolidClassifier : public Handle_TCollection_MapNode {
@@ -2326,6 +2389,12 @@ class TopOpeBRepTool_ListNodeOfListOfC2DF : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepTool_ListNodeOfListOfC2DF::Handle_TopOpeBRepTool_ListNodeOfListOfC2DF %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepTool_ListNodeOfListOfC2DF;
 class Handle_TopOpeBRepTool_ListNodeOfListOfC2DF : public Handle_TCollection_MapNode {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Select3D_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -184,6 +199,12 @@ class Select3D_ListNodeOfListOfSensitive : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_Select3D_ListNodeOfListOfSensitive::Handle_Select3D_ListNodeOfListOfSensitive %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Select3D_ListNodeOfListOfSensitive;
 class Handle_Select3D_ListNodeOfListOfSensitive : public Handle_TCollection_MapNode {
 
@@ -232,6 +253,12 @@ class Select3D_ListNodeOfListOfSensitiveTriangle : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Select3D_ListNodeOfListOfSensitiveTriangle::Handle_Select3D_ListNodeOfListOfSensitiveTriangle %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Select3D_ListNodeOfListOfSensitiveTriangle;
 class Handle_Select3D_ListNodeOfListOfSensitiveTriangle : public Handle_TCollection_MapNode {
@@ -810,6 +837,12 @@ class Select3D_Projector : public Standard_Transient {
 	}
 };
 
+%pythonappend Handle_Select3D_Projector::Handle_Select3D_Projector %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Select3D_Projector;
 class Handle_Select3D_Projector : public Handle_Standard_Transient {
 
@@ -954,6 +987,12 @@ class Select3D_SensitiveEntity : public SelectBasics_SensitiveEntity {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Select3D_SensitiveEntity::Handle_Select3D_SensitiveEntity %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Select3D_SensitiveEntity;
 class Handle_Select3D_SensitiveEntity : public Handle_SelectBasics_SensitiveEntity {
@@ -1138,6 +1177,12 @@ class Select3D_SequenceNodeOfSensitiveEntitySequence : public TCollection_SeqNod
 	}
 };
 
+%pythonappend Handle_Select3D_SequenceNodeOfSensitiveEntitySequence::Handle_Select3D_SequenceNodeOfSensitiveEntitySequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Select3D_SequenceNodeOfSensitiveEntitySequence;
 class Handle_Select3D_SequenceNodeOfSensitiveEntitySequence : public Handle_TCollection_SeqNode {
 
@@ -1282,6 +1327,12 @@ class Select3D_SensitiveBox : public Select3D_SensitiveEntity {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Select3D_SensitiveBox::Handle_Select3D_SensitiveBox %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Select3D_SensitiveBox;
 class Handle_Select3D_SensitiveBox : public Handle_Select3D_SensitiveEntity {
@@ -1482,6 +1533,12 @@ class Select3D_SensitiveGroup : public Select3D_SensitiveEntity {
 	}
 };
 
+%pythonappend Handle_Select3D_SensitiveGroup::Handle_Select3D_SensitiveGroup %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Select3D_SensitiveGroup;
 class Handle_Select3D_SensitiveGroup : public Handle_Select3D_SensitiveEntity {
 
@@ -1607,6 +1664,12 @@ class Select3D_SensitivePoint : public Select3D_SensitiveEntity {
 	}
 };
 
+%pythonappend Handle_Select3D_SensitivePoint::Handle_Select3D_SensitivePoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Select3D_SensitivePoint;
 class Handle_Select3D_SensitivePoint : public Handle_Select3D_SensitiveEntity {
 
@@ -1675,6 +1738,12 @@ class Select3D_SensitivePoly : public Select3D_SensitiveEntity {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Select3D_SensitivePoly::Handle_Select3D_SensitivePoly %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Select3D_SensitivePoly;
 class Handle_Select3D_SensitivePoly : public Handle_Select3D_SensitiveEntity {
@@ -1853,6 +1922,12 @@ class Select3D_SensitiveSegment : public Select3D_SensitiveEntity {
 	}
 };
 
+%pythonappend Handle_Select3D_SensitiveSegment::Handle_Select3D_SensitiveSegment %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Select3D_SensitiveSegment;
 class Handle_Select3D_SensitiveSegment : public Handle_Select3D_SensitiveEntity {
 
@@ -2015,6 +2090,12 @@ class Select3D_SensitiveWire : public Select3D_SensitiveEntity {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Select3D_SensitiveWire::Handle_Select3D_SensitiveWire %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Select3D_SensitiveWire;
 class Handle_Select3D_SensitiveWire : public Handle_Select3D_SensitiveEntity {
@@ -2191,6 +2272,12 @@ class Select3D_SensitiveCircle : public Select3D_SensitivePoly {
 	}
 };
 
+%pythonappend Handle_Select3D_SensitiveCircle::Handle_Select3D_SensitiveCircle %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Select3D_SensitiveCircle;
 class Handle_Select3D_SensitiveCircle : public Handle_Select3D_SensitivePoly {
 
@@ -2328,6 +2415,12 @@ class Select3D_SensitiveCurve : public Select3D_SensitivePoly {
 	}
 };
 
+%pythonappend Handle_Select3D_SensitiveCurve::Handle_Select3D_SensitiveCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Select3D_SensitiveCurve;
 class Handle_Select3D_SensitiveCurve : public Handle_Select3D_SensitivePoly {
 
@@ -2452,6 +2545,12 @@ class Select3D_SensitiveFace : public Select3D_SensitivePoly {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Select3D_SensitiveFace::Handle_Select3D_SensitiveFace %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Select3D_SensitiveFace;
 class Handle_Select3D_SensitiveFace : public Handle_Select3D_SensitivePoly {
@@ -2617,6 +2716,12 @@ class Select3D_SensitiveTriangle : public Select3D_SensitivePoly {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Select3D_SensitiveTriangle::Handle_Select3D_SensitiveTriangle %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Select3D_SensitiveTriangle;
 class Handle_Select3D_SensitiveTriangle : public Handle_Select3D_SensitivePoly {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Dico_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -196,6 +211,12 @@ class Dico_DictionaryOfInteger : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dico_DictionaryOfInteger::Handle_Dico_DictionaryOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dico_DictionaryOfInteger;
 class Handle_Dico_DictionaryOfInteger : public Handle_MMgt_TShared {
@@ -372,6 +393,12 @@ class Dico_DictionaryOfTransient : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Dico_DictionaryOfTransient::Handle_Dico_DictionaryOfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dico_DictionaryOfTransient;
 class Handle_Dico_DictionaryOfTransient : public Handle_MMgt_TShared {
 
@@ -529,6 +556,12 @@ class Dico_StackItemOfDictionaryOfInteger : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Dico_StackItemOfDictionaryOfInteger::Handle_Dico_StackItemOfDictionaryOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dico_StackItemOfDictionaryOfInteger;
 class Handle_Dico_StackItemOfDictionaryOfInteger : public Handle_MMgt_TShared {
 
@@ -589,6 +622,12 @@ class Dico_StackItemOfDictionaryOfTransient : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dico_StackItemOfDictionaryOfTransient::Handle_Dico_StackItemOfDictionaryOfTransient %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dico_StackItemOfDictionaryOfTransient;
 class Handle_Dico_StackItemOfDictionaryOfTransient : public Handle_MMgt_TShared {

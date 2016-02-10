@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include HLRBRep_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -190,6 +205,12 @@ class HLRBRep_AreaLimit : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRBRep_AreaLimit::Handle_HLRBRep_AreaLimit %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRBRep_AreaLimit;
 class Handle_HLRBRep_AreaLimit : public Handle_MMgt_TShared {
@@ -2041,6 +2062,12 @@ class HLRBRep_Data : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_HLRBRep_Data::Handle_HLRBRep_Data %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HLRBRep_Data;
 class Handle_HLRBRep_Data : public Handle_MMgt_TShared {
 
@@ -3526,6 +3553,12 @@ class HLRBRep_InternalAlgo : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_HLRBRep_InternalAlgo::Handle_HLRBRep_InternalAlgo %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HLRBRep_InternalAlgo;
 class Handle_HLRBRep_InternalAlgo : public Handle_MMgt_TShared {
 
@@ -4062,6 +4095,12 @@ class HLRBRep_ListNodeOfListOfBPnt2D : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_HLRBRep_ListNodeOfListOfBPnt2D::Handle_HLRBRep_ListNodeOfListOfBPnt2D %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HLRBRep_ListNodeOfListOfBPnt2D;
 class Handle_HLRBRep_ListNodeOfListOfBPnt2D : public Handle_TCollection_MapNode {
 
@@ -4110,6 +4149,12 @@ class HLRBRep_ListNodeOfListOfBPoint : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRBRep_ListNodeOfListOfBPoint::Handle_HLRBRep_ListNodeOfListOfBPoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRBRep_ListNodeOfListOfBPoint;
 class Handle_HLRBRep_ListNodeOfListOfBPoint : public Handle_TCollection_MapNode {
@@ -4709,6 +4754,12 @@ class HLRBRep_PolyAlgo : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRBRep_PolyAlgo::Handle_HLRBRep_PolyAlgo %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRBRep_PolyAlgo;
 class Handle_HLRBRep_PolyAlgo : public Handle_MMgt_TShared {
@@ -5378,6 +5429,12 @@ class HLRBRep_SequenceNodeOfSeqOfShapeBounds : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_HLRBRep_SequenceNodeOfSeqOfShapeBounds::Handle_HLRBRep_SequenceNodeOfSeqOfShapeBounds %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HLRBRep_SequenceNodeOfSeqOfShapeBounds;
 class Handle_HLRBRep_SequenceNodeOfSeqOfShapeBounds : public Handle_TCollection_SeqNode {
 
@@ -5428,6 +5485,12 @@ class HLRBRep_SequenceNodeOfSeqPCOfPCLocFOfTheLocateExtPCOfTheProjPCurOfCInter :
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRBRep_SequenceNodeOfSeqPCOfPCLocFOfTheLocateExtPCOfTheProjPCurOfCInter::Handle_HLRBRep_SequenceNodeOfSeqPCOfPCLocFOfTheLocateExtPCOfTheProjPCurOfCInter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRBRep_SequenceNodeOfSeqPCOfPCLocFOfTheLocateExtPCOfTheProjPCurOfCInter;
 class Handle_HLRBRep_SequenceNodeOfSeqPCOfPCLocFOfTheLocateExtPCOfTheProjPCurOfCInter : public Handle_TCollection_SeqNode {
@@ -7252,6 +7315,12 @@ class HLRBRep_Algo : public HLRBRep_InternalAlgo {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRBRep_Algo::Handle_HLRBRep_Algo %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRBRep_Algo;
 class Handle_HLRBRep_Algo : public Handle_HLRBRep_InternalAlgo {

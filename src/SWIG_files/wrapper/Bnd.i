@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Bnd_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -1691,6 +1706,12 @@ class Bnd_HArray1OfBox : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Bnd_HArray1OfBox::Handle_Bnd_HArray1OfBox %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Bnd_HArray1OfBox;
 class Handle_Bnd_HArray1OfBox : public Handle_MMgt_TShared {
 
@@ -1792,6 +1813,12 @@ class Bnd_HArray1OfBox2d : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Bnd_HArray1OfBox2d::Handle_Bnd_HArray1OfBox2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Bnd_HArray1OfBox2d;
 class Handle_Bnd_HArray1OfBox2d : public Handle_MMgt_TShared {
 
@@ -1892,6 +1919,12 @@ class Bnd_HArray1OfSphere : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Bnd_HArray1OfSphere::Handle_Bnd_HArray1OfSphere %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Bnd_HArray1OfSphere;
 class Handle_Bnd_HArray1OfSphere : public Handle_MMgt_TShared {
@@ -2075,6 +2108,12 @@ class Bnd_SequenceNodeOfSeqOfBox : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Bnd_SequenceNodeOfSeqOfBox::Handle_Bnd_SequenceNodeOfSeqOfBox %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Bnd_SequenceNodeOfSeqOfBox;
 class Handle_Bnd_SequenceNodeOfSeqOfBox : public Handle_TCollection_SeqNode {

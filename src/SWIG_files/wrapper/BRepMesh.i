@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRepMesh_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef NCollection_Vector <BRepMesh_Vertex> BRepMesh_VectorOfVertex;
 typedef NCollection_DataMap <Standard_Integer , Standard_Integer> BRepMesh_MapOfIntegerInteger;
@@ -858,6 +873,12 @@ class BRepMesh_DataMapNodeOfDataMapOfFaceAttribute : public TCollection_MapNode 
 	}
 };
 
+%pythonappend Handle_BRepMesh_DataMapNodeOfDataMapOfFaceAttribute::Handle_BRepMesh_DataMapNodeOfDataMapOfFaceAttribute %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepMesh_DataMapNodeOfDataMapOfFaceAttribute;
 class Handle_BRepMesh_DataMapNodeOfDataMapOfFaceAttribute : public Handle_TCollection_MapNode {
 
@@ -921,6 +942,12 @@ class BRepMesh_DataMapNodeOfDataMapOfIntegerListOfInteger : public TCollection_M
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerListOfInteger::Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerListOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerListOfInteger;
 class Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerListOfInteger : public Handle_TCollection_MapNode {
@@ -986,6 +1013,12 @@ class BRepMesh_DataMapNodeOfDataMapOfIntegerListOfXY : public TCollection_MapNod
 	}
 };
 
+%pythonappend Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerListOfXY::Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerListOfXY %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerListOfXY;
 class Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerListOfXY : public Handle_TCollection_MapNode {
 
@@ -1050,6 +1083,12 @@ class BRepMesh_DataMapNodeOfDataMapOfIntegerPnt : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerPnt::Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerPnt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerPnt;
 class Handle_BRepMesh_DataMapNodeOfDataMapOfIntegerPnt : public Handle_TCollection_MapNode {
 
@@ -1104,6 +1143,12 @@ class BRepMesh_DataMapNodeOfDataMapOfShapePairOfPolygon : public TCollection_Map
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMesh_DataMapNodeOfDataMapOfShapePairOfPolygon::Handle_BRepMesh_DataMapNodeOfDataMapOfShapePairOfPolygon %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMesh_DataMapNodeOfDataMapOfShapePairOfPolygon;
 class Handle_BRepMesh_DataMapNodeOfDataMapOfShapePairOfPolygon : public Handle_TCollection_MapNode {
@@ -1169,6 +1214,12 @@ class BRepMesh_DataMapNodeOfDataMapOfShapeReal : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_BRepMesh_DataMapNodeOfDataMapOfShapeReal::Handle_BRepMesh_DataMapNodeOfDataMapOfShapeReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepMesh_DataMapNodeOfDataMapOfShapeReal;
 class Handle_BRepMesh_DataMapNodeOfDataMapOfShapeReal : public Handle_TCollection_MapNode {
 
@@ -1232,6 +1283,12 @@ class BRepMesh_DataMapNodeOfDataMapOfVertexInteger : public TCollection_MapNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMesh_DataMapNodeOfDataMapOfVertexInteger::Handle_BRepMesh_DataMapNodeOfDataMapOfVertexInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMesh_DataMapNodeOfDataMapOfVertexInteger;
 class Handle_BRepMesh_DataMapNodeOfDataMapOfVertexInteger : public Handle_TCollection_MapNode {
@@ -2060,6 +2117,12 @@ class BRepMesh_DataStructureOfDelaun : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_BRepMesh_DataStructureOfDelaun::Handle_BRepMesh_DataStructureOfDelaun %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepMesh_DataStructureOfDelaun;
 class Handle_BRepMesh_DataStructureOfDelaun : public Handle_MMgt_TShared {
 
@@ -2262,6 +2325,12 @@ class BRepMesh_DiscretRoot : public Standard_Transient {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMesh_DiscretRoot::Handle_BRepMesh_DiscretRoot %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMesh_DiscretRoot;
 class Handle_BRepMesh_DiscretRoot : public Handle_Standard_Transient {
@@ -2527,6 +2596,12 @@ class BRepMesh_FaceAttribute : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMesh_FaceAttribute::Handle_BRepMesh_FaceAttribute %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMesh_FaceAttribute;
 class Handle_BRepMesh_FaceAttribute : public Handle_MMgt_TShared {
@@ -2823,6 +2898,12 @@ class BRepMesh_FastDiscret : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_BRepMesh_FastDiscret::Handle_BRepMesh_FastDiscret %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepMesh_FastDiscret;
 class Handle_BRepMesh_FastDiscret : public Handle_MMgt_TShared {
 
@@ -2947,6 +3028,12 @@ class BRepMesh_FastDiscretFace : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMesh_FastDiscretFace::Handle_BRepMesh_FastDiscretFace %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMesh_FastDiscretFace;
 class Handle_BRepMesh_FastDiscretFace : public Handle_MMgt_TShared {
@@ -3164,6 +3251,12 @@ class BRepMesh_HArray1OfVertexOfDelaun : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMesh_HArray1OfVertexOfDelaun::Handle_BRepMesh_HArray1OfVertexOfDelaun %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMesh_HArray1OfVertexOfDelaun;
 class Handle_BRepMesh_HArray1OfVertexOfDelaun : public Handle_MMgt_TShared {
@@ -3557,6 +3650,12 @@ class BRepMesh_IndexedDataMapNodeOfIDMapOfLinkOfDataStructureOfDelaun : public T
 	}
 };
 
+%pythonappend Handle_BRepMesh_IndexedDataMapNodeOfIDMapOfLinkOfDataStructureOfDelaun::Handle_BRepMesh_IndexedDataMapNodeOfIDMapOfLinkOfDataStructureOfDelaun %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepMesh_IndexedDataMapNodeOfIDMapOfLinkOfDataStructureOfDelaun;
 class Handle_BRepMesh_IndexedDataMapNodeOfIDMapOfLinkOfDataStructureOfDelaun : public Handle_TCollection_MapNode {
 
@@ -3633,6 +3732,12 @@ class BRepMesh_IndexedDataMapNodeOfIDMapOfNodeOfDataStructureOfDelaun : public T
 	}
 };
 
+%pythonappend Handle_BRepMesh_IndexedDataMapNodeOfIDMapOfNodeOfDataStructureOfDelaun::Handle_BRepMesh_IndexedDataMapNodeOfIDMapOfNodeOfDataStructureOfDelaun %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepMesh_IndexedDataMapNodeOfIDMapOfNodeOfDataStructureOfDelaun;
 class Handle_BRepMesh_IndexedDataMapNodeOfIDMapOfNodeOfDataStructureOfDelaun : public Handle_TCollection_MapNode {
 
@@ -3703,6 +3808,12 @@ class BRepMesh_IndexedMapNodeOfIMapOfElementOfDataStructureOfDelaun : public TCo
 	}
 };
 
+%pythonappend Handle_BRepMesh_IndexedMapNodeOfIMapOfElementOfDataStructureOfDelaun::Handle_BRepMesh_IndexedMapNodeOfIMapOfElementOfDataStructureOfDelaun %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepMesh_IndexedMapNodeOfIMapOfElementOfDataStructureOfDelaun;
 class Handle_BRepMesh_IndexedMapNodeOfIMapOfElementOfDataStructureOfDelaun : public Handle_TCollection_MapNode {
 
@@ -3772,6 +3883,12 @@ class BRepMesh_IndexedMapNodeOfIndexedMapOfVertex : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMesh_IndexedMapNodeOfIndexedMapOfVertex::Handle_BRepMesh_IndexedMapNodeOfIndexedMapOfVertex %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMesh_IndexedMapNodeOfIndexedMapOfVertex;
 class Handle_BRepMesh_IndexedMapNodeOfIndexedMapOfVertex : public Handle_TCollection_MapNode {
@@ -3981,6 +4098,12 @@ class BRepMesh_ListNodeOfListOfVertex : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_BRepMesh_ListNodeOfListOfVertex::Handle_BRepMesh_ListNodeOfListOfVertex %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepMesh_ListNodeOfListOfVertex;
 class Handle_BRepMesh_ListNodeOfListOfVertex : public Handle_TCollection_MapNode {
 
@@ -4029,6 +4152,12 @@ class BRepMesh_ListNodeOfListOfXY : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMesh_ListNodeOfListOfXY::Handle_BRepMesh_ListNodeOfListOfXY %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMesh_ListNodeOfListOfXY;
 class Handle_BRepMesh_ListNodeOfListOfXY : public Handle_TCollection_MapNode {
@@ -5286,6 +5415,12 @@ class BRepMesh_IncrementalMesh : public BRepMesh_DiscretRoot {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMesh_IncrementalMesh::Handle_BRepMesh_IncrementalMesh %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMesh_IncrementalMesh;
 class Handle_BRepMesh_IncrementalMesh : public Handle_BRepMesh_DiscretRoot {

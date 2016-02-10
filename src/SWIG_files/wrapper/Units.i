@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Units_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -356,6 +371,12 @@ class Units_Lexicon : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Units_Lexicon::Handle_Units_Lexicon %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Units_Lexicon;
 class Handle_Units_Lexicon : public Handle_MMgt_TShared {
@@ -828,6 +849,12 @@ class Units_QuantitiesSequence : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Units_QuantitiesSequence::Handle_Units_QuantitiesSequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Units_QuantitiesSequence;
 class Handle_Units_QuantitiesSequence : public Handle_MMgt_TShared {
 
@@ -933,6 +960,12 @@ class Units_SequenceNodeOfQtsSequence : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Units_SequenceNodeOfQtsSequence::Handle_Units_SequenceNodeOfQtsSequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Units_SequenceNodeOfQtsSequence;
 class Handle_Units_SequenceNodeOfQtsSequence : public Handle_TCollection_SeqNode {
 
@@ -984,6 +1017,12 @@ class Units_SequenceNodeOfTksSequence : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Units_SequenceNodeOfTksSequence::Handle_Units_SequenceNodeOfTksSequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Units_SequenceNodeOfTksSequence;
 class Handle_Units_SequenceNodeOfTksSequence : public Handle_TCollection_SeqNode {
 
@@ -1034,6 +1073,12 @@ class Units_SequenceNodeOfUtsSequence : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Units_SequenceNodeOfUtsSequence::Handle_Units_SequenceNodeOfUtsSequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Units_SequenceNodeOfUtsSequence;
 class Handle_Units_SequenceNodeOfUtsSequence : public Handle_TCollection_SeqNode {
@@ -1488,6 +1533,12 @@ class Units_Token : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Units_Token::Handle_Units_Token %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Units_Token;
 class Handle_Units_Token : public Handle_MMgt_TShared {
 
@@ -1661,6 +1712,12 @@ class Units_TokensSequence : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Units_TokensSequence::Handle_Units_TokensSequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Units_TokensSequence;
 class Handle_Units_TokensSequence : public Handle_MMgt_TShared {
 
@@ -1802,6 +1859,12 @@ class Units_Unit : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Units_Unit::Handle_Units_Unit %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Units_Unit;
 class Handle_Units_Unit : public Handle_MMgt_TShared {
 
@@ -1888,6 +1951,12 @@ class Units_UnitsDictionary : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Units_UnitsDictionary::Handle_Units_UnitsDictionary %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Units_UnitsDictionary;
 class Handle_Units_UnitsDictionary : public Handle_MMgt_TShared {
@@ -2062,6 +2131,12 @@ class Units_UnitsSequence : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Units_UnitsSequence::Handle_Units_UnitsSequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Units_UnitsSequence;
 class Handle_Units_UnitsSequence : public Handle_MMgt_TShared {
 
@@ -2212,6 +2287,12 @@ class Units_UnitsSystem : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Units_UnitsSystem::Handle_Units_UnitsSystem %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Units_UnitsSystem;
 class Handle_Units_UnitsSystem : public Handle_MMgt_TShared {
@@ -2454,6 +2535,12 @@ class Units_ShiftedToken : public Units_Token {
 	}
 };
 
+%pythonappend Handle_Units_ShiftedToken::Handle_Units_ShiftedToken %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Units_ShiftedToken;
 class Handle_Units_ShiftedToken : public Handle_Units_Token {
 
@@ -2552,6 +2639,12 @@ class Units_ShiftedUnit : public Units_Unit {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Units_ShiftedUnit::Handle_Units_ShiftedUnit %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Units_ShiftedUnit;
 class Handle_Units_ShiftedUnit : public Handle_Units_Unit {
@@ -2663,6 +2756,12 @@ class Units_UnitsLexicon : public Units_Lexicon {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Units_UnitsLexicon::Handle_Units_UnitsLexicon %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Units_UnitsLexicon;
 class Handle_Units_UnitsLexicon : public Handle_Units_Lexicon {

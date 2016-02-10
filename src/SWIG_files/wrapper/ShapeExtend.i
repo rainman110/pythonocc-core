@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ShapeExtend_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -156,6 +171,12 @@ class ShapeExtend_BasicMsgRegistrator : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeExtend_BasicMsgRegistrator::Handle_ShapeExtend_BasicMsgRegistrator %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeExtend_BasicMsgRegistrator;
 class Handle_ShapeExtend_BasicMsgRegistrator : public Handle_MMgt_TShared {
@@ -351,6 +372,12 @@ class ShapeExtend_ComplexCurve : public Geom_Curve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeExtend_ComplexCurve::Handle_ShapeExtend_ComplexCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeExtend_ComplexCurve;
 class Handle_ShapeExtend_ComplexCurve : public Handle_Geom_Curve {
@@ -895,6 +922,12 @@ class ShapeExtend_CompositeSurface : public Geom_Surface {
 	}
 };
 
+%pythonappend Handle_ShapeExtend_CompositeSurface::Handle_ShapeExtend_CompositeSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeExtend_CompositeSurface;
 class Handle_ShapeExtend_CompositeSurface : public Handle_Geom_Surface {
 
@@ -1010,6 +1043,12 @@ class ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg : public TCollection_MapN
 	}
 };
 
+%pythonappend Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg::Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg;
 class Handle_ShapeExtend_DataMapNodeOfDataMapOfShapeListOfMsg : public Handle_TCollection_MapNode {
 
@@ -1064,6 +1103,12 @@ class ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg : public TCollection_
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg::Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg;
 class Handle_ShapeExtend_DataMapNodeOfDataMapOfTransientListOfMsg : public Handle_TCollection_MapNode {
@@ -1599,6 +1644,12 @@ class ShapeExtend_WireData : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeExtend_WireData::Handle_ShapeExtend_WireData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeExtend_WireData;
 class Handle_ShapeExtend_WireData : public Handle_MMgt_TShared {
 
@@ -1677,6 +1728,12 @@ class ShapeExtend_MsgRegistrator : public ShapeExtend_BasicMsgRegistrator {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeExtend_MsgRegistrator::Handle_ShapeExtend_MsgRegistrator %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeExtend_MsgRegistrator;
 class Handle_ShapeExtend_MsgRegistrator : public Handle_ShapeExtend_BasicMsgRegistrator {

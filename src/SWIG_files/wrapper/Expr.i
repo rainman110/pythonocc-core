@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Expr_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -451,6 +466,12 @@ class Expr_GeneralExpression : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Expr_GeneralExpression::Handle_Expr_GeneralExpression %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_GeneralExpression;
 class Handle_Expr_GeneralExpression : public Handle_MMgt_TShared {
 
@@ -555,6 +576,12 @@ class Expr_GeneralFunction : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_GeneralFunction::Handle_Expr_GeneralFunction %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_GeneralFunction;
 class Handle_Expr_GeneralFunction : public Handle_MMgt_TShared {
@@ -667,6 +694,12 @@ class Expr_GeneralRelation : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Expr_GeneralRelation::Handle_Expr_GeneralRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_GeneralRelation;
 class Handle_Expr_GeneralRelation : public Handle_MMgt_TShared {
 
@@ -736,6 +769,12 @@ class Expr_IndexedMapNodeOfMapOfNamedUnknown : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown::Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown;
 class Handle_Expr_IndexedMapNodeOfMapOfNamedUnknown : public Handle_TCollection_MapNode {
@@ -916,6 +955,12 @@ class Expr_SequenceNodeOfSequenceOfGeneralExpression : public TCollection_SeqNod
 	}
 };
 
+%pythonappend Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression::Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression;
 class Handle_Expr_SequenceNodeOfSequenceOfGeneralExpression : public Handle_TCollection_SeqNode {
 
@@ -966,6 +1011,12 @@ class Expr_SequenceNodeOfSequenceOfGeneralRelation : public TCollection_SeqNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation::Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation;
 class Handle_Expr_SequenceNodeOfSequenceOfGeneralRelation : public Handle_TCollection_SeqNode {
@@ -1360,6 +1411,12 @@ class Expr_BinaryExpression : public Expr_GeneralExpression {
 	}
 };
 
+%pythonappend Handle_Expr_BinaryExpression::Handle_Expr_BinaryExpression %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_BinaryExpression;
 class Handle_Expr_BinaryExpression : public Handle_Expr_GeneralExpression {
 
@@ -1503,6 +1560,12 @@ class Expr_FunctionDerivative : public Expr_GeneralFunction {
 	}
 };
 
+%pythonappend Handle_Expr_FunctionDerivative::Handle_Expr_FunctionDerivative %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_FunctionDerivative;
 class Handle_Expr_FunctionDerivative : public Handle_Expr_GeneralFunction {
 
@@ -1569,6 +1632,12 @@ class Expr_NamedExpression : public Expr_GeneralExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_NamedExpression::Handle_Expr_NamedExpression %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_NamedExpression;
 class Handle_Expr_NamedExpression : public Handle_Expr_GeneralExpression {
@@ -1714,6 +1783,12 @@ class Expr_NamedFunction : public Expr_GeneralFunction {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_NamedFunction::Handle_Expr_NamedFunction %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_NamedFunction;
 class Handle_Expr_NamedFunction : public Handle_Expr_GeneralFunction {
@@ -1870,6 +1945,12 @@ class Expr_NumericValue : public Expr_GeneralExpression {
 	}
 };
 
+%pythonappend Handle_Expr_NumericValue::Handle_Expr_NumericValue %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_NumericValue;
 class Handle_Expr_NumericValue : public Handle_Expr_GeneralExpression {
 
@@ -1974,6 +2055,12 @@ class Expr_PolyExpression : public Expr_GeneralExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_PolyExpression::Handle_Expr_PolyExpression %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_PolyExpression;
 class Handle_Expr_PolyExpression : public Handle_Expr_GeneralExpression {
@@ -2083,6 +2170,12 @@ class Expr_SingleRelation : public Expr_GeneralRelation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_SingleRelation::Handle_Expr_SingleRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_SingleRelation;
 class Handle_Expr_SingleRelation : public Handle_Expr_GeneralRelation {
@@ -2215,6 +2308,12 @@ class Expr_SystemRelation : public Expr_GeneralRelation {
 	}
 };
 
+%pythonappend Handle_Expr_SystemRelation::Handle_Expr_SystemRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_SystemRelation;
 class Handle_Expr_SystemRelation : public Handle_Expr_GeneralRelation {
 
@@ -2310,6 +2409,12 @@ class Expr_UnaryExpression : public Expr_GeneralExpression {
 	}
 };
 
+%pythonappend Handle_Expr_UnaryExpression::Handle_Expr_UnaryExpression %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_UnaryExpression;
 class Handle_Expr_UnaryExpression : public Handle_Expr_GeneralExpression {
 
@@ -2402,6 +2507,12 @@ class Expr_Absolute : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_Absolute::Handle_Expr_Absolute %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_Absolute;
 class Handle_Expr_Absolute : public Handle_Expr_UnaryExpression {
@@ -2496,6 +2607,12 @@ class Expr_ArcCosine : public Expr_UnaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_ArcCosine::Handle_Expr_ArcCosine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_ArcCosine;
 class Handle_Expr_ArcCosine : public Handle_Expr_UnaryExpression {
 
@@ -2588,6 +2705,12 @@ class Expr_ArcSine : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_ArcSine::Handle_Expr_ArcSine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_ArcSine;
 class Handle_Expr_ArcSine : public Handle_Expr_UnaryExpression {
@@ -2682,6 +2805,12 @@ class Expr_ArcTangent : public Expr_UnaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_ArcTangent::Handle_Expr_ArcTangent %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_ArcTangent;
 class Handle_Expr_ArcTangent : public Handle_Expr_UnaryExpression {
 
@@ -2774,6 +2903,12 @@ class Expr_ArgCosh : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_ArgCosh::Handle_Expr_ArgCosh %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_ArgCosh;
 class Handle_Expr_ArgCosh : public Handle_Expr_UnaryExpression {
@@ -2868,6 +3003,12 @@ class Expr_ArgSinh : public Expr_UnaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_ArgSinh::Handle_Expr_ArgSinh %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_ArgSinh;
 class Handle_Expr_ArgSinh : public Handle_Expr_UnaryExpression {
 
@@ -2960,6 +3101,12 @@ class Expr_ArgTanh : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_ArgTanh::Handle_Expr_ArgTanh %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_ArgTanh;
 class Handle_Expr_ArgTanh : public Handle_Expr_UnaryExpression {
@@ -3064,6 +3211,12 @@ class Expr_BinaryFunction : public Expr_BinaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_BinaryFunction::Handle_Expr_BinaryFunction %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_BinaryFunction;
 class Handle_Expr_BinaryFunction : public Handle_Expr_BinaryExpression {
 
@@ -3157,6 +3310,12 @@ class Expr_Cosh : public Expr_UnaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_Cosh::Handle_Expr_Cosh %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_Cosh;
 class Handle_Expr_Cosh : public Handle_Expr_UnaryExpression {
 
@@ -3249,6 +3408,12 @@ class Expr_Cosine : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_Cosine::Handle_Expr_Cosine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_Cosine;
 class Handle_Expr_Cosine : public Handle_Expr_UnaryExpression {
@@ -3355,6 +3520,12 @@ class Expr_Difference : public Expr_BinaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_Difference::Handle_Expr_Difference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_Difference;
 class Handle_Expr_Difference : public Handle_Expr_BinaryExpression {
 
@@ -3429,6 +3600,12 @@ class Expr_Different : public Expr_SingleRelation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_Different::Handle_Expr_Different %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_Different;
 class Handle_Expr_Different : public Handle_Expr_SingleRelation {
@@ -3525,6 +3702,12 @@ class Expr_Division : public Expr_BinaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_Division::Handle_Expr_Division %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_Division;
 class Handle_Expr_Division : public Handle_Expr_BinaryExpression {
 
@@ -3599,6 +3782,12 @@ class Expr_Equal : public Expr_SingleRelation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_Equal::Handle_Expr_Equal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_Equal;
 class Handle_Expr_Equal : public Handle_Expr_SingleRelation {
@@ -3692,6 +3881,12 @@ class Expr_Exponential : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_Exponential::Handle_Expr_Exponential %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_Exponential;
 class Handle_Expr_Exponential : public Handle_Expr_UnaryExpression {
@@ -3788,6 +3983,12 @@ class Expr_Exponentiate : public Expr_BinaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_Exponentiate::Handle_Expr_Exponentiate %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_Exponentiate;
 class Handle_Expr_Exponentiate : public Handle_Expr_BinaryExpression {
 
@@ -3862,6 +4063,12 @@ class Expr_GreaterThan : public Expr_SingleRelation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_GreaterThan::Handle_Expr_GreaterThan %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_GreaterThan;
 class Handle_Expr_GreaterThan : public Handle_Expr_SingleRelation {
@@ -3938,6 +4145,12 @@ class Expr_GreaterThanOrEqual : public Expr_SingleRelation {
 	}
 };
 
+%pythonappend Handle_Expr_GreaterThanOrEqual::Handle_Expr_GreaterThanOrEqual %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_GreaterThanOrEqual;
 class Handle_Expr_GreaterThanOrEqual : public Handle_Expr_SingleRelation {
 
@@ -4013,6 +4226,12 @@ class Expr_LessThan : public Expr_SingleRelation {
 	}
 };
 
+%pythonappend Handle_Expr_LessThan::Handle_Expr_LessThan %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_LessThan;
 class Handle_Expr_LessThan : public Handle_Expr_SingleRelation {
 
@@ -4087,6 +4306,12 @@ class Expr_LessThanOrEqual : public Expr_SingleRelation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_LessThanOrEqual::Handle_Expr_LessThanOrEqual %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_LessThanOrEqual;
 class Handle_Expr_LessThanOrEqual : public Handle_Expr_SingleRelation {
@@ -4181,6 +4406,12 @@ class Expr_LogOf10 : public Expr_UnaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_LogOf10::Handle_Expr_LogOf10 %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_LogOf10;
 class Handle_Expr_LogOf10 : public Handle_Expr_UnaryExpression {
 
@@ -4273,6 +4504,12 @@ class Expr_LogOfe : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_LogOfe::Handle_Expr_LogOfe %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_LogOfe;
 class Handle_Expr_LogOfe : public Handle_Expr_UnaryExpression {
@@ -4412,6 +4649,12 @@ class Expr_NamedConstant : public Expr_NamedExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_NamedConstant::Handle_Expr_NamedConstant %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_NamedConstant;
 class Handle_Expr_NamedConstant : public Handle_Expr_NamedExpression {
@@ -4560,6 +4803,12 @@ class Expr_NamedUnknown : public Expr_NamedExpression {
 	}
 };
 
+%pythonappend Handle_Expr_NamedUnknown::Handle_Expr_NamedUnknown %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_NamedUnknown;
 class Handle_Expr_NamedUnknown : public Handle_Expr_NamedExpression {
 
@@ -4660,6 +4909,12 @@ class Expr_PolyFunction : public Expr_PolyExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_PolyFunction::Handle_Expr_PolyFunction %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_PolyFunction;
 class Handle_Expr_PolyFunction : public Handle_Expr_PolyExpression {
@@ -4764,6 +5019,12 @@ class Expr_Product : public Expr_PolyExpression {
 	}
 };
 
+%pythonappend Handle_Expr_Product::Handle_Expr_Product %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_Product;
 class Handle_Expr_Product : public Handle_Expr_PolyExpression {
 
@@ -4856,6 +5117,12 @@ class Expr_Sine : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_Sine::Handle_Expr_Sine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_Sine;
 class Handle_Expr_Sine : public Handle_Expr_UnaryExpression {
@@ -4950,6 +5217,12 @@ class Expr_Sinh : public Expr_UnaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_Sinh::Handle_Expr_Sinh %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_Sinh;
 class Handle_Expr_Sinh : public Handle_Expr_UnaryExpression {
 
@@ -5043,6 +5316,12 @@ class Expr_Square : public Expr_UnaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_Square::Handle_Expr_Square %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_Square;
 class Handle_Expr_Square : public Handle_Expr_UnaryExpression {
 
@@ -5135,6 +5414,12 @@ class Expr_SquareRoot : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_SquareRoot::Handle_Expr_SquareRoot %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_SquareRoot;
 class Handle_Expr_SquareRoot : public Handle_Expr_UnaryExpression {
@@ -5249,6 +5534,12 @@ class Expr_Sum : public Expr_PolyExpression {
 	}
 };
 
+%pythonappend Handle_Expr_Sum::Handle_Expr_Sum %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_Sum;
 class Handle_Expr_Sum : public Handle_Expr_PolyExpression {
 
@@ -5342,6 +5633,12 @@ class Expr_Tangent : public Expr_UnaryExpression {
 	}
 };
 
+%pythonappend Handle_Expr_Tangent::Handle_Expr_Tangent %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Expr_Tangent;
 class Handle_Expr_Tangent : public Handle_Expr_UnaryExpression {
 
@@ -5434,6 +5731,12 @@ class Expr_Tanh : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_Tanh::Handle_Expr_Tanh %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_Tanh;
 class Handle_Expr_Tanh : public Handle_Expr_UnaryExpression {
@@ -5535,6 +5838,12 @@ class Expr_UnaryFunction : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_UnaryFunction::Handle_Expr_UnaryFunction %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_UnaryFunction;
 class Handle_Expr_UnaryFunction : public Handle_Expr_UnaryExpression {
@@ -5638,6 +5947,12 @@ class Expr_UnaryMinus : public Expr_UnaryExpression {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Expr_UnaryMinus::Handle_Expr_UnaryMinus %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Expr_UnaryMinus;
 class Handle_Expr_UnaryMinus : public Handle_Expr_UnaryExpression {

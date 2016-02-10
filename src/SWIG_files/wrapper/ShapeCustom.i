@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ShapeCustom_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -285,6 +300,12 @@ class ShapeCustom_ConvertToBSpline : public BRepTools_Modification {
 	}
 };
 
+%pythonappend Handle_ShapeCustom_ConvertToBSpline::Handle_ShapeCustom_ConvertToBSpline %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeCustom_ConvertToBSpline;
 class Handle_ShapeCustom_ConvertToBSpline : public Handle_BRepTools_Modification {
 
@@ -498,6 +519,12 @@ class ShapeCustom_DirectModification : public BRepTools_Modification {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeCustom_DirectModification::Handle_ShapeCustom_DirectModification %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeCustom_DirectModification;
 class Handle_ShapeCustom_DirectModification : public Handle_BRepTools_Modification {
@@ -750,6 +777,12 @@ class ShapeCustom_RestrictionParameters : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeCustom_RestrictionParameters::Handle_ShapeCustom_RestrictionParameters %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeCustom_RestrictionParameters;
 class Handle_ShapeCustom_RestrictionParameters : public Handle_MMgt_TShared {
 
@@ -918,6 +951,12 @@ class ShapeCustom_TrsfModification : public BRepTools_TrsfModification {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeCustom_TrsfModification::Handle_ShapeCustom_TrsfModification %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeCustom_TrsfModification;
 class Handle_ShapeCustom_TrsfModification : public Handle_BRepTools_TrsfModification {

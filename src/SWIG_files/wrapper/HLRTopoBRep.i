@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include HLRTopoBRep_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -400,6 +415,12 @@ class HLRTopoBRep_DataMapNodeOfDataMapOfShapeFaceData : public TCollection_MapNo
 	}
 };
 
+%pythonappend Handle_HLRTopoBRep_DataMapNodeOfDataMapOfShapeFaceData::Handle_HLRTopoBRep_DataMapNodeOfDataMapOfShapeFaceData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HLRTopoBRep_DataMapNodeOfDataMapOfShapeFaceData;
 class Handle_HLRTopoBRep_DataMapNodeOfDataMapOfShapeFaceData : public Handle_TCollection_MapNode {
 
@@ -454,6 +475,12 @@ class HLRTopoBRep_DataMapNodeOfMapOfShapeListOfVData : public TCollection_MapNod
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRTopoBRep_DataMapNodeOfMapOfShapeListOfVData::Handle_HLRTopoBRep_DataMapNodeOfMapOfShapeListOfVData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRTopoBRep_DataMapNodeOfMapOfShapeListOfVData;
 class Handle_HLRTopoBRep_DataMapNodeOfMapOfShapeListOfVData : public Handle_TCollection_MapNode {
@@ -700,6 +727,12 @@ class HLRTopoBRep_ListNodeOfListOfVData : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRTopoBRep_ListNodeOfListOfVData::Handle_HLRTopoBRep_ListNodeOfListOfVData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRTopoBRep_ListNodeOfListOfVData;
 class Handle_HLRTopoBRep_ListNodeOfListOfVData : public Handle_TCollection_MapNode {
@@ -991,6 +1024,12 @@ class HLRTopoBRep_OutLiner : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRTopoBRep_OutLiner::Handle_HLRTopoBRep_OutLiner %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRTopoBRep_OutLiner;
 class Handle_HLRTopoBRep_OutLiner : public Handle_MMgt_TShared {

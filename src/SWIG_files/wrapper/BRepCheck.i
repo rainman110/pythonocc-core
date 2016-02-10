@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRepCheck_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -254,6 +269,12 @@ class BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus : public TCollection_Map
 	}
 };
 
+%pythonappend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus::Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus;
 class Handle_BRepCheck_DataMapNodeOfDataMapOfShapeListOfStatus : public Handle_TCollection_MapNode {
 
@@ -308,6 +329,12 @@ class BRepCheck_DataMapNodeOfDataMapOfShapeResult : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult::Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult;
 class Handle_BRepCheck_DataMapNodeOfDataMapOfShapeResult : public Handle_TCollection_MapNode {
@@ -548,6 +575,12 @@ class BRepCheck_ListNodeOfListOfStatus : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_BRepCheck_ListNodeOfListOfStatus::Handle_BRepCheck_ListNodeOfListOfStatus %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepCheck_ListNodeOfListOfStatus;
 class Handle_BRepCheck_ListNodeOfListOfStatus : public Handle_TCollection_MapNode {
 
@@ -775,6 +808,12 @@ class BRepCheck_Result : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_BRepCheck_Result::Handle_BRepCheck_Result %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepCheck_Result;
 class Handle_BRepCheck_Result : public Handle_MMgt_TShared {
 
@@ -845,6 +884,12 @@ class BRepCheck_Edge : public BRepCheck_Result {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepCheck_Edge::Handle_BRepCheck_Edge %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepCheck_Edge;
 class Handle_BRepCheck_Edge : public Handle_BRepCheck_Result {
@@ -939,6 +984,12 @@ class BRepCheck_Face : public BRepCheck_Result {
 	}
 };
 
+%pythonappend Handle_BRepCheck_Face::Handle_BRepCheck_Face %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepCheck_Face;
 class Handle_BRepCheck_Face : public Handle_BRepCheck_Result {
 
@@ -1026,6 +1077,12 @@ class BRepCheck_Shell : public BRepCheck_Result {
 	}
 };
 
+%pythonappend Handle_BRepCheck_Shell::Handle_BRepCheck_Shell %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepCheck_Shell;
 class Handle_BRepCheck_Shell : public Handle_BRepCheck_Result {
 
@@ -1086,6 +1143,12 @@ class BRepCheck_Vertex : public BRepCheck_Result {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepCheck_Vertex::Handle_BRepCheck_Vertex %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepCheck_Vertex;
 class Handle_BRepCheck_Vertex : public Handle_BRepCheck_Result {
@@ -1205,6 +1268,12 @@ class BRepCheck_Wire : public BRepCheck_Result {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepCheck_Wire::Handle_BRepCheck_Wire %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepCheck_Wire;
 class Handle_BRepCheck_Wire : public Handle_BRepCheck_Result {

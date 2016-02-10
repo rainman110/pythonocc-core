@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include SelectBasics_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -166,6 +181,12 @@ class SelectBasics_EntityOwner : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_SelectBasics_EntityOwner::Handle_SelectBasics_EntityOwner %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_SelectBasics_EntityOwner;
 class Handle_SelectBasics_EntityOwner : public Handle_MMgt_TShared {
 
@@ -283,6 +304,12 @@ class SelectBasics_ListNodeOfListOfBox2d : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_SelectBasics_ListNodeOfListOfBox2d::Handle_SelectBasics_ListNodeOfListOfBox2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_SelectBasics_ListNodeOfListOfBox2d;
 class Handle_SelectBasics_ListNodeOfListOfBox2d : public Handle_TCollection_MapNode {
 
@@ -331,6 +358,12 @@ class SelectBasics_ListNodeOfListOfSensitive : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_SelectBasics_ListNodeOfListOfSensitive::Handle_SelectBasics_ListNodeOfListOfSensitive %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_SelectBasics_ListNodeOfListOfSensitive;
 class Handle_SelectBasics_ListNodeOfListOfSensitive : public Handle_TCollection_MapNode {
@@ -759,6 +792,12 @@ class SelectBasics_SensitiveEntity : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_SelectBasics_SensitiveEntity::Handle_SelectBasics_SensitiveEntity %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_SelectBasics_SensitiveEntity;
 class Handle_SelectBasics_SensitiveEntity : public Handle_MMgt_TShared {
 
@@ -809,6 +848,12 @@ class SelectBasics_SequenceNodeOfSequenceOfOwner : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_SelectBasics_SequenceNodeOfSequenceOfOwner::Handle_SelectBasics_SequenceNodeOfSequenceOfOwner %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_SelectBasics_SequenceNodeOfSequenceOfOwner;
 class Handle_SelectBasics_SequenceNodeOfSequenceOfOwner : public Handle_TCollection_SeqNode {

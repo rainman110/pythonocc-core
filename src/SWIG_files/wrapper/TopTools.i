@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TopTools_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef TopTools_LocationSet * TopTools_LocationSetPtr;
 /* end typedefs declaration */
@@ -679,6 +694,12 @@ class TopTools_DataMapNodeOfDataMapOfIntegerListOfShape : public TCollection_Map
 	}
 };
 
+%pythonappend Handle_TopTools_DataMapNodeOfDataMapOfIntegerListOfShape::Handle_TopTools_DataMapNodeOfDataMapOfIntegerListOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_DataMapNodeOfDataMapOfIntegerListOfShape;
 class Handle_TopTools_DataMapNodeOfDataMapOfIntegerListOfShape : public Handle_TCollection_MapNode {
 
@@ -742,6 +763,12 @@ class TopTools_DataMapNodeOfDataMapOfIntegerShape : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopTools_DataMapNodeOfDataMapOfIntegerShape::Handle_TopTools_DataMapNodeOfDataMapOfIntegerShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopTools_DataMapNodeOfDataMapOfIntegerShape;
 class Handle_TopTools_DataMapNodeOfDataMapOfIntegerShape : public Handle_TCollection_MapNode {
@@ -807,6 +834,12 @@ class TopTools_DataMapNodeOfDataMapOfOrientedShapeInteger : public TCollection_M
 	}
 };
 
+%pythonappend Handle_TopTools_DataMapNodeOfDataMapOfOrientedShapeInteger::Handle_TopTools_DataMapNodeOfDataMapOfOrientedShapeInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_DataMapNodeOfDataMapOfOrientedShapeInteger;
 class Handle_TopTools_DataMapNodeOfDataMapOfOrientedShapeInteger : public Handle_TCollection_MapNode {
 
@@ -861,6 +894,12 @@ class TopTools_DataMapNodeOfDataMapOfOrientedShapeShape : public TCollection_Map
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopTools_DataMapNodeOfDataMapOfOrientedShapeShape::Handle_TopTools_DataMapNodeOfDataMapOfOrientedShapeShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopTools_DataMapNodeOfDataMapOfOrientedShapeShape;
 class Handle_TopTools_DataMapNodeOfDataMapOfOrientedShapeShape : public Handle_TCollection_MapNode {
@@ -926,6 +965,12 @@ class TopTools_DataMapNodeOfDataMapOfShapeInteger : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TopTools_DataMapNodeOfDataMapOfShapeInteger::Handle_TopTools_DataMapNodeOfDataMapOfShapeInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_DataMapNodeOfDataMapOfShapeInteger;
 class Handle_TopTools_DataMapNodeOfDataMapOfShapeInteger : public Handle_TCollection_MapNode {
 
@@ -981,6 +1026,12 @@ class TopTools_DataMapNodeOfDataMapOfShapeListOfInteger : public TCollection_Map
 	}
 };
 
+%pythonappend Handle_TopTools_DataMapNodeOfDataMapOfShapeListOfInteger::Handle_TopTools_DataMapNodeOfDataMapOfShapeListOfInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_DataMapNodeOfDataMapOfShapeListOfInteger;
 class Handle_TopTools_DataMapNodeOfDataMapOfShapeListOfInteger : public Handle_TCollection_MapNode {
 
@@ -1035,6 +1086,12 @@ class TopTools_DataMapNodeOfDataMapOfShapeListOfShape : public TCollection_MapNo
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopTools_DataMapNodeOfDataMapOfShapeListOfShape::Handle_TopTools_DataMapNodeOfDataMapOfShapeListOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopTools_DataMapNodeOfDataMapOfShapeListOfShape;
 class Handle_TopTools_DataMapNodeOfDataMapOfShapeListOfShape : public Handle_TCollection_MapNode {
@@ -1100,6 +1157,12 @@ class TopTools_DataMapNodeOfDataMapOfShapeReal : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TopTools_DataMapNodeOfDataMapOfShapeReal::Handle_TopTools_DataMapNodeOfDataMapOfShapeReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_DataMapNodeOfDataMapOfShapeReal;
 class Handle_TopTools_DataMapNodeOfDataMapOfShapeReal : public Handle_TCollection_MapNode {
 
@@ -1155,6 +1218,12 @@ class TopTools_DataMapNodeOfDataMapOfShapeSequenceOfShape : public TCollection_M
 	}
 };
 
+%pythonappend Handle_TopTools_DataMapNodeOfDataMapOfShapeSequenceOfShape::Handle_TopTools_DataMapNodeOfDataMapOfShapeSequenceOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_DataMapNodeOfDataMapOfShapeSequenceOfShape;
 class Handle_TopTools_DataMapNodeOfDataMapOfShapeSequenceOfShape : public Handle_TCollection_MapNode {
 
@@ -1209,6 +1278,12 @@ class TopTools_DataMapNodeOfDataMapOfShapeShape : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopTools_DataMapNodeOfDataMapOfShapeShape::Handle_TopTools_DataMapNodeOfDataMapOfShapeShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopTools_DataMapNodeOfDataMapOfShapeShape;
 class Handle_TopTools_DataMapNodeOfDataMapOfShapeShape : public Handle_TCollection_MapNode {
@@ -2091,6 +2166,12 @@ class TopTools_HArray1OfListOfShape : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TopTools_HArray1OfListOfShape::Handle_TopTools_HArray1OfListOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_HArray1OfListOfShape;
 class Handle_TopTools_HArray1OfListOfShape : public Handle_MMgt_TShared {
 
@@ -2191,6 +2272,12 @@ class TopTools_HArray1OfShape : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopTools_HArray1OfShape::Handle_TopTools_HArray1OfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopTools_HArray1OfShape;
 class Handle_TopTools_HArray1OfShape : public Handle_MMgt_TShared {
@@ -2318,6 +2405,12 @@ class TopTools_HArray2OfShape : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopTools_HArray2OfShape::Handle_TopTools_HArray2OfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopTools_HArray2OfShape;
 class Handle_TopTools_HArray2OfShape : public Handle_MMgt_TShared {
@@ -2492,6 +2585,12 @@ class TopTools_HSequenceOfShape : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TopTools_HSequenceOfShape::Handle_TopTools_HSequenceOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_HSequenceOfShape;
 class Handle_TopTools_HSequenceOfShape : public Handle_MMgt_TShared {
 
@@ -2567,6 +2666,12 @@ class TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeAddress : public TCollec
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeAddress::Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeAddress %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeAddress;
 class Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeAddress : public Handle_TCollection_MapNode {
@@ -2644,6 +2749,12 @@ class TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeListOfShape : public TCo
 	}
 };
 
+%pythonappend Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeListOfShape::Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeListOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeListOfShape;
 class Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeListOfShape : public Handle_TCollection_MapNode {
 
@@ -2719,6 +2830,12 @@ class TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeShape : public TCollecti
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeShape::Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeShape;
 class Handle_TopTools_IndexedDataMapNodeOfIndexedDataMapOfShapeShape : public Handle_TCollection_MapNode {
@@ -3120,6 +3237,12 @@ class TopTools_IndexedMapNodeOfIndexedMapOfOrientedShape : public TCollection_Ma
 	}
 };
 
+%pythonappend Handle_TopTools_IndexedMapNodeOfIndexedMapOfOrientedShape::Handle_TopTools_IndexedMapNodeOfIndexedMapOfOrientedShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_IndexedMapNodeOfIndexedMapOfOrientedShape;
 class Handle_TopTools_IndexedMapNodeOfIndexedMapOfOrientedShape : public Handle_TCollection_MapNode {
 
@@ -3189,6 +3312,12 @@ class TopTools_IndexedMapNodeOfIndexedMapOfShape : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopTools_IndexedMapNodeOfIndexedMapOfShape::Handle_TopTools_IndexedMapNodeOfIndexedMapOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopTools_IndexedMapNodeOfIndexedMapOfShape;
 class Handle_TopTools_IndexedMapNodeOfIndexedMapOfShape : public Handle_TCollection_MapNode {
@@ -3412,6 +3541,12 @@ class TopTools_ListNodeOfListOfShape : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopTools_ListNodeOfListOfShape::Handle_TopTools_ListNodeOfListOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopTools_ListNodeOfListOfShape;
 class Handle_TopTools_ListNodeOfListOfShape : public Handle_TCollection_MapNode {
@@ -3888,6 +4023,12 @@ class TopTools_SequenceNodeOfSequenceOfShape : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_TopTools_SequenceNodeOfSequenceOfShape::Handle_TopTools_SequenceNodeOfSequenceOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_SequenceNodeOfSequenceOfShape;
 class Handle_TopTools_SequenceNodeOfSequenceOfShape : public Handle_TCollection_SeqNode {
 
@@ -4328,6 +4469,12 @@ class TopTools_StdMapNodeOfMapOfOrientedShape : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TopTools_StdMapNodeOfMapOfOrientedShape::Handle_TopTools_StdMapNodeOfMapOfOrientedShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopTools_StdMapNodeOfMapOfOrientedShape;
 class Handle_TopTools_StdMapNodeOfMapOfOrientedShape : public Handle_TCollection_MapNode {
 
@@ -4376,6 +4523,12 @@ class TopTools_StdMapNodeOfMapOfShape : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopTools_StdMapNodeOfMapOfShape::Handle_TopTools_StdMapNodeOfMapOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopTools_StdMapNodeOfMapOfShape;
 class Handle_TopTools_StdMapNodeOfMapOfShape : public Handle_TCollection_MapNode {

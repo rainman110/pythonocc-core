@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include IntRes2d_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -522,6 +537,12 @@ class IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint : public TCollection_Se
 	}
 };
 
+%pythonappend Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint::Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint;
 class Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionPoint : public Handle_TCollection_SeqNode {
 
@@ -572,6 +593,12 @@ class IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment : public TCollection_
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment::Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment;
 class Handle_IntRes2d_SequenceNodeOfSequenceOfIntersectionSegment : public Handle_TCollection_SeqNode {

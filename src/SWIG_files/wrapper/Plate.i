@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Plate_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -491,6 +506,12 @@ class Plate_HArray1OfPinpointConstraint : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Plate_HArray1OfPinpointConstraint::Handle_Plate_HArray1OfPinpointConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Plate_HArray1OfPinpointConstraint;
 class Handle_Plate_HArray1OfPinpointConstraint : public Handle_MMgt_TShared {
 
@@ -934,6 +955,12 @@ class Plate_SequenceNodeOfSequenceOfLinearScalarConstraint : public TCollection_
 	}
 };
 
+%pythonappend Handle_Plate_SequenceNodeOfSequenceOfLinearScalarConstraint::Handle_Plate_SequenceNodeOfSequenceOfLinearScalarConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Plate_SequenceNodeOfSequenceOfLinearScalarConstraint;
 class Handle_Plate_SequenceNodeOfSequenceOfLinearScalarConstraint : public Handle_TCollection_SeqNode {
 
@@ -985,6 +1012,12 @@ class Plate_SequenceNodeOfSequenceOfLinearXYZConstraint : public TCollection_Seq
 	}
 };
 
+%pythonappend Handle_Plate_SequenceNodeOfSequenceOfLinearXYZConstraint::Handle_Plate_SequenceNodeOfSequenceOfLinearXYZConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Plate_SequenceNodeOfSequenceOfLinearXYZConstraint;
 class Handle_Plate_SequenceNodeOfSequenceOfLinearXYZConstraint : public Handle_TCollection_SeqNode {
 
@@ -1035,6 +1068,12 @@ class Plate_SequenceNodeOfSequenceOfPinpointConstraint : public TCollection_SeqN
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Plate_SequenceNodeOfSequenceOfPinpointConstraint::Handle_Plate_SequenceNodeOfSequenceOfPinpointConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Plate_SequenceNodeOfSequenceOfPinpointConstraint;
 class Handle_Plate_SequenceNodeOfSequenceOfPinpointConstraint : public Handle_TCollection_SeqNode {

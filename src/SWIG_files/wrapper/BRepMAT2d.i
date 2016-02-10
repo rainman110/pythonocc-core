@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRepMAT2d_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -211,6 +226,12 @@ class BRepMAT2d_DataMapNodeOfDataMapOfBasicEltShape : public TCollection_MapNode
 	}
 };
 
+%pythonappend Handle_BRepMAT2d_DataMapNodeOfDataMapOfBasicEltShape::Handle_BRepMAT2d_DataMapNodeOfDataMapOfBasicEltShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepMAT2d_DataMapNodeOfDataMapOfBasicEltShape;
 class Handle_BRepMAT2d_DataMapNodeOfDataMapOfBasicEltShape : public Handle_TCollection_MapNode {
 
@@ -265,6 +286,12 @@ class BRepMAT2d_DataMapNodeOfDataMapOfShapeSequenceOfBasicElt : public TCollecti
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMAT2d_DataMapNodeOfDataMapOfShapeSequenceOfBasicElt::Handle_BRepMAT2d_DataMapNodeOfDataMapOfShapeSequenceOfBasicElt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMAT2d_DataMapNodeOfDataMapOfShapeSequenceOfBasicElt;
 class Handle_BRepMAT2d_DataMapNodeOfDataMapOfShapeSequenceOfBasicElt : public Handle_TCollection_MapNode {
@@ -632,6 +659,12 @@ class BRepMAT2d_SequenceNodeOfSequenceOfBasicElt : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepMAT2d_SequenceNodeOfSequenceOfBasicElt::Handle_BRepMAT2d_SequenceNodeOfSequenceOfBasicElt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepMAT2d_SequenceNodeOfSequenceOfBasicElt;
 class Handle_BRepMAT2d_SequenceNodeOfSequenceOfBasicElt : public Handle_TCollection_SeqNode {

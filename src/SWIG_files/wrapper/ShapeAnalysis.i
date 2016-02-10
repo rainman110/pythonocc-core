@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ShapeAnalysis_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef NCollection_UBTree <Standard_Integer , Bnd_Box> ShapeAnalysis_BoxBndTree;
 /* end typedefs declaration */
@@ -669,6 +684,12 @@ class ShapeAnalysis_DataMapNodeOfDataMapOfShapeListOfReal : public TCollection_M
 	}
 };
 
+%pythonappend Handle_ShapeAnalysis_DataMapNodeOfDataMapOfShapeListOfReal::Handle_ShapeAnalysis_DataMapNodeOfDataMapOfShapeListOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeAnalysis_DataMapNodeOfDataMapOfShapeListOfReal;
 class Handle_ShapeAnalysis_DataMapNodeOfDataMapOfShapeListOfReal : public Handle_TCollection_MapNode {
 
@@ -1240,6 +1261,12 @@ class ShapeAnalysis_FreeBoundData : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeAnalysis_FreeBoundData::Handle_ShapeAnalysis_FreeBoundData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeAnalysis_FreeBoundData;
 class Handle_ShapeAnalysis_FreeBoundData : public Handle_MMgt_TShared {
 
@@ -1746,6 +1773,12 @@ class ShapeAnalysis_HSequenceOfFreeBounds : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeAnalysis_HSequenceOfFreeBounds::Handle_ShapeAnalysis_HSequenceOfFreeBounds %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeAnalysis_HSequenceOfFreeBounds;
 class Handle_ShapeAnalysis_HSequenceOfFreeBounds : public Handle_MMgt_TShared {
 
@@ -1796,6 +1829,12 @@ class ShapeAnalysis_SequenceNodeOfSequenceOfFreeBounds : public TCollection_SeqN
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeAnalysis_SequenceNodeOfSequenceOfFreeBounds::Handle_ShapeAnalysis_SequenceNodeOfSequenceOfFreeBounds %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeAnalysis_SequenceNodeOfSequenceOfFreeBounds;
 class Handle_ShapeAnalysis_SequenceNodeOfSequenceOfFreeBounds : public Handle_TCollection_SeqNode {
@@ -2697,6 +2736,12 @@ class ShapeAnalysis_Surface : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeAnalysis_Surface::Handle_ShapeAnalysis_Surface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeAnalysis_Surface;
 class Handle_ShapeAnalysis_Surface : public Handle_MMgt_TShared {
 
@@ -2807,6 +2852,12 @@ class ShapeAnalysis_TransferParameters : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeAnalysis_TransferParameters::Handle_ShapeAnalysis_TransferParameters %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeAnalysis_TransferParameters;
 class Handle_ShapeAnalysis_TransferParameters : public Handle_MMgt_TShared {
@@ -3437,6 +3488,12 @@ class ShapeAnalysis_Wire : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeAnalysis_Wire::Handle_ShapeAnalysis_Wire %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeAnalysis_Wire;
 class Handle_ShapeAnalysis_Wire : public Handle_MMgt_TShared {
 
@@ -3973,6 +4030,12 @@ class ShapeAnalysis_TransferParametersProj : public ShapeAnalysis_TransferParame
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeAnalysis_TransferParametersProj::Handle_ShapeAnalysis_TransferParametersProj %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeAnalysis_TransferParametersProj;
 class Handle_ShapeAnalysis_TransferParametersProj : public Handle_ShapeAnalysis_TransferParameters {

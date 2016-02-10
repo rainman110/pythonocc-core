@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TDocStd_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef TDocStd_XLink * TDocStd_XLinkPtr;
 /* end typedefs declaration */
@@ -200,6 +215,12 @@ class TDocStd_Application : public CDF_Application {
 	}
 };
 
+%pythonappend Handle_TDocStd_Application::Handle_TDocStd_Application %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDocStd_Application;
 class Handle_TDocStd_Application : public Handle_CDF_Application {
 
@@ -263,6 +284,12 @@ class TDocStd_ApplicationDelta : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TDocStd_ApplicationDelta::Handle_TDocStd_ApplicationDelta %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDocStd_ApplicationDelta;
 class Handle_TDocStd_ApplicationDelta : public Handle_MMgt_TShared {
 
@@ -305,6 +332,12 @@ class TDocStd_CompoundDelta : public TDF_Delta {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDocStd_CompoundDelta::Handle_TDocStd_CompoundDelta %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDocStd_CompoundDelta;
 class Handle_TDocStd_CompoundDelta : public Handle_TDF_Delta {
@@ -410,6 +443,12 @@ class TDocStd_DataMapNodeOfLabelIDMapDataMap : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap::Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap;
 class Handle_TDocStd_DataMapNodeOfLabelIDMapDataMap : public Handle_TCollection_MapNode {
@@ -734,6 +773,12 @@ class TDocStd_Document : public CDM_Document {
 	}
 };
 
+%pythonappend Handle_TDocStd_Document::Handle_TDocStd_Document %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDocStd_Document;
 class Handle_TDocStd_Document : public Handle_CDM_Document {
 
@@ -961,6 +1006,12 @@ class TDocStd_Modified : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDocStd_Modified::Handle_TDocStd_Modified %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDocStd_Modified;
 class Handle_TDocStd_Modified : public Handle_TDF_Attribute {
 
@@ -1150,6 +1201,12 @@ class TDocStd_MultiTransactionManager : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TDocStd_MultiTransactionManager::Handle_TDocStd_MultiTransactionManager %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDocStd_MultiTransactionManager;
 class Handle_TDocStd_MultiTransactionManager : public Handle_MMgt_TShared {
 
@@ -1253,6 +1310,12 @@ class TDocStd_Owner : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDocStd_Owner::Handle_TDocStd_Owner %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDocStd_Owner;
 class Handle_TDocStd_Owner : public Handle_TDF_Attribute {
 
@@ -1340,6 +1403,12 @@ class TDocStd_SequenceNodeOfSequenceOfApplicationDelta : public TCollection_SeqN
 	}
 };
 
+%pythonappend Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta::Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta;
 class Handle_TDocStd_SequenceNodeOfSequenceOfApplicationDelta : public Handle_TCollection_SeqNode {
 
@@ -1390,6 +1459,12 @@ class TDocStd_SequenceNodeOfSequenceOfDocument : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDocStd_SequenceNodeOfSequenceOfDocument::Handle_TDocStd_SequenceNodeOfSequenceOfDocument %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDocStd_SequenceNodeOfSequenceOfDocument;
 class Handle_TDocStd_SequenceNodeOfSequenceOfDocument : public Handle_TCollection_SeqNode {
@@ -1830,6 +1905,12 @@ class TDocStd_XLink : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDocStd_XLink::Handle_TDocStd_XLink %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDocStd_XLink;
 class Handle_TDocStd_XLink : public Handle_TDF_Attribute {
 
@@ -1986,6 +2067,12 @@ class TDocStd_XLinkRoot : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDocStd_XLinkRoot::Handle_TDocStd_XLinkRoot %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDocStd_XLinkRoot;
 class Handle_TDocStd_XLinkRoot : public Handle_TDF_Attribute {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TColgp_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -1976,6 +1991,12 @@ class TColgp_DataMapNodeOfDataMapOfIntegerCirc2d : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TColgp_DataMapNodeOfDataMapOfIntegerCirc2d::Handle_TColgp_DataMapNodeOfDataMapOfIntegerCirc2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_DataMapNodeOfDataMapOfIntegerCirc2d;
 class Handle_TColgp_DataMapNodeOfDataMapOfIntegerCirc2d : public Handle_TCollection_MapNode {
 
@@ -2155,6 +2176,12 @@ class TColgp_HArray1OfCirc2d : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HArray1OfCirc2d::Handle_TColgp_HArray1OfCirc2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HArray1OfCirc2d;
 class Handle_TColgp_HArray1OfCirc2d : public Handle_MMgt_TShared {
 
@@ -2255,6 +2282,12 @@ class TColgp_HArray1OfDir : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HArray1OfDir::Handle_TColgp_HArray1OfDir %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HArray1OfDir;
 class Handle_TColgp_HArray1OfDir : public Handle_MMgt_TShared {
@@ -2357,6 +2390,12 @@ class TColgp_HArray1OfDir2d : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HArray1OfDir2d::Handle_TColgp_HArray1OfDir2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HArray1OfDir2d;
 class Handle_TColgp_HArray1OfDir2d : public Handle_MMgt_TShared {
 
@@ -2457,6 +2496,12 @@ class TColgp_HArray1OfLin2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HArray1OfLin2d::Handle_TColgp_HArray1OfLin2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HArray1OfLin2d;
 class Handle_TColgp_HArray1OfLin2d : public Handle_MMgt_TShared {
@@ -2559,6 +2604,12 @@ class TColgp_HArray1OfPnt : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HArray1OfPnt::Handle_TColgp_HArray1OfPnt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HArray1OfPnt;
 class Handle_TColgp_HArray1OfPnt : public Handle_MMgt_TShared {
 
@@ -2659,6 +2710,12 @@ class TColgp_HArray1OfPnt2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HArray1OfPnt2d::Handle_TColgp_HArray1OfPnt2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HArray1OfPnt2d;
 class Handle_TColgp_HArray1OfPnt2d : public Handle_MMgt_TShared {
@@ -2761,6 +2818,12 @@ class TColgp_HArray1OfVec : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HArray1OfVec::Handle_TColgp_HArray1OfVec %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HArray1OfVec;
 class Handle_TColgp_HArray1OfVec : public Handle_MMgt_TShared {
 
@@ -2861,6 +2924,12 @@ class TColgp_HArray1OfVec2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HArray1OfVec2d::Handle_TColgp_HArray1OfVec2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HArray1OfVec2d;
 class Handle_TColgp_HArray1OfVec2d : public Handle_MMgt_TShared {
@@ -2963,6 +3032,12 @@ class TColgp_HArray1OfXY : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HArray1OfXY::Handle_TColgp_HArray1OfXY %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HArray1OfXY;
 class Handle_TColgp_HArray1OfXY : public Handle_MMgt_TShared {
 
@@ -3063,6 +3138,12 @@ class TColgp_HArray1OfXYZ : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HArray1OfXYZ::Handle_TColgp_HArray1OfXYZ %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HArray1OfXYZ;
 class Handle_TColgp_HArray1OfXYZ : public Handle_MMgt_TShared {
@@ -3191,6 +3272,12 @@ class TColgp_HArray2OfCirc2d : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HArray2OfCirc2d::Handle_TColgp_HArray2OfCirc2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HArray2OfCirc2d;
 class Handle_TColgp_HArray2OfCirc2d : public Handle_MMgt_TShared {
 
@@ -3317,6 +3404,12 @@ class TColgp_HArray2OfDir : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HArray2OfDir::Handle_TColgp_HArray2OfDir %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HArray2OfDir;
 class Handle_TColgp_HArray2OfDir : public Handle_MMgt_TShared {
@@ -3445,6 +3538,12 @@ class TColgp_HArray2OfDir2d : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HArray2OfDir2d::Handle_TColgp_HArray2OfDir2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HArray2OfDir2d;
 class Handle_TColgp_HArray2OfDir2d : public Handle_MMgt_TShared {
 
@@ -3571,6 +3670,12 @@ class TColgp_HArray2OfLin2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HArray2OfLin2d::Handle_TColgp_HArray2OfLin2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HArray2OfLin2d;
 class Handle_TColgp_HArray2OfLin2d : public Handle_MMgt_TShared {
@@ -3699,6 +3804,12 @@ class TColgp_HArray2OfPnt : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HArray2OfPnt::Handle_TColgp_HArray2OfPnt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HArray2OfPnt;
 class Handle_TColgp_HArray2OfPnt : public Handle_MMgt_TShared {
 
@@ -3825,6 +3936,12 @@ class TColgp_HArray2OfPnt2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HArray2OfPnt2d::Handle_TColgp_HArray2OfPnt2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HArray2OfPnt2d;
 class Handle_TColgp_HArray2OfPnt2d : public Handle_MMgt_TShared {
@@ -3953,6 +4070,12 @@ class TColgp_HArray2OfVec : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HArray2OfVec::Handle_TColgp_HArray2OfVec %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HArray2OfVec;
 class Handle_TColgp_HArray2OfVec : public Handle_MMgt_TShared {
 
@@ -4079,6 +4202,12 @@ class TColgp_HArray2OfVec2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HArray2OfVec2d::Handle_TColgp_HArray2OfVec2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HArray2OfVec2d;
 class Handle_TColgp_HArray2OfVec2d : public Handle_MMgt_TShared {
@@ -4207,6 +4336,12 @@ class TColgp_HArray2OfXY : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HArray2OfXY::Handle_TColgp_HArray2OfXY %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HArray2OfXY;
 class Handle_TColgp_HArray2OfXY : public Handle_MMgt_TShared {
 
@@ -4333,6 +4468,12 @@ class TColgp_HArray2OfXYZ : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HArray2OfXYZ::Handle_TColgp_HArray2OfXYZ %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HArray2OfXYZ;
 class Handle_TColgp_HArray2OfXYZ : public Handle_MMgt_TShared {
@@ -4507,6 +4648,12 @@ class TColgp_HSequenceOfDir : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HSequenceOfDir::Handle_TColgp_HSequenceOfDir %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HSequenceOfDir;
 class Handle_TColgp_HSequenceOfDir : public Handle_MMgt_TShared {
 
@@ -4679,6 +4826,12 @@ class TColgp_HSequenceOfDir2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HSequenceOfDir2d::Handle_TColgp_HSequenceOfDir2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HSequenceOfDir2d;
 class Handle_TColgp_HSequenceOfDir2d : public Handle_MMgt_TShared {
@@ -4853,6 +5006,12 @@ class TColgp_HSequenceOfPnt : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HSequenceOfPnt::Handle_TColgp_HSequenceOfPnt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HSequenceOfPnt;
 class Handle_TColgp_HSequenceOfPnt : public Handle_MMgt_TShared {
 
@@ -5025,6 +5184,12 @@ class TColgp_HSequenceOfPnt2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HSequenceOfPnt2d::Handle_TColgp_HSequenceOfPnt2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HSequenceOfPnt2d;
 class Handle_TColgp_HSequenceOfPnt2d : public Handle_MMgt_TShared {
@@ -5199,6 +5364,12 @@ class TColgp_HSequenceOfVec : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HSequenceOfVec::Handle_TColgp_HSequenceOfVec %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HSequenceOfVec;
 class Handle_TColgp_HSequenceOfVec : public Handle_MMgt_TShared {
 
@@ -5371,6 +5542,12 @@ class TColgp_HSequenceOfVec2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_HSequenceOfVec2d::Handle_TColgp_HSequenceOfVec2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_HSequenceOfVec2d;
 class Handle_TColgp_HSequenceOfVec2d : public Handle_MMgt_TShared {
@@ -5545,6 +5722,12 @@ class TColgp_HSequenceOfXY : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HSequenceOfXY::Handle_TColgp_HSequenceOfXY %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HSequenceOfXY;
 class Handle_TColgp_HSequenceOfXY : public Handle_MMgt_TShared {
 
@@ -5718,6 +5901,12 @@ class TColgp_HSequenceOfXYZ : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColgp_HSequenceOfXYZ::Handle_TColgp_HSequenceOfXYZ %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_HSequenceOfXYZ;
 class Handle_TColgp_HSequenceOfXYZ : public Handle_MMgt_TShared {
 
@@ -5768,6 +5957,12 @@ class TColgp_SequenceNodeOfSequenceOfArray1OfPnt2d : public TCollection_SeqNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_SequenceNodeOfSequenceOfArray1OfPnt2d::Handle_TColgp_SequenceNodeOfSequenceOfArray1OfPnt2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_SequenceNodeOfSequenceOfArray1OfPnt2d;
 class Handle_TColgp_SequenceNodeOfSequenceOfArray1OfPnt2d : public Handle_TCollection_SeqNode {
@@ -5820,6 +6015,12 @@ class TColgp_SequenceNodeOfSequenceOfDir : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_TColgp_SequenceNodeOfSequenceOfDir::Handle_TColgp_SequenceNodeOfSequenceOfDir %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_SequenceNodeOfSequenceOfDir;
 class Handle_TColgp_SequenceNodeOfSequenceOfDir : public Handle_TCollection_SeqNode {
 
@@ -5870,6 +6071,12 @@ class TColgp_SequenceNodeOfSequenceOfDir2d : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_SequenceNodeOfSequenceOfDir2d::Handle_TColgp_SequenceNodeOfSequenceOfDir2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_SequenceNodeOfSequenceOfDir2d;
 class Handle_TColgp_SequenceNodeOfSequenceOfDir2d : public Handle_TCollection_SeqNode {
@@ -5922,6 +6129,12 @@ class TColgp_SequenceNodeOfSequenceOfPnt : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_TColgp_SequenceNodeOfSequenceOfPnt::Handle_TColgp_SequenceNodeOfSequenceOfPnt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_SequenceNodeOfSequenceOfPnt;
 class Handle_TColgp_SequenceNodeOfSequenceOfPnt : public Handle_TCollection_SeqNode {
 
@@ -5972,6 +6185,12 @@ class TColgp_SequenceNodeOfSequenceOfPnt2d : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_SequenceNodeOfSequenceOfPnt2d::Handle_TColgp_SequenceNodeOfSequenceOfPnt2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_SequenceNodeOfSequenceOfPnt2d;
 class Handle_TColgp_SequenceNodeOfSequenceOfPnt2d : public Handle_TCollection_SeqNode {
@@ -6024,6 +6243,12 @@ class TColgp_SequenceNodeOfSequenceOfVec : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_TColgp_SequenceNodeOfSequenceOfVec::Handle_TColgp_SequenceNodeOfSequenceOfVec %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_SequenceNodeOfSequenceOfVec;
 class Handle_TColgp_SequenceNodeOfSequenceOfVec : public Handle_TCollection_SeqNode {
 
@@ -6074,6 +6299,12 @@ class TColgp_SequenceNodeOfSequenceOfVec2d : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_SequenceNodeOfSequenceOfVec2d::Handle_TColgp_SequenceNodeOfSequenceOfVec2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_SequenceNodeOfSequenceOfVec2d;
 class Handle_TColgp_SequenceNodeOfSequenceOfVec2d : public Handle_TCollection_SeqNode {
@@ -6126,6 +6357,12 @@ class TColgp_SequenceNodeOfSequenceOfXY : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_TColgp_SequenceNodeOfSequenceOfXY::Handle_TColgp_SequenceNodeOfSequenceOfXY %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColgp_SequenceNodeOfSequenceOfXY;
 class Handle_TColgp_SequenceNodeOfSequenceOfXY : public Handle_TCollection_SeqNode {
 
@@ -6176,6 +6413,12 @@ class TColgp_SequenceNodeOfSequenceOfXYZ : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColgp_SequenceNodeOfSequenceOfXYZ::Handle_TColgp_SequenceNodeOfSequenceOfXYZ %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColgp_SequenceNodeOfSequenceOfXYZ;
 class Handle_TColgp_SequenceNodeOfSequenceOfXYZ : public Handle_TCollection_SeqNode {

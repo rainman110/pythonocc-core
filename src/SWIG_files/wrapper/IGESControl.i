@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include IGESControl_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -81,6 +96,12 @@ class IGESControl_ActorWrite : public Transfer_ActorOfFinderProcess {
 	}
 };
 
+%pythonappend Handle_IGESControl_ActorWrite::Handle_IGESControl_ActorWrite %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IGESControl_ActorWrite;
 class Handle_IGESControl_ActorWrite : public Handle_Transfer_ActorOfFinderProcess {
 
@@ -123,6 +144,12 @@ class IGESControl_AlgoContainer : public IGESToBRep_AlgoContainer {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IGESControl_AlgoContainer::Handle_IGESControl_AlgoContainer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IGESControl_AlgoContainer;
 class Handle_IGESControl_AlgoContainer : public Handle_IGESToBRep_AlgoContainer {
@@ -209,6 +236,12 @@ class IGESControl_Controller : public XSControl_Controller {
 	}
 };
 
+%pythonappend Handle_IGESControl_Controller::Handle_IGESControl_Controller %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IGESControl_Controller;
 class Handle_IGESControl_Controller : public Handle_XSControl_Controller {
 
@@ -273,6 +306,12 @@ class IGESControl_IGESBoundary : public IGESToBRep_IGESBoundary {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IGESControl_IGESBoundary::Handle_IGESControl_IGESBoundary %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IGESControl_IGESBoundary;
 class Handle_IGESControl_IGESBoundary : public Handle_IGESToBRep_IGESBoundary {
@@ -378,6 +417,12 @@ class IGESControl_ToolContainer : public IGESToBRep_ToolContainer {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IGESControl_ToolContainer::Handle_IGESControl_ToolContainer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IGESControl_ToolContainer;
 class Handle_IGESControl_ToolContainer : public Handle_IGESToBRep_ToolContainer {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Materials_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -207,6 +222,12 @@ class Materials_Color : public Standard_Transient {
 	}
 };
 
+%pythonappend Handle_Materials_Color::Handle_Materials_Color %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Materials_Color;
 class Handle_Materials_Color : public Handle_Standard_Transient {
 
@@ -352,6 +373,12 @@ class Materials_FuzzyInstance : public Dynamic_FuzzyClass {
 	}
 };
 
+%pythonappend Handle_Materials_FuzzyInstance::Handle_Materials_FuzzyInstance %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Materials_FuzzyInstance;
 class Handle_Materials_FuzzyInstance : public Handle_Dynamic_FuzzyClass {
 
@@ -406,6 +433,12 @@ class Materials_MaterialDefinition : public Dynamic_FuzzyDefinitionsDictionary {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Materials_MaterialDefinition::Handle_Materials_MaterialDefinition %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Materials_MaterialDefinition;
 class Handle_Materials_MaterialDefinition : public Handle_Dynamic_FuzzyDefinitionsDictionary {
@@ -493,6 +526,12 @@ class Materials_MaterialsDictionary : public Standard_Transient {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Materials_MaterialsDictionary::Handle_Materials_MaterialsDictionary %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Materials_MaterialsDictionary;
 class Handle_Materials_MaterialsDictionary : public Handle_Standard_Transient {
@@ -666,6 +705,12 @@ class Materials_MaterialsSequence : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Materials_MaterialsSequence::Handle_Materials_MaterialsSequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Materials_MaterialsSequence;
 class Handle_Materials_MaterialsSequence : public Handle_MMgt_TShared {
@@ -850,6 +895,12 @@ class Materials_SequenceNodeOfMtsSequence : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Materials_SequenceNodeOfMtsSequence::Handle_Materials_SequenceNodeOfMtsSequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Materials_SequenceNodeOfMtsSequence;
 class Handle_Materials_SequenceNodeOfMtsSequence : public Handle_TCollection_SeqNode {
 
@@ -908,6 +959,12 @@ class Materials_Material : public Materials_FuzzyInstance {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Materials_Material::Handle_Materials_Material %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Materials_Material;
 class Handle_Materials_Material : public Handle_Materials_FuzzyInstance {

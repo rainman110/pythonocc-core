@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRepOffsetAPI_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef BRepBuilderAPI_Sewing BRepOffsetAPI_Sewing;
 typedef Handle_BRepBuilderAPI_Sewing Handle_BRepOffsetAPI_Sewing;
@@ -1223,6 +1238,12 @@ class BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal : public TCollection_
 	}
 };
 
+%pythonappend Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal::Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal;
 class Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfReal : public Handle_TCollection_SeqNode {
 
@@ -1273,6 +1294,12 @@ class BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape : public TCollection
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape::Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape;
 class Handle_BRepOffsetAPI_SequenceNodeOfSequenceOfSequenceOfShape : public Handle_TCollection_SeqNode {

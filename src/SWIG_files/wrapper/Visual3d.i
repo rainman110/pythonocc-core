@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Visual3d_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef Visual3d_View * Visual3d_ViewPtr;
 typedef Visual3d_ViewManager * Visual3d_ViewManagerPtr;
@@ -561,6 +576,12 @@ class Visual3d_HSequenceOfPickPath : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Visual3d_HSequenceOfPickPath::Handle_Visual3d_HSequenceOfPickPath %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Visual3d_HSequenceOfPickPath;
 class Handle_Visual3d_HSequenceOfPickPath : public Handle_MMgt_TShared {
 
@@ -674,6 +695,12 @@ class Visual3d_HSetOfLight : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Visual3d_HSetOfLight::Handle_Visual3d_HSetOfLight %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Visual3d_HSetOfLight;
 class Handle_Visual3d_HSetOfLight : public Handle_MMgt_TShared {
 
@@ -786,6 +813,12 @@ class Visual3d_HSetOfView : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Visual3d_HSetOfView::Handle_Visual3d_HSetOfView %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Visual3d_HSetOfView;
 class Handle_Visual3d_HSetOfView : public Handle_MMgt_TShared {
@@ -1026,6 +1059,12 @@ class Visual3d_Layer : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Visual3d_Layer::Handle_Visual3d_Layer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Visual3d_Layer;
 class Handle_Visual3d_Layer : public Handle_MMgt_TShared {
 
@@ -1090,6 +1129,12 @@ class Visual3d_LayerItem : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Visual3d_LayerItem::Handle_Visual3d_LayerItem %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Visual3d_LayerItem;
 class Handle_Visual3d_LayerItem : public Handle_MMgt_TShared {
@@ -1328,6 +1373,12 @@ class Visual3d_Light : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Visual3d_Light::Handle_Visual3d_Light %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Visual3d_Light;
 class Handle_Visual3d_Light : public Handle_MMgt_TShared {
 
@@ -1445,6 +1496,12 @@ class Visual3d_ListNodeOfSetListOfSetOfLight : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_Visual3d_ListNodeOfSetListOfSetOfLight::Handle_Visual3d_ListNodeOfSetListOfSetOfLight %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Visual3d_ListNodeOfSetListOfSetOfLight;
 class Handle_Visual3d_ListNodeOfSetListOfSetOfLight : public Handle_TCollection_MapNode {
 
@@ -1493,6 +1550,12 @@ class Visual3d_ListNodeOfSetListOfSetOfView : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Visual3d_ListNodeOfSetListOfSetOfView::Handle_Visual3d_ListNodeOfSetListOfSetOfView %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Visual3d_ListNodeOfSetListOfSetOfView;
 class Handle_Visual3d_ListNodeOfSetListOfSetOfView : public Handle_TCollection_MapNode {
@@ -1668,6 +1731,12 @@ class Visual3d_SequenceNodeOfSequenceOfPickPath : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Visual3d_SequenceNodeOfSequenceOfPickPath::Handle_Visual3d_SequenceNodeOfSequenceOfPickPath %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Visual3d_SequenceNodeOfSequenceOfPickPath;
 class Handle_Visual3d_SequenceNodeOfSequenceOfPickPath : public Handle_TCollection_SeqNode {
@@ -2357,6 +2426,12 @@ class Visual3d_TransientManager : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Visual3d_TransientManager::Handle_Visual3d_TransientManager %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Visual3d_TransientManager;
 class Handle_Visual3d_TransientManager : public Handle_MMgt_TShared {
@@ -3289,6 +3364,12 @@ class Visual3d_View : public Graphic3d_DataStructureManager {
 	}
 };
 
+%pythonappend Handle_Visual3d_View::Handle_Visual3d_View %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Visual3d_View;
 class Handle_Visual3d_View : public Handle_Graphic3d_DataStructureManager {
 
@@ -3683,6 +3764,12 @@ class Visual3d_ViewManager : public Graphic3d_StructureManager {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Visual3d_ViewManager::Handle_Visual3d_ViewManager %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Visual3d_ViewManager;
 class Handle_Visual3d_ViewManager : public Handle_Graphic3d_StructureManager {

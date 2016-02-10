@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include IntSurf_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef Handle_NCollection_BaseAllocator IntSurf_Allocator;
 typedef NCollection_Sequence <IntSurf_PntOn2S> IntSurf_SequenceOfPntOn2S;
@@ -329,6 +344,12 @@ class IntSurf_LineOn2S : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_IntSurf_LineOn2S::Handle_IntSurf_LineOn2S %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntSurf_LineOn2S;
 class Handle_IntSurf_LineOn2S : public Handle_MMgt_TShared {
 
@@ -411,6 +432,12 @@ class IntSurf_ListNodeOfListOfPntOn2S : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IntSurf_ListNodeOfListOfPntOn2S::Handle_IntSurf_ListNodeOfListOfPntOn2S %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IntSurf_ListNodeOfListOfPntOn2S;
 class Handle_IntSurf_ListNodeOfListOfPntOn2S : public Handle_TCollection_MapNode {
@@ -1117,6 +1144,12 @@ class IntSurf_SequenceNodeOfSequenceOfCouple : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_IntSurf_SequenceNodeOfSequenceOfCouple::Handle_IntSurf_SequenceNodeOfSequenceOfCouple %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntSurf_SequenceNodeOfSequenceOfCouple;
 class Handle_IntSurf_SequenceNodeOfSequenceOfCouple : public Handle_TCollection_SeqNode {
 
@@ -1168,6 +1201,12 @@ class IntSurf_SequenceNodeOfSequenceOfInteriorPoint : public TCollection_SeqNode
 	}
 };
 
+%pythonappend Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint::Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint;
 class Handle_IntSurf_SequenceNodeOfSequenceOfInteriorPoint : public Handle_TCollection_SeqNode {
 
@@ -1218,6 +1257,12 @@ class IntSurf_SequenceNodeOfSequenceOfPathPoint : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint::Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint;
 class Handle_IntSurf_SequenceNodeOfSequenceOfPathPoint : public Handle_TCollection_SeqNode {

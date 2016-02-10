@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Geom2dAdaptor_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -331,6 +346,12 @@ class Geom2dAdaptor_GHCurve : public Adaptor2d_HCurve2d {
 	}
 };
 
+%pythonappend Handle_Geom2dAdaptor_GHCurve::Handle_Geom2dAdaptor_GHCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom2dAdaptor_GHCurve;
 class Handle_Geom2dAdaptor_GHCurve : public Handle_Adaptor2d_HCurve2d {
 
@@ -395,6 +416,12 @@ class Geom2dAdaptor_HCurve : public Geom2dAdaptor_GHCurve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom2dAdaptor_HCurve::Handle_Geom2dAdaptor_HCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom2dAdaptor_HCurve;
 class Handle_Geom2dAdaptor_HCurve : public Handle_Geom2dAdaptor_GHCurve {

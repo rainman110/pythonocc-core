@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TopOpeBRepBuild_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef TopOpeBRepBuild_GTopo * TopOpeBRepBuild_PGTopo;
 typedef TopOpeBRepBuild_Builder * TopOpeBRepBuild_PBuilder;
@@ -505,6 +520,12 @@ class TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape : public
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape::Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape;
 class Handle_TopOpeBRepBuild_DataMapNodeOfDataMapOfShapeListOfShapeListOfShape : public Handle_TCollection_MapNode {
@@ -1474,6 +1495,12 @@ class TopOpeBRepBuild_HBuilder : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TopOpeBRepBuild_HBuilder::Handle_TopOpeBRepBuild_HBuilder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepBuild_HBuilder;
 class Handle_TopOpeBRepBuild_HBuilder : public Handle_MMgt_TShared {
 
@@ -1549,6 +1576,12 @@ class TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo : publ
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo::Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo;
 class Handle_TopOpeBRepBuild_IndexedDataMapNodeOfIndexedDataMapOfShapeVertexInfo : public Handle_TCollection_MapNode {
@@ -1845,6 +1878,12 @@ class TopOpeBRepBuild_ListNodeOfListOfListOfLoop : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop::Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop;
 class Handle_TopOpeBRepBuild_ListNodeOfListOfListOfLoop : public Handle_TCollection_MapNode {
 
@@ -1893,6 +1932,12 @@ class TopOpeBRepBuild_ListNodeOfListOfLoop : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepBuild_ListNodeOfListOfLoop::Handle_TopOpeBRepBuild_ListNodeOfListOfLoop %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepBuild_ListNodeOfListOfLoop;
 class Handle_TopOpeBRepBuild_ListNodeOfListOfLoop : public Handle_TCollection_MapNode {
@@ -1943,6 +1988,12 @@ class TopOpeBRepBuild_ListNodeOfListOfPave : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TopOpeBRepBuild_ListNodeOfListOfPave::Handle_TopOpeBRepBuild_ListNodeOfListOfPave %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepBuild_ListNodeOfListOfPave;
 class Handle_TopOpeBRepBuild_ListNodeOfListOfPave : public Handle_TCollection_MapNode {
 
@@ -1991,6 +2042,12 @@ class TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape : public TCollection_MapN
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape::Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape;
 class Handle_TopOpeBRepBuild_ListNodeOfListOfShapeListOfShape : public Handle_TCollection_MapNode {
@@ -2552,6 +2609,12 @@ class TopOpeBRepBuild_Loop : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepBuild_Loop::Handle_TopOpeBRepBuild_Loop %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepBuild_Loop;
 class Handle_TopOpeBRepBuild_Loop : public Handle_MMgt_TShared {
@@ -3945,6 +4008,12 @@ class TopOpeBRepBuild_Pave : public TopOpeBRepBuild_Loop {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepBuild_Pave::Handle_TopOpeBRepBuild_Pave %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepBuild_Pave;
 class Handle_TopOpeBRepBuild_Pave : public Handle_TopOpeBRepBuild_Loop {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Geom_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -188,6 +203,12 @@ class Geom_Geometry : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_Geometry::Handle_Geom_Geometry %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_Geometry;
 class Handle_Geom_Geometry : public Handle_MMgt_TShared {
@@ -362,6 +383,12 @@ class Geom_HSequenceOfBSplineSurface : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Geom_HSequenceOfBSplineSurface::Handle_Geom_HSequenceOfBSplineSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_HSequenceOfBSplineSurface;
 class Handle_Geom_HSequenceOfBSplineSurface : public Handle_MMgt_TShared {
 
@@ -535,6 +562,12 @@ class Geom_HSequenceOfSurface : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Geom_HSequenceOfSurface::Handle_Geom_HSequenceOfSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_HSequenceOfSurface;
 class Handle_Geom_HSequenceOfSurface : public Handle_MMgt_TShared {
 
@@ -650,6 +683,12 @@ class Geom_SequenceNodeOfSequenceOfBSplineSurface : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Geom_SequenceNodeOfSequenceOfBSplineSurface::Handle_Geom_SequenceNodeOfSequenceOfBSplineSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_SequenceNodeOfSequenceOfBSplineSurface;
 class Handle_Geom_SequenceNodeOfSequenceOfBSplineSurface : public Handle_TCollection_SeqNode {
 
@@ -700,6 +739,12 @@ class Geom_SequenceNodeOfSequenceOfSurface : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_SequenceNodeOfSequenceOfSurface::Handle_Geom_SequenceNodeOfSequenceOfSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_SequenceNodeOfSequenceOfSurface;
 class Handle_Geom_SequenceNodeOfSequenceOfSurface : public Handle_TCollection_SeqNode {
@@ -1208,6 +1253,12 @@ class Geom_Transformation : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Geom_Transformation::Handle_Geom_Transformation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_Transformation;
 class Handle_Geom_Transformation : public Handle_MMgt_TShared {
 
@@ -1294,6 +1345,12 @@ class Geom_AxisPlacement : public Geom_Geometry {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_AxisPlacement::Handle_Geom_AxisPlacement %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_AxisPlacement;
 class Handle_Geom_AxisPlacement : public Handle_Geom_Geometry {
@@ -1484,6 +1541,12 @@ class Geom_Curve : public Geom_Geometry {
 	}
 };
 
+%pythonappend Handle_Geom_Curve::Handle_Geom_Curve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_Curve;
 class Handle_Geom_Curve : public Handle_Geom_Geometry {
 
@@ -1572,6 +1635,12 @@ class Geom_Point : public Geom_Geometry {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_Point::Handle_Geom_Point %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_Point;
 class Handle_Geom_Point : public Handle_Geom_Geometry {
@@ -1862,6 +1931,12 @@ class Geom_Surface : public Geom_Geometry {
 	}
 };
 
+%pythonappend Handle_Geom_Surface::Handle_Geom_Surface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_Surface;
 class Handle_Geom_Surface : public Handle_Geom_Geometry {
 
@@ -2031,6 +2106,12 @@ class Geom_Vector : public Geom_Geometry {
 	}
 };
 
+%pythonappend Handle_Geom_Vector::Handle_Geom_Vector %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_Vector;
 class Handle_Geom_Vector : public Handle_Geom_Geometry {
 
@@ -2125,6 +2206,12 @@ class Geom_Axis1Placement : public Geom_AxisPlacement {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_Axis1Placement::Handle_Geom_Axis1Placement %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_Axis1Placement;
 class Handle_Geom_Axis1Placement : public Handle_Geom_AxisPlacement {
@@ -2247,6 +2334,12 @@ class Geom_Axis2Placement : public Geom_AxisPlacement {
 	}
 };
 
+%pythonappend Handle_Geom_Axis2Placement::Handle_Geom_Axis2Placement %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_Axis2Placement;
 class Handle_Geom_Axis2Placement : public Handle_Geom_AxisPlacement {
 
@@ -2296,6 +2389,12 @@ class Geom_BoundedCurve : public Geom_Curve {
 	}
 };
 
+%pythonappend Handle_Geom_BoundedCurve::Handle_Geom_BoundedCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_BoundedCurve;
 class Handle_Geom_BoundedCurve : public Handle_Geom_Curve {
 
@@ -2332,6 +2431,12 @@ class Geom_BoundedSurface : public Geom_Surface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_BoundedSurface::Handle_Geom_BoundedSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_BoundedSurface;
 class Handle_Geom_BoundedSurface : public Handle_Geom_Surface {
@@ -2484,6 +2589,12 @@ class Geom_CartesianPoint : public Geom_Point {
 	}
 };
 
+%pythonappend Handle_Geom_CartesianPoint::Handle_Geom_CartesianPoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_CartesianPoint;
 class Handle_Geom_CartesianPoint : public Handle_Geom_Point {
 
@@ -2608,6 +2719,12 @@ class Geom_Conic : public Geom_Curve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_Conic::Handle_Geom_Conic %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_Conic;
 class Handle_Geom_Conic : public Handle_Geom_Curve {
@@ -2778,6 +2895,12 @@ class Geom_Direction : public Geom_Vector {
 	}
 };
 
+%pythonappend Handle_Geom_Direction::Handle_Geom_Direction %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_Direction;
 class Handle_Geom_Direction : public Handle_Geom_Vector {
 
@@ -2906,6 +3029,12 @@ class Geom_ElementarySurface : public Geom_Surface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_ElementarySurface::Handle_Geom_ElementarySurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_ElementarySurface;
 class Handle_Geom_ElementarySurface : public Handle_Geom_Surface {
@@ -3159,6 +3288,12 @@ class Geom_Line : public Geom_Curve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_Line::Handle_Geom_Line %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_Line;
 class Handle_Geom_Line : public Handle_Geom_Curve {
@@ -3466,6 +3601,12 @@ class Geom_OffsetCurve : public Geom_Curve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_OffsetCurve::Handle_Geom_OffsetCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_OffsetCurve;
 class Handle_Geom_OffsetCurve : public Handle_Geom_Curve {
@@ -4012,6 +4153,12 @@ class Geom_OffsetSurface : public Geom_Surface {
 	}
 };
 
+%pythonappend Handle_Geom_OffsetSurface::Handle_Geom_OffsetSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_OffsetSurface;
 class Handle_Geom_OffsetSurface : public Handle_Geom_Surface {
 
@@ -4066,6 +4213,12 @@ class Geom_SweptSurface : public Geom_Surface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_SweptSurface::Handle_Geom_SweptSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_SweptSurface;
 class Handle_Geom_SweptSurface : public Handle_Geom_Surface {
@@ -4315,6 +4468,12 @@ class Geom_VectorWithMagnitude : public Geom_Vector {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_VectorWithMagnitude::Handle_Geom_VectorWithMagnitude %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_VectorWithMagnitude;
 class Handle_Geom_VectorWithMagnitude : public Handle_Geom_Vector {
@@ -5008,6 +5167,12 @@ class Geom_BSplineCurve : public Geom_BoundedCurve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_BSplineCurve::Handle_Geom_BSplineCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_BSplineCurve;
 class Handle_Geom_BSplineCurve : public Handle_Geom_BoundedCurve {
@@ -6160,6 +6325,12 @@ class Geom_BSplineSurface : public Geom_BoundedSurface {
 	}
 };
 
+%pythonappend Handle_Geom_BSplineSurface::Handle_Geom_BSplineSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_BSplineSurface;
 class Handle_Geom_BSplineSurface : public Handle_Geom_BoundedSurface {
 
@@ -6516,6 +6687,12 @@ class Geom_BezierCurve : public Geom_BoundedCurve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_BezierCurve::Handle_Geom_BezierCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_BezierCurve;
 class Handle_Geom_BezierCurve : public Handle_Geom_BoundedCurve {
@@ -7104,6 +7281,12 @@ class Geom_BezierSurface : public Geom_BoundedSurface {
 	}
 };
 
+%pythonappend Handle_Geom_BezierSurface::Handle_Geom_BezierSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_BezierSurface;
 class Handle_Geom_BezierSurface : public Handle_Geom_BoundedSurface {
 
@@ -7300,6 +7483,12 @@ class Geom_Circle : public Geom_Conic {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_Circle::Handle_Geom_Circle %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_Circle;
 class Handle_Geom_Circle : public Handle_Geom_Conic {
@@ -7636,6 +7825,12 @@ class Geom_ConicalSurface : public Geom_ElementarySurface {
 	}
 };
 
+%pythonappend Handle_Geom_ConicalSurface::Handle_Geom_ConicalSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_ConicalSurface;
 class Handle_Geom_ConicalSurface : public Handle_Geom_ElementarySurface {
 
@@ -7943,6 +8138,12 @@ class Geom_CylindricalSurface : public Geom_ElementarySurface {
 	}
 };
 
+%pythonappend Handle_Geom_CylindricalSurface::Handle_Geom_CylindricalSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_CylindricalSurface;
 class Handle_Geom_CylindricalSurface : public Handle_Geom_ElementarySurface {
 
@@ -8189,6 +8390,12 @@ class Geom_Ellipse : public Geom_Conic {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_Ellipse::Handle_Geom_Ellipse %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_Ellipse;
 class Handle_Geom_Ellipse : public Handle_Geom_Conic {
@@ -8469,6 +8676,12 @@ class Geom_Hyperbola : public Geom_Conic {
 	}
 };
 
+%pythonappend Handle_Geom_Hyperbola::Handle_Geom_Hyperbola %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_Hyperbola;
 class Handle_Geom_Hyperbola : public Handle_Geom_Conic {
 
@@ -8711,6 +8924,12 @@ class Geom_Parabola : public Geom_Conic {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_Parabola::Handle_Geom_Parabola %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_Parabola;
 class Handle_Geom_Parabola : public Handle_Geom_Conic {
@@ -9026,6 +9245,12 @@ class Geom_Plane : public Geom_ElementarySurface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_Plane::Handle_Geom_Plane %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_Plane;
 class Handle_Geom_Plane : public Handle_Geom_ElementarySurface {
@@ -9382,6 +9607,12 @@ class Geom_RectangularTrimmedSurface : public Geom_BoundedSurface {
 	}
 };
 
+%pythonappend Handle_Geom_RectangularTrimmedSurface::Handle_Geom_RectangularTrimmedSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_RectangularTrimmedSurface;
 class Handle_Geom_RectangularTrimmedSurface : public Handle_Geom_BoundedSurface {
 
@@ -9680,6 +9911,12 @@ class Geom_SphericalSurface : public Geom_ElementarySurface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_SphericalSurface::Handle_Geom_SphericalSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_SphericalSurface;
 class Handle_Geom_SphericalSurface : public Handle_Geom_ElementarySurface {
@@ -10065,6 +10302,12 @@ class Geom_SurfaceOfLinearExtrusion : public Geom_SweptSurface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_SurfaceOfLinearExtrusion::Handle_Geom_SurfaceOfLinearExtrusion %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_SurfaceOfLinearExtrusion;
 class Handle_Geom_SurfaceOfLinearExtrusion : public Handle_Geom_SweptSurface {
@@ -10483,6 +10726,12 @@ class Geom_SurfaceOfRevolution : public Geom_SweptSurface {
 	}
 };
 
+%pythonappend Handle_Geom_SurfaceOfRevolution::Handle_Geom_SurfaceOfRevolution %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_SurfaceOfRevolution;
 class Handle_Geom_SurfaceOfRevolution : public Handle_Geom_SweptSurface {
 
@@ -10780,6 +11029,12 @@ class Geom_ToroidalSurface : public Geom_ElementarySurface {
 	}
 };
 
+%pythonappend Handle_Geom_ToroidalSurface::Handle_Geom_ToroidalSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Geom_ToroidalSurface;
 class Handle_Geom_ToroidalSurface : public Handle_Geom_ElementarySurface {
 
@@ -11012,6 +11267,12 @@ class Geom_TrimmedCurve : public Geom_BoundedCurve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Geom_TrimmedCurve::Handle_Geom_TrimmedCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Geom_TrimmedCurve;
 class Handle_Geom_TrimmedCurve : public Handle_Geom_BoundedCurve {

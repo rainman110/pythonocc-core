@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include IntCurveSurface_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -279,6 +294,12 @@ class IntCurveSurface_SequenceNodeOfSequenceOfPnt : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_IntCurveSurface_SequenceNodeOfSequenceOfPnt::Handle_IntCurveSurface_SequenceNodeOfSequenceOfPnt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_IntCurveSurface_SequenceNodeOfSequenceOfPnt;
 class Handle_IntCurveSurface_SequenceNodeOfSequenceOfPnt : public Handle_TCollection_SeqNode {
 
@@ -329,6 +350,12 @@ class IntCurveSurface_SequenceNodeOfSequenceOfSeg : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IntCurveSurface_SequenceNodeOfSequenceOfSeg::Handle_IntCurveSurface_SequenceNodeOfSequenceOfSeg %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IntCurveSurface_SequenceNodeOfSequenceOfSeg;
 class Handle_IntCurveSurface_SequenceNodeOfSequenceOfSeg : public Handle_TCollection_SeqNode {

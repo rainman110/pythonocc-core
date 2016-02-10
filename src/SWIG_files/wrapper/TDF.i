@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TDF_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef Handle_NCollection_BaseAllocator TDF_HAllocator;
 typedef TDF_LabelNode * TDF_LabelNodePtr;
@@ -376,6 +391,12 @@ class TDF_Attribute : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TDF_Attribute::Handle_TDF_Attribute %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_Attribute;
 class Handle_TDF_Attribute : public Handle_MMgt_TShared {
 
@@ -604,6 +625,12 @@ class TDF_AttributeDelta : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_AttributeDelta::Handle_TDF_AttributeDelta %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_AttributeDelta;
 class Handle_TDF_AttributeDelta : public Handle_MMgt_TShared {
@@ -1751,6 +1778,12 @@ class TDF_Data : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TDF_Data::Handle_TDF_Data %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_Data;
 class Handle_TDF_Data : public Handle_MMgt_TShared {
 
@@ -1926,6 +1959,12 @@ class TDF_DataMapNodeOfAttributeDataMap : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDF_DataMapNodeOfAttributeDataMap::Handle_TDF_DataMapNodeOfAttributeDataMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_DataMapNodeOfAttributeDataMap;
 class Handle_TDF_DataMapNodeOfAttributeDataMap : public Handle_TCollection_MapNode {
 
@@ -1980,6 +2019,12 @@ class TDF_DataMapNodeOfLabelDataMap : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_DataMapNodeOfLabelDataMap::Handle_TDF_DataMapNodeOfLabelDataMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_DataMapNodeOfLabelDataMap;
 class Handle_TDF_DataMapNodeOfLabelDataMap : public Handle_TCollection_MapNode {
@@ -2045,6 +2090,12 @@ class TDF_DataMapNodeOfLabelIntegerMap : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDF_DataMapNodeOfLabelIntegerMap::Handle_TDF_DataMapNodeOfLabelIntegerMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_DataMapNodeOfLabelIntegerMap;
 class Handle_TDF_DataMapNodeOfLabelIntegerMap : public Handle_TCollection_MapNode {
 
@@ -2099,6 +2150,12 @@ class TDF_DataMapNodeOfLabelLabelMap : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_DataMapNodeOfLabelLabelMap::Handle_TDF_DataMapNodeOfLabelLabelMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_DataMapNodeOfLabelLabelMap;
 class Handle_TDF_DataMapNodeOfLabelLabelMap : public Handle_TCollection_MapNode {
@@ -2221,6 +2278,12 @@ class TDF_DataSet : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TDF_DataSet::Handle_TDF_DataSet %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_DataSet;
 class Handle_TDF_DataSet : public Handle_MMgt_TShared {
 
@@ -2325,6 +2388,12 @@ class TDF_Delta : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_Delta::Handle_TDF_Delta %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_Delta;
 class Handle_TDF_Delta : public Handle_MMgt_TShared {
@@ -2601,6 +2670,12 @@ class TDF_DoubleMapNodeOfAttributeDoubleMap : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDF_DoubleMapNodeOfAttributeDoubleMap::Handle_TDF_DoubleMapNodeOfAttributeDoubleMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_DoubleMapNodeOfAttributeDoubleMap;
 class Handle_TDF_DoubleMapNodeOfAttributeDoubleMap : public Handle_TCollection_MapNode {
 
@@ -2662,6 +2737,12 @@ class TDF_DoubleMapNodeOfGUIDProgIDMap : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDF_DoubleMapNodeOfGUIDProgIDMap::Handle_TDF_DoubleMapNodeOfGUIDProgIDMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_DoubleMapNodeOfGUIDProgIDMap;
 class Handle_TDF_DoubleMapNodeOfGUIDProgIDMap : public Handle_TCollection_MapNode {
 
@@ -2722,6 +2803,12 @@ class TDF_DoubleMapNodeOfLabelDoubleMap : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_DoubleMapNodeOfLabelDoubleMap::Handle_TDF_DoubleMapNodeOfLabelDoubleMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_DoubleMapNodeOfLabelDoubleMap;
 class Handle_TDF_DoubleMapNodeOfLabelDoubleMap : public Handle_TCollection_MapNode {
@@ -2909,6 +2996,12 @@ class TDF_HAttributeArray1 : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_HAttributeArray1::Handle_TDF_HAttributeArray1 %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_HAttributeArray1;
 class Handle_TDF_HAttributeArray1 : public Handle_MMgt_TShared {
@@ -3272,6 +3365,12 @@ class TDF_IndexedMapNodeOfAttributeIndexedMap : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDF_IndexedMapNodeOfAttributeIndexedMap::Handle_TDF_IndexedMapNodeOfAttributeIndexedMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_IndexedMapNodeOfAttributeIndexedMap;
 class Handle_TDF_IndexedMapNodeOfAttributeIndexedMap : public Handle_TCollection_MapNode {
 
@@ -3341,6 +3440,12 @@ class TDF_IndexedMapNodeOfLabelIndexedMap : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_IndexedMapNodeOfLabelIndexedMap::Handle_TDF_IndexedMapNodeOfLabelIndexedMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_IndexedMapNodeOfLabelIndexedMap;
 class Handle_TDF_IndexedMapNodeOfLabelIndexedMap : public Handle_TCollection_MapNode {
@@ -4578,6 +4683,12 @@ class TDF_ListNodeOfAttributeDeltaList : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDF_ListNodeOfAttributeDeltaList::Handle_TDF_ListNodeOfAttributeDeltaList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_ListNodeOfAttributeDeltaList;
 class Handle_TDF_ListNodeOfAttributeDeltaList : public Handle_TCollection_MapNode {
 
@@ -4626,6 +4737,12 @@ class TDF_ListNodeOfAttributeList : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_ListNodeOfAttributeList::Handle_TDF_ListNodeOfAttributeList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_ListNodeOfAttributeList;
 class Handle_TDF_ListNodeOfAttributeList : public Handle_TCollection_MapNode {
@@ -4676,6 +4793,12 @@ class TDF_ListNodeOfDeltaList : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDF_ListNodeOfDeltaList::Handle_TDF_ListNodeOfDeltaList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_ListNodeOfDeltaList;
 class Handle_TDF_ListNodeOfDeltaList : public Handle_TCollection_MapNode {
 
@@ -4725,6 +4848,12 @@ class TDF_ListNodeOfIDList : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDF_ListNodeOfIDList::Handle_TDF_ListNodeOfIDList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_ListNodeOfIDList;
 class Handle_TDF_ListNodeOfIDList : public Handle_TCollection_MapNode {
 
@@ -4773,6 +4902,12 @@ class TDF_ListNodeOfLabelList : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_ListNodeOfLabelList::Handle_TDF_ListNodeOfLabelList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_ListNodeOfLabelList;
 class Handle_TDF_ListNodeOfLabelList : public Handle_TCollection_MapNode {
@@ -5037,6 +5172,12 @@ class TDF_RelocationTable : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TDF_RelocationTable::Handle_TDF_RelocationTable %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_RelocationTable;
 class Handle_TDF_RelocationTable : public Handle_MMgt_TShared {
 
@@ -5087,6 +5228,12 @@ class TDF_SequenceNodeOfAttributeSequence : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_SequenceNodeOfAttributeSequence::Handle_TDF_SequenceNodeOfAttributeSequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_SequenceNodeOfAttributeSequence;
 class Handle_TDF_SequenceNodeOfAttributeSequence : public Handle_TCollection_SeqNode {
@@ -5139,6 +5286,12 @@ class TDF_SequenceNodeOfLabelSequence : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_TDF_SequenceNodeOfLabelSequence::Handle_TDF_SequenceNodeOfLabelSequence %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_SequenceNodeOfLabelSequence;
 class Handle_TDF_SequenceNodeOfLabelSequence : public Handle_TCollection_SeqNode {
 
@@ -5187,6 +5340,12 @@ class TDF_StdMapNodeOfAttributeMap : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_StdMapNodeOfAttributeMap::Handle_TDF_StdMapNodeOfAttributeMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_StdMapNodeOfAttributeMap;
 class Handle_TDF_StdMapNodeOfAttributeMap : public Handle_TCollection_MapNode {
@@ -5237,6 +5396,12 @@ class TDF_StdMapNodeOfIDMap : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TDF_StdMapNodeOfIDMap::Handle_TDF_StdMapNodeOfIDMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_StdMapNodeOfIDMap;
 class Handle_TDF_StdMapNodeOfIDMap : public Handle_TCollection_MapNode {
 
@@ -5285,6 +5450,12 @@ class TDF_StdMapNodeOfLabelMap : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_StdMapNodeOfLabelMap::Handle_TDF_StdMapNodeOfLabelMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_StdMapNodeOfLabelMap;
 class Handle_TDF_StdMapNodeOfLabelMap : public Handle_TCollection_MapNode {
@@ -5662,6 +5833,12 @@ class TDF_DeltaOnAddition : public TDF_AttributeDelta {
 	}
 };
 
+%pythonappend Handle_TDF_DeltaOnAddition::Handle_TDF_DeltaOnAddition %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_DeltaOnAddition;
 class Handle_TDF_DeltaOnAddition : public Handle_TDF_AttributeDelta {
 
@@ -5713,6 +5890,12 @@ class TDF_DeltaOnForget : public TDF_AttributeDelta {
 	}
 };
 
+%pythonappend Handle_TDF_DeltaOnForget::Handle_TDF_DeltaOnForget %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_DeltaOnForget;
 class Handle_TDF_DeltaOnForget : public Handle_TDF_AttributeDelta {
 
@@ -5756,6 +5939,12 @@ class TDF_DeltaOnModification : public TDF_AttributeDelta {
 	}
 };
 
+%pythonappend Handle_TDF_DeltaOnModification::Handle_TDF_DeltaOnModification %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_DeltaOnModification;
 class Handle_TDF_DeltaOnModification : public Handle_TDF_AttributeDelta {
 
@@ -5792,6 +5981,12 @@ class TDF_DeltaOnRemoval : public TDF_AttributeDelta {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_DeltaOnRemoval::Handle_TDF_DeltaOnRemoval %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_DeltaOnRemoval;
 class Handle_TDF_DeltaOnRemoval : public Handle_TDF_AttributeDelta {
@@ -5843,6 +6038,12 @@ class TDF_DeltaOnResume : public TDF_AttributeDelta {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_DeltaOnResume::Handle_TDF_DeltaOnResume %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_DeltaOnResume;
 class Handle_TDF_DeltaOnResume : public Handle_TDF_AttributeDelta {
@@ -5942,6 +6143,12 @@ class TDF_Reference : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_Reference::Handle_TDF_Reference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_Reference;
 class Handle_TDF_Reference : public Handle_TDF_Attribute {
@@ -6048,6 +6255,12 @@ class TDF_TagSource : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TDF_TagSource::Handle_TDF_TagSource %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_TagSource;
 class Handle_TDF_TagSource : public Handle_TDF_Attribute {
 
@@ -6099,6 +6312,12 @@ class TDF_DefaultDeltaOnModification : public TDF_DeltaOnModification {
 	}
 };
 
+%pythonappend Handle_TDF_DefaultDeltaOnModification::Handle_TDF_DefaultDeltaOnModification %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TDF_DefaultDeltaOnModification;
 class Handle_TDF_DefaultDeltaOnModification : public Handle_TDF_DeltaOnModification {
 
@@ -6149,6 +6368,12 @@ class TDF_DefaultDeltaOnRemoval : public TDF_DeltaOnRemoval {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TDF_DefaultDeltaOnRemoval::Handle_TDF_DefaultDeltaOnRemoval %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TDF_DefaultDeltaOnRemoval;
 class Handle_TDF_DefaultDeltaOnRemoval : public Handle_TDF_DeltaOnRemoval {

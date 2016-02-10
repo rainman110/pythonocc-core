@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Intf_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -1032,6 +1047,12 @@ class Intf_SequenceNodeOfSeqOfSectionLine : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Intf_SequenceNodeOfSeqOfSectionLine::Handle_Intf_SequenceNodeOfSeqOfSectionLine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Intf_SequenceNodeOfSeqOfSectionLine;
 class Handle_Intf_SequenceNodeOfSeqOfSectionLine : public Handle_TCollection_SeqNode {
 
@@ -1083,6 +1104,12 @@ class Intf_SequenceNodeOfSeqOfSectionPoint : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Intf_SequenceNodeOfSeqOfSectionPoint::Handle_Intf_SequenceNodeOfSeqOfSectionPoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Intf_SequenceNodeOfSeqOfSectionPoint;
 class Handle_Intf_SequenceNodeOfSeqOfSectionPoint : public Handle_TCollection_SeqNode {
 
@@ -1133,6 +1160,12 @@ class Intf_SequenceNodeOfSeqOfTangentZone : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Intf_SequenceNodeOfSeqOfTangentZone::Handle_Intf_SequenceNodeOfSeqOfTangentZone %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Intf_SequenceNodeOfSeqOfTangentZone;
 class Handle_Intf_SequenceNodeOfSeqOfTangentZone : public Handle_TCollection_SeqNode {

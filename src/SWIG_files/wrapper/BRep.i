@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRep_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -954,6 +969,12 @@ class BRep_CurveRepresentation : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_BRep_CurveRepresentation::Handle_BRep_CurveRepresentation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_CurveRepresentation;
 class Handle_BRep_CurveRepresentation : public Handle_MMgt_TShared {
 
@@ -1071,6 +1092,12 @@ class BRep_ListNodeOfListOfCurveRepresentation : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_BRep_ListNodeOfListOfCurveRepresentation::Handle_BRep_ListNodeOfListOfCurveRepresentation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_ListNodeOfListOfCurveRepresentation;
 class Handle_BRep_ListNodeOfListOfCurveRepresentation : public Handle_TCollection_MapNode {
 
@@ -1119,6 +1146,12 @@ class BRep_ListNodeOfListOfPointRepresentation : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRep_ListNodeOfListOfPointRepresentation::Handle_BRep_ListNodeOfListOfPointRepresentation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRep_ListNodeOfListOfPointRepresentation;
 class Handle_BRep_ListNodeOfListOfPointRepresentation : public Handle_TCollection_MapNode {
@@ -1515,6 +1548,12 @@ class BRep_PointRepresentation : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_BRep_PointRepresentation::Handle_BRep_PointRepresentation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_PointRepresentation;
 class Handle_BRep_PointRepresentation : public Handle_MMgt_TShared {
 
@@ -1620,6 +1659,12 @@ class BRep_TEdge : public TopoDS_TEdge {
 	}
 };
 
+%pythonappend Handle_BRep_TEdge::Handle_BRep_TEdge %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_TEdge;
 class Handle_BRep_TEdge : public Handle_TopoDS_TEdge {
 
@@ -1719,6 +1764,12 @@ class BRep_TFace : public TopoDS_TFace {
 	}
 };
 
+%pythonappend Handle_BRep_TFace::Handle_BRep_TFace %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_TFace;
 class Handle_BRep_TFace : public Handle_TopoDS_TFace {
 
@@ -1801,6 +1852,12 @@ class BRep_TVertex : public TopoDS_TVertex {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRep_TVertex::Handle_BRep_TVertex %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRep_TVertex;
 class Handle_BRep_TVertex : public Handle_TopoDS_TVertex {
@@ -2466,6 +2523,12 @@ class BRep_CurveOn2Surfaces : public BRep_CurveRepresentation {
 	}
 };
 
+%pythonappend Handle_BRep_CurveOn2Surfaces::Handle_BRep_CurveOn2Surfaces %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_CurveOn2Surfaces;
 class Handle_BRep_CurveOn2Surfaces : public Handle_BRep_CurveRepresentation {
 
@@ -2555,6 +2618,12 @@ class BRep_GCurve : public BRep_CurveRepresentation {
 	}
 };
 
+%pythonappend Handle_BRep_GCurve::Handle_BRep_GCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_GCurve;
 class Handle_BRep_GCurve : public Handle_BRep_CurveRepresentation {
 
@@ -2626,6 +2695,12 @@ class BRep_PointOnCurve : public BRep_PointRepresentation {
 	}
 };
 
+%pythonappend Handle_BRep_PointOnCurve::Handle_BRep_PointOnCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_PointOnCurve;
 class Handle_BRep_PointOnCurve : public Handle_BRep_PointRepresentation {
 
@@ -2672,6 +2747,12 @@ class BRep_PointsOnSurface : public BRep_PointRepresentation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRep_PointsOnSurface::Handle_BRep_PointsOnSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRep_PointsOnSurface;
 class Handle_BRep_PointsOnSurface : public Handle_BRep_PointRepresentation {
@@ -2739,6 +2820,12 @@ class BRep_Polygon3D : public BRep_CurveRepresentation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRep_Polygon3D::Handle_BRep_Polygon3D %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRep_Polygon3D;
 class Handle_BRep_Polygon3D : public Handle_BRep_CurveRepresentation {
@@ -2822,6 +2909,12 @@ class BRep_PolygonOnSurface : public BRep_CurveRepresentation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRep_PolygonOnSurface::Handle_BRep_PolygonOnSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRep_PolygonOnSurface;
 class Handle_BRep_PolygonOnSurface : public Handle_BRep_CurveRepresentation {
@@ -2908,6 +3001,12 @@ class BRep_PolygonOnTriangulation : public BRep_CurveRepresentation {
 	}
 };
 
+%pythonappend Handle_BRep_PolygonOnTriangulation::Handle_BRep_PolygonOnTriangulation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_PolygonOnTriangulation;
 class Handle_BRep_PolygonOnTriangulation : public Handle_BRep_CurveRepresentation {
 
@@ -2984,6 +3083,12 @@ class BRep_Curve3D : public BRep_GCurve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRep_Curve3D::Handle_BRep_Curve3D %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRep_Curve3D;
 class Handle_BRep_Curve3D : public Handle_BRep_GCurve {
@@ -3100,6 +3205,12 @@ class BRep_CurveOnSurface : public BRep_GCurve {
 	}
 };
 
+%pythonappend Handle_BRep_CurveOnSurface::Handle_BRep_CurveOnSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_CurveOnSurface;
 class Handle_BRep_CurveOnSurface : public Handle_BRep_GCurve {
 
@@ -3175,6 +3286,12 @@ class BRep_PointOnCurveOnSurface : public BRep_PointsOnSurface {
 	}
 };
 
+%pythonappend Handle_BRep_PointOnCurveOnSurface::Handle_BRep_PointOnCurveOnSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_PointOnCurveOnSurface;
 class Handle_BRep_PointOnCurveOnSurface : public Handle_BRep_PointsOnSurface {
 
@@ -3245,6 +3362,12 @@ class BRep_PointOnSurface : public BRep_PointsOnSurface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRep_PointOnSurface::Handle_BRep_PointOnSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRep_PointOnSurface;
 class Handle_BRep_PointOnSurface : public Handle_BRep_PointsOnSurface {
@@ -3317,6 +3440,12 @@ class BRep_PolygonOnClosedSurface : public BRep_PolygonOnSurface {
 	}
 };
 
+%pythonappend Handle_BRep_PolygonOnClosedSurface::Handle_BRep_PolygonOnClosedSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRep_PolygonOnClosedSurface;
 class Handle_BRep_PolygonOnClosedSurface : public Handle_BRep_PolygonOnSurface {
 
@@ -3387,6 +3516,12 @@ class BRep_PolygonOnClosedTriangulation : public BRep_PolygonOnTriangulation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRep_PolygonOnClosedTriangulation::Handle_BRep_PolygonOnClosedTriangulation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRep_PolygonOnClosedTriangulation;
 class Handle_BRep_PolygonOnClosedTriangulation : public Handle_BRep_PolygonOnTriangulation {
@@ -3524,6 +3659,12 @@ class BRep_CurveOnClosedSurface : public BRep_CurveOnSurface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRep_CurveOnClosedSurface::Handle_BRep_CurveOnClosedSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRep_CurveOnClosedSurface;
 class Handle_BRep_CurveOnClosedSurface : public Handle_BRep_CurveOnSurface {

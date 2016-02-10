@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include AIS_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef AIS_NListTransient::Iterator AIS_NListIteratorOfListTransient;
 typedef AIS_InteractiveContext * AIS_PToContext;
@@ -715,6 +730,12 @@ class AIS_AttributeFilter : public SelectMgr_Filter {
 	}
 };
 
+%pythonappend Handle_AIS_AttributeFilter::Handle_AIS_AttributeFilter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_AttributeFilter;
 class Handle_AIS_AttributeFilter : public Handle_SelectMgr_Filter {
 
@@ -796,6 +817,12 @@ class AIS_BadEdgeFilter : public SelectMgr_Filter {
 	}
 };
 
+%pythonappend Handle_AIS_BadEdgeFilter::Handle_AIS_BadEdgeFilter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_BadEdgeFilter;
 class Handle_AIS_BadEdgeFilter : public Handle_SelectMgr_Filter {
 
@@ -850,6 +877,12 @@ class AIS_C0RegularityFilter : public SelectMgr_Filter {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_C0RegularityFilter::Handle_AIS_C0RegularityFilter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_C0RegularityFilter;
 class Handle_AIS_C0RegularityFilter : public Handle_SelectMgr_Filter {
@@ -1035,6 +1068,12 @@ class AIS_DataMapNodeOfDataMapOfILC : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_AIS_DataMapNodeOfDataMapOfILC::Handle_AIS_DataMapNodeOfDataMapOfILC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_DataMapNodeOfDataMapOfILC;
 class Handle_AIS_DataMapNodeOfDataMapOfILC : public Handle_TCollection_MapNode {
 
@@ -1090,6 +1129,12 @@ class AIS_DataMapNodeOfDataMapOfIOStatus : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_AIS_DataMapNodeOfDataMapOfIOStatus::Handle_AIS_DataMapNodeOfDataMapOfIOStatus %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_DataMapNodeOfDataMapOfIOStatus;
 class Handle_AIS_DataMapNodeOfDataMapOfIOStatus : public Handle_TCollection_MapNode {
 
@@ -1144,6 +1189,12 @@ class AIS_DataMapNodeOfDataMapOfSelStat : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_DataMapNodeOfDataMapOfSelStat::Handle_AIS_DataMapNodeOfDataMapOfSelStat %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_DataMapNodeOfDataMapOfSelStat;
 class Handle_AIS_DataMapNodeOfDataMapOfSelStat : public Handle_TCollection_MapNode {
@@ -1208,6 +1259,12 @@ class AIS_DataMapNodeOfDataMapofIntegerListOfinteractive : public TCollection_Ma
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_DataMapNodeOfDataMapofIntegerListOfinteractive::Handle_AIS_DataMapNodeOfDataMapofIntegerListOfinteractive %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_DataMapNodeOfDataMapofIntegerListOfinteractive;
 class Handle_AIS_DataMapNodeOfDataMapofIntegerListOfinteractive : public Handle_TCollection_MapNode {
@@ -1611,6 +1668,12 @@ class AIS_DimensionOwner : public SelectMgr_EntityOwner {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_DimensionOwner::Handle_AIS_DimensionOwner %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_DimensionOwner;
 class Handle_AIS_DimensionOwner : public Handle_SelectMgr_EntityOwner {
@@ -2129,6 +2192,12 @@ class AIS_Drawer : public Prs3d_Drawer {
 	}
 };
 
+%pythonappend Handle_AIS_Drawer::Handle_AIS_Drawer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_Drawer;
 class Handle_AIS_Drawer : public Handle_Prs3d_Drawer {
 
@@ -2265,6 +2334,12 @@ class AIS_ExclusionFilter : public SelectMgr_Filter {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_ExclusionFilter::Handle_AIS_ExclusionFilter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_ExclusionFilter;
 class Handle_AIS_ExclusionFilter : public Handle_SelectMgr_Filter {
@@ -2423,6 +2498,12 @@ class AIS_GlobalStatus : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_AIS_GlobalStatus::Handle_AIS_GlobalStatus %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_GlobalStatus;
 class Handle_AIS_GlobalStatus : public Handle_MMgt_TShared {
 
@@ -2571,6 +2652,12 @@ class AIS_IndexedDataMapNodeOfIndexedDataMapOfOwnerPrs : public TCollection_MapN
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_IndexedDataMapNodeOfIndexedDataMapOfOwnerPrs::Handle_AIS_IndexedDataMapNodeOfIndexedDataMapOfOwnerPrs %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_IndexedDataMapNodeOfIndexedDataMapOfOwnerPrs;
 class Handle_AIS_IndexedDataMapNodeOfIndexedDataMapOfOwnerPrs : public Handle_TCollection_MapNode {
@@ -4641,6 +4728,12 @@ class AIS_InteractiveContext : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_AIS_InteractiveContext::Handle_AIS_InteractiveContext %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_InteractiveContext;
 class Handle_AIS_InteractiveContext : public Handle_MMgt_TShared {
 
@@ -5148,6 +5241,12 @@ class AIS_InteractiveObject : public SelectMgr_SelectableObject {
 	}
 };
 
+%pythonappend Handle_AIS_InteractiveObject::Handle_AIS_InteractiveObject %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_InteractiveObject;
 class Handle_AIS_InteractiveObject : public Handle_SelectMgr_SelectableObject {
 
@@ -5230,6 +5329,12 @@ class AIS_ListNodeOfListOfInteractive : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_ListNodeOfListOfInteractive::Handle_AIS_ListNodeOfListOfInteractive %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_ListNodeOfListOfInteractive;
 class Handle_AIS_ListNodeOfListOfInteractive : public Handle_TCollection_MapNode {
@@ -6100,6 +6205,12 @@ class AIS_LocalContext : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_AIS_LocalContext::Handle_AIS_LocalContext %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_LocalContext;
 class Handle_AIS_LocalContext : public Handle_MMgt_TShared {
 
@@ -6268,6 +6379,12 @@ class AIS_LocalStatus : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_LocalStatus::Handle_AIS_LocalStatus %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_LocalStatus;
 class Handle_AIS_LocalStatus : public Handle_MMgt_TShared {
@@ -6516,6 +6633,12 @@ class AIS_Selection : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_AIS_Selection::Handle_AIS_Selection %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_Selection;
 class Handle_AIS_Selection : public Handle_MMgt_TShared {
 
@@ -6567,6 +6690,12 @@ class AIS_SequenceNodeOfSequenceOfDimension : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_AIS_SequenceNodeOfSequenceOfDimension::Handle_AIS_SequenceNodeOfSequenceOfDimension %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_SequenceNodeOfSequenceOfDimension;
 class Handle_AIS_SequenceNodeOfSequenceOfDimension : public Handle_TCollection_SeqNode {
 
@@ -6617,6 +6746,12 @@ class AIS_SequenceNodeOfSequenceOfInteractive : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_SequenceNodeOfSequenceOfInteractive::Handle_AIS_SequenceNodeOfSequenceOfInteractive %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_SequenceNodeOfSequenceOfInteractive;
 class Handle_AIS_SequenceNodeOfSequenceOfInteractive : public Handle_TCollection_SeqNode {
@@ -6931,6 +7066,12 @@ class AIS_StdMapNodeOfMapOfInteractive : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_AIS_StdMapNodeOfMapOfInteractive::Handle_AIS_StdMapNodeOfMapOfInteractive %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_StdMapNodeOfMapOfInteractive;
 class Handle_AIS_StdMapNodeOfMapOfInteractive : public Handle_TCollection_MapNode {
 
@@ -6983,6 +7124,12 @@ class AIS_TypeFilter : public SelectMgr_Filter {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_TypeFilter::Handle_AIS_TypeFilter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_TypeFilter;
 class Handle_AIS_TypeFilter : public Handle_SelectMgr_Filter {
@@ -7159,6 +7306,12 @@ class AIS_Axis : public AIS_InteractiveObject {
 	}
 };
 
+%pythonappend Handle_AIS_Axis::Handle_AIS_Axis %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_Axis;
 class Handle_AIS_Axis : public Handle_AIS_InteractiveObject {
 
@@ -7330,6 +7483,12 @@ class AIS_Circle : public AIS_InteractiveObject {
 	}
 };
 
+%pythonappend Handle_AIS_Circle::Handle_AIS_Circle %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_Circle;
 class Handle_AIS_Circle : public Handle_AIS_InteractiveObject {
 
@@ -7456,6 +7615,12 @@ class AIS_ConnectedInteractive : public AIS_InteractiveObject {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_ConnectedInteractive::Handle_AIS_ConnectedInteractive %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_ConnectedInteractive;
 class Handle_AIS_ConnectedInteractive : public Handle_AIS_InteractiveObject {
@@ -7809,6 +7974,12 @@ class AIS_Line : public AIS_InteractiveObject {
 	}
 };
 
+%pythonappend Handle_AIS_Line::Handle_AIS_Line %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_Line;
 class Handle_AIS_Line : public Handle_AIS_InteractiveObject {
 
@@ -7915,6 +8086,12 @@ class AIS_MultipleConnectedInteractive : public AIS_InteractiveObject {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_MultipleConnectedInteractive::Handle_AIS_MultipleConnectedInteractive %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_MultipleConnectedInteractive;
 class Handle_AIS_MultipleConnectedInteractive : public Handle_AIS_InteractiveObject {
@@ -8207,6 +8384,12 @@ class AIS_Plane : public AIS_InteractiveObject {
 	}
 };
 
+%pythonappend Handle_AIS_Plane::Handle_AIS_Plane %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_Plane;
 class Handle_AIS_Plane : public Handle_AIS_InteractiveObject {
 
@@ -8354,6 +8537,12 @@ class AIS_PlaneTrihedron : public AIS_InteractiveObject {
 	}
 };
 
+%pythonappend Handle_AIS_PlaneTrihedron::Handle_AIS_PlaneTrihedron %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_PlaneTrihedron;
 class Handle_AIS_PlaneTrihedron : public Handle_AIS_InteractiveObject {
 
@@ -8490,6 +8679,12 @@ class AIS_Point : public AIS_InteractiveObject {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_Point::Handle_AIS_Point %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_Point;
 class Handle_AIS_Point : public Handle_AIS_InteractiveObject {
@@ -8723,6 +8918,12 @@ class AIS_Relation : public AIS_InteractiveObject {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_Relation::Handle_AIS_Relation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_Relation;
 class Handle_AIS_Relation : public Handle_AIS_InteractiveObject {
@@ -9057,6 +9258,12 @@ class AIS_Shape : public AIS_InteractiveObject {
 	}
 };
 
+%pythonappend Handle_AIS_Shape::Handle_AIS_Shape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_Shape;
 class Handle_AIS_Shape : public Handle_AIS_InteractiveObject {
 
@@ -9111,6 +9318,12 @@ class AIS_SignatureFilter : public AIS_TypeFilter {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_SignatureFilter::Handle_AIS_SignatureFilter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_SignatureFilter;
 class Handle_AIS_SignatureFilter : public Handle_AIS_TypeFilter {
@@ -9182,6 +9395,12 @@ class AIS_Triangulation : public AIS_InteractiveObject {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_Triangulation::Handle_AIS_Triangulation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_Triangulation;
 class Handle_AIS_Triangulation : public Handle_AIS_InteractiveObject {
@@ -9415,6 +9634,12 @@ class AIS_Trihedron : public AIS_InteractiveObject {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_Trihedron::Handle_AIS_Trihedron %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_Trihedron;
 class Handle_AIS_Trihedron : public Handle_AIS_InteractiveObject {
@@ -9717,6 +9942,12 @@ class AIS_Chamf2dDimension : public AIS_Relation {
 	}
 };
 
+%pythonappend Handle_AIS_Chamf2dDimension::Handle_AIS_Chamf2dDimension %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_Chamf2dDimension;
 class Handle_AIS_Chamf2dDimension : public Handle_AIS_Relation {
 
@@ -9808,6 +10039,12 @@ class AIS_Chamf3dDimension : public AIS_Relation {
 	}
 };
 
+%pythonappend Handle_AIS_Chamf3dDimension::Handle_AIS_Chamf3dDimension %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_Chamf3dDimension;
 class Handle_AIS_Chamf3dDimension : public Handle_AIS_Relation {
 
@@ -9868,6 +10105,12 @@ class AIS_ConcentricRelation : public AIS_Relation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_ConcentricRelation::Handle_AIS_ConcentricRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_ConcentricRelation;
 class Handle_AIS_ConcentricRelation : public Handle_AIS_Relation {
@@ -9969,6 +10212,12 @@ class AIS_ConnectedShape : public AIS_ConnectedInteractive {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_ConnectedShape::Handle_AIS_ConnectedShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_ConnectedShape;
 class Handle_AIS_ConnectedShape : public Handle_AIS_ConnectedInteractive {
@@ -10128,6 +10377,12 @@ class AIS_EllipseRadiusDimension : public AIS_Relation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_EllipseRadiusDimension::Handle_AIS_EllipseRadiusDimension %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_EllipseRadiusDimension;
 class Handle_AIS_EllipseRadiusDimension : public Handle_AIS_Relation {
@@ -10332,6 +10587,12 @@ class AIS_EqualDistanceRelation : public AIS_Relation {
 	}
 };
 
+%pythonappend Handle_AIS_EqualDistanceRelation::Handle_AIS_EqualDistanceRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_EqualDistanceRelation;
 class Handle_AIS_EqualDistanceRelation : public Handle_AIS_Relation {
 
@@ -10392,6 +10653,12 @@ class AIS_EqualRadiusRelation : public AIS_Relation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_EqualRadiusRelation::Handle_AIS_EqualRadiusRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_EqualRadiusRelation;
 class Handle_AIS_EqualRadiusRelation : public Handle_AIS_Relation {
@@ -10514,6 +10781,12 @@ class AIS_FixRelation : public AIS_Relation {
 	}
 };
 
+%pythonappend Handle_AIS_FixRelation::Handle_AIS_FixRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_FixRelation;
 class Handle_AIS_FixRelation : public Handle_AIS_Relation {
 
@@ -10580,6 +10853,12 @@ class AIS_IdenticRelation : public AIS_Relation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_IdenticRelation::Handle_AIS_IdenticRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_IdenticRelation;
 class Handle_AIS_IdenticRelation : public Handle_AIS_Relation {
@@ -10826,6 +11105,12 @@ class AIS_MidPointRelation : public AIS_Relation {
 	}
 };
 
+%pythonappend Handle_AIS_MidPointRelation::Handle_AIS_MidPointRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_MidPointRelation;
 class Handle_AIS_MidPointRelation : public Handle_AIS_Relation {
 
@@ -10898,6 +11183,12 @@ class AIS_MultipleConnectedShape : public AIS_MultipleConnectedInteractive {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_MultipleConnectedShape::Handle_AIS_MultipleConnectedShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_MultipleConnectedShape;
 class Handle_AIS_MultipleConnectedShape : public Handle_AIS_MultipleConnectedInteractive {
@@ -10981,6 +11272,12 @@ class AIS_OffsetDimension : public AIS_Relation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_OffsetDimension::Handle_AIS_OffsetDimension %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_OffsetDimension;
 class Handle_AIS_OffsetDimension : public Handle_AIS_Relation {
@@ -11067,6 +11364,12 @@ class AIS_ParallelRelation : public AIS_Relation {
 	}
 };
 
+%pythonappend Handle_AIS_ParallelRelation::Handle_AIS_ParallelRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_ParallelRelation;
 class Handle_AIS_ParallelRelation : public Handle_AIS_Relation {
 
@@ -11137,6 +11440,12 @@ class AIS_PerpendicularRelation : public AIS_Relation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_PerpendicularRelation::Handle_AIS_PerpendicularRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_PerpendicularRelation;
 class Handle_AIS_PerpendicularRelation : public Handle_AIS_Relation {
@@ -11331,6 +11640,12 @@ class AIS_SymmetricRelation : public AIS_Relation {
 	}
 };
 
+%pythonappend Handle_AIS_SymmetricRelation::Handle_AIS_SymmetricRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_SymmetricRelation;
 class Handle_AIS_SymmetricRelation : public Handle_AIS_Relation {
 
@@ -11407,6 +11722,12 @@ class AIS_TangentRelation : public AIS_Relation {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_TangentRelation::Handle_AIS_TangentRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_TangentRelation;
 class Handle_AIS_TangentRelation : public Handle_AIS_Relation {
@@ -11661,6 +11982,12 @@ class AIS_MaxRadiusDimension : public AIS_EllipseRadiusDimension {
 	}
 };
 
+%pythonappend Handle_AIS_MaxRadiusDimension::Handle_AIS_MaxRadiusDimension %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_AIS_MaxRadiusDimension;
 class Handle_AIS_MaxRadiusDimension : public Handle_AIS_EllipseRadiusDimension {
 
@@ -11739,6 +12066,12 @@ class AIS_MinRadiusDimension : public AIS_EllipseRadiusDimension {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AIS_MinRadiusDimension::Handle_AIS_MinRadiusDimension %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AIS_MinRadiusDimension;
 class Handle_AIS_MinRadiusDimension : public Handle_AIS_EllipseRadiusDimension {

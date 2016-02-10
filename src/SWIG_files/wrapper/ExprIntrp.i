@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ExprIntrp_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -204,6 +219,12 @@ class ExprIntrp_Generator : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ExprIntrp_Generator::Handle_ExprIntrp_Generator %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ExprIntrp_Generator;
 class Handle_ExprIntrp_Generator : public Handle_MMgt_TShared {
 
@@ -255,6 +276,12 @@ class ExprIntrp_SequenceNodeOfSequenceOfNamedExpression : public TCollection_Seq
 	}
 };
 
+%pythonappend Handle_ExprIntrp_SequenceNodeOfSequenceOfNamedExpression::Handle_ExprIntrp_SequenceNodeOfSequenceOfNamedExpression %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ExprIntrp_SequenceNodeOfSequenceOfNamedExpression;
 class Handle_ExprIntrp_SequenceNodeOfSequenceOfNamedExpression : public Handle_TCollection_SeqNode {
 
@@ -305,6 +332,12 @@ class ExprIntrp_SequenceNodeOfSequenceOfNamedFunction : public TCollection_SeqNo
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ExprIntrp_SequenceNodeOfSequenceOfNamedFunction::Handle_ExprIntrp_SequenceNodeOfSequenceOfNamedFunction %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ExprIntrp_SequenceNodeOfSequenceOfNamedFunction;
 class Handle_ExprIntrp_SequenceNodeOfSequenceOfNamedFunction : public Handle_TCollection_SeqNode {
@@ -755,6 +788,12 @@ class ExprIntrp_StackNodeOfStackOfGeneralExpression : public TCollection_MapNode
 	}
 };
 
+%pythonappend Handle_ExprIntrp_StackNodeOfStackOfGeneralExpression::Handle_ExprIntrp_StackNodeOfStackOfGeneralExpression %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ExprIntrp_StackNodeOfStackOfGeneralExpression;
 class Handle_ExprIntrp_StackNodeOfStackOfGeneralExpression : public Handle_TCollection_MapNode {
 
@@ -803,6 +842,12 @@ class ExprIntrp_StackNodeOfStackOfGeneralFunction : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ExprIntrp_StackNodeOfStackOfGeneralFunction::Handle_ExprIntrp_StackNodeOfStackOfGeneralFunction %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ExprIntrp_StackNodeOfStackOfGeneralFunction;
 class Handle_ExprIntrp_StackNodeOfStackOfGeneralFunction : public Handle_TCollection_MapNode {
@@ -853,6 +898,12 @@ class ExprIntrp_StackNodeOfStackOfGeneralRelation : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_ExprIntrp_StackNodeOfStackOfGeneralRelation::Handle_ExprIntrp_StackNodeOfStackOfGeneralRelation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ExprIntrp_StackNodeOfStackOfGeneralRelation;
 class Handle_ExprIntrp_StackNodeOfStackOfGeneralRelation : public Handle_TCollection_MapNode {
 
@@ -901,6 +952,12 @@ class ExprIntrp_StackNodeOfStackOfNames : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ExprIntrp_StackNodeOfStackOfNames::Handle_ExprIntrp_StackNodeOfStackOfNames %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ExprIntrp_StackNodeOfStackOfNames;
 class Handle_ExprIntrp_StackNodeOfStackOfNames : public Handle_TCollection_MapNode {
@@ -1171,6 +1228,12 @@ class ExprIntrp_GenExp : public ExprIntrp_Generator {
 	}
 };
 
+%pythonappend Handle_ExprIntrp_GenExp::Handle_ExprIntrp_GenExp %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ExprIntrp_GenExp;
 class Handle_ExprIntrp_GenExp : public Handle_ExprIntrp_Generator {
 
@@ -1221,6 +1284,12 @@ class ExprIntrp_GenFct : public ExprIntrp_Generator {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ExprIntrp_GenFct::Handle_ExprIntrp_GenFct %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ExprIntrp_GenFct;
 class Handle_ExprIntrp_GenFct : public Handle_ExprIntrp_Generator {
@@ -1282,6 +1351,12 @@ class ExprIntrp_GenRel : public ExprIntrp_Generator {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ExprIntrp_GenRel::Handle_ExprIntrp_GenRel %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ExprIntrp_GenRel;
 class Handle_ExprIntrp_GenRel : public Handle_ExprIntrp_Generator {

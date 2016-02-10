@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TopOpeBRepDS_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef TopOpeBRepDS_DataStructure * TopOpeBRepDS_PDataStructure;
 /* end typedefs declaration */
@@ -343,6 +358,12 @@ class TopOpeBRepDS_Association : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_Association::Handle_TopOpeBRepDS_Association %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_Association;
 class Handle_TopOpeBRepDS_Association : public Handle_MMgt_TShared {
@@ -886,6 +907,12 @@ class TopOpeBRepDS_Check : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_Check::Handle_TopOpeBRepDS_Check %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_Check;
 class Handle_TopOpeBRepDS_Check : public Handle_MMgt_TShared {
@@ -1547,6 +1574,12 @@ class TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus : public TCollection_MapNod
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus;
 class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfCheckStatus : public Handle_TCollection_MapNode {
 
@@ -1611,6 +1644,12 @@ class TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference : public TCol
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference;
 class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfIntegerListOfInterference : public Handle_TCollection_MapNode {
 
@@ -1665,6 +1704,12 @@ class TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference : public
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference;
 class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceListOfInterference : public Handle_TCollection_MapNode {
@@ -1721,6 +1766,12 @@ class TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape : public TCollection_
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape;
 class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfInterferenceShape : public Handle_TCollection_MapNode {
 
@@ -1776,6 +1827,12 @@ class TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State : public TColl
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State;
 class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeListOfShapeOn1State : public Handle_TCollection_MapNode {
 
@@ -1830,6 +1887,12 @@ class TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState : public TCollection_MapNode
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState::Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState;
 class Handle_TopOpeBRepDS_DataMapNodeOfDataMapOfShapeState : public Handle_TCollection_MapNode {
@@ -1895,6 +1958,12 @@ class TopOpeBRepDS_DataMapNodeOfMapOfCurve : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve::Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve;
 class Handle_TopOpeBRepDS_DataMapNodeOfMapOfCurve : public Handle_TCollection_MapNode {
 
@@ -1958,6 +2027,12 @@ class TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData : public TCollection_MapNo
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData::Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData;
 class Handle_TopOpeBRepDS_DataMapNodeOfMapOfIntegerShapeData : public Handle_TCollection_MapNode {
@@ -2023,6 +2098,12 @@ class TopOpeBRepDS_DataMapNodeOfMapOfPoint : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint::Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint;
 class Handle_TopOpeBRepDS_DataMapNodeOfMapOfPoint : public Handle_TCollection_MapNode {
 
@@ -2087,6 +2168,12 @@ class TopOpeBRepDS_DataMapNodeOfMapOfSurface : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface::Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface;
 class Handle_TopOpeBRepDS_DataMapNodeOfMapOfSurface : public Handle_TCollection_MapNode {
 
@@ -2141,6 +2228,12 @@ class TopOpeBRepDS_DataMapNodeOfShapeSurface : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface::Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface;
 class Handle_TopOpeBRepDS_DataMapNodeOfShapeSurface : public Handle_TCollection_MapNode {
@@ -3388,6 +3481,12 @@ class TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape : public TCollection_M
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape::Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape;
 class Handle_TopOpeBRepDS_DoubleMapNodeOfDoubleMapOfIntegerShape : public Handle_TCollection_MapNode {
 
@@ -4261,6 +4360,12 @@ class TopOpeBRepDS_GapTool : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_GapTool::Handle_TopOpeBRepDS_GapTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_GapTool;
 class Handle_TopOpeBRepDS_GapTool : public Handle_MMgt_TShared {
 
@@ -4404,6 +4509,12 @@ class TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference : public MMgt_TSh
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference::Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference;
 class Handle_TopOpeBRepDS_HArray1OfDataMapOfIntegerListOfInterference : public Handle_MMgt_TShared {
 
@@ -4479,6 +4590,12 @@ class TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState : public T
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState::Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState;
 class Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfShapeWithState : public Handle_TCollection_MapNode {
@@ -4556,6 +4673,12 @@ class TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint : public TCol
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint::Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint;
 class Handle_TopOpeBRepDS_IndexedDataMapNodeOfIndexedDataMapOfVertexPoint : public Handle_TCollection_MapNode {
 
@@ -4631,6 +4754,12 @@ class TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData : public TCollection_MapNo
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData::Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData;
 class Handle_TopOpeBRepDS_IndexedDataMapNodeOfMapOfShapeData : public Handle_TCollection_MapNode {
@@ -5033,6 +5162,12 @@ class TopOpeBRepDS_Interference : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_Interference::Handle_TopOpeBRepDS_Interference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_Interference;
 class Handle_TopOpeBRepDS_Interference : public Handle_MMgt_TShared {
 
@@ -5320,6 +5455,12 @@ class TopOpeBRepDS_ListNodeOfListOfInterference : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_ListNodeOfListOfInterference::Handle_TopOpeBRepDS_ListNodeOfListOfInterference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_ListNodeOfListOfInterference;
 class Handle_TopOpeBRepDS_ListNodeOfListOfInterference : public Handle_TCollection_MapNode {
@@ -5973,6 +6114,12 @@ class TopOpeBRepDS_Marker : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_Marker::Handle_TopOpeBRepDS_Marker %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_Marker;
 class Handle_TopOpeBRepDS_Marker : public Handle_MMgt_TShared {
@@ -6934,6 +7081,12 @@ class TopOpeBRepDS_CurvePointInterference : public TopOpeBRepDS_Interference {
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_CurvePointInterference::Handle_TopOpeBRepDS_CurvePointInterference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_CurvePointInterference;
 class Handle_TopOpeBRepDS_CurvePointInterference : public Handle_TopOpeBRepDS_Interference {
 
@@ -7113,6 +7266,12 @@ class TopOpeBRepDS_ShapeShapeInterference : public TopOpeBRepDS_Interference {
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_ShapeShapeInterference::Handle_TopOpeBRepDS_ShapeShapeInterference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_ShapeShapeInterference;
 class Handle_TopOpeBRepDS_ShapeShapeInterference : public Handle_TopOpeBRepDS_Interference {
 
@@ -7171,6 +7330,12 @@ class TopOpeBRepDS_SolidSurfaceInterference : public TopOpeBRepDS_Interference {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_SolidSurfaceInterference::Handle_TopOpeBRepDS_SolidSurfaceInterference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_SolidSurfaceInterference;
 class Handle_TopOpeBRepDS_SolidSurfaceInterference : public Handle_TopOpeBRepDS_Interference {
@@ -7260,6 +7425,12 @@ class TopOpeBRepDS_SurfaceCurveInterference : public TopOpeBRepDS_Interference {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_SurfaceCurveInterference::Handle_TopOpeBRepDS_SurfaceCurveInterference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_SurfaceCurveInterference;
 class Handle_TopOpeBRepDS_SurfaceCurveInterference : public Handle_TopOpeBRepDS_Interference {
@@ -7396,6 +7567,12 @@ class TopOpeBRepDS_EdgeVertexInterference : public TopOpeBRepDS_ShapeShapeInterf
 	}
 };
 
+%pythonappend Handle_TopOpeBRepDS_EdgeVertexInterference::Handle_TopOpeBRepDS_EdgeVertexInterference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopOpeBRepDS_EdgeVertexInterference;
 class Handle_TopOpeBRepDS_EdgeVertexInterference : public Handle_TopOpeBRepDS_ShapeShapeInterference {
 
@@ -7456,6 +7633,12 @@ class TopOpeBRepDS_FaceEdgeInterference : public TopOpeBRepDS_ShapeShapeInterfer
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopOpeBRepDS_FaceEdgeInterference::Handle_TopOpeBRepDS_FaceEdgeInterference %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopOpeBRepDS_FaceEdgeInterference;
 class Handle_TopOpeBRepDS_FaceEdgeInterference : public Handle_TopOpeBRepDS_ShapeShapeInterference {

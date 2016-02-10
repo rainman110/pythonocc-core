@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Prs3d_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef Prs3d_NListOfSequenceOfPnt::Iterator Prs3d_NListIteratorOfListOfSequenceOfPnt;
 /* end typedefs declaration */
@@ -115,6 +130,12 @@ class Prs3d_BasicAspect : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Prs3d_BasicAspect::Handle_Prs3d_BasicAspect %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Prs3d_BasicAspect;
 class Handle_Prs3d_BasicAspect : public Handle_MMgt_TShared {
@@ -749,6 +770,12 @@ class Prs3d_Drawer : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Prs3d_Drawer::Handle_Prs3d_Drawer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Prs3d_Drawer;
 class Handle_Prs3d_Drawer : public Handle_MMgt_TShared {
 
@@ -857,6 +884,12 @@ class Prs3d_PlaneSet : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Prs3d_PlaneSet::Handle_Prs3d_PlaneSet %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Prs3d_PlaneSet;
 class Handle_Prs3d_PlaneSet : public Handle_MMgt_TShared {
@@ -1043,6 +1076,12 @@ class Prs3d_Presentation : public Graphic3d_Structure {
 	}
 };
 
+%pythonappend Handle_Prs3d_Presentation::Handle_Prs3d_Presentation %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Prs3d_Presentation;
 class Handle_Prs3d_Presentation : public Handle_Graphic3d_Structure {
 
@@ -1119,6 +1158,12 @@ class Prs3d_Projector : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Prs3d_Projector::Handle_Prs3d_Projector %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Prs3d_Projector;
 class Handle_Prs3d_Projector : public Handle_MMgt_TShared {
@@ -1385,6 +1430,12 @@ class Prs3d_ArrowAspect : public Prs3d_BasicAspect {
 	}
 };
 
+%pythonappend Handle_Prs3d_ArrowAspect::Handle_Prs3d_ArrowAspect %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Prs3d_ArrowAspect;
 class Handle_Prs3d_ArrowAspect : public Handle_Prs3d_BasicAspect {
 
@@ -1503,6 +1554,12 @@ class Prs3d_DatumAspect : public Prs3d_BasicAspect {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Prs3d_DatumAspect::Handle_Prs3d_DatumAspect %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Prs3d_DatumAspect;
 class Handle_Prs3d_DatumAspect : public Handle_Prs3d_BasicAspect {
@@ -1737,6 +1794,12 @@ class Prs3d_DimensionAspect : public Prs3d_BasicAspect {
 	}
 };
 
+%pythonappend Handle_Prs3d_DimensionAspect::Handle_Prs3d_DimensionAspect %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Prs3d_DimensionAspect;
 class Handle_Prs3d_DimensionAspect : public Handle_Prs3d_BasicAspect {
 
@@ -1831,6 +1894,12 @@ class Prs3d_LineAspect : public Prs3d_BasicAspect {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Prs3d_LineAspect::Handle_Prs3d_LineAspect %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Prs3d_LineAspect;
 class Handle_Prs3d_LineAspect : public Handle_Prs3d_BasicAspect {
@@ -2019,6 +2088,12 @@ class Prs3d_PlaneAspect : public Prs3d_BasicAspect {
 	}
 };
 
+%pythonappend Handle_Prs3d_PlaneAspect::Handle_Prs3d_PlaneAspect %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Prs3d_PlaneAspect;
 class Handle_Prs3d_PlaneAspect : public Handle_Prs3d_BasicAspect {
 
@@ -2139,6 +2214,12 @@ class Prs3d_PointAspect : public Prs3d_BasicAspect {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Prs3d_PointAspect::Handle_Prs3d_PointAspect %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Prs3d_PointAspect;
 class Handle_Prs3d_PointAspect : public Handle_Prs3d_BasicAspect {
@@ -2268,6 +2349,12 @@ class Prs3d_ShadingAspect : public Prs3d_BasicAspect {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Prs3d_ShadingAspect::Handle_Prs3d_ShadingAspect %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Prs3d_ShadingAspect;
 class Handle_Prs3d_ShadingAspect : public Handle_Prs3d_BasicAspect {
@@ -2459,6 +2546,12 @@ class Prs3d_TextAspect : public Prs3d_BasicAspect {
 	}
 };
 
+%pythonappend Handle_Prs3d_TextAspect::Handle_Prs3d_TextAspect %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Prs3d_TextAspect;
 class Handle_Prs3d_TextAspect : public Handle_Prs3d_BasicAspect {
 
@@ -2535,6 +2628,12 @@ class Prs3d_IsoAspect : public Prs3d_LineAspect {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Prs3d_IsoAspect::Handle_Prs3d_IsoAspect %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Prs3d_IsoAspect;
 class Handle_Prs3d_IsoAspect : public Handle_Prs3d_LineAspect {

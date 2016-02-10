@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Bisector_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -218,6 +233,12 @@ class Bisector_Curve : public Geom2d_Curve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Bisector_Curve::Handle_Bisector_Curve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Bisector_Curve;
 class Handle_Bisector_Curve : public Handle_Geom2d_Curve {
@@ -822,6 +843,12 @@ class Bisector_BisecAna : public Bisector_Curve {
 	}
 };
 
+%pythonappend Handle_Bisector_BisecAna::Handle_Bisector_BisecAna %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Bisector_BisecAna;
 class Handle_Bisector_BisecAna : public Handle_Bisector_Curve {
 
@@ -1113,6 +1140,12 @@ class Bisector_BisecCC : public Bisector_Curve {
 	}
 };
 
+%pythonappend Handle_Bisector_BisecCC::Handle_Bisector_BisecCC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Bisector_BisecCC;
 class Handle_Bisector_BisecCC : public Handle_Bisector_Curve {
 
@@ -1391,6 +1424,12 @@ class Bisector_BisecPC : public Bisector_Curve {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Bisector_BisecPC::Handle_Bisector_BisecPC %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Bisector_BisecPC;
 class Handle_Bisector_BisecPC : public Handle_Bisector_Curve {

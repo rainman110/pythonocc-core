@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include LocOpe_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -565,6 +580,12 @@ class LocOpe_DataMapNodeOfDataMapOfShapePnt : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt::Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt;
 class Handle_LocOpe_DataMapNodeOfDataMapOfShapePnt : public Handle_TCollection_MapNode {
 
@@ -794,6 +815,12 @@ class LocOpe_GeneratedShape : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_LocOpe_GeneratedShape::Handle_LocOpe_GeneratedShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_LocOpe_GeneratedShape;
 class Handle_LocOpe_GeneratedShape : public Handle_MMgt_TShared {
 
@@ -984,6 +1011,12 @@ class LocOpe_HBuilder : public TopOpeBRepBuild_HBuilder {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_LocOpe_HBuilder::Handle_LocOpe_HBuilder %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_LocOpe_HBuilder;
 class Handle_LocOpe_HBuilder : public Handle_TopOpeBRepBuild_HBuilder {
@@ -1340,6 +1373,12 @@ class LocOpe_ProjectedWires : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_LocOpe_ProjectedWires::Handle_LocOpe_ProjectedWires %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_LocOpe_ProjectedWires;
 class Handle_LocOpe_ProjectedWires : public Handle_MMgt_TShared {
 
@@ -1390,6 +1429,12 @@ class LocOpe_SequenceNodeOfSequenceOfCirc : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_LocOpe_SequenceNodeOfSequenceOfCirc::Handle_LocOpe_SequenceNodeOfSequenceOfCirc %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_LocOpe_SequenceNodeOfSequenceOfCirc;
 class Handle_LocOpe_SequenceNodeOfSequenceOfCirc : public Handle_TCollection_SeqNode {
@@ -1442,6 +1487,12 @@ class LocOpe_SequenceNodeOfSequenceOfLin : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_LocOpe_SequenceNodeOfSequenceOfLin::Handle_LocOpe_SequenceNodeOfSequenceOfLin %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_LocOpe_SequenceNodeOfSequenceOfLin;
 class Handle_LocOpe_SequenceNodeOfSequenceOfLin : public Handle_TCollection_SeqNode {
 
@@ -1492,6 +1543,12 @@ class LocOpe_SequenceNodeOfSequenceOfPntFace : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_LocOpe_SequenceNodeOfSequenceOfPntFace::Handle_LocOpe_SequenceNodeOfSequenceOfPntFace %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_LocOpe_SequenceNodeOfSequenceOfPntFace;
 class Handle_LocOpe_SequenceNodeOfSequenceOfPntFace : public Handle_TCollection_SeqNode {
@@ -2230,6 +2287,12 @@ class LocOpe_GluedShape : public LocOpe_GeneratedShape {
 	}
 };
 
+%pythonappend Handle_LocOpe_GluedShape::Handle_LocOpe_GluedShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_LocOpe_GluedShape;
 class Handle_LocOpe_GluedShape : public Handle_LocOpe_GeneratedShape {
 
@@ -2384,6 +2447,12 @@ class LocOpe_WiresOnShape : public LocOpe_ProjectedWires {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_LocOpe_WiresOnShape::Handle_LocOpe_WiresOnShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_LocOpe_WiresOnShape;
 class Handle_LocOpe_WiresOnShape : public Handle_LocOpe_ProjectedWires {

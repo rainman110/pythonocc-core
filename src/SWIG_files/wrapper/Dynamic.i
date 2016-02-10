@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Dynamic_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -136,6 +151,12 @@ class Dynamic_DynamicClass : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_DynamicClass::Handle_Dynamic_DynamicClass %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_DynamicClass;
 class Handle_Dynamic_DynamicClass : public Handle_MMgt_TShared {
@@ -259,6 +280,12 @@ class Dynamic_DynamicInstance : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_DynamicInstance::Handle_Dynamic_DynamicInstance %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_DynamicInstance;
 class Handle_Dynamic_DynamicInstance : public Handle_MMgt_TShared {
@@ -433,6 +460,12 @@ class Dynamic_FuzzyClass : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Dynamic_FuzzyClass::Handle_Dynamic_FuzzyClass %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_FuzzyClass;
 class Handle_Dynamic_FuzzyClass : public Handle_MMgt_TShared {
 
@@ -528,6 +561,12 @@ class Dynamic_FuzzyDefinitionsDictionary : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Dynamic_FuzzyDefinitionsDictionary::Handle_Dynamic_FuzzyDefinitionsDictionary %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_FuzzyDefinitionsDictionary;
 class Handle_Dynamic_FuzzyDefinitionsDictionary : public Handle_MMgt_TShared {
 
@@ -622,6 +661,12 @@ class Dynamic_Method : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_Method::Handle_Dynamic_Method %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_Method;
 class Handle_Dynamic_Method : public Handle_MMgt_TShared {
@@ -726,6 +771,12 @@ class Dynamic_MethodDefinitionsDictionary : public Standard_Transient {
 	}
 };
 
+%pythonappend Handle_Dynamic_MethodDefinitionsDictionary::Handle_Dynamic_MethodDefinitionsDictionary %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_MethodDefinitionsDictionary;
 class Handle_Dynamic_MethodDefinitionsDictionary : public Handle_Standard_Transient {
 
@@ -776,6 +827,12 @@ class Dynamic_Parameter : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_Parameter::Handle_Dynamic_Parameter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_Parameter;
 class Handle_Dynamic_Parameter : public Handle_MMgt_TShared {
@@ -843,6 +900,12 @@ class Dynamic_ParameterNode : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_ParameterNode::Handle_Dynamic_ParameterNode %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_ParameterNode;
 class Handle_Dynamic_ParameterNode : public Handle_MMgt_TShared {
@@ -1423,6 +1486,12 @@ class Dynamic_SequenceNodeOfSeqOfClasses : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Dynamic_SequenceNodeOfSeqOfClasses::Handle_Dynamic_SequenceNodeOfSeqOfClasses %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_SequenceNodeOfSeqOfClasses;
 class Handle_Dynamic_SequenceNodeOfSeqOfClasses : public Handle_TCollection_SeqNode {
 
@@ -1473,6 +1542,12 @@ class Dynamic_SequenceNodeOfSeqOfFuzzyDefinitions : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_SequenceNodeOfSeqOfFuzzyDefinitions::Handle_Dynamic_SequenceNodeOfSeqOfFuzzyDefinitions %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_SequenceNodeOfSeqOfFuzzyDefinitions;
 class Handle_Dynamic_SequenceNodeOfSeqOfFuzzyDefinitions : public Handle_TCollection_SeqNode {
@@ -1525,6 +1600,12 @@ class Dynamic_SequenceNodeOfSeqOfMethodDefinitions : public TCollection_SeqNode 
 	}
 };
 
+%pythonappend Handle_Dynamic_SequenceNodeOfSeqOfMethodDefinitions::Handle_Dynamic_SequenceNodeOfSeqOfMethodDefinitions %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_SequenceNodeOfSeqOfMethodDefinitions;
 class Handle_Dynamic_SequenceNodeOfSeqOfMethodDefinitions : public Handle_TCollection_SeqNode {
 
@@ -1575,6 +1656,12 @@ class Dynamic_SequenceNodeOfSeqOfMethods : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_SequenceNodeOfSeqOfMethods::Handle_Dynamic_SequenceNodeOfSeqOfMethods %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_SequenceNodeOfSeqOfMethods;
 class Handle_Dynamic_SequenceNodeOfSeqOfMethods : public Handle_TCollection_SeqNode {
@@ -1749,6 +1836,12 @@ class Dynamic_SequenceOfClasses : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Dynamic_SequenceOfClasses::Handle_Dynamic_SequenceOfClasses %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_SequenceOfClasses;
 class Handle_Dynamic_SequenceOfClasses : public Handle_MMgt_TShared {
 
@@ -1921,6 +2014,12 @@ class Dynamic_SequenceOfFuzzyDefinitions : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_SequenceOfFuzzyDefinitions::Handle_Dynamic_SequenceOfFuzzyDefinitions %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_SequenceOfFuzzyDefinitions;
 class Handle_Dynamic_SequenceOfFuzzyDefinitions : public Handle_MMgt_TShared {
@@ -2095,6 +2194,12 @@ class Dynamic_SequenceOfMethodDefinitions : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Dynamic_SequenceOfMethodDefinitions::Handle_Dynamic_SequenceOfMethodDefinitions %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_SequenceOfMethodDefinitions;
 class Handle_Dynamic_SequenceOfMethodDefinitions : public Handle_MMgt_TShared {
 
@@ -2268,6 +2373,12 @@ class Dynamic_SequenceOfMethods : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Dynamic_SequenceOfMethods::Handle_Dynamic_SequenceOfMethods %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_SequenceOfMethods;
 class Handle_Dynamic_SequenceOfMethods : public Handle_MMgt_TShared {
 
@@ -2347,6 +2458,12 @@ class Dynamic_Variable : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Dynamic_Variable::Handle_Dynamic_Variable %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_Variable;
 class Handle_Dynamic_Variable : public Handle_MMgt_TShared {
 
@@ -2414,6 +2531,12 @@ class Dynamic_VariableNode : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Dynamic_VariableNode::Handle_Dynamic_VariableNode %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_VariableNode;
 class Handle_Dynamic_VariableNode : public Handle_MMgt_TShared {
 
@@ -2458,6 +2581,12 @@ class Dynamic_AbstractVariableInstance : public Dynamic_Variable {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_AbstractVariableInstance::Handle_Dynamic_AbstractVariableInstance %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_AbstractVariableInstance;
 class Handle_Dynamic_AbstractVariableInstance : public Handle_Dynamic_Variable {
@@ -2546,6 +2675,12 @@ class Dynamic_BooleanParameter : public Dynamic_Parameter {
 	}
 };
 
+%pythonappend Handle_Dynamic_BooleanParameter::Handle_Dynamic_BooleanParameter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_BooleanParameter;
 class Handle_Dynamic_BooleanParameter : public Handle_Dynamic_Parameter {
 
@@ -2613,6 +2748,12 @@ class Dynamic_DynamicDerivedClass : public Dynamic_DynamicClass {
 	}
 };
 
+%pythonappend Handle_Dynamic_DynamicDerivedClass::Handle_Dynamic_DynamicDerivedClass %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_DynamicDerivedClass;
 class Handle_Dynamic_DynamicDerivedClass : public Handle_Dynamic_DynamicClass {
 
@@ -2671,6 +2812,12 @@ class Dynamic_FuzzyDefinition : public Dynamic_FuzzyClass {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_FuzzyDefinition::Handle_Dynamic_FuzzyDefinition %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_FuzzyDefinition;
 class Handle_Dynamic_FuzzyDefinition : public Handle_Dynamic_FuzzyClass {
@@ -2749,6 +2896,12 @@ class Dynamic_InstanceParameter : public Dynamic_Parameter {
 	}
 };
 
+%pythonappend Handle_Dynamic_InstanceParameter::Handle_Dynamic_InstanceParameter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_InstanceParameter;
 class Handle_Dynamic_InstanceParameter : public Handle_Dynamic_Parameter {
 
@@ -2826,6 +2979,12 @@ class Dynamic_IntegerParameter : public Dynamic_Parameter {
 	}
 };
 
+%pythonappend Handle_Dynamic_IntegerParameter::Handle_Dynamic_IntegerParameter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_IntegerParameter;
 class Handle_Dynamic_IntegerParameter : public Handle_Dynamic_Parameter {
 
@@ -2888,6 +3047,12 @@ class Dynamic_MethodDefinition : public Dynamic_Method {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_MethodDefinition::Handle_Dynamic_MethodDefinition %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_MethodDefinition;
 class Handle_Dynamic_MethodDefinition : public Handle_Dynamic_Method {
@@ -2966,6 +3131,12 @@ class Dynamic_ObjectParameter : public Dynamic_Parameter {
 	}
 };
 
+%pythonappend Handle_Dynamic_ObjectParameter::Handle_Dynamic_ObjectParameter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_ObjectParameter;
 class Handle_Dynamic_ObjectParameter : public Handle_Dynamic_Parameter {
 
@@ -3042,6 +3213,12 @@ class Dynamic_RealParameter : public Dynamic_Parameter {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_RealParameter::Handle_Dynamic_RealParameter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_RealParameter;
 class Handle_Dynamic_RealParameter : public Handle_Dynamic_Parameter {
@@ -3120,6 +3297,12 @@ class Dynamic_StringParameter : public Dynamic_Parameter {
 	}
 };
 
+%pythonappend Handle_Dynamic_StringParameter::Handle_Dynamic_StringParameter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_StringParameter;
 class Handle_Dynamic_StringParameter : public Handle_Dynamic_Parameter {
 
@@ -3162,6 +3345,12 @@ class Dynamic_VariableGroup : public Dynamic_Variable {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_VariableGroup::Handle_Dynamic_VariableGroup %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_VariableGroup;
 class Handle_Dynamic_VariableGroup : public Handle_Dynamic_Variable {
@@ -3223,6 +3412,12 @@ class Dynamic_CompiledMethod : public Dynamic_MethodDefinition {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_CompiledMethod::Handle_Dynamic_CompiledMethod %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_CompiledMethod;
 class Handle_Dynamic_CompiledMethod : public Handle_Dynamic_MethodDefinition {
@@ -3299,6 +3494,12 @@ class Dynamic_CompositMethod : public Dynamic_MethodDefinition {
 	}
 };
 
+%pythonappend Handle_Dynamic_CompositMethod::Handle_Dynamic_CompositMethod %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_CompositMethod;
 class Handle_Dynamic_CompositMethod : public Handle_Dynamic_MethodDefinition {
 
@@ -3355,6 +3556,12 @@ class Dynamic_CompositVariableInstance : public Dynamic_AbstractVariableInstance
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_CompositVariableInstance::Handle_Dynamic_CompositVariableInstance %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_CompositVariableInstance;
 class Handle_Dynamic_CompositVariableInstance : public Handle_Dynamic_AbstractVariableInstance {
@@ -3417,6 +3624,12 @@ class Dynamic_InterpretedMethod : public Dynamic_MethodDefinition {
 	}
 };
 
+%pythonappend Handle_Dynamic_InterpretedMethod::Handle_Dynamic_InterpretedMethod %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Dynamic_InterpretedMethod;
 class Handle_Dynamic_InterpretedMethod : public Handle_Dynamic_MethodDefinition {
 
@@ -3473,6 +3686,12 @@ class Dynamic_VariableInstance : public Dynamic_AbstractVariableInstance {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Dynamic_VariableInstance::Handle_Dynamic_VariableInstance %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Dynamic_VariableInstance;
 class Handle_Dynamic_VariableInstance : public Handle_Dynamic_AbstractVariableInstance {

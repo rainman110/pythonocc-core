@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ShapeFix_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -168,6 +183,12 @@ class ShapeFix_DataMapNodeOfDataMapOfShapeBox2d : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeFix_DataMapNodeOfDataMapOfShapeBox2d::Handle_ShapeFix_DataMapNodeOfDataMapOfShapeBox2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeFix_DataMapNodeOfDataMapOfShapeBox2d;
 class Handle_ShapeFix_DataMapNodeOfDataMapOfShapeBox2d : public Handle_TCollection_MapNode {
@@ -450,6 +471,12 @@ class ShapeFix_Edge : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeFix_Edge::Handle_ShapeFix_Edge %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeFix_Edge;
 class Handle_ShapeFix_Edge : public Handle_MMgt_TShared {
 
@@ -574,6 +601,12 @@ class ShapeFix_EdgeProjAux : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeFix_EdgeProjAux::Handle_ShapeFix_EdgeProjAux %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeFix_EdgeProjAux;
 class Handle_ShapeFix_EdgeProjAux : public Handle_MMgt_TShared {
@@ -936,6 +969,12 @@ class ShapeFix_Root : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_ShapeFix_Root::Handle_ShapeFix_Root %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeFix_Root;
 class Handle_ShapeFix_Root : public Handle_MMgt_TShared {
 
@@ -986,6 +1025,12 @@ class ShapeFix_SequenceNodeOfSequenceOfWireSegment : public TCollection_SeqNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeFix_SequenceNodeOfSequenceOfWireSegment::Handle_ShapeFix_SequenceNodeOfSequenceOfWireSegment %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeFix_SequenceNodeOfSequenceOfWireSegment;
 class Handle_ShapeFix_SequenceNodeOfSequenceOfWireSegment : public Handle_TCollection_SeqNode {
@@ -1445,6 +1490,12 @@ class ShapeFix_ComposeShell : public ShapeFix_Root {
 	}
 };
 
+%pythonappend Handle_ShapeFix_ComposeShell::Handle_ShapeFix_ComposeShell %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeFix_ComposeShell;
 class Handle_ShapeFix_ComposeShell : public Handle_ShapeFix_Root {
 
@@ -1802,6 +1853,12 @@ class ShapeFix_Face : public ShapeFix_Root {
 	}
 };
 
+%pythonappend Handle_ShapeFix_Face::Handle_ShapeFix_Face %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeFix_Face;
 class Handle_ShapeFix_Face : public Handle_ShapeFix_Root {
 
@@ -1974,6 +2031,12 @@ class ShapeFix_FixSmallFace : public ShapeFix_Root {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeFix_FixSmallFace::Handle_ShapeFix_FixSmallFace %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeFix_FixSmallFace;
 class Handle_ShapeFix_FixSmallFace : public Handle_ShapeFix_Root {
@@ -2196,6 +2259,12 @@ class ShapeFix_Shape : public ShapeFix_Root {
 	}
 };
 
+%pythonappend Handle_ShapeFix_Shape::Handle_ShapeFix_Shape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeFix_Shape;
 class Handle_ShapeFix_Shape : public Handle_ShapeFix_Root {
 
@@ -2371,6 +2440,12 @@ class ShapeFix_Shell : public ShapeFix_Root {
 	}
 };
 
+%pythonappend Handle_ShapeFix_Shell::Handle_ShapeFix_Shell %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeFix_Shell;
 class Handle_ShapeFix_Shell : public Handle_ShapeFix_Root {
 
@@ -2530,6 +2605,12 @@ class ShapeFix_Solid : public ShapeFix_Root {
 	}
 };
 
+%pythonappend Handle_ShapeFix_Solid::Handle_ShapeFix_Solid %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeFix_Solid;
 class Handle_ShapeFix_Solid : public Handle_ShapeFix_Root {
 
@@ -2584,6 +2665,12 @@ class ShapeFix_SplitCommonVertex : public ShapeFix_Root {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeFix_SplitCommonVertex::Handle_ShapeFix_SplitCommonVertex %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeFix_SplitCommonVertex;
 class Handle_ShapeFix_SplitCommonVertex : public Handle_ShapeFix_Root {
@@ -3382,6 +3469,12 @@ class ShapeFix_Wire : public ShapeFix_Root {
 	}
 };
 
+%pythonappend Handle_ShapeFix_Wire::Handle_ShapeFix_Wire %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_ShapeFix_Wire;
 class Handle_ShapeFix_Wire : public Handle_ShapeFix_Root {
 
@@ -3533,6 +3626,12 @@ class ShapeFix_Wireframe : public ShapeFix_Root {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeFix_Wireframe::Handle_ShapeFix_Wireframe %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeFix_Wireframe;
 class Handle_ShapeFix_Wireframe : public Handle_ShapeFix_Root {

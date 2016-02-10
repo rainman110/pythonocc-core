@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TopoDS_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -276,6 +291,12 @@ class TopoDS_HShape : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TopoDS_HShape::Handle_TopoDS_HShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopoDS_HShape;
 class Handle_TopoDS_HShape : public Handle_MMgt_TShared {
 
@@ -412,6 +433,12 @@ class TopoDS_ListNodeOfListOfShape : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopoDS_ListNodeOfListOfShape::Handle_TopoDS_ListNodeOfListOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopoDS_ListNodeOfListOfShape;
 class Handle_TopoDS_ListNodeOfListOfShape : public Handle_TCollection_MapNode {
@@ -1030,6 +1057,12 @@ class TopoDS_TShape : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TopoDS_TShape::Handle_TopoDS_TShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopoDS_TShape;
 class Handle_TopoDS_TShape : public Handle_MMgt_TShared {
 
@@ -1157,6 +1190,12 @@ class TopoDS_TCompSolid : public TopoDS_TShape {
 	}
 };
 
+%pythonappend Handle_TopoDS_TCompSolid::Handle_TopoDS_TCompSolid %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopoDS_TCompSolid;
 class Handle_TopoDS_TCompSolid : public Handle_TopoDS_TShape {
 
@@ -1212,6 +1251,12 @@ class TopoDS_TCompound : public TopoDS_TShape {
 	}
 };
 
+%pythonappend Handle_TopoDS_TCompound::Handle_TopoDS_TCompound %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopoDS_TCompound;
 class Handle_TopoDS_TCompound : public Handle_TopoDS_TShape {
 
@@ -1254,6 +1299,12 @@ class TopoDS_TEdge : public TopoDS_TShape {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopoDS_TEdge::Handle_TopoDS_TEdge %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopoDS_TEdge;
 class Handle_TopoDS_TEdge : public Handle_TopoDS_TShape {
@@ -1310,6 +1361,12 @@ class TopoDS_TFace : public TopoDS_TShape {
 	}
 };
 
+%pythonappend Handle_TopoDS_TFace::Handle_TopoDS_TFace %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopoDS_TFace;
 class Handle_TopoDS_TFace : public Handle_TopoDS_TShape {
 
@@ -1364,6 +1421,12 @@ class TopoDS_TShell : public TopoDS_TShape {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopoDS_TShell::Handle_TopoDS_TShell %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopoDS_TShell;
 class Handle_TopoDS_TShell : public Handle_TopoDS_TShape {
@@ -1420,6 +1483,12 @@ class TopoDS_TSolid : public TopoDS_TShape {
 	}
 };
 
+%pythonappend Handle_TopoDS_TSolid::Handle_TopoDS_TSolid %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TopoDS_TSolid;
 class Handle_TopoDS_TSolid : public Handle_TopoDS_TShape {
 
@@ -1462,6 +1531,12 @@ class TopoDS_TVertex : public TopoDS_TShape {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopoDS_TVertex::Handle_TopoDS_TVertex %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopoDS_TVertex;
 class Handle_TopoDS_TVertex : public Handle_TopoDS_TShape {
@@ -1517,6 +1592,12 @@ class TopoDS_TWire : public TopoDS_TShape {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TopoDS_TWire::Handle_TopoDS_TWire %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TopoDS_TWire;
 class Handle_TopoDS_TWire : public Handle_TopoDS_TShape {

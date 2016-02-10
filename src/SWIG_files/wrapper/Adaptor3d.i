@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Adaptor3d_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef Adaptor3d_Surface * Adaptor3d_SurfacePtr;
 typedef Adaptor3d_Curve * Adaptor3d_CurvePtr;
@@ -429,6 +444,12 @@ class Adaptor3d_HCurve : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Adaptor3d_HCurve::Handle_Adaptor3d_HCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Adaptor3d_HCurve;
 class Handle_Adaptor3d_HCurve : public Handle_MMgt_TShared {
 
@@ -489,6 +510,12 @@ class Adaptor3d_HOffsetCurve : public Adaptor2d_HCurve2d {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Adaptor3d_HOffsetCurve::Handle_Adaptor3d_HOffsetCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Adaptor3d_HOffsetCurve;
 class Handle_Adaptor3d_HOffsetCurve : public Handle_Adaptor2d_HCurve2d {
@@ -816,6 +843,12 @@ class Adaptor3d_HSurface : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Adaptor3d_HSurface::Handle_Adaptor3d_HSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Adaptor3d_HSurface;
 class Handle_Adaptor3d_HSurface : public Handle_MMgt_TShared {
@@ -1254,6 +1287,12 @@ class Adaptor3d_HVertex : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Adaptor3d_HVertex::Handle_Adaptor3d_HVertex %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Adaptor3d_HVertex;
 class Handle_Adaptor3d_HVertex : public Handle_MMgt_TShared {
@@ -2147,6 +2186,12 @@ class Adaptor3d_TopolTool : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Adaptor3d_TopolTool::Handle_Adaptor3d_TopolTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Adaptor3d_TopolTool;
 class Handle_Adaptor3d_TopolTool : public Handle_MMgt_TShared {
 
@@ -2452,6 +2497,12 @@ class Adaptor3d_HCurveOnSurface : public Adaptor3d_HCurve {
 	}
 };
 
+%pythonappend Handle_Adaptor3d_HCurveOnSurface::Handle_Adaptor3d_HCurveOnSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Adaptor3d_HCurveOnSurface;
 class Handle_Adaptor3d_HCurveOnSurface : public Handle_Adaptor3d_HCurve {
 
@@ -2517,6 +2568,12 @@ class Adaptor3d_HIsoCurve : public Adaptor3d_HCurve {
 	}
 };
 
+%pythonappend Handle_Adaptor3d_HIsoCurve::Handle_Adaptor3d_HIsoCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Adaptor3d_HIsoCurve;
 class Handle_Adaptor3d_HIsoCurve : public Handle_Adaptor3d_HCurve {
 
@@ -2578,6 +2635,12 @@ class Adaptor3d_HSurfaceOfLinearExtrusion : public Adaptor3d_HSurface {
 	}
 };
 
+%pythonappend Handle_Adaptor3d_HSurfaceOfLinearExtrusion::Handle_Adaptor3d_HSurfaceOfLinearExtrusion %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Adaptor3d_HSurfaceOfLinearExtrusion;
 class Handle_Adaptor3d_HSurfaceOfLinearExtrusion : public Handle_Adaptor3d_HSurface {
 
@@ -2638,6 +2701,12 @@ class Adaptor3d_HSurfaceOfRevolution : public Adaptor3d_HSurface {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Adaptor3d_HSurfaceOfRevolution::Handle_Adaptor3d_HSurfaceOfRevolution %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Adaptor3d_HSurfaceOfRevolution;
 class Handle_Adaptor3d_HSurfaceOfRevolution : public Handle_Adaptor3d_HSurface {

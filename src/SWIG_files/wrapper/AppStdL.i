@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include AppStdL_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -80,6 +95,12 @@ class AppStdL_Application : public TDocStd_Application {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_AppStdL_Application::Handle_AppStdL_Application %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_AppStdL_Application;
 class Handle_AppStdL_Application : public Handle_TDocStd_Application {

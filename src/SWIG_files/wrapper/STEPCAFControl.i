@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include STEPCAFControl_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -93,6 +108,12 @@ class STEPCAFControl_ActorWrite : public STEPControl_ActorWrite {
 	}
 };
 
+%pythonappend Handle_STEPCAFControl_ActorWrite::Handle_STEPCAFControl_ActorWrite %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_STEPCAFControl_ActorWrite;
 class Handle_STEPCAFControl_ActorWrite : public Handle_STEPControl_ActorWrite {
 
@@ -141,6 +162,12 @@ class STEPCAFControl_Controller : public STEPControl_Controller {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_STEPCAFControl_Controller::Handle_STEPCAFControl_Controller %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_STEPCAFControl_Controller;
 class Handle_STEPCAFControl_Controller : public Handle_STEPControl_Controller {
@@ -377,6 +404,12 @@ class STEPCAFControl_DataMapNodeOfDataMapOfLabelExternFile : public TCollection_
 	}
 };
 
+%pythonappend Handle_STEPCAFControl_DataMapNodeOfDataMapOfLabelExternFile::Handle_STEPCAFControl_DataMapNodeOfDataMapOfLabelExternFile %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_STEPCAFControl_DataMapNodeOfDataMapOfLabelExternFile;
 class Handle_STEPCAFControl_DataMapNodeOfDataMapOfLabelExternFile : public Handle_TCollection_MapNode {
 
@@ -431,6 +464,12 @@ class STEPCAFControl_DataMapNodeOfDataMapOfLabelShape : public TCollection_MapNo
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_STEPCAFControl_DataMapNodeOfDataMapOfLabelShape::Handle_STEPCAFControl_DataMapNodeOfDataMapOfLabelShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_STEPCAFControl_DataMapNodeOfDataMapOfLabelShape;
 class Handle_STEPCAFControl_DataMapNodeOfDataMapOfLabelShape : public Handle_TCollection_MapNode {
@@ -487,6 +526,12 @@ class STEPCAFControl_DataMapNodeOfDataMapOfPDExternFile : public TCollection_Map
 	}
 };
 
+%pythonappend Handle_STEPCAFControl_DataMapNodeOfDataMapOfPDExternFile::Handle_STEPCAFControl_DataMapNodeOfDataMapOfPDExternFile %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_STEPCAFControl_DataMapNodeOfDataMapOfPDExternFile;
 class Handle_STEPCAFControl_DataMapNodeOfDataMapOfPDExternFile : public Handle_TCollection_MapNode {
 
@@ -541,6 +586,12 @@ class STEPCAFControl_DataMapNodeOfDataMapOfSDRExternFile : public TCollection_Ma
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_STEPCAFControl_DataMapNodeOfDataMapOfSDRExternFile::Handle_STEPCAFControl_DataMapNodeOfDataMapOfSDRExternFile %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_STEPCAFControl_DataMapNodeOfDataMapOfSDRExternFile;
 class Handle_STEPCAFControl_DataMapNodeOfDataMapOfSDRExternFile : public Handle_TCollection_MapNode {
@@ -597,6 +648,12 @@ class STEPCAFControl_DataMapNodeOfDataMapOfShapePD : public TCollection_MapNode 
 	}
 };
 
+%pythonappend Handle_STEPCAFControl_DataMapNodeOfDataMapOfShapePD::Handle_STEPCAFControl_DataMapNodeOfDataMapOfShapePD %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_STEPCAFControl_DataMapNodeOfDataMapOfShapePD;
 class Handle_STEPCAFControl_DataMapNodeOfDataMapOfShapePD : public Handle_TCollection_MapNode {
 
@@ -651,6 +708,12 @@ class STEPCAFControl_DataMapNodeOfDataMapOfShapeSDR : public TCollection_MapNode
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_STEPCAFControl_DataMapNodeOfDataMapOfShapeSDR::Handle_STEPCAFControl_DataMapNodeOfDataMapOfShapeSDR %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_STEPCAFControl_DataMapNodeOfDataMapOfShapeSDR;
 class Handle_STEPCAFControl_DataMapNodeOfDataMapOfShapeSDR : public Handle_TCollection_MapNode {
@@ -1295,6 +1358,12 @@ class STEPCAFControl_DictionaryOfExternFile : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_STEPCAFControl_DictionaryOfExternFile::Handle_STEPCAFControl_DictionaryOfExternFile %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_STEPCAFControl_DictionaryOfExternFile;
 class Handle_STEPCAFControl_DictionaryOfExternFile : public Handle_MMgt_TShared {
 
@@ -1397,6 +1466,12 @@ class STEPCAFControl_ExternFile : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_STEPCAFControl_ExternFile::Handle_STEPCAFControl_ExternFile %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_STEPCAFControl_ExternFile;
 class Handle_STEPCAFControl_ExternFile : public Handle_MMgt_TShared {
@@ -1716,6 +1791,12 @@ class STEPCAFControl_StackItemOfDictionaryOfExternFile : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_STEPCAFControl_StackItemOfDictionaryOfExternFile::Handle_STEPCAFControl_StackItemOfDictionaryOfExternFile %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_STEPCAFControl_StackItemOfDictionaryOfExternFile;
 class Handle_STEPCAFControl_StackItemOfDictionaryOfExternFile : public Handle_MMgt_TShared {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BOPDS_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef NCollection_Map <BOPDS_PassKey , BOPDS_PassKeyMapHasher> BOPDS_MapOfPassKey;
 typedef BOPCol_Array1 <BOPDS_InterfVZ> BOPDS_VectorOfInterfVZ;
@@ -230,6 +245,12 @@ class BOPDS_CommonBlock : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BOPDS_CommonBlock::Handle_BOPDS_CommonBlock %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BOPDS_CommonBlock;
 class Handle_BOPDS_CommonBlock : public Handle_MMgt_TShared {
@@ -1746,6 +1767,12 @@ class BOPDS_PaveBlock : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BOPDS_PaveBlock::Handle_BOPDS_PaveBlock %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BOPDS_PaveBlock;
 class Handle_BOPDS_PaveBlock : public Handle_MMgt_TShared {

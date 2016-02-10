@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TFunction_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -227,6 +242,12 @@ class TFunction_DataMapNodeOfDataMapOfGUIDDriver : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver::Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver;
 class Handle_TFunction_DataMapNodeOfDataMapOfGUIDDriver : public Handle_TCollection_MapNode {
 
@@ -281,6 +302,12 @@ class TFunction_DataMapNodeOfDataMapOfLabelListOfLabel : public TCollection_MapN
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel::Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel;
 class Handle_TFunction_DataMapNodeOfDataMapOfLabelListOfLabel : public Handle_TCollection_MapNode {
@@ -538,6 +565,12 @@ class TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel : public TCollection_MapN
 	}
 };
 
+%pythonappend Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel::Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel;
 class Handle_TFunction_DoubleMapNodeOfDoubleMapOfIntegerLabel : public Handle_TCollection_MapNode {
 
@@ -715,6 +748,12 @@ class TFunction_Driver : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TFunction_Driver::Handle_TFunction_Driver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TFunction_Driver;
 class Handle_TFunction_Driver : public Handle_MMgt_TShared {
 
@@ -821,6 +860,12 @@ class TFunction_DriverTable : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TFunction_DriverTable::Handle_TFunction_DriverTable %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TFunction_DriverTable;
 class Handle_TFunction_DriverTable : public Handle_MMgt_TShared {
@@ -956,6 +1001,12 @@ class TFunction_Function : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TFunction_Function::Handle_TFunction_Function %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TFunction_Function;
 class Handle_TFunction_Function : public Handle_TDF_Attribute {
@@ -1150,6 +1201,12 @@ class TFunction_GraphNode : public TDF_Attribute {
 	}
 };
 
+%pythonappend Handle_TFunction_GraphNode::Handle_TFunction_GraphNode %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TFunction_GraphNode;
 class Handle_TFunction_GraphNode : public Handle_TDF_Attribute {
 
@@ -1250,6 +1307,12 @@ class TFunction_HArray1OfDataMapOfGUIDDriver : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TFunction_HArray1OfDataMapOfGUIDDriver::Handle_TFunction_HArray1OfDataMapOfGUIDDriver %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TFunction_HArray1OfDataMapOfGUIDDriver;
 class Handle_TFunction_HArray1OfDataMapOfGUIDDriver : public Handle_MMgt_TShared {
@@ -1754,6 +1817,12 @@ class TFunction_Scope : public TDF_Attribute {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TFunction_Scope::Handle_TFunction_Scope %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TFunction_Scope;
 class Handle_TFunction_Scope : public Handle_TDF_Attribute {

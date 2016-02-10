@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Interface_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef Standard_Boolean ( * Interface_ValueSatisfies ) ( const Handle_TCollection_HAsciiString & val );
 typedef NCollection_Vector <Interface_FileParameter> Interface_VectorOfFileParameter;
@@ -952,6 +967,12 @@ class Interface_Check : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_Check::Handle_Interface_Check %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_Check;
 class Handle_Interface_Check : public Handle_MMgt_TShared {
 
@@ -1367,6 +1388,12 @@ class Interface_CopyControl : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_CopyControl::Handle_Interface_CopyControl %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_CopyControl;
 class Handle_Interface_CopyControl : public Handle_MMgt_TShared {
 
@@ -1623,6 +1650,12 @@ class Interface_DataMapNodeOfDataMapOfTransientInteger : public TCollection_MapN
 	}
 };
 
+%pythonappend Handle_Interface_DataMapNodeOfDataMapOfTransientInteger::Handle_Interface_DataMapNodeOfDataMapOfTransientInteger %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_DataMapNodeOfDataMapOfTransientInteger;
 class Handle_Interface_DataMapNodeOfDataMapOfTransientInteger : public Handle_TCollection_MapNode {
 
@@ -1825,6 +1858,12 @@ class Interface_EntityCluster : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_EntityCluster::Handle_Interface_EntityCluster %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_EntityCluster;
 class Handle_Interface_EntityCluster : public Handle_MMgt_TShared {
@@ -2373,6 +2412,12 @@ class Interface_FileReaderData : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_FileReaderData::Handle_Interface_FileReaderData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_FileReaderData;
 class Handle_Interface_FileReaderData : public Handle_MMgt_TShared {
 
@@ -2786,6 +2831,12 @@ class Interface_GTool : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_GTool::Handle_Interface_GTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_GTool;
 class Handle_Interface_GTool : public Handle_MMgt_TShared {
 
@@ -3078,6 +3129,12 @@ class Interface_GeneralModule : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_GeneralModule::Handle_Interface_GeneralModule %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_GeneralModule;
 class Handle_Interface_GeneralModule : public Handle_MMgt_TShared {
 
@@ -3139,6 +3196,12 @@ class Interface_GlobalNodeOfGeneralLib : public Standard_Transient {
 	}
 };
 
+%pythonappend Handle_Interface_GlobalNodeOfGeneralLib::Handle_Interface_GlobalNodeOfGeneralLib %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_GlobalNodeOfGeneralLib;
 class Handle_Interface_GlobalNodeOfGeneralLib : public Handle_Standard_Transient {
 
@@ -3199,6 +3262,12 @@ class Interface_GlobalNodeOfReaderLib : public Standard_Transient {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_GlobalNodeOfReaderLib::Handle_Interface_GlobalNodeOfReaderLib %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_GlobalNodeOfReaderLib;
 class Handle_Interface_GlobalNodeOfReaderLib : public Handle_Standard_Transient {
@@ -3633,6 +3702,12 @@ class Interface_HArray1OfHAsciiString : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_HArray1OfHAsciiString::Handle_Interface_HArray1OfHAsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_HArray1OfHAsciiString;
 class Handle_Interface_HArray1OfHAsciiString : public Handle_MMgt_TShared {
 
@@ -3735,6 +3810,12 @@ class Interface_HGraph : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_HGraph::Handle_Interface_HGraph %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_HGraph;
 class Handle_Interface_HGraph : public Handle_MMgt_TShared {
@@ -3909,6 +3990,12 @@ class Interface_HSequenceOfCheck : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_HSequenceOfCheck::Handle_Interface_HSequenceOfCheck %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_HSequenceOfCheck;
 class Handle_Interface_HSequenceOfCheck : public Handle_MMgt_TShared {
 
@@ -3978,6 +4065,12 @@ class Interface_IndexedMapNodeOfIndexedMapOfAsciiString : public TCollection_Map
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString::Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString;
 class Handle_Interface_IndexedMapNodeOfIndexedMapOfAsciiString : public Handle_TCollection_MapNode {
@@ -4262,6 +4355,12 @@ class Interface_IntVal : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_IntVal::Handle_Interface_IntVal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_IntVal;
 class Handle_Interface_IntVal : public Handle_MMgt_TShared {
@@ -4815,6 +4914,12 @@ class Interface_InterfaceModel : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_InterfaceModel::Handle_Interface_InterfaceModel %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_InterfaceModel;
 class Handle_Interface_InterfaceModel : public Handle_MMgt_TShared {
 
@@ -5290,6 +5395,12 @@ class Interface_NodeOfGeneralLib : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_NodeOfGeneralLib::Handle_Interface_NodeOfGeneralLib %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_NodeOfGeneralLib;
 class Handle_Interface_NodeOfGeneralLib : public Handle_MMgt_TShared {
 
@@ -5348,6 +5459,12 @@ class Interface_NodeOfReaderLib : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_NodeOfReaderLib::Handle_Interface_NodeOfReaderLib %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_NodeOfReaderLib;
 class Handle_Interface_NodeOfReaderLib : public Handle_MMgt_TShared {
@@ -5441,6 +5558,12 @@ class Interface_ParamList : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_ParamList::Handle_Interface_ParamList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_ParamList;
 class Handle_Interface_ParamList : public Handle_MMgt_TShared {
@@ -5558,6 +5681,12 @@ class Interface_ParamSet : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_ParamSet::Handle_Interface_ParamSet %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_ParamSet;
 class Handle_Interface_ParamSet : public Handle_MMgt_TShared {
@@ -5710,6 +5839,12 @@ class Interface_Protocol : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_Protocol::Handle_Interface_Protocol %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_Protocol;
 class Handle_Interface_Protocol : public Handle_MMgt_TShared {
 
@@ -5856,6 +5991,12 @@ class Interface_ReaderModule : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_ReaderModule::Handle_Interface_ReaderModule %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_ReaderModule;
 class Handle_Interface_ReaderModule : public Handle_MMgt_TShared {
 
@@ -5967,6 +6108,12 @@ class Interface_ReportEntity : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_ReportEntity::Handle_Interface_ReportEntity %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_ReportEntity;
 class Handle_Interface_ReportEntity : public Handle_MMgt_TShared {
 
@@ -6017,6 +6164,12 @@ class Interface_SequenceNodeOfSequenceOfCheck : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_SequenceNodeOfSequenceOfCheck::Handle_Interface_SequenceNodeOfSequenceOfCheck %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_SequenceNodeOfSequenceOfCheck;
 class Handle_Interface_SequenceNodeOfSequenceOfCheck : public Handle_TCollection_SeqNode {
@@ -6435,6 +6588,12 @@ class Interface_SignLabel : public MoniTool_SignText {
 	}
 };
 
+%pythonappend Handle_Interface_SignLabel::Handle_Interface_SignLabel %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_SignLabel;
 class Handle_Interface_SignLabel : public Handle_MoniTool_SignText {
 
@@ -6499,6 +6658,12 @@ class Interface_SignType : public MoniTool_SignText {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_SignType::Handle_Interface_SignType %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_SignType;
 class Handle_Interface_SignType : public Handle_MoniTool_SignText {
@@ -6570,6 +6735,12 @@ class Interface_TypedValue : public MoniTool_TypedValue {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_TypedValue::Handle_Interface_TypedValue %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_TypedValue;
 class Handle_Interface_TypedValue : public Handle_MoniTool_TypedValue {
@@ -6760,6 +6931,12 @@ class Interface_UndefinedContent : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Interface_UndefinedContent::Handle_Interface_UndefinedContent %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Interface_UndefinedContent;
 class Handle_Interface_UndefinedContent : public Handle_MMgt_TShared {
 
@@ -6836,6 +7013,12 @@ class Interface_CopyMap : public Interface_CopyControl {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_CopyMap::Handle_Interface_CopyMap %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_CopyMap;
 class Handle_Interface_CopyMap : public Handle_Interface_CopyControl {
@@ -7175,6 +7358,12 @@ class Interface_Static : public Interface_TypedValue {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Interface_Static::Handle_Interface_Static %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Interface_Static;
 class Handle_Interface_Static : public Handle_Interface_TypedValue {

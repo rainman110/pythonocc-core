@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include MAT_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -202,6 +217,12 @@ class MAT_Arc : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_MAT_Arc::Handle_MAT_Arc %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT_Arc;
 class Handle_MAT_Arc : public Handle_MMgt_TShared {
 
@@ -294,6 +315,12 @@ class MAT_BasicElt : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT_BasicElt::Handle_MAT_BasicElt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT_BasicElt;
 class Handle_MAT_BasicElt : public Handle_MMgt_TShared {
@@ -482,6 +509,12 @@ class MAT_Bisector : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_MAT_Bisector::Handle_MAT_Bisector %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT_Bisector;
 class Handle_MAT_Bisector : public Handle_MMgt_TShared {
 
@@ -666,6 +699,12 @@ class MAT_DataMapNodeOfDataMapOfIntegerArc : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_MAT_DataMapNodeOfDataMapOfIntegerArc::Handle_MAT_DataMapNodeOfDataMapOfIntegerArc %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT_DataMapNodeOfDataMapOfIntegerArc;
 class Handle_MAT_DataMapNodeOfDataMapOfIntegerArc : public Handle_TCollection_MapNode {
 
@@ -729,6 +768,12 @@ class MAT_DataMapNodeOfDataMapOfIntegerBasicElt : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt::Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt;
 class Handle_MAT_DataMapNodeOfDataMapOfIntegerBasicElt : public Handle_TCollection_MapNode {
@@ -794,6 +839,12 @@ class MAT_DataMapNodeOfDataMapOfIntegerBisector : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector::Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector;
 class Handle_MAT_DataMapNodeOfDataMapOfIntegerBisector : public Handle_TCollection_MapNode {
 
@@ -857,6 +908,12 @@ class MAT_DataMapNodeOfDataMapOfIntegerNode : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT_DataMapNodeOfDataMapOfIntegerNode::Handle_MAT_DataMapNodeOfDataMapOfIntegerNode %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT_DataMapNodeOfDataMapOfIntegerNode;
 class Handle_MAT_DataMapNodeOfDataMapOfIntegerNode : public Handle_TCollection_MapNode {
@@ -1269,6 +1326,12 @@ class MAT_Edge : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_MAT_Edge::Handle_MAT_Edge %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT_Edge;
 class Handle_MAT_Edge : public Handle_MMgt_TShared {
 
@@ -1415,6 +1478,12 @@ class MAT_Graph : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT_Graph::Handle_MAT_Graph %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT_Graph;
 class Handle_MAT_Graph : public Handle_MMgt_TShared {
@@ -1571,6 +1640,12 @@ class MAT_ListOfBisector : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_MAT_ListOfBisector::Handle_MAT_ListOfBisector %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT_ListOfBisector;
 class Handle_MAT_ListOfBisector : public Handle_MMgt_TShared {
 
@@ -1726,6 +1801,12 @@ class MAT_ListOfEdge : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_MAT_ListOfEdge::Handle_MAT_ListOfEdge %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT_ListOfEdge;
 class Handle_MAT_ListOfEdge : public Handle_MMgt_TShared {
 
@@ -1837,6 +1918,12 @@ class MAT_Node : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_MAT_Node::Handle_MAT_Node %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT_Node;
 class Handle_MAT_Node : public Handle_MMgt_TShared {
 
@@ -1888,6 +1975,12 @@ class MAT_SequenceNodeOfSequenceOfArc : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_MAT_SequenceNodeOfSequenceOfArc::Handle_MAT_SequenceNodeOfSequenceOfArc %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT_SequenceNodeOfSequenceOfArc;
 class Handle_MAT_SequenceNodeOfSequenceOfArc : public Handle_TCollection_SeqNode {
 
@@ -1938,6 +2031,12 @@ class MAT_SequenceNodeOfSequenceOfBasicElt : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT_SequenceNodeOfSequenceOfBasicElt::Handle_MAT_SequenceNodeOfSequenceOfBasicElt %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT_SequenceNodeOfSequenceOfBasicElt;
 class Handle_MAT_SequenceNodeOfSequenceOfBasicElt : public Handle_TCollection_SeqNode {
@@ -2284,6 +2383,12 @@ class MAT_TListNodeOfListOfBisector : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_MAT_TListNodeOfListOfBisector::Handle_MAT_TListNodeOfListOfBisector %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_MAT_TListNodeOfListOfBisector;
 class Handle_MAT_TListNodeOfListOfBisector : public Handle_MMgt_TShared {
 
@@ -2364,6 +2469,12 @@ class MAT_TListNodeOfListOfEdge : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT_TListNodeOfListOfEdge::Handle_MAT_TListNodeOfListOfEdge %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT_TListNodeOfListOfEdge;
 class Handle_MAT_TListNodeOfListOfEdge : public Handle_MMgt_TShared {
@@ -2447,6 +2558,12 @@ class MAT_Zone : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_MAT_Zone::Handle_MAT_Zone %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_MAT_Zone;
 class Handle_MAT_Zone : public Handle_MMgt_TShared {

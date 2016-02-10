@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include FEmTool_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -375,6 +390,12 @@ class FEmTool_Curve : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_FEmTool_Curve::Handle_FEmTool_Curve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_FEmTool_Curve;
 class Handle_FEmTool_Curve : public Handle_MMgt_TShared {
 
@@ -463,6 +484,12 @@ class FEmTool_ElementaryCriterion : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_FEmTool_ElementaryCriterion::Handle_FEmTool_ElementaryCriterion %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_FEmTool_ElementaryCriterion;
 class Handle_FEmTool_ElementaryCriterion : public Handle_MMgt_TShared {
@@ -627,6 +654,12 @@ class FEmTool_HAssemblyTable : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_FEmTool_HAssemblyTable::Handle_FEmTool_HAssemblyTable %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_FEmTool_HAssemblyTable;
 class Handle_FEmTool_HAssemblyTable : public Handle_MMgt_TShared {
 
@@ -709,6 +742,12 @@ class FEmTool_ListNodeOfListOfVectors : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_FEmTool_ListNodeOfListOfVectors::Handle_FEmTool_ListNodeOfListOfVectors %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_FEmTool_ListNodeOfListOfVectors;
 class Handle_FEmTool_ListNodeOfListOfVectors : public Handle_TCollection_MapNode {
@@ -1017,6 +1056,12 @@ class FEmTool_SequenceNodeOfSeqOfLinConstr : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_FEmTool_SequenceNodeOfSeqOfLinConstr::Handle_FEmTool_SequenceNodeOfSeqOfLinConstr %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_FEmTool_SequenceNodeOfSeqOfLinConstr;
 class Handle_FEmTool_SequenceNodeOfSeqOfLinConstr : public Handle_TCollection_SeqNode {
 
@@ -1130,6 +1175,12 @@ class FEmTool_SparseMatrix : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_FEmTool_SparseMatrix::Handle_FEmTool_SparseMatrix %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_FEmTool_SparseMatrix;
 class Handle_FEmTool_SparseMatrix : public Handle_MMgt_TShared {
 
@@ -1200,6 +1251,12 @@ class FEmTool_LinearFlexion : public FEmTool_ElementaryCriterion {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_FEmTool_LinearFlexion::Handle_FEmTool_LinearFlexion %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_FEmTool_LinearFlexion;
 class Handle_FEmTool_LinearFlexion : public Handle_FEmTool_ElementaryCriterion {
@@ -1272,6 +1329,12 @@ class FEmTool_LinearJerk : public FEmTool_ElementaryCriterion {
 	}
 };
 
+%pythonappend Handle_FEmTool_LinearJerk::Handle_FEmTool_LinearJerk %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_FEmTool_LinearJerk;
 class Handle_FEmTool_LinearJerk : public Handle_FEmTool_ElementaryCriterion {
 
@@ -1342,6 +1405,12 @@ class FEmTool_LinearTension : public FEmTool_ElementaryCriterion {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_FEmTool_LinearTension::Handle_FEmTool_LinearTension %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_FEmTool_LinearTension;
 class Handle_FEmTool_LinearTension : public Handle_FEmTool_ElementaryCriterion {
@@ -1477,6 +1546,12 @@ class FEmTool_ProfileMatrix : public FEmTool_SparseMatrix {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_FEmTool_ProfileMatrix::Handle_FEmTool_ProfileMatrix %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_FEmTool_ProfileMatrix;
 class Handle_FEmTool_ProfileMatrix : public Handle_FEmTool_SparseMatrix {

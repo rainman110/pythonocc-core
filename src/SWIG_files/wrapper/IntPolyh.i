@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include IntPolyh_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef IntPolyh_Array <IntPolyh_Edge> IntPolyh_ArrayOfEdges;
 typedef IntPolyh_Array <IntPolyh_SectionLine> IntPolyh_ArrayOfSectionLines;
@@ -778,6 +793,12 @@ class IntPolyh_SequenceNodeOfSeqOfStartPoints : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints::Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints;
 class Handle_IntPolyh_SequenceNodeOfSeqOfStartPoints : public Handle_TCollection_SeqNode {

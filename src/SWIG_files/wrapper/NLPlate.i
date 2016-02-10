@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include NLPlate_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -168,6 +183,12 @@ class NLPlate_HGPPConstraint : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_NLPlate_HGPPConstraint::Handle_NLPlate_HGPPConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_NLPlate_HGPPConstraint;
 class Handle_NLPlate_HGPPConstraint : public Handle_MMgt_TShared {
@@ -311,6 +332,12 @@ class NLPlate_SequenceNodeOfSequenceOfHGPPConstraint : public TCollection_SeqNod
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint::Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint;
 class Handle_NLPlate_SequenceNodeOfSequenceOfHGPPConstraint : public Handle_TCollection_SeqNode {
@@ -527,6 +554,12 @@ class NLPlate_StackNodeOfStackOfPlate : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_NLPlate_StackNodeOfStackOfPlate::Handle_NLPlate_StackNodeOfStackOfPlate %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_NLPlate_StackNodeOfStackOfPlate;
 class Handle_NLPlate_StackNodeOfStackOfPlate : public Handle_TCollection_MapNode {
 
@@ -656,6 +689,12 @@ class NLPlate_HPG0Constraint : public NLPlate_HGPPConstraint {
 	}
 };
 
+%pythonappend Handle_NLPlate_HPG0Constraint::Handle_NLPlate_HPG0Constraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_NLPlate_HPG0Constraint;
 class Handle_NLPlate_HPG0Constraint : public Handle_NLPlate_HGPPConstraint {
 
@@ -733,6 +772,12 @@ class NLPlate_HPG1Constraint : public NLPlate_HGPPConstraint {
 	}
 };
 
+%pythonappend Handle_NLPlate_HPG1Constraint::Handle_NLPlate_HPG1Constraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_NLPlate_HPG1Constraint;
 class Handle_NLPlate_HPG1Constraint : public Handle_NLPlate_HGPPConstraint {
 
@@ -798,6 +843,12 @@ class NLPlate_HPG0G1Constraint : public NLPlate_HPG0Constraint {
 	}
 };
 
+%pythonappend Handle_NLPlate_HPG0G1Constraint::Handle_NLPlate_HPG0G1Constraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_NLPlate_HPG0G1Constraint;
 class Handle_NLPlate_HPG0G1Constraint : public Handle_NLPlate_HPG0Constraint {
 
@@ -852,6 +903,12 @@ class NLPlate_HPG2Constraint : public NLPlate_HPG1Constraint {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_NLPlate_HPG2Constraint::Handle_NLPlate_HPG2Constraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_NLPlate_HPG2Constraint;
 class Handle_NLPlate_HPG2Constraint : public Handle_NLPlate_HPG1Constraint {
@@ -910,6 +967,12 @@ class NLPlate_HPG0G2Constraint : public NLPlate_HPG0G1Constraint {
 	}
 };
 
+%pythonappend Handle_NLPlate_HPG0G2Constraint::Handle_NLPlate_HPG0G2Constraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_NLPlate_HPG0G2Constraint;
 class Handle_NLPlate_HPG0G2Constraint : public Handle_NLPlate_HPG0G1Constraint {
 
@@ -966,6 +1029,12 @@ class NLPlate_HPG3Constraint : public NLPlate_HPG2Constraint {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_NLPlate_HPG3Constraint::Handle_NLPlate_HPG3Constraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_NLPlate_HPG3Constraint;
 class Handle_NLPlate_HPG3Constraint : public Handle_NLPlate_HPG2Constraint {
@@ -1025,6 +1094,12 @@ class NLPlate_HPG0G3Constraint : public NLPlate_HPG0G2Constraint {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_NLPlate_HPG0G3Constraint::Handle_NLPlate_HPG0G3Constraint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_NLPlate_HPG0G3Constraint;
 class Handle_NLPlate_HPG0G3Constraint : public Handle_NLPlate_HPG0G2Constraint {

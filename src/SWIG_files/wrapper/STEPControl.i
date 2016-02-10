@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include STEPControl_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -143,6 +158,12 @@ class STEPControl_ActorRead : public Transfer_ActorOfTransientProcess {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_STEPControl_ActorRead::Handle_STEPControl_ActorRead %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_STEPControl_ActorRead;
 class Handle_STEPControl_ActorRead : public Handle_Transfer_ActorOfTransientProcess {
@@ -273,6 +294,12 @@ class STEPControl_ActorWrite : public Transfer_ActorOfFinderProcess {
 	}
 };
 
+%pythonappend Handle_STEPControl_ActorWrite::Handle_STEPControl_ActorWrite %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_STEPControl_ActorWrite;
 class Handle_STEPControl_ActorWrite : public Handle_Transfer_ActorOfFinderProcess {
 
@@ -355,6 +382,12 @@ class STEPControl_Controller : public XSControl_Controller {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_STEPControl_Controller::Handle_STEPControl_Controller %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_STEPControl_Controller;
 class Handle_STEPControl_Controller : public Handle_XSControl_Controller {

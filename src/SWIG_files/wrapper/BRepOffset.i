@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRepOffset_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -355,6 +370,12 @@ class BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval : public TCollection_
 	}
 };
 
+%pythonappend Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval::Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval;
 class Handle_BRepOffset_DataMapNodeOfDataMapOfShapeListOfInterval : public Handle_TCollection_MapNode {
 
@@ -410,6 +431,12 @@ class BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape : public TCollection_MapN
 	}
 };
 
+%pythonappend Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape::Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape;
 class Handle_BRepOffset_DataMapNodeOfDataMapOfShapeMapOfShape : public Handle_TCollection_MapNode {
 
@@ -464,6 +491,12 @@ class BRepOffset_DataMapNodeOfDataMapOfShapeOffset : public TCollection_MapNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset::Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset;
 class Handle_BRepOffset_DataMapNodeOfDataMapOfShapeOffset : public Handle_TCollection_MapNode {
@@ -996,6 +1029,12 @@ class BRepOffset_ListNodeOfListOfInterval : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepOffset_ListNodeOfListOfInterval::Handle_BRepOffset_ListNodeOfListOfInterval %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepOffset_ListNodeOfListOfInterval;
 class Handle_BRepOffset_ListNodeOfListOfInterval : public Handle_TCollection_MapNode {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include HLRAlgo_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -1129,6 +1144,12 @@ class HLRAlgo_EdgesBlock : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_HLRAlgo_EdgesBlock::Handle_HLRAlgo_EdgesBlock %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HLRAlgo_EdgesBlock;
 class Handle_HLRAlgo_EdgesBlock : public Handle_MMgt_TShared {
 
@@ -1229,6 +1250,12 @@ class HLRAlgo_HArray1OfPHDat : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRAlgo_HArray1OfPHDat::Handle_HLRAlgo_HArray1OfPHDat %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRAlgo_HArray1OfPHDat;
 class Handle_HLRAlgo_HArray1OfPHDat : public Handle_MMgt_TShared {
@@ -1331,6 +1358,12 @@ class HLRAlgo_HArray1OfPINod : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_HLRAlgo_HArray1OfPINod::Handle_HLRAlgo_HArray1OfPINod %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HLRAlgo_HArray1OfPINod;
 class Handle_HLRAlgo_HArray1OfPINod : public Handle_MMgt_TShared {
 
@@ -1432,6 +1465,12 @@ class HLRAlgo_HArray1OfPISeg : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_HLRAlgo_HArray1OfPISeg::Handle_HLRAlgo_HArray1OfPISeg %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HLRAlgo_HArray1OfPISeg;
 class Handle_HLRAlgo_HArray1OfPISeg : public Handle_MMgt_TShared {
 
@@ -1532,6 +1571,12 @@ class HLRAlgo_HArray1OfTData : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRAlgo_HArray1OfTData::Handle_HLRAlgo_HArray1OfTData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRAlgo_HArray1OfTData;
 class Handle_HLRAlgo_HArray1OfTData : public Handle_MMgt_TShared {
@@ -1954,6 +1999,12 @@ class HLRAlgo_ListNodeOfInterferenceList : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_HLRAlgo_ListNodeOfInterferenceList::Handle_HLRAlgo_ListNodeOfInterferenceList %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HLRAlgo_ListNodeOfInterferenceList;
 class Handle_HLRAlgo_ListNodeOfInterferenceList : public Handle_TCollection_MapNode {
 
@@ -2002,6 +2053,12 @@ class HLRAlgo_ListNodeOfListOfBPoint : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRAlgo_ListNodeOfListOfBPoint::Handle_HLRAlgo_ListNodeOfListOfBPoint %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRAlgo_ListNodeOfListOfBPoint;
 class Handle_HLRAlgo_ListNodeOfListOfBPoint : public Handle_TCollection_MapNode {
@@ -2250,6 +2307,12 @@ class HLRAlgo_PolyAlgo : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_HLRAlgo_PolyAlgo::Handle_HLRAlgo_PolyAlgo %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HLRAlgo_PolyAlgo;
 class Handle_HLRAlgo_PolyAlgo : public Handle_MMgt_TShared {
 
@@ -2360,6 +2423,12 @@ class HLRAlgo_PolyData : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRAlgo_PolyData::Handle_HLRAlgo_PolyData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRAlgo_PolyData;
 class Handle_HLRAlgo_PolyData : public Handle_MMgt_TShared {
@@ -2578,6 +2647,12 @@ class HLRAlgo_PolyInternalData : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_HLRAlgo_PolyInternalData::Handle_HLRAlgo_PolyInternalData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HLRAlgo_PolyInternalData;
 class Handle_HLRAlgo_PolyInternalData : public Handle_MMgt_TShared {
 
@@ -2626,6 +2701,12 @@ class HLRAlgo_PolyInternalNode : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRAlgo_PolyInternalNode::Handle_HLRAlgo_PolyInternalNode %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRAlgo_PolyInternalNode;
 class Handle_HLRAlgo_PolyInternalNode : public Handle_MMgt_TShared {
@@ -2715,6 +2796,12 @@ class HLRAlgo_PolyShellData : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRAlgo_PolyShellData::Handle_HLRAlgo_PolyShellData %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRAlgo_PolyShellData;
 class Handle_HLRAlgo_PolyShellData : public Handle_MMgt_TShared {
@@ -2978,6 +3065,12 @@ class HLRAlgo_WiresBlock : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HLRAlgo_WiresBlock::Handle_HLRAlgo_WiresBlock %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HLRAlgo_WiresBlock;
 class Handle_HLRAlgo_WiresBlock : public Handle_MMgt_TShared {

@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRepBlend_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef BlendFunc_Chamfer BRepBlend_Chamfer;
 typedef BlendFunc_CSConstRad BRepBlend_CSConstRad;
@@ -288,6 +303,12 @@ class BRepBlend_AppFuncRoot : public Approx_SweepFunction {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepBlend_AppFuncRoot::Handle_BRepBlend_AppFuncRoot %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepBlend_AppFuncRoot;
 class Handle_BRepBlend_AppFuncRoot : public Handle_Approx_SweepFunction {
@@ -1673,6 +1694,12 @@ class BRepBlend_Line : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_BRepBlend_Line::Handle_BRepBlend_Line %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepBlend_Line;
 class Handle_BRepBlend_Line : public Handle_MMgt_TShared {
 
@@ -2674,6 +2701,12 @@ class BRepBlend_SequenceNodeOfSequenceOfLine : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_BRepBlend_SequenceNodeOfSequenceOfLine::Handle_BRepBlend_SequenceNodeOfSequenceOfLine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepBlend_SequenceNodeOfSequenceOfLine;
 class Handle_BRepBlend_SequenceNodeOfSequenceOfLine : public Handle_TCollection_SeqNode {
 
@@ -2724,6 +2757,12 @@ class BRepBlend_SequenceNodeOfSequenceOfPointOnRst : public TCollection_SeqNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst::Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst;
 class Handle_BRepBlend_SequenceNodeOfSequenceOfPointOnRst : public Handle_TCollection_SeqNode {
@@ -4462,6 +4501,12 @@ class BRepBlend_AppFunc : public BRepBlend_AppFuncRoot {
 	}
 };
 
+%pythonappend Handle_BRepBlend_AppFunc::Handle_BRepBlend_AppFunc %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepBlend_AppFunc;
 class Handle_BRepBlend_AppFunc : public Handle_BRepBlend_AppFuncRoot {
 
@@ -4531,6 +4576,12 @@ class BRepBlend_AppFuncRst : public BRepBlend_AppFuncRoot {
 	}
 };
 
+%pythonappend Handle_BRepBlend_AppFuncRst::Handle_BRepBlend_AppFuncRst %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_BRepBlend_AppFuncRst;
 class Handle_BRepBlend_AppFuncRst : public Handle_BRepBlend_AppFuncRoot {
 
@@ -4599,6 +4650,12 @@ class BRepBlend_AppFuncRstRst : public BRepBlend_AppFuncRoot {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepBlend_AppFuncRstRst::Handle_BRepBlend_AppFuncRstRst %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepBlend_AppFuncRstRst;
 class Handle_BRepBlend_AppFuncRstRst : public Handle_BRepBlend_AppFuncRoot {

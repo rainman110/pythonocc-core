@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include V3d_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef V3d_View * V3d_ViewPointer;
 typedef V3d_Viewer * V3d_ViewerPointer;
@@ -332,6 +347,12 @@ class V3d_CircularGrid : public Aspect_CircularGrid {
 	}
 };
 
+%pythonappend Handle_V3d_CircularGrid::Handle_V3d_CircularGrid %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_V3d_CircularGrid;
 class Handle_V3d_CircularGrid : public Handle_Aspect_CircularGrid {
 
@@ -447,6 +468,12 @@ class V3d_ColorScale : public Aspect_ColorScale {
 	}
 };
 
+%pythonappend Handle_V3d_ColorScale::Handle_V3d_ColorScale %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_V3d_ColorScale;
 class Handle_V3d_ColorScale : public Handle_Aspect_ColorScale {
 
@@ -503,6 +530,12 @@ class V3d_ColorScaleLayerItem : public Visual3d_LayerItem {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_V3d_ColorScaleLayerItem::Handle_V3d_ColorScaleLayerItem %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_V3d_ColorScaleLayerItem;
 class Handle_V3d_ColorScaleLayerItem : public Handle_Visual3d_LayerItem {
@@ -580,6 +613,12 @@ class V3d_LayerMgr : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_V3d_LayerMgr::Handle_V3d_LayerMgr %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_V3d_LayerMgr;
 class Handle_V3d_LayerMgr : public Handle_MMgt_TShared {
@@ -702,6 +741,12 @@ class V3d_Light : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_V3d_Light::Handle_V3d_Light %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_V3d_Light;
 class Handle_V3d_Light : public Handle_MMgt_TShared {
 
@@ -810,6 +855,12 @@ class V3d_RectangularGrid : public Aspect_RectangularGrid {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_V3d_RectangularGrid::Handle_V3d_RectangularGrid %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_V3d_RectangularGrid;
 class Handle_V3d_RectangularGrid : public Handle_Aspect_RectangularGrid {
@@ -2748,6 +2799,12 @@ class V3d_View : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_V3d_View::Handle_V3d_View %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_V3d_View;
 class Handle_V3d_View : public Handle_MMgt_TShared {
 
@@ -3517,6 +3574,12 @@ class V3d_Viewer : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_V3d_Viewer::Handle_V3d_Viewer %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_V3d_Viewer;
 class Handle_V3d_Viewer : public Handle_MMgt_TShared {
 
@@ -3563,6 +3626,12 @@ class V3d_AmbientLight : public V3d_Light {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_V3d_AmbientLight::Handle_V3d_AmbientLight %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_V3d_AmbientLight;
 class Handle_V3d_AmbientLight : public Handle_V3d_Light {
@@ -3632,6 +3701,12 @@ class V3d_OrthographicView : public V3d_View {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_V3d_OrthographicView::Handle_V3d_OrthographicView %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_V3d_OrthographicView;
 class Handle_V3d_OrthographicView : public Handle_V3d_View {
@@ -3729,6 +3804,12 @@ class V3d_PerspectiveView : public V3d_View {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_V3d_PerspectiveView::Handle_V3d_PerspectiveView %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_V3d_PerspectiveView;
 class Handle_V3d_PerspectiveView : public Handle_V3d_View {
@@ -3882,6 +3963,12 @@ class V3d_PositionLight : public V3d_Light {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_V3d_PositionLight::Handle_V3d_PositionLight %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_V3d_PositionLight;
 class Handle_V3d_PositionLight : public Handle_V3d_Light {
@@ -4048,6 +4135,12 @@ class V3d_DirectionalLight : public V3d_PositionLight {
 	}
 };
 
+%pythonappend Handle_V3d_DirectionalLight::Handle_V3d_DirectionalLight %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_V3d_DirectionalLight;
 class Handle_V3d_DirectionalLight : public Handle_V3d_PositionLight {
 
@@ -4184,6 +4277,12 @@ class V3d_PositionalLight : public V3d_PositionLight {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_V3d_PositionalLight::Handle_V3d_PositionalLight %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_V3d_PositionalLight;
 class Handle_V3d_PositionalLight : public Handle_V3d_PositionLight {
@@ -4389,6 +4488,12 @@ class V3d_SpotLight : public V3d_PositionLight {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_V3d_SpotLight::Handle_V3d_SpotLight %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_V3d_SpotLight;
 class Handle_V3d_SpotLight : public Handle_V3d_PositionLight {

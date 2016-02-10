@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include BRepTopAdaptor_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 typedef TColStd_SequenceOfAddress BRepTopAdaptor_SeqOfPtr;
 /* end typedefs declaration */
@@ -107,6 +122,12 @@ class BRepTopAdaptor_DataMapNodeOfMapOfShapeTool : public TCollection_MapNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool::Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool;
 class Handle_BRepTopAdaptor_DataMapNodeOfMapOfShapeTool : public Handle_TCollection_MapNode {
@@ -242,6 +263,12 @@ class BRepTopAdaptor_HVertex : public Adaptor3d_HVertex {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepTopAdaptor_HVertex::Handle_BRepTopAdaptor_HVertex %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepTopAdaptor_HVertex;
 class Handle_BRepTopAdaptor_HVertex : public Handle_Adaptor3d_HVertex {
@@ -587,6 +614,12 @@ class BRepTopAdaptor_TopolTool : public Adaptor3d_TopolTool {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_BRepTopAdaptor_TopolTool::Handle_BRepTopAdaptor_TopolTool %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_BRepTopAdaptor_TopolTool;
 class Handle_BRepTopAdaptor_TopolTool : public Handle_Adaptor3d_TopolTool {

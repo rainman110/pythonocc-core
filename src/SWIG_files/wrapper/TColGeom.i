@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include TColGeom_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -1031,6 +1046,12 @@ class TColGeom_HArray1OfBSplineCurve : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColGeom_HArray1OfBSplineCurve::Handle_TColGeom_HArray1OfBSplineCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColGeom_HArray1OfBSplineCurve;
 class Handle_TColGeom_HArray1OfBSplineCurve : public Handle_MMgt_TShared {
 
@@ -1131,6 +1152,12 @@ class TColGeom_HArray1OfBezierCurve : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColGeom_HArray1OfBezierCurve::Handle_TColGeom_HArray1OfBezierCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColGeom_HArray1OfBezierCurve;
 class Handle_TColGeom_HArray1OfBezierCurve : public Handle_MMgt_TShared {
@@ -1233,6 +1260,12 @@ class TColGeom_HArray1OfBoundedCurve : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColGeom_HArray1OfBoundedCurve::Handle_TColGeom_HArray1OfBoundedCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColGeom_HArray1OfBoundedCurve;
 class Handle_TColGeom_HArray1OfBoundedCurve : public Handle_MMgt_TShared {
 
@@ -1333,6 +1366,12 @@ class TColGeom_HArray1OfBoundedSurface : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColGeom_HArray1OfBoundedSurface::Handle_TColGeom_HArray1OfBoundedSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColGeom_HArray1OfBoundedSurface;
 class Handle_TColGeom_HArray1OfBoundedSurface : public Handle_MMgt_TShared {
@@ -1435,6 +1474,12 @@ class TColGeom_HArray1OfCurve : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColGeom_HArray1OfCurve::Handle_TColGeom_HArray1OfCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColGeom_HArray1OfCurve;
 class Handle_TColGeom_HArray1OfCurve : public Handle_MMgt_TShared {
 
@@ -1535,6 +1580,12 @@ class TColGeom_HArray1OfSurface : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColGeom_HArray1OfSurface::Handle_TColGeom_HArray1OfSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColGeom_HArray1OfSurface;
 class Handle_TColGeom_HArray1OfSurface : public Handle_MMgt_TShared {
@@ -1663,6 +1714,12 @@ class TColGeom_HArray2OfBSplineSurface : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColGeom_HArray2OfBSplineSurface::Handle_TColGeom_HArray2OfBSplineSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColGeom_HArray2OfBSplineSurface;
 class Handle_TColGeom_HArray2OfBSplineSurface : public Handle_MMgt_TShared {
 
@@ -1789,6 +1846,12 @@ class TColGeom_HArray2OfBezierSurface : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColGeom_HArray2OfBezierSurface::Handle_TColGeom_HArray2OfBezierSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColGeom_HArray2OfBezierSurface;
 class Handle_TColGeom_HArray2OfBezierSurface : public Handle_MMgt_TShared {
@@ -1917,6 +1980,12 @@ class TColGeom_HArray2OfBoundedSurface : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColGeom_HArray2OfBoundedSurface::Handle_TColGeom_HArray2OfBoundedSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColGeom_HArray2OfBoundedSurface;
 class Handle_TColGeom_HArray2OfBoundedSurface : public Handle_MMgt_TShared {
 
@@ -2043,6 +2112,12 @@ class TColGeom_HArray2OfSurface : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColGeom_HArray2OfSurface::Handle_TColGeom_HArray2OfSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColGeom_HArray2OfSurface;
 class Handle_TColGeom_HArray2OfSurface : public Handle_MMgt_TShared {
@@ -2217,6 +2292,12 @@ class TColGeom_HSequenceOfBoundedCurve : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColGeom_HSequenceOfBoundedCurve::Handle_TColGeom_HSequenceOfBoundedCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColGeom_HSequenceOfBoundedCurve;
 class Handle_TColGeom_HSequenceOfBoundedCurve : public Handle_MMgt_TShared {
 
@@ -2389,6 +2470,12 @@ class TColGeom_HSequenceOfBoundedSurface : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColGeom_HSequenceOfBoundedSurface::Handle_TColGeom_HSequenceOfBoundedSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColGeom_HSequenceOfBoundedSurface;
 class Handle_TColGeom_HSequenceOfBoundedSurface : public Handle_MMgt_TShared {
@@ -2563,6 +2650,12 @@ class TColGeom_HSequenceOfCurve : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColGeom_HSequenceOfCurve::Handle_TColGeom_HSequenceOfCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColGeom_HSequenceOfCurve;
 class Handle_TColGeom_HSequenceOfCurve : public Handle_MMgt_TShared {
 
@@ -2736,6 +2829,12 @@ class TColGeom_HSequenceOfSurface : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_TColGeom_HSequenceOfSurface::Handle_TColGeom_HSequenceOfSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColGeom_HSequenceOfSurface;
 class Handle_TColGeom_HSequenceOfSurface : public Handle_MMgt_TShared {
 
@@ -2786,6 +2885,12 @@ class TColGeom_SequenceNodeOfSequenceOfBoundedCurve : public TCollection_SeqNode
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColGeom_SequenceNodeOfSequenceOfBoundedCurve::Handle_TColGeom_SequenceNodeOfSequenceOfBoundedCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColGeom_SequenceNodeOfSequenceOfBoundedCurve;
 class Handle_TColGeom_SequenceNodeOfSequenceOfBoundedCurve : public Handle_TCollection_SeqNode {
@@ -2838,6 +2943,12 @@ class TColGeom_SequenceNodeOfSequenceOfBoundedSurface : public TCollection_SeqNo
 	}
 };
 
+%pythonappend Handle_TColGeom_SequenceNodeOfSequenceOfBoundedSurface::Handle_TColGeom_SequenceNodeOfSequenceOfBoundedSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColGeom_SequenceNodeOfSequenceOfBoundedSurface;
 class Handle_TColGeom_SequenceNodeOfSequenceOfBoundedSurface : public Handle_TCollection_SeqNode {
 
@@ -2889,6 +3000,12 @@ class TColGeom_SequenceNodeOfSequenceOfCurve : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_TColGeom_SequenceNodeOfSequenceOfCurve::Handle_TColGeom_SequenceNodeOfSequenceOfCurve %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_TColGeom_SequenceNodeOfSequenceOfCurve;
 class Handle_TColGeom_SequenceNodeOfSequenceOfCurve : public Handle_TCollection_SeqNode {
 
@@ -2939,6 +3056,12 @@ class TColGeom_SequenceNodeOfSequenceOfSurface : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_TColGeom_SequenceNodeOfSequenceOfSurface::Handle_TColGeom_SequenceNodeOfSequenceOfSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_TColGeom_SequenceNodeOfSequenceOfSurface;
 class Handle_TColGeom_SequenceNodeOfSequenceOfSurface : public Handle_TCollection_SeqNode {

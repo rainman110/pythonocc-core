@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Law_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -753,6 +768,12 @@ class Law_BSpline : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Law_BSpline::Handle_Law_BSpline %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Law_BSpline;
 class Handle_Law_BSpline : public Handle_MMgt_TShared {
 
@@ -905,6 +926,12 @@ class Law_Function : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Law_Function::Handle_Law_Function %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Law_Function;
 class Handle_Law_Function : public Handle_MMgt_TShared {
@@ -1179,6 +1206,12 @@ class Law_ListNodeOfLaws : public TCollection_MapNode {
 	}
 };
 
+%pythonappend Handle_Law_ListNodeOfLaws::Handle_Law_ListNodeOfLaws %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Law_ListNodeOfLaws;
 class Handle_Law_ListNodeOfLaws : public Handle_TCollection_MapNode {
 
@@ -1309,6 +1342,12 @@ class Law_BSpFunc : public Law_Function {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Law_BSpFunc::Handle_Law_BSpFunc %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Law_BSpFunc;
 class Handle_Law_BSpFunc : public Handle_Law_Function {
@@ -1463,6 +1502,12 @@ class Law_Composite : public Law_Function {
 	}
 };
 
+%pythonappend Handle_Law_Composite::Handle_Law_Composite %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Law_Composite;
 class Handle_Law_Composite : public Handle_Law_Function {
 
@@ -1591,6 +1636,12 @@ class Law_Constant : public Law_Function {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Law_Constant::Handle_Law_Constant %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Law_Constant;
 class Handle_Law_Constant : public Handle_Law_Function {
@@ -1727,6 +1778,12 @@ class Law_Linear : public Law_Function {
 	}
 };
 
+%pythonappend Handle_Law_Linear::Handle_Law_Linear %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Law_Linear;
 class Handle_Law_Linear : public Handle_Law_Function {
 
@@ -1822,6 +1879,12 @@ class Law_Interpol : public Law_BSpFunc {
 	}
 };
 
+%pythonappend Handle_Law_Interpol::Handle_Law_Interpol %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Law_Interpol;
 class Handle_Law_Interpol : public Handle_Law_BSpFunc {
 
@@ -1896,6 +1959,12 @@ class Law_S : public Law_BSpFunc {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Law_S::Handle_Law_S %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Law_S;
 class Handle_Law_S : public Handle_Law_BSpFunc {

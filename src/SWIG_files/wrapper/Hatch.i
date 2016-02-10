@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Hatch_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -341,6 +356,12 @@ class Hatch_SequenceNodeOfSequenceOfLine : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_Hatch_SequenceNodeOfSequenceOfLine::Handle_Hatch_SequenceNodeOfSequenceOfLine %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Hatch_SequenceNodeOfSequenceOfLine;
 class Handle_Hatch_SequenceNodeOfSequenceOfLine : public Handle_TCollection_SeqNode {
 
@@ -391,6 +412,12 @@ class Hatch_SequenceNodeOfSequenceOfParameter : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Hatch_SequenceNodeOfSequenceOfParameter::Handle_Hatch_SequenceNodeOfSequenceOfParameter %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Hatch_SequenceNodeOfSequenceOfParameter;
 class Handle_Hatch_SequenceNodeOfSequenceOfParameter : public Handle_TCollection_SeqNode {

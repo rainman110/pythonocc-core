@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include Approx_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -663,6 +678,12 @@ class Approx_CurvlinFunc : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Approx_CurvlinFunc::Handle_Approx_CurvlinFunc %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Approx_CurvlinFunc;
 class Handle_Approx_CurvlinFunc : public Handle_MMgt_TShared {
 
@@ -988,6 +1009,12 @@ class Approx_HArray1OfAdHSurface : public MMgt_TShared {
 	}
 };
 
+%pythonappend Handle_Approx_HArray1OfAdHSurface::Handle_Approx_HArray1OfAdHSurface %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_Approx_HArray1OfAdHSurface;
 class Handle_Approx_HArray1OfAdHSurface : public Handle_MMgt_TShared {
 
@@ -1088,6 +1115,12 @@ class Approx_HArray1OfGTrsf2d : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Approx_HArray1OfGTrsf2d::Handle_Approx_HArray1OfGTrsf2d %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Approx_HArray1OfGTrsf2d;
 class Handle_Approx_HArray1OfGTrsf2d : public Handle_MMgt_TShared {
@@ -1331,6 +1364,12 @@ class Approx_SequenceNodeOfSequenceOfHArray1OfReal : public TCollection_SeqNode 
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal::Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal;
 class Handle_Approx_SequenceNodeOfSequenceOfHArray1OfReal : public Handle_TCollection_SeqNode {
@@ -1908,6 +1947,12 @@ class Approx_SweepFunction : public MMgt_TShared {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_Approx_SweepFunction::Handle_Approx_SweepFunction %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_Approx_SweepFunction;
 class Handle_Approx_SweepFunction : public Handle_MMgt_TShared {

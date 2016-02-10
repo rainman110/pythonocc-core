@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include ShapeBuild_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -357,6 +372,12 @@ class ShapeBuild_ReShape : public BRepTools_ReShape {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_ShapeBuild_ReShape::Handle_ShapeBuild_ReShape %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_ShapeBuild_ReShape;
 class Handle_ShapeBuild_ReShape : public Handle_BRepTools_ReShape {

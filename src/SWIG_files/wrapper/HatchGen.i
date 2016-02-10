@@ -35,6 +35,21 @@ along with pythonOCC.  If not, see <http://www.gnu.org/licenses/>.
 
 %include HatchGen_headers.i
 
+
+%pythoncode {
+def register_handle(handle, base_object):
+    """
+    Inserts the handle into the base object to
+    prevent memory corruption in certain cases
+    """
+    try:
+        if base_object.IsKind("Standard_Transient"):
+            base_object.thisHandle = handle
+            base_object.thisown = False
+    except:
+        pass
+};
+
 /* typedefs */
 /* end typedefs declaration */
 
@@ -704,6 +719,12 @@ class HatchGen_SequenceNodeOfDomains : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_HatchGen_SequenceNodeOfDomains::Handle_HatchGen_SequenceNodeOfDomains %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HatchGen_SequenceNodeOfDomains;
 class Handle_HatchGen_SequenceNodeOfDomains : public Handle_TCollection_SeqNode {
 
@@ -755,6 +776,12 @@ class HatchGen_SequenceNodeOfPointsOnElement : public TCollection_SeqNode {
 	}
 };
 
+%pythonappend Handle_HatchGen_SequenceNodeOfPointsOnElement::Handle_HatchGen_SequenceNodeOfPointsOnElement %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
+
 %nodefaultctor Handle_HatchGen_SequenceNodeOfPointsOnElement;
 class Handle_HatchGen_SequenceNodeOfPointsOnElement : public Handle_TCollection_SeqNode {
 
@@ -805,6 +832,12 @@ class HatchGen_SequenceNodeOfPointsOnHatching : public TCollection_SeqNode {
 		        return self.thisHandle
 	}
 };
+
+%pythonappend Handle_HatchGen_SequenceNodeOfPointsOnHatching::Handle_HatchGen_SequenceNodeOfPointsOnHatching %{
+    # register the handle in the base object
+    if len(args) > 0:
+        register_handle(self, args[0])
+%}
 
 %nodefaultctor Handle_HatchGen_SequenceNodeOfPointsOnHatching;
 class Handle_HatchGen_SequenceNodeOfPointsOnHatching : public Handle_TCollection_SeqNode {
