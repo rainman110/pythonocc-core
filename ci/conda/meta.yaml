@@ -25,7 +25,7 @@ requirements:
   build:
     - patch             [win]
     - python
-    - oce 0.17.*
+    - oce ==0.17.2
     - cmake
     - ninja             [win]
     - swig
@@ -34,7 +34,7 @@ requirements:
     - pyqt
     - wxpython          [py27]
     - pyside            [py27]
-    - oce 0.17.*
+    - oce ==0.17.2
     - python
 
 
