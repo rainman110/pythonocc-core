@@ -1,40 +1,37 @@
 ﻿package:
   name: pythonocc-core
-  version: "0.17"
+  version: 0.17
 
 source:
-  path: ../..
+  path: ../../
   patches:
-    - fix_graphicshr_location.patch [win]
+    - fix_graphicshr_location.patch # [win]
     - fix_GeomFill_BSplineCurves_Init_method.patch
 
 build:
-
-build:
   script_env:
-    - CC
-    - CXX
+    - CC               # [not win]
+    - CXX              # [not win]
 
   number: {{ environ.get('GIT_DESCRIBE_NUMBER', 0) }}
   binary_relocation: false [osx]
   features:
-    - vc9               [win and py27]
-    - vc10              [win and py34]
-    - vc14              [win and py35]
+    - vc9              # [win and py27]
+    - vc10             # [win and py34]
+    - vc14             # [win and py35]
 
 requirements:
   build:
-    - patch             [win]
     - python
     - oce ==0.17.2
     - cmake
-    - ninja             [win]
-    - swig
+    - ninja            # [win]
+    - swig >=3.0.9
 
   run:
     - pyqt
-    - wxpython          [py27]
-    - pyside            [py27]
+    - wxpython          # [py27]
+    - pyside            # [py27]
     - oce ==0.17.2
     - python
 
