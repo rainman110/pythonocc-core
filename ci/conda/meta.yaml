@@ -25,7 +25,6 @@ requirements:
     - python
     - oce ==0.17.2
     - cmake
-    - ninja            # [win]
     - swig >=3.0.9
 
   run:
