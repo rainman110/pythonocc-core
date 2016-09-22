@@ -1,3 +1,5 @@
+
+
 mkdir build
 cd build
 
@@ -5,7 +7,8 @@ REM Remove dot from PY_VER for use in library name
 set MY_PY_VER=%PY_VER:.=%
 
 REM Configure step
-cmake -G %CMAKE_GENERATOR% -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
+@echo on
+cmake -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DCMAKE_BUILD_TYPE=Release ^
  -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
  -DCMAKE_SYSTEM_PREFIX_PATH="%LIBRARY_PREFIX%" ^
@@ -14,6 +17,7 @@ cmake -G %CMAKE_GENERATOR% -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
  -DPYTHON_LIBRARY:FILEPATH="%PREFIX%"/libs/python%MY_PY_VER%.lib ^
  ..
 if errorlevel 1 exit 1
+@echo off
  
 REM Build step 
 cmake --build . --config Release --target INSTALL
