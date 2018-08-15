@@ -19,6 +19,8 @@
 #include "Tesselator.h"
 #include <sstream>
 #include <algorithm>
+#include <cmath>
+#include <iomanip>
 //---------------------------------------------------------------------------
 #include <TopExp_Explorer.hxx>
 #include <Bnd_Box.hxx>
@@ -69,15 +71,10 @@ Tesselator::Tesselator(TopoDS_Shape   aShape,
     //prepare bbox tex coords
     PrepareBoxTextureCoordinates(myShape);
   }
-
     locVertexcoord = NULL;
     locNormalcoord = NULL;
     locTexcoord    = NULL;
-    // compute default deviation
     ComputeDefaultDeviation();
-    
-    //Tesselate();
-    TesselateWithUVCoords();
 }
 
 Tesselator::Tesselator(TopoDS_Shape   aShape) :
@@ -98,11 +95,19 @@ Tesselator::Tesselator(TopoDS_Shape   aShape) :
     locVertexcoord = NULL;
     locNormalcoord = NULL;
     locTexcoord    = NULL;
-    // compute default deviation
     ComputeDefaultDeviation();
-    
-    TesselateWithUVCoords();
 }
+
+void Tesselator::Compute(bool uv_coords, bool compute_edges, float mesh_quality, bool parallel)
+{
+  if (uv_coords) {
+    TesselateWithUVCoords(compute_edges, mesh_quality, parallel);
+  }
+  else {
+    Tesselate(compute_edges, mesh_quality, parallel);
+  }
+}
+
 //---------------------------------------------------------------------------
 Tesselator::~Tesselator()
 {
@@ -136,7 +141,7 @@ void Tesselator::SetDeviation(Standard_Real aDeviation)
 
 
 //---------------------------------------------------------------------------
-void Tesselator::Tesselate()
+void Tesselator::Tesselate(bool compute_edges, float mesh_quality, bool parallel)
 {
     TopExp_Explorer       ExpFace;
     StdPrs_ToolShadedShape   SST;
@@ -148,7 +153,8 @@ void Tesselator::Tesselate()
     gp_Pnt2d d_coord;
 
     //Triangulate
-    BRepMesh_IncrementalMesh(myShape, myDeviation);
+    BRepMesh_IncrementalMesh(myShape, myDeviation*mesh_quality, false, 0.5*mesh_quality, parallel);
+
 
     for (ExpFace.Init(myShape, TopAbs_FACE); ExpFace.More(); ExpFace.Next()) {
       const TopoDS_Face&    myFace    = TopoDS::Face(ExpFace.Current());
@@ -213,12 +219,14 @@ void Tesselator::Tesselate()
         facelist.push_back(this_face);
       }
     }
-    JoinPrimitives();    
+    JoinPrimitives();
+    if (compute_edges) {  
     ComputeEdges();
+    }
 }
 
 //---------------------------------------------------------------------------
-void Tesselator::TesselateWithUVCoords()
+void Tesselator::TesselateWithUVCoords(bool compute_edges, float mesh_quality, bool parallel)
 {
   Standard_Real Umin;
   Standard_Real Umax;
@@ -238,7 +246,7 @@ void Tesselator::TesselateWithUVCoords()
   gp_Pnt2d d_coord;
   
   //Triangulate
-  BRepMesh_IncrementalMesh(myShape, myDeviation);
+  BRepMesh_IncrementalMesh(myShape, myDeviation*mesh_quality, false, 0.5*mesh_quality, parallel);
 
   for (ExpFace.Init(myShape, TopAbs_FACE); ExpFace.More(); ExpFace.Next()) {
     const TopoDS_Face&    myFace    = TopoDS::Face(ExpFace.Current());
@@ -333,7 +341,9 @@ void Tesselator::TesselateWithUVCoords()
     }
   }
   JoinPrimitivesWithUVCoords();
-  ComputeEdges();
+  if (compute_edges) {  
+    ComputeEdges();
+  }
 }
 
 //---------------------------INTERFACE---------------------------------------
@@ -347,11 +357,11 @@ void Tesselator::ComputeDefaultDeviation()
     BRepBndLib::Add(myShape, aBox);
     aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-    Standard_Real xDim = abs((long)aXmax - (long)aXmin);
-    Standard_Real yDim = abs((long)aYmax - (long)aYmin);
-    Standard_Real zDim = abs((long)aZmax - (long)aZmin);
+    Standard_Real xDim = std::abs((long)aXmax - (long)aXmin);
+    Standard_Real yDim = std::abs((long)aYmax - (long)aYmin);
+    Standard_Real zDim = std::abs((long)aZmax - (long)aZmin);
 
-    Standard_Real adeviation = std::max(aXmax-aXmin, std::max(aYmax-aYmin, aZmax-aZmin)) * 1e-2 ;
+    Standard_Real adeviation = std::max(aXmax-aXmin, std::max(aYmax-aYmin, aZmax-aZmin)) * 2e-2 ;
     myDeviation = adeviation;
 }
 
@@ -431,57 +441,133 @@ void Tesselator::ComputeEdges()
   }
 }
 
+
+std::string formatFloatNumber(float f) 
+{
+  // returns string representation of the float number f.
+  // set precision to 4 digits
+  // set epsilon to 1e-3
+  float epsilon = 1e-3;
+  std::stringstream formatted_float;
+  if (std::abs(f) < epsilon) {
+    f = 0.;
+  }
+  formatted_float << std::setprecision(4) << f;
+  // 4 is perfect for the default quality
+  // for lower quality, it can be down to 3 or 2
+  // for better quality, up to 5 or 6
+  return formatted_float.str();
+}
+
+std::vector<float> Tesselator::GetVerticesPositionAsTuple()
+{
+  // create the vector and allocate memory
+  std::vector<float> vertices_position;
+  vertices_position.reserve(tot_triangle_count);
+  // loop over tertices
+  int pID = 0;
+  int qID = 0;
+  int rID = 0;
+  for (int i=0;i<tot_triangle_count;i++) {
+      pID = loc_tri_indexes[(i * 3) + 0] * 3;
+      vertices_position.push_back(locVertexcoord[pID]);
+      vertices_position.push_back(locVertexcoord[pID+1]);
+      vertices_position.push_back(locVertexcoord[pID+2]);
+      // Second vertex
+      qID = loc_tri_indexes[(i * 3) + 1] * 3;
+      vertices_position.push_back(locVertexcoord[qID]);
+      vertices_position.push_back(locVertexcoord[qID+1]);
+      vertices_position.push_back(locVertexcoord[qID+2]);
+      // Third vertex
+      rID = loc_tri_indexes[(i * 3) + 2] * 3;
+      vertices_position.push_back(locVertexcoord[rID]);
+      vertices_position.push_back(locVertexcoord[rID+1]);
+      vertices_position.push_back(locVertexcoord[rID+2]);
+    }
+  return vertices_position;
+}
+
+std::vector<float> Tesselator::GetNormalsAsTuple()
+{
+  // create the vector and allocate memory
+  std::vector<float> normals;
+  normals.reserve(tot_triangle_count);
+  // loop over normals
+  int pID = 0;
+  int qID = 0;
+  int rID = 0;
+  for (int i=0;i<tot_triangle_count;i++) {
+      pID = loc_tri_indexes[(i * 3) + 0] * 3;
+      normals.push_back(locNormalcoord[pID]);
+      normals.push_back(locNormalcoord[pID+1]);
+      normals.push_back(locNormalcoord[pID+2]);
+      // Second normal
+      qID = loc_tri_indexes[(i * 3) + 1] * 3;
+      normals.push_back(locNormalcoord[qID]);
+      normals.push_back(locNormalcoord[qID+1]);
+      normals.push_back(locNormalcoord[qID+2]);
+      // Third normal
+      rID = loc_tri_indexes[(i * 3) + 2] * 3;
+      normals.push_back(locNormalcoord[rID]);
+      normals.push_back(locNormalcoord[rID+1]);
+      normals.push_back(locNormalcoord[rID+2]);
+    }
+  return normals;
+}
+
 std::string Tesselator::ExportShapeToX3DIndexedFaceSet()
 {
-  std::stringstream str1;
+  std::stringstream str_ifs, str_vertices, str_normals;
   int *vertices_idx = new int[3];
   int *texcoords_idx = new int[3];
   int *normals_idx = new int[3];
+  // traverse triangles and write vertices and normals strings
+  for (int i=0;i<tot_triangle_count;i++) {
+      ObjGetTriangle(i, vertices_idx, texcoords_idx, normals_idx);
+      // VERTICES
+      // First Vertex
+      str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[0]]) << " ";
+      str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[0]+1]) <<" ";
+      str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[0]+2]) <<"\n";
+      // Second vertex
+      str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[1]]) << " ";
+      str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[1]+1]) << " ";
+      str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[1]+2]) << "\n";
+      // Third vertex
+      str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[2]]) << " ";
+      str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[2]+1]) << " ";
+      str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[2]+2]) << "\n";
+      // NORMALS
+      // First normal
+      str_normals << formatFloatNumber(locNormalcoord[normals_idx[0]]) << " ";
+      str_normals << formatFloatNumber(locNormalcoord[normals_idx[0]+1]) << " ";
+      str_normals << formatFloatNumber(locNormalcoord[normals_idx[0]+2]) << "\n";
+      // Second normal
+      str_normals << formatFloatNumber(locNormalcoord[normals_idx[1]]) << " ";
+      str_normals << formatFloatNumber(locNormalcoord[normals_idx[1]+1]) << " ";
+      str_normals << formatFloatNumber(locNormalcoord[normals_idx[1]+2]) << "\n";
+      // Third normal
+      str_normals << formatFloatNumber(locNormalcoord[normals_idx[2]]) << " ";
+      str_normals << formatFloatNumber(locNormalcoord[normals_idx[2]+1]) << " ";
+      str_normals << formatFloatNumber(locNormalcoord[normals_idx[2]+2]) << "\n";
+  }
+  str_ifs << "<TriangleSet solid='false'>\n";
+  // write points coordinates
+  str_ifs << "<Coordinate point='";
+  str_ifs << str_vertices.str();
+  str_ifs << "'></Coordinate>\n";
+  // write normals
+  str_ifs << "<Normal vector='";
+  str_ifs << str_normals.str();
+  str_ifs << "'></Normal>\n";
+  // close all markups
+  str_ifs << "</TriangleSet>\n";
+    
+  delete [] vertices_idx;
+  delete [] texcoords_idx;
+  delete [] normals_idx;  
   
-  str1 << "<IndexedFaceSet coordIndex='";
-    for (int i=0;i<tot_triangle_count;i++) {
-        ObjGetTriangle(i, vertices_idx, texcoords_idx, normals_idx);
-        // vertex indices
-        str1 << i*3 << " " << 1+i*3 << " " << 2+i*3 << " -1\n";
-    } 
-    str1 << "' solid='false'>\n";
-    // write points coordinates
-    str1 << "<Coordinate point='";
-    for (int i=0;i<tot_triangle_count;i++) {
-        ObjGetTriangle(i, vertices_idx, texcoords_idx, normals_idx);
-        str1 <<locVertexcoord[vertices_idx[0]]<< " " <<locVertexcoord[vertices_idx[0]+1]<<" "
-            << locVertexcoord[vertices_idx[0]+2]<<"\n";
-        // Second vertex
-        str1 <<locVertexcoord[vertices_idx[1]]<<" "<<locVertexcoord[vertices_idx[1]+1]<<" "
-            << locVertexcoord[vertices_idx[1]+2]<<"\n";
-        // Third vertex
-        str1 << locVertexcoord[vertices_idx[2]]<<" "<<locVertexcoord[vertices_idx[2]+1]<<" "
-            << locVertexcoord[vertices_idx[2]+2]<<"\n";
-    }
-    str1 << "' containerField='coord'></Coordinate>\n";
-    // write normals
-    str1 << "<Normal vector='";
-    for (int i=0;i<tot_triangle_count;i++) {
-        ObjGetTriangle(i, vertices_idx, texcoords_idx, normals_idx);
-        // First normal
-        str1 << locNormalcoord[normals_idx[0]]<<" "<<locNormalcoord[normals_idx[0]+1]<<" "
-            << locNormalcoord[normals_idx[0]+2]<<"\n";
-        // Second normal
-        str1 << locNormalcoord[normals_idx[1]]<<" "<<locNormalcoord[normals_idx[1]+1]<<" "
-            << locNormalcoord[normals_idx[1]+2]<<"\n";
-        // Third normal
-        str1 << locNormalcoord[normals_idx[2]]<<" "<<locNormalcoord[normals_idx[2]+1]<<" "
-            << locNormalcoord[normals_idx[2]+2] << "\n";
-    }
-    str1 << "' containerField='normal'></Normal>\n";
-    // close all markups
-    str1 << "</IndexedFaceSet>\n";
-    
-    delete [] vertices_idx;
-    delete [] texcoords_idx;
-    delete [] normals_idx;
-    
-    return str1.str();
+  return str_ifs.str();
 }
 
 void Tesselator::ExportShapeToX3D(char * filename, int diffR, int diffG, int diffB)
@@ -504,76 +590,110 @@ void Tesselator::ExportShapeToX3D(char * filename, int diffR, int diffG, int dif
 
 }
 
-void Tesselator::ExportShapeToThreejs(char * filename)
+std::string Tesselator::ExportShapeToThreejsJSONString(char *shape_function_name, bool export_uv)
 {
-    ofstream js_file;
+    // a method that export a shape to a JSON BufferGeometry object
+    std::stringstream str_3js, str_vertices, str_normals, str_uvs;
     int *vertices_idx = new int[3];
     int *texcoords_idx = new int[3];
     int *normals_idx = new int[3];
-    js_file.open (filename);
-    // write header
-    js_file << "var Shape = function () {\n";
-    js_file << "var scope = this;\n";
-    js_file << "THREE.Geometry.call( this );\n";
-    // first write vertices coords
+    // loop over triangles and write vertices, normals and uvs if enabled
     for (int i=0;i<tot_triangle_count;i++) {
         ObjGetTriangle(i, vertices_idx, texcoords_idx, normals_idx);
+        // write vertex coordinates
         // First vertex
-        js_file << "v("<<locVertexcoord[vertices_idx[0]]<<","<<locVertexcoord[vertices_idx[0]+1]<<","
-            << locVertexcoord[vertices_idx[0]+2]<<");\n";
+        str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[0]]) << ",";
+        str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[0]+1]) << ",";
+        str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[0]+2]) << ",";
         // Second vertex
-        js_file << "v("<<locVertexcoord[vertices_idx[1]]<<","<<locVertexcoord[vertices_idx[1]+1]<<","
-            << locVertexcoord[vertices_idx[1]+2]<<");\n";
+        str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[1]]) << ",";
+        str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[1]+1]) << ",";
+        str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[1]+2]) << ",";
         // Third vertex
-        js_file << "v("<<locVertexcoord[vertices_idx[2]]<<","<<locVertexcoord[vertices_idx[2]+1]<<","
-            << locVertexcoord[vertices_idx[2]+2]<<");\n";
-        
-    
-    }
-    // write normals
-    for (int i=0;i<tot_triangle_count;i++) {
-        ObjGetTriangle(i, vertices_idx, texcoords_idx, normals_idx);
-        // vertex indices
-        js_file << "f3("<<i*3<<","<<1+i*3<<","<<2+i*3<<",";
-        // First normal
-        js_file << locNormalcoord[normals_idx[0]]<<","<<locNormalcoord[normals_idx[0]+1]<<","
-            << locNormalcoord[normals_idx[0]+2]<<",";
+        str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[2]]) << ",";
+        str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[2]+1]) << ",";
+        str_vertices << formatFloatNumber(locVertexcoord[vertices_idx[2]+2]);
+        // Be careful, JSON parsers don't like trailing commas !!!
+        if (i != tot_triangle_count-1) {
+          str_vertices << ",";
+        }
+        // NORMALS
+          // First normal
+        str_normals << formatFloatNumber(locNormalcoord[normals_idx[0]]) << ",";
+        str_normals << formatFloatNumber(locNormalcoord[normals_idx[0]+1]) << ",";
+        str_normals << formatFloatNumber(locNormalcoord[normals_idx[0]+2]) << ",";
         // Second normal
-        js_file << locNormalcoord[normals_idx[1]]<<","<<locNormalcoord[normals_idx[1]+1]<<","
-            << locNormalcoord[normals_idx[1]+2]<<",";
+        str_normals << formatFloatNumber(locNormalcoord[normals_idx[1]]) << ",";
+        str_normals << formatFloatNumber(locNormalcoord[normals_idx[1]+1]) << ",";
+        str_normals << formatFloatNumber(locNormalcoord[normals_idx[1]+2]) << ",";
         // Third normal
-        js_file << locNormalcoord[normals_idx[2]]<<","<<locNormalcoord[normals_idx[2]+1]<<","
-            << locNormalcoord[normals_idx[2]+2];
-        js_file << ");\n";
+        str_normals << formatFloatNumber(locNormalcoord[normals_idx[2]]) << ",";
+        str_normals << formatFloatNumber(locNormalcoord[normals_idx[2]+1]) << ",";
+        str_normals << formatFloatNumber(locNormalcoord[normals_idx[2]+2]);
+        // Be careful, JSON parsers don't like trailing commas !!!
+        if (i != tot_triangle_count-1) {
+          str_normals << ",";
+        }
+        // UVs
+        if (export_uv) {
+          str_uvs << formatFloatNumber(locTexcoord[texcoords_idx[0]])<<",";
+          str_uvs << formatFloatNumber(locTexcoord[texcoords_idx[0]+2])<<",";
+          str_uvs << formatFloatNumber(locTexcoord[texcoords_idx[1]])<<",";
+          str_uvs << formatFloatNumber(locTexcoord[texcoords_idx[1]+2])<<",";
+          str_uvs << formatFloatNumber(locTexcoord[texcoords_idx[2]])<<",";
+          str_uvs << formatFloatNumber(locTexcoord[texcoords_idx[2]+2]);
+          // Be careful, JSON parsers don't like trailing commas !!!
+          if (i != tot_triangle_count-1) {
+            str_uvs <<",";
+          }
+        }
     }
-
-    // at last, write texcoords
-    for (int i=0;i<tot_triangle_count;i++) {
-        ObjGetTriangle(i, vertices_idx, texcoords_idx, normals_idx);
-        js_file << "uvs(";
-        js_file << locTexcoord[texcoords_idx[0]]<<","<<locTexcoord[texcoords_idx[0]+2]<<",";
-        js_file << locTexcoord[texcoords_idx[1]]<<","<<locTexcoord[texcoords_idx[1]+2]<<",";
-        js_file << locTexcoord[texcoords_idx[2]]<<","<<locTexcoord[texcoords_idx[2]+2];
-        js_file << ");\n";
+    str_3js << "{\n";
+    str_3js << "\t\"metadata\": {\n";
+    str_3js << "\t\t\"version\": 4.4,\n";
+    str_3js << "\t\t\"type\": \"BufferGeometry\",\n";
+    str_3js << "\t\t\"generator\": \"pythonOCC\"\n";
+    str_3js << "\t},\n";
+    str_3js << "\t\"uuid\": \"" << shape_function_name << "\",\n";
+    str_3js << "\t\"type\": \"BufferGeometry\",\n";
+    str_3js << "\t\"data\": {\n";
+    str_3js << "\t\"attributes\": {\n";
+    str_3js << "\t\t\t\"position\": {\n";
+    str_3js << "\t\t\t\t\"itemSize\": 3,\n";
+    str_3js << "\t\t\t\t\"type\": \"Float32Array\",\n";
+    str_3js << "\t\t\t\t\"array\": [";
+    // write vertices
+    str_3js << str_vertices.str();
+    str_3js << "]\n";
+    str_3js << "\t\t\t},\n";
+    str_3js << "\t\t\t\"normal\": {\n";
+    str_3js << "\t\t\t\t\"itemSize\": 3,\n";
+    str_3js << "\t\t\t\t\"type\": \"Float32Array\",\n";
+    str_3js << "\t\t\t\t\"array\": [";
+    // write normals
+    str_3js << str_normals.str();
+    str_3js << "]\n";
+    if (export_uv) {
+      str_3js << "\t\t\t},\n";
+      str_3js << "\t\t\t\"uv\": {\n";
+      str_3js << "\t\t\t\t\"itemSize\": 2,\n";
+      str_3js << "\t\t\t\t\"type\": \"Float32Array\",\n";
+      str_3js << "\t\t\t\t\"array\": [";
+      // write uvs coordinates
+      str_3js << str_uvs.str();
+      str_3js << "]\n";
     }
+    str_3js << "\t\t\t}\n";
+    // close all brackets
+    str_3js << "\t\t}\n";
+    str_3js << "\t}\n";
+    str_3js << "}\n";
 
-    // footer
-    js_file << "function v( x, y, z ) {\n";
-    js_file<< "  scope.vertices.push(new THREE.Vector3(x,y,z));\n";
-    js_file<<"}\n";
-    js_file <<"function f3( a, b, c, n1_x,n1_y,n1_z,n2_x,n2_y,n2_z,n3_x,n3_y,n3_z ) {\n";
-    js_file << "  scope.faces.push(new THREE.Face3(a,b,c,[new THREE.Vector3(n1_x,n1_y,n1_z),\n";
-    js_file << "new THREE.Vector3( n2_x, n2_y, n2_z ), new THREE.Vector3( n3_x, n3_y, n3_z ) ]  ) );\n";
-    js_file << "}\n";
-    js_file << "function uvs(a,b,c,d,e,f) {\n";
-    js_file << "scope.faceVertexUvs[ 0 ].push( [new THREE.Vector2(a,b), new THREE.Vector2(c,d), new THREE.Vector2(e,f)] );\n";
-    js_file << "}\n}\n";
-    js_file << "Shape.prototype = new THREE.Geometry();\n";
-    js_file << "Shape.prototype.constructor = Shape;\n";
-    js_file.close();
     delete [] vertices_idx;
     delete [] texcoords_idx;
     delete [] normals_idx;
+
+    return str_3js.str();
 }
 
 //---------------------------------------------------------------------------
@@ -877,9 +997,9 @@ void Tesselator::PrepareBoxTextureCoordinates(const TopoDS_Shape& aShape)
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
   //enlarge the bb so all edges have the size of the biggest one
-  Standard_Real xDim = abs((long)aXmax - (long)aXmin);
-  Standard_Real yDim = abs((long)aYmax - (long)aYmin);
-  Standard_Real zDim = abs((long)aZmax - (long)aZmin);
+  Standard_Real xDim = std::abs((long)aXmax - (long)aXmin);
+  Standard_Real yDim = std::abs((long)aYmax - (long)aYmin);
+  Standard_Real zDim = std::abs((long)aZmax - (long)aZmin);
 
   if ((xDim > yDim) && (xDim > zDim)) {
     aYmin -= (xDim - yDim) / 2;
@@ -909,9 +1029,9 @@ void Tesselator::PrepareBoxTextureCoordinates(const TopoDS_Shape& aShape)
 //---------------------------------------------------------------------------
 void Tesselator::GetBoxTextureCoordinate(const gp_Pnt& p, const gp_Dir& N1, gp_Vec2d& theCoord_p)
 {
-  Standard_Real x = abs(N1.X());
-  Standard_Real y = abs(N1.Y());
-  Standard_Real z = abs(N1.Z());
+  Standard_Real x = std::abs(N1.X());
+  Standard_Real y = std::abs(N1.Y());
+  Standard_Real z = std::abs(N1.Z());
 
   if (x >= y && x >= z) {
     if (N1.X() > 0) { //right
